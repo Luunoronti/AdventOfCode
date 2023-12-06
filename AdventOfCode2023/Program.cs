@@ -2,8 +2,69 @@
 {
     private static void Main(string[] args)
     {
-        Day5();
+        Day6();
     }
+
+
+
+    private static void Day6()
+    {
+        var lines = File.ReadAllLines("..\\..\\..\\input.txt");
+
+        var times = lines[0][11..].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(t => int.Parse(t)).ToArray();
+        var ogRecords = lines[1][11..].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(t => int.Parse(t)).ToArray();
+
+        List<(int, int)> races = new();
+        for (int i = 0; i < times.Length; i++) races.Add((times[i], ogRecords[i]));
+        
+        // for each race, estimate possible wins:
+        int[] winPossobiolities = new int[races.Count];
+
+        for (int i = 0; i < races.Count; i++)
+        {
+            (int, int) race = races[i];
+            var time = race.Item1;
+            var record = race.Item2;
+
+            // brute force: find all options that will yield distance better than record
+            for (int t = 0; t <= time; t++)
+            {
+                // we keep this time, and convert it to distance that we will travel in remaining time
+                var distanceTravelled = (time - t) * t;
+
+                if (distanceTravelled > record)
+                {
+                    winPossobiolities[i]++;
+                }
+            }
+        }
+
+        var sum = winPossobiolities[0];
+        for (int i1 = 1; i1 < winPossobiolities.Length; i1++)
+        {
+            int w = winPossobiolities[i1];
+            sum *= w;
+        }
+
+        Console.WriteLine($"Part 1 {sum}");
+
+
+        // part 2:
+        var time2 = long.Parse(lines[0][11..].Replace(" ", ""));
+        var record2 = long.Parse(lines[1][11..].Replace(" ", ""));
+        long winPossobiolies2 = 0;
+
+        for (int t = 0; t <= time2; t++)
+        {
+            // we keep this time, and convert it to distance that we will travel in remaining time
+            var distanceTravelled = (time2 - t) * t;
+            if (distanceTravelled > record2)
+                winPossobiolies2++;
+        }
+        Console.WriteLine($"Part 2 {winPossobiolies2}");
+    }
+
+
 
 
     class Map
@@ -146,8 +207,6 @@
         }
     }
 
-    
-
     class Card
     {
         public int Number;
@@ -226,7 +285,6 @@
         Console.WriteLine($"Total sum: {sum}");
         Console.WriteLine($"Total cards: {originalCards.Sum(c => 1 + c.Copies)}");
     }
-
 
     struct Day3Str1
     {
