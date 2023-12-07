@@ -1,4 +1,8 @@
-﻿internal class Program
+﻿using System.Drawing;
+using System.Net.Http.Headers;
+using System.Reflection.Metadata;
+
+internal class Program
 {
     private static void Main(string[] args)
     {
@@ -22,7 +26,7 @@
             'A',
             'K',
             'Q',
-            'J',
+
             'T',
             '9',
             '8',
@@ -31,7 +35,8 @@
             '5',
             '4',
             '3',
-            '2'
+            '2',
+            'J'
         };
     private static void Day7()
     {
@@ -57,63 +62,94 @@
             }
             return 0;
         }
-        static HandStr GetHandStr(string hand)
+
+        static string UpdateJs(string hand)
         {
             var jc = hand.Count(c => c == 'J');
+            if (jc == 0) return hand;
+            if (jc == 5) return "AAAAA";
+            var ret = hand;
+            var tmp = hand.Replace("J", "");
 
-            if (jc > 0)
+            var dist = tmp.Distinct();
+            var count = dist.Count();
+
+            if (count == 0) return hand;
+            if (count == 1) return hand[0] == 'J' ? hand.Replace('J', 'A') : hand.Replace('J', hand[0]);
+            if (count == 2)
             {
-                // remove j from string
-                var hand2 = hand.Replace("J", "");
+                var s1 = hand.Sum(h => (h == dist.ElementAt(0)) ? 1 : 0);
+                var s2 = hand.Sum(h => (h == dist.ElementAt(1)) ? 1 : 0);
 
-                // establish which letter is the highest count
-                // and if two pairs, which pair is stronger
-                // then make Js them and proceed
+                var str1 = str.Count - str.IndexOf(dist.ElementAt(0));
+                var str2 = str.Count - str.IndexOf(dist.ElementAt(1));
 
-                var dist = hand.Distinct();
-                var count = dist.Count();
-                
-                if (count == hand.Length)  // each is different
-                {
-                    var max = hand2.Min(h => str.IndexOf(h));
-                    var C = str[max];
-                }
+                if (s1 >= 3) return hand.Replace('J', dist.ElementAt(0));
+                if (s2 >= 3) return hand.Replace('J', dist.ElementAt(1));
+                if (s1 == 2 && s2 == 1) return hand.Replace('J', dist.ElementAt(0));
+                if (s2 == 2 && s1 == 1) return hand.Replace('J', dist.ElementAt(1));
+                if (str1 > str2) return hand.Replace('J', dist.ElementAt(0));
+                return hand.Replace('J', dist.ElementAt(1));
             }
-            //else
+            if (count == 3) // we removed at least one J so we can have 4 chars at most, so if count is 3, we can have only one double
             {
-                var dist = hand.Distinct();
-                var count = dist.Count();
+                var s1 = hand.Sum(h => (h == dist.ElementAt(0)) ? 1 : 0);
+                var s2 = hand.Sum(h => (h == dist.ElementAt(1)) ? 1 : 0);
+                var s3 = hand.Sum(h => (h == dist.ElementAt(2)) ? 1 : 0);
 
-                if (count == 0) return HandStr.HighCard;
-                if (count == 1) return HandStr.FiveOfKind;
-                if (count == 2)
-                {
-                    var s1 = hand.Sum(h => (h == dist.ElementAt(0)) ? 1 : 0);
-                    var s2 = hand.Sum(h => (h == dist.ElementAt(1)) ? 1 : 0);
-                    if (s1 == 4 || s2 == 4)
-                        return HandStr.FourOfKind;
-                    return HandStr.FullHouse;
-                }
-                if (count == 3)
-                {
-                    var s1 = hand.Sum(h => (h == dist.ElementAt(0)) ? 1 : 0);
-                    var s2 = hand.Sum(h => (h == dist.ElementAt(1)) ? 1 : 0);
-                    var s3 = hand.Sum(h => (h == dist.ElementAt(2)) ? 1 : 0);
-                    if (s1 == 3 || s2 == 3 || s3 == 3)
-                        return HandStr.ThreeOfKind;
-                    return HandStr.TwoPair;
-                }
-                if (count == 4)
-                {
-                    return HandStr.OnePair;
-                }
+                if (s1 > 1) return hand.Replace('J', dist.ElementAt(0));
+                if (s2 > 1) return hand.Replace('J', dist.ElementAt(1));
+                if (s3 > 1) return hand.Replace('J', dist.ElementAt(2));
+            }
+            if (count == 4) // we removed at least one J so we can have 4 chars at most, therefore we only check for highest posssible char
+            {
+                var str1 = str.IndexOf(dist.ElementAt(0));
+                var str2 = str.IndexOf(dist.ElementAt(1));
+                var str3 = str.IndexOf(dist.ElementAt(2));
+                var str4 = str.IndexOf(dist.ElementAt(3));
+
+                var winner = Math.Min(str1, Math.Min(str2, Math.Min(str3, str4)));
+                return hand.Replace('J', str[winner]);
+            }
+
+            return ret;
+        }
+
+        static HandStr GetHandStr(string hand)
+        {
+            hand = UpdateJs(hand);
+            var dist = hand.Distinct();
+            var count = dist.Count();
+
+            if (count == 0) return HandStr.HighCard;
+            if (count == 1) return HandStr.FiveOfKind;
+            if (count == 2)
+            {
+                var s1 = hand.Sum(h => (h == dist.ElementAt(0)) ? 1 : 0);
+                var s2 = hand.Sum(h => (h == dist.ElementAt(1)) ? 1 : 0);
+                if (s1 == 4 || s2 == 4)
+                    return HandStr.FourOfKind;
+                return HandStr.FullHouse;
+            }
+            if (count == 3)
+            {
+                var s1 = hand.Sum(h => (h == dist.ElementAt(0)) ? 1 : 0);
+                var s2 = hand.Sum(h => (h == dist.ElementAt(1)) ? 1 : 0);
+                var s3 = hand.Sum(h => (h == dist.ElementAt(2)) ? 1 : 0);
+                if (s1 == 3 || s2 == 3 || s3 == 3)
+                    return HandStr.ThreeOfKind;
+                return HandStr.TwoPair;
+            }
+            if (count == 4)
+            {
+                return HandStr.OnePair;
             }
 
             return HandStr.HighCard;
         }
         var hands = File.ReadAllLines("..\\..\\..\\input.txt")
             .Select(l => l.Split(' ')).Select(s => new { hand = s[0], bid = int.Parse(s[1]) })
-            .Select(h => new { h, str = GetHandStr(h.hand) })
+            .Select(h => new { h, str = GetHandStr(h.hand), str_u = UpdateJs(h.hand) })
             .ToList();
 
         hands.Sort((h1, h2) => CompareHands(h1.h.hand, h1.str, h2.h.hand, h2.str));
@@ -123,7 +159,11 @@
 
         foreach (var h in handsR)
         {
-            Console.WriteLine($"{h.h.h.hand} : {h.h.str} : {h.rank}");
+            var color = Console.ForegroundColor;
+            if (h.h.h.hand != h.h.str_u)
+                Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"{h.h.h.hand} : {h.h.str} : {h.h.str_u} : {h.rank}");
+            Console.ForegroundColor = color;
         }
         Console.WriteLine($"Part 1: {rankSum}");
 
