@@ -2,11 +2,132 @@
 {
     private static void Main(string[] args)
     {
-        Day6();
+        Day7();
     }
 
 
+    enum HandStr
+    {
+        FiveOfKind,
+        FourOfKind,
+        FullHouse,
+        ThreeOfKind,
+        TwoPair,
+        OnePair,
+        HighCard,
+        None,
+    }
+    static List<char> str = new List<char>()
+        {
+            'A',
+            'K',
+            'Q',
+            'J',
+            'T',
+            '9',
+            '8',
+            '7',
+            '6',
+            '5',
+            '4',
+            '3',
+            '2'
+        };
+    private static void Day7()
+    {
 
+        static int CompareHands(string hand1, HandStr str1, string hand2, HandStr str2)
+        {
+            var c = str1.CompareTo(str2);
+            if (c != 0) return c;
+
+            for (int i = 0; i < hand1.Length; i++)
+            {
+                var d1 = char.IsDigit(hand1[i]);
+                var d2 = char.IsDigit(hand2[i]);
+
+                var s1 = str.Count - str.IndexOf(hand1[i]);
+                var s2 = str.Count - str.IndexOf(hand2[i]);
+
+                c = s2.CompareTo(s1);
+                if (c != 0)
+                {
+                    return c;
+                }
+            }
+            return 0;
+        }
+        static HandStr GetHandStr(string hand)
+        {
+            var jc = hand.Count(c => c == 'J');
+
+            if (jc > 0)
+            {
+                // remove j from string
+                var hand2 = hand.Replace("J", "");
+
+                // establish which letter is the highest count
+                // and if two pairs, which pair is stronger
+                // then make Js them and proceed
+
+                var dist = hand.Distinct();
+                var count = dist.Count();
+                
+                if (count == hand.Length)  // each is different
+                {
+                    var max = hand2.Min(h => str.IndexOf(h));
+                    var C = str[max];
+                }
+            }
+            //else
+            {
+                var dist = hand.Distinct();
+                var count = dist.Count();
+
+                if (count == 0) return HandStr.HighCard;
+                if (count == 1) return HandStr.FiveOfKind;
+                if (count == 2)
+                {
+                    var s1 = hand.Sum(h => (h == dist.ElementAt(0)) ? 1 : 0);
+                    var s2 = hand.Sum(h => (h == dist.ElementAt(1)) ? 1 : 0);
+                    if (s1 == 4 || s2 == 4)
+                        return HandStr.FourOfKind;
+                    return HandStr.FullHouse;
+                }
+                if (count == 3)
+                {
+                    var s1 = hand.Sum(h => (h == dist.ElementAt(0)) ? 1 : 0);
+                    var s2 = hand.Sum(h => (h == dist.ElementAt(1)) ? 1 : 0);
+                    var s3 = hand.Sum(h => (h == dist.ElementAt(2)) ? 1 : 0);
+                    if (s1 == 3 || s2 == 3 || s3 == 3)
+                        return HandStr.ThreeOfKind;
+                    return HandStr.TwoPair;
+                }
+                if (count == 4)
+                {
+                    return HandStr.OnePair;
+                }
+            }
+
+            return HandStr.HighCard;
+        }
+        var hands = File.ReadAllLines("..\\..\\..\\input.txt")
+            .Select(l => l.Split(' ')).Select(s => new { hand = s[0], bid = int.Parse(s[1]) })
+            .Select(h => new { h, str = GetHandStr(h.hand) })
+            .ToList();
+
+        hands.Sort((h1, h2) => CompareHands(h1.h.hand, h1.str, h2.h.hand, h2.str));
+
+        var handsR = hands.Select((h, i) => new { h, rank = hands.Count - i });
+        var rankSum = handsR.Sum(h => h.rank * h.h.h.bid);
+
+        foreach (var h in handsR)
+        {
+            Console.WriteLine($"{h.h.h.hand} : {h.h.str} : {h.rank}");
+        }
+        Console.WriteLine($"Part 1: {rankSum}");
+
+    }
     private static void Day6()
     {
         var lines = File.ReadAllLines("..\\..\\..\\input.txt");
@@ -16,7 +137,7 @@
 
         List<(int, int)> races = new();
         for (int i = 0; i < times.Length; i++) races.Add((times[i], ogRecords[i]));
-        
+
         // for each race, estimate possible wins:
         int[] winPossobiolities = new int[races.Count];
 
