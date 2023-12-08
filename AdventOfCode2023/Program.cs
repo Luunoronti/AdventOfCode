@@ -4,7 +4,7 @@ internal partial class Program
 {
     private static void Main(string[] args)
     {
-        Day7.Run(File.ReadAllLines("..\\..\\..\\input.txt"));
+        Day8.Run(File.ReadAllLines("..\\..\\..\\input.txt"));
     }
 
 
