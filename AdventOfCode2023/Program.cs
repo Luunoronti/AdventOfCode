@@ -11,7 +11,7 @@ internal partial class Program
 
         var year = DateTime.Now.Year;
         var ns = $"AdventOfCode{year}";
-        var day = 6;// DateTime.Now.Day;
+        var day = DateTime.Now.Day;
         var dn = $"Day{day}";
 
         CreateDayIfDoesNotExist(year, day);
