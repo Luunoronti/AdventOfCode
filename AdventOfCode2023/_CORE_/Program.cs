@@ -53,7 +53,7 @@ internal partial class Program
         if (a2 != 0)
         {
             Clipboard.SetText(a2.ToString());
-            Console.WriteLine($"Answer {CC.Sys}2{CC.Clr} ({CC.Ans}{a1}{CC.Clr}) has been copied to clipboard automatically.");
+            Console.WriteLine($"Answer {CC.Sys}2{CC.Clr} ({CC.Ans}{a2}{CC.Clr}) has been copied to clipboard automatically.");
         }
         else if (a1 != 0)
         {

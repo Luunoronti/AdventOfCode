@@ -2,7 +2,7 @@
 
 namespace AdventOfCode2023
 {
-    [Force]
+    //[Force]
     class Day07
     {
         public static string TestFile => "2023\\07\\test.txt";
