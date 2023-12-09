@@ -65,7 +65,7 @@ internal partial class Program
 
     private static string[] ReadLines(bool test, int day, int year)
     {
-        Console.WriteLine($"Invoking Run with {CC.Sys}{(test ? "test" : "problem")}{CC.Clr} data on {CC.Sys}{day}{CC.Clr}");
+        Console.WriteLine($"Invoking Run with {CC.Sys}{(test ? "test" : "problem")}{CC.Clr} data on {CC.Sys}Day{day:D2}.Day{day}{CC.Clr}");
         var fileName = $"..\\..\\..\\{year}\\{day:D2}\\{(test ? "test" : "problem")}.txt";
         var lines = File.ReadAllLines(fileName);
         if (lines.Length == 0)
