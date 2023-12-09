@@ -1,9 +1,34 @@
-﻿namespace AdventOfCode2023
+﻿using System;
+
+namespace AdventOfCode2023
 {
     public static class StringExtentions
     {
         private static readonly Dictionary<(string, char, bool, bool), string[]> _splitCache = new();
         private static readonly Dictionary<(string, char, int, bool, bool), int> _splitCacheInts = new();
+
+        private static readonly Dictionary<(string, char, bool, bool), long[]> _splitCacheArrayOfLongs = new();
+        public static long[] SplitAtAsArrayOfLongs(this string str, char splitChar, bool removeEmpty = true, bool trim = true)
+        {
+            var co = (str, splitChar, removeEmpty, trim);
+            if (_splitCacheArrayOfLongs.TryGetValue(co, out var ret)) return ret;
+
+            var opt = StringSplitOptions.None;
+            if (removeEmpty) opt |= StringSplitOptions.RemoveEmptyEntries;
+            if (trim) opt |= StringSplitOptions.TrimEntries;
+
+            var split = str.Split(splitChar, opt);
+            try
+            {
+                ret = split.Select(s => long.Parse(s)).ToArray();
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidDataException($"Split to long[] failed. Split char: {splitChar}, String: {str}. Error: {ex.Message}");
+            }
+            _splitCacheArrayOfLongs[co] = ret;
+            return ret;
+        }
 
         public static int SplitAtAsInt(this string str, char splitChar, int index, bool removeEmpty = true, bool trim = true)
         {

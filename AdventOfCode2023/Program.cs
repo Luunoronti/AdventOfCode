@@ -1,10 +1,63 @@
-﻿using AdventOfCode2023;
+﻿using System.Diagnostics;
+using System.Reflection;
 
+static class CC
+{
+    public const string Clr = "\u001b[0m";
+    public const string Sys = "\u001b[38;2;75;180;237m";
+    
+    public const string Ans = "\u001b[38;2;190;180;237m\u001b[4m";
+}
+static class Log
+{
+    public static void WriteLine(string message) => Console.WriteLine(message);
+}
 internal partial class Program
 {
     private static void Main(string[] args)
     {
-        Day8.Run(File.ReadAllLines("..\\..\\..\\input.txt"));
+        // enumerate all types, get those that start with 'Day'
+        // and get the highest number
+        var selectedType =
+            Assembly.GetExecutingAssembly()
+            .GetTypes()
+            .Where(t => t.Name.StartsWith("Day") && int.TryParse(t.Name[3..], out _))
+            .Select(t => (type: t, name: t.Name, num: int.Parse(t.Name[3..])))
+            .OrderByDescending(t => t.num)
+            .FirstOrDefault();
+
+        var maxthreads = Math.Max(1, Environment.ProcessorCount);
+        ThreadPool.SetMaxThreads(maxthreads, Environment.ProcessorCount);
+        Console.WriteLine($"Max threads set to {CC.Sys}{maxthreads}{CC.Clr}");
+
+        // get input
+        // check if should run test or live data
+        var test = (bool)(selectedType.type.GetProperty("TestData")?.GetValue(null) ?? true);
+        Console.WriteLine($"Invoking Run with {CC.Sys}{(test ? "test" : "problem")}{CC.Clr} data on {CC.Sys}{selectedType.name}{CC.Clr}");
+        var fileName = $"..\\..\\..\\day{selectedType.num}_test.txt";
+        if (File.Exists(fileName) == false) File.WriteAllText(fileName, "");
+        fileName = $"..\\..\\..\\day{selectedType.num}_problem.txt";
+        if (File.Exists(fileName) == false) File.WriteAllText(fileName, "");
+
+        fileName = $"..\\..\\..\\day{selectedType.num}_{(test ? "test" : "problem")}.txt";
+
+        var lines = File.ReadAllLines(fileName);
+
+        Console.WriteLine($"{CC.Sys}===> Running {selectedType.name} Part 1...{CC.Clr}");
+        var sw = Stopwatch.StartNew();
+        var part1Answer = (long)(selectedType.type.GetMethod("Part1")?.Invoke(null, new object[] { lines }) ?? -1);
+        sw.Stop();
+        Console.WriteLine($"{CC.Sys}===> {selectedType.name} Part 1 completed in {sw.ElapsedMilliseconds} ms ({sw.Elapsed}){CC.Clr}");
+
+
+        Console.WriteLine($"{CC.Sys}===> Running {selectedType.name} Part 2...{CC.Clr}");
+        sw = Stopwatch.StartNew();
+        var part2Answer = (long)(selectedType.type.GetMethod("Part2")?.Invoke(null, new object[] { lines }) ?? -1);
+        sw.Stop();
+        Console.WriteLine($"{CC.Sys}===> {selectedType.name} Part 2 completed in {sw.ElapsedMilliseconds} ms ({sw.Elapsed}){CC.Clr}");
+
+        Console.WriteLine($"{CC.Sys}{selectedType.name} Part 1 answer: {CC.Ans}{part1Answer}{CC.Clr}");
+        Console.WriteLine($"{CC.Sys}{selectedType.name} Part 2 answer: {CC.Ans}{part2Answer}{CC.Clr}");
     }
 
 
