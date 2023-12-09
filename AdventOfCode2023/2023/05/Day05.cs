@@ -1,7 +1,9 @@
 namespace AdventOfCode2023
 {
-    class Day5
+    class Day05
     {
+        public static string TestFile => "2023\\05\\test.txt";
+        public static string LiveFile => "2023\\05\\live.txt";
         class Map
         {
             public long Source;
@@ -114,7 +116,6 @@ namespace AdventOfCode2023
                 {
                     CalcSeed2(s2, posX, posY);
                 });
-                //Thread.Sleep(5000);
                 Log.WriteLine();
             }
             while (sem > 0) Thread.Sleep(10);
@@ -142,7 +143,7 @@ namespace AdventOfCode2023
                             Console.CursorTop = consoleY;
                             var percenage = (double)(si - s2.Start) / (double)s2.Range;
                             percenage *= 100;
-                            Console.Write($"{si - s2.Start:N0} ({percenage:F2})");
+                            Log.Write($"{si - s2.Start:N0} ({percenage:F2})");
                         }
                     }
                 }

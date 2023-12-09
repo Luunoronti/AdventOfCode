@@ -1,7 +1,9 @@
 namespace AdventOfCode2023
 {
-    class Day3
+    class Day03
     {
+        public static string TestFile => "2023\\03\\test.txt";
+        public static string LiveFile => "2023\\03\\live.txt";
         struct Day3Str1
         {
             public int x;

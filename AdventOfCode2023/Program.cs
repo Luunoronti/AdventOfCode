@@ -1,8 +1,10 @@
-﻿using System.Diagnostics;
+﻿using AdventOfCode2023;
+using System.Diagnostics;
 using System.Reflection;
 
 internal partial class Program
 {
+    [STAThread]
     private static void Main(string[] _)
     {
         var maxthreads = Math.Max(1, Environment.ProcessorCount);
@@ -16,21 +18,15 @@ internal partial class Program
 
         CreateDayIfDoesNotExist(year, day);
 
-        var typeSet =
-            Assembly.GetExecutingAssembly()
-            .GetTypes()
-            .Where(t => t.Namespace == ns && t.Name == dn)
-            .Select(t => (type: t, name: t.Name))
-            .FirstOrDefault();
+        var type = GetTypeToProcess(ns, dn);
 
-        if (typeSet.type == null)
+        if (type == null)
         {
             Console.WriteLine($"{CC.Err}Type {dn} for year {year} does not exist. It has been recreated, please build your project and run it again. {CC.Clr}");
             return;
         }
 
-        var type = typeSet.type;
-        var name = typeSet.name;
+        var name = type.Name;
 
         var test = (bool)(type.GetProperty("TestData")?.GetValue(null) ?? true);
         if (Debugger.IsAttached == false)
@@ -39,40 +35,85 @@ internal partial class Program
         Log.Enabled = test;
         Console.WriteLine($"Logger is {CC.Sys}{(Log.Enabled ? "on" : "off")}{CC.Clr}");
 
-        var lines = ReadLines(test, day, year);
 
-        Log.Enabled = test; 
 
-        var a1 = RunMethod(name, type, "Part1", lines);
-        var a2 = RunMethod(name, type, "Part2", lines);
+        Log.Enabled = test;
+
+        Console.WriteLine($"Invoking Run with {CC.Sys}{(test ? "test" : "live")}{CC.Clr} data on {CC.Sys}{type.Namespace}.{type.Name}{CC.Clr}\n");
+
+        var lines = ReadLines(type.GetProperty(test ? "TestFile" : "LiveFile")?.GetValue(null) as string);
+        var a1 = RunMethod(type, "Part1", lines);
+
+        lines = ReadLines(type.GetProperty(test ? "TestFile" : "LiveFile")?.GetValue(null) as string);
+        var a2 = RunMethod(type, "Part2", lines);
 
         Console.WriteLine();
         Console.WriteLine();
         Console.WriteLine($"Day {CC.Sys}{day}{CC.Clr} part {CC.Sys}1{CC.Clr} answer: {CC.Ans}{a1}{CC.Clr}");
         Console.WriteLine($"Day {CC.Sys}{day}{CC.Clr} part {CC.Sys}2{CC.Clr} answer: {CC.Ans}{a2}{CC.Clr}");
         Console.WriteLine();
+
+        if (a2 != 0)
+        {
+            Clipboard.SetText(a2.ToString());
+            Console.WriteLine($"Answer {CC.Sys}2{CC.Clr} ({CC.Ans}{a1}{CC.Clr}) has been copied to clipboard automatically.");
+        }
+        else if (a1 != 0)
+        {
+            Clipboard.SetText(a1.ToString());
+            Console.WriteLine($"Answer {CC.Sys}1{CC.Clr} ({CC.Ans}{a1}{CC.Clr}) has been copied to clipboard automatically.");
+        }
+
+
+        Console.WriteLine($"Press {CC.Sys}1{CC.Clr} to copy first answer to clipboard, {CC.Sys}2{CC.Clr} to copy second answer, any other key to quit.");
+        while (true)
+        {
+            var key = Console.ReadKey(true);
+            if (key.Key == ConsoleKey.D1)
+            {
+                Clipboard.SetText(a1.ToString());
+                Console.WriteLine($"Answer {CC.Sys}1{CC.Clr} ({CC.Ans}{a1}{CC.Clr}) copied.");
+            }
+            else if (key.Key == ConsoleKey.D2)
+            {
+                Clipboard.SetText(a2.ToString());
+                Console.WriteLine($"Answer {CC.Sys}2{CC.Clr} ({CC.Ans}{a2}{CC.Clr}) copied.");
+            }
+            else break;
+        }
     }
 
-    private static long RunMethod(string name, Type type, string method, string[] lines)
+    private static Type? GetTypeToProcess(string @namespace, string name) =>
+            Assembly.GetExecutingAssembly().GetTypes()
+            .Where(t => t.GetCustomAttribute<ForceAttribute>() != null)
+            .ForEach(t => Console.WriteLine($"Type {CC.Sys}{t.Namespace}.{t.Name}{CC.Clr} is forced to be processed."))
+            .FirstOrDefault()
+            ??
+            Assembly.GetExecutingAssembly().GetTypes()
+            .Where(t => t.Namespace == @namespace && t.Name == name)
+            .FirstOrDefault()
+            ;
+
+    private static long RunMethod(Type type, string method, string[] lines)
     {
-        Console.WriteLine($"{CC.Sys}===> Running {name} {method}...{CC.Clr}");
+        Console.WriteLine($"{CC.Att}===>{CC.Clr} Running {CC.Sys}{type.Namespace}.{type.Name}.{method}{CC.Clr}...");
         var sw = Stopwatch.StartNew();
         var answer = (long)(type.GetMethod(method)?.Invoke(null, new object[] { lines }) ?? -1);
         sw.Stop();
-        Console.WriteLine($"{CC.Sys}===> {name} {method} completed in {sw.ElapsedMilliseconds} ms ({sw.Elapsed}){CC.Clr}");
+        Console.WriteLine($"{CC.Att}===> {CC.Sys}{type.Namespace}.{type.Name}.{method} {CC.Clr}completed in {CC.Sys}{sw.ElapsedMilliseconds} ms ({sw.Elapsed}){CC.Clr}\n");
         return answer;
     }
 
-    private static string[] ReadLines(bool test, int day, int year)
+    private static string[] ReadLines(string? file)
     {
-        Console.WriteLine($"Invoking Run with {CC.Sys}{(test ? "test" : "problem")}{CC.Clr} data on {CC.Sys}Day{day:D2}.Day{day}{CC.Clr}");
-        var fileName = $"..\\..\\..\\{year}\\{day:D2}\\{(test ? "test" : "problem")}.txt";
+        var fileName = $"..\\..\\..\\{file}";
         var lines = File.ReadAllLines(fileName);
         if (lines.Length == 0)
         {
             Console.WriteLine($"{CC.Err}There are no lines to process. Did you forget to fill in data into the file?{CC.Clr}");
             Console.WriteLine($"{fileName}");
         }
+        Console.WriteLine($"{CC.Att}===> {CC.Sys}{lines.Length}{CC.Clr} lines of data read from {CC.Sys}{Path.GetFileName(fileName)}{CC.Clr}");
         return lines;
     }
 
@@ -81,12 +122,12 @@ internal partial class Program
         var prefix = $"..\\..\\..\\{year}\\{day:D2}\\";
         Directory.CreateDirectory(prefix);
 
-        if (File.Exists(prefix + $"Day{day}.cs") == false)
-            File.WriteAllText(prefix + $"Day{day}.cs", DayTemplateCode.Replace("{Year}", year.ToString()).Replace("{Day}", day.ToString()));
+        if (File.Exists(prefix + $"Day{day:D2}.cs") == false)
+            File.WriteAllText(prefix + $"Day{day:D2}.cs", DayTemplateCode.Replace("{Year}", year.ToString()).Replace("{Day}", day.ToString("D2")));
         if (File.Exists(prefix + $"test.txt") == false)
             File.WriteAllText(prefix + $"test.txt", "");
-        if (File.Exists(prefix + $"problem.txt") == false)
-            File.WriteAllText(prefix + $"problem.txt", "");
+        if (File.Exists(prefix + $"live.txt") == false)
+            File.WriteAllText(prefix + $"live.txt", "");
     }
 
     private const string DayTemplateCode = @"namespace AdventOfCode{Year}
@@ -94,6 +135,8 @@ internal partial class Program
     class Day{Day}
     {
         public static bool TestData => true;
+        public static string TestFile => ""{Year}\\{Day}\\test.txt"";
+        public static string LiveFile => ""{Year}\\{Day}\\live.txt"";
         
         public static long Part1(string[] lines)
         {

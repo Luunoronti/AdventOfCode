@@ -1,13 +1,15 @@
 namespace AdventOfCode2023
 {
-    class Day6
+    class Day06
     {
+        public static string TestFile => "2023\\06\\test.txt";
+        public static string LiveFile => "2023\\06\\live.txt";
         public static bool TestData => true;
         
         public static long Part1(string[] lines)
         {
-            var times = lines[0][11..].SplitAtAsArrayOfLongs(' ');
-            var ogRecords = lines[1][11..].SplitAtAsArrayOfLongs(' ');
+            var times = lines[0][11..].SplitAsArrayOfLongs(' ');
+            var ogRecords = lines[1][11..].SplitAsArrayOfLongs(' ');
 
             List<(long, long)> races = new();
             for (int i = 0; i < times.Length; i++) races.Add((times[i], ogRecords[i]));

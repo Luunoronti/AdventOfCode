@@ -1,7 +1,9 @@
 namespace AdventOfCode2023
 {
-    class Day2
+    class Day02
     {
+        public static string TestFile => "2023\\02\\test.txt";
+        public static string LiveFile => "2023\\02\\live.txt";
         public static bool TestData => true;
         
         public static long Part1(string[] lines)
@@ -12,9 +14,7 @@ namespace AdventOfCode2023
                 var sp1 = line.Split(':');
                 var gameNum = int.Parse(sp1[0][5..]);
                 if (GetMarblesCountForGame(sp1[1]))
-                {
                     possibleGamesSum += gameNum;
-                }
             }
             return possibleGamesSum;
         }

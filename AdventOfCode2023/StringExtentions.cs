@@ -6,7 +6,7 @@
         private static readonly Dictionary<(string, char, int, bool, bool), int> _splitCacheInts = new();
 
         private static readonly Dictionary<(string, char, bool, bool), long[]> _splitCacheArrayOfLongs = new();
-        public static long[] SplitAtAsArrayOfLongs(this string str, char splitChar, bool removeEmpty = true, bool trim = true)
+        public static long[] SplitAsArrayOfLongs(this string str, char splitChar, bool removeEmpty = true, bool trim = true)
         {
             var co = (str, splitChar, removeEmpty, trim);
             if (_splitCacheArrayOfLongs.TryGetValue(co, out var ret)) return ret;

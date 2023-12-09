@@ -1,7 +1,9 @@
 ﻿namespace AdventOfCode2023
 {
-    class Day8
+    class Day08
     {
+        public static string TestFile => "2023\\08\\test.txt";
+        public static string LiveFile => "2023\\08\\live.txt";
         public static long Part1(string[] lines)
         {
             var steps = lines[0].Trim().Select(c => c == 'L' ? 0 : 1).ToArray();
@@ -33,7 +35,7 @@
             var startNodeIndex = nodeidmap["AAA"];
             var targetNodeIndex = nodeidmap["ZZZ"];
             var currNodeIndex = startNodeIndex;
-            Console.WriteLine($"Target node index: {targetNodeIndex}");
+            Log.WriteLine($"Target node index: {targetNodeIndex}");
             while (true)
             {
                 if (currNodeIndex == targetNodeIndex)

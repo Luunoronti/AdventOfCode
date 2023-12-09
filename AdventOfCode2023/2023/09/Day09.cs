@@ -1,7 +1,9 @@
 ﻿namespace AdventOfCode2023
 {
-    class Day9
+    class Day09
     {
+        public static string TestFile => "2023\\09\\test.txt";
+        public static string LiveFile => "2023\\09\\live.txt";
         public static bool TestData => true;
 
         private static long _answer1;
@@ -9,7 +11,7 @@
 
         private static void ProcessLine(string line)
         {
-            var currentList = line.SplitAtAsArrayOfLongs(' ').ToList();
+            var currentList = line.SplitAsArrayOfLongs(' ').ToList();
             if (currentList.Count == 0) return;
             var stack = new Stack<List<long>>();
             stack.Push(currentList);

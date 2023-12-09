@@ -1,7 +1,9 @@
 namespace AdventOfCode2023
 {
-    class Day4
+    class Day04
     {
+        public static string TestFile => "2023\\04\\test.txt";
+        public static string LiveFile => "2023\\04\\live.txt";
         class Card
         {
             public int Number;
@@ -20,36 +22,22 @@ namespace AdventOfCode2023
                 var sp1 = line.Split(':');
                 var cardNum = int.Parse(sp1[0][5..]);
                 var sp2 = sp1[1].Split('|');
-                var winningStr = sp2[0].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                var currentStr = sp2[1].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-                var winning = winningStr.Select(w => int.Parse(w.Trim())).ToList();
-                var current = currentStr.Select(w => int.Parse(w.Trim())).ToList();
+                var winning = sp2[0].SplitAsArrayOfLongs(' ');
+                var current = sp2[1].SplitAsArrayOfLongs(' ');
 
                 var myWins = winning.Where(w => current.Contains(w)).ToList();
                 if (myWins.Count == 0)
                 {
-                    cards.Add(new Card
-                    {
-                        CardSum = 0,
-                        Number = cardNum,
-                        Wins = myWins.Count
-                    });
+                    cards.Add(new Card { CardSum = 0, Number = cardNum, Wins = myWins.Count });
                     continue;
                 }
 
                 var cardSum = 1; // first point
                 for (int i = 1; i < myWins.Count; i++)
-                {
                     cardSum *= 2;
-                }
 
-                cards.Add(new Card
-                {
-                    CardSum = cardSum,
-                    Number = cardNum,
-                    Wins = myWins.Count
-                });
+                cards.Add(new Card { CardSum = cardSum, Number = cardNum, Wins = myWins.Count });
             }
             return cards;
         }

@@ -1,8 +1,11 @@
 ﻿namespace AdventOfCode2023
 {
-
-    class Day7
+    [Force]
+    class Day07
     {
+        public static string TestFile => "2023\\07\\test.txt";
+        public static string LiveFile => "2023\\07\\live.txt";
+
         enum HandStr { HighCard, OnePair, TwoPair, ThreeOfKind, FullHouse, FourOfKind, FiveOfKind }
         static readonly List<char> powerMap = new() { 'A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2' };
         static readonly List<char> powerMapWithJoker = new() { 'A', 'K', 'Q', 'T', '9', '8', '7', '6', '5', '4', '3', '2', 'J' };
