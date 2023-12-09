@@ -1,27 +1,6 @@
 ﻿namespace AdventOfCode2023
 {
-    public static class OtherExtentions
-    {
-        public static string ToReadable(this int[]? array) => array == null ? "<null>" : $"[{string.Join(", ", array)}]";
-        public static List<T> SortRet<T>(this List<T> list, IComparer<T> comparer)
-        {
-            list.Sort(comparer);
-            return list;
-        }
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
-        {
-            foreach (var e in enumerable)
-                action?.Invoke(e);
-            return enumerable;
-        }
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> enumerable, Action<T, int> action)
-        {
-            var count = enumerable.Count();
-            for (int i = 0; i < count; i++)
-                action?.Invoke(enumerable.ElementAt(i), i);
-            return enumerable;
-        }
-    }
+
     class Day7
     {
         enum HandStr { HighCard, OnePair, TwoPair, ThreeOfKind, FullHouse, FourOfKind, FiveOfKind }
@@ -115,23 +94,28 @@
         }
 
 
-        public static void Run(string[] lines)
+
+        public static long Part1(string[] lines)
         {
             var hands = lines.Select(l => new Hand(l))
                 .ToList();
-            var sum = hands
+            return hands
                 .SortRet(new Hand.Comparer { UseJokerRule = false, LowToHigh = true })
                 .ForEach((h, i) => h.Rank = lines.Length - i)
-                //.ForEach(h => Console.WriteLine($"Hand: {h.ToString(false)}"))
+                .ForEach(h => Log.WriteLine($"Hand: {h.ToString(false)}"))
                 .Sum(h => h.Bid * h.Rank);
-            Console.WriteLine($"Part 1: {sum}");
-
-            sum = hands
+        }
+        public static long Part2(string[] lines)
+        {
+            var hands = lines.Select(l => new Hand(l))
+                .ToList();
+            return hands
                .SortRet(new Hand.Comparer { UseJokerRule = true, LowToHigh = true })
                .ForEach((h, i) => h.Rank = lines.Length - i)
-               .ForEach(h => Console.WriteLine($"Hand: {h.ToString(true)}"))
+               .ForEach(h => Log.WriteLine($"Hand: {h.ToString(true)}"))
                .Sum(h => h.Bid * h.Rank);
-            Console.WriteLine($"Part 2: {sum}");
         }
+
+
     }
 }

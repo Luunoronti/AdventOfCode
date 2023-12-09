@@ -1,10 +1,8 @@
-﻿using System.IO;
-
-namespace AdventOfCode2023
+﻿namespace AdventOfCode2023
 {
     class Day8
     {
-        private static void Part1(string[] lines)
+        public static long Part1(string[] lines)
         {
             var steps = lines[0].Trim().Select(c => c == 'L' ? 0 : 1).ToArray();
 
@@ -51,11 +49,9 @@ namespace AdventOfCode2023
                 currNodeIndex = nodeArray[currNodeIndex, step];
             }
 
-            Console.WriteLine($"Part 1: {stepsCount}");
+            return stepsCount;
         }
-
-
-        private static void Part2(string[] lines)
+        public static long Part2(string[] lines)
         {
             var steps = lines[0].Trim().Select(c => c == 'L' ? 0 : 1).ToArray();
 
@@ -96,7 +92,7 @@ namespace AdventOfCode2023
             searchersList.Select(l => GetPath(l, 0)).Select(l => l / stepCount)
                 .ForEach(l => fctr *= l);
 
-            Console.WriteLine($"Part 2: {fctr * stepCount}");
+            return fctr * stepCount;
 
             int GetPath(int node, int stepIndex)
             {
@@ -114,12 +110,6 @@ namespace AdventOfCode2023
                 }
                 return stepsCount;
             }
-        }
-
-        public static void Run(string[] lines)
-        {
-            Part1(lines);
-            Part2(lines);
         }
     }
 }
