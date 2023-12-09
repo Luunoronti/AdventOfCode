@@ -1,10 +1,13 @@
-﻿namespace AdventOfCode2023
+﻿using System.Data;
+
+namespace AdventOfCode2023
 {
     [Force]
     class Day07
     {
         public static string TestFile => "2023\\07\\test.txt";
         public static string LiveFile => "2023\\07\\live.txt";
+        public static bool TestData => true;
 
         enum HandStr { HighCard, OnePair, TwoPair, ThreeOfKind, FullHouse, FourOfKind, FiveOfKind }
         static readonly List<char> powerMap = new() { 'A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2' };
@@ -92,8 +95,8 @@
                 return HandStr.HighCard;
             }
             public string ToString(bool useJokerRule) => useJokerRule ?
-                $"{Cards}, Bid: {Bid,4}, Rank: {Rank,4}, Str: {HandStrWithJokerRule,HandStrLen}, Groups: {GroupsWithJokerRule.ToReadable(),15}, Powers: {Powers.ToReadable()}" :
-                $"{Cards}, Bid: {Bid,4}, Rank: {Rank,4}, Str: {HandStr,HandStrLen}, Groups: {Groups.ToReadable(),15}, Powers: {Powers.ToReadable()}";
+                $"{Cards}, Bid: {Bid,4}, Rank: {Rank,4}, Str: {HandStrWithJokerRule,HandStrLen}, Groups: {Log.PrintEnumerableWithPadding(4, GroupsWithJokerRule, delimiter: ", ")}, Powers: {Log.PrintEnumerableWithPadding(4, Powers, delimiter: ", ")}" :
+                $"{Cards}, Bid: {Bid,4}, Rank: {Rank,4}, Str: {HandStr,HandStrLen}, Groups: {Log.PrintEnumerableWithPadding(4, Groups, delimiter: ", ")}, Powers: {Log.PrintEnumerableWithPadding(4, Powers, delimiter: ", ")}";
         }
 
 
@@ -102,10 +105,13 @@
         {
             var hands = lines.Select(l => new Hand(l))
                 .ToList();
+            Log.CreateDataTable("");
             return hands
                 .SortRet(new Hand.Comparer { UseJokerRule = false, LowToHigh = true })
                 .ForEach((h, i) => h.Rank = lines.Length - i)
-                .ForEach(h => Log.WriteLine($"Hand: {h.ToString(false)}"))
+                .SingleAction(() => Log.CreateDataTable("Cards", "Bid", "Rank", "Strength", "Groups", "Powers"))
+                .ForEach(h => Log.AddTableRow(h.Cards, h.Bid, h.Rank, h.HandStr, Log.PrintEnumerableWithPadding(1, h.Groups, delimiter: ", "), Log.PrintEnumerableWithPadding(4, h.Powers, delimiter: ", ")))
+                .SingleAction(() => Log.PrintTable())
                 .Sum(h => h.Bid * h.Rank);
         }
         public static long Part2(string[] lines)
@@ -115,7 +121,9 @@
             return hands
                .SortRet(new Hand.Comparer { UseJokerRule = true, LowToHigh = true })
                .ForEach((h, i) => h.Rank = lines.Length - i)
-               .ForEach(h => Log.WriteLine($"Hand: {h.ToString(true)}"))
+               .SingleAction(() => Log.CreateDataTable("Cards", "Bid", "Rank", "Strength", "Groups", "Powers"))
+               .ForEach(h => Log.AddTableRow(h.Cards, h.Bid, h.Rank, h.HandStr, Log.PrintEnumerableWithPadding(1, h.GroupsWithJokerRule, delimiter: ", "), Log.PrintEnumerableWithPadding(4, h.PowersWithJokerRule, delimiter: ", ")))
+               .SingleAction(() => Log.PrintTable())
                .Sum(h => h.Bid * h.Rank);
         }
 

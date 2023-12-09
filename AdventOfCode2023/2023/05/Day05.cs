@@ -1,5 +1,6 @@
 namespace AdventOfCode2023
 {
+    //[Force]
     class Day05
     {
         public static string TestFile => "2023\\05\\test.txt";

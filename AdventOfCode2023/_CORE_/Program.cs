@@ -14,7 +14,7 @@ internal partial class Program
         var year = DateTime.Now.Year;
         var ns = $"AdventOfCode{year}";
         var day = DateTime.Now.Day;
-        var dn = $"Day{day}";
+        var dn = $"Day{day:D2}";
 
         CreateDayIfDoesNotExist(year, day);
 
@@ -36,10 +36,7 @@ internal partial class Program
         Console.WriteLine($"Logger is {CC.Sys}{(Log.Enabled ? "on" : "off")}{CC.Clr}");
 
 
-
-        Log.Enabled = test;
-
-        Console.WriteLine($"Invoking Run with {CC.Sys}{(test ? "test" : "live")}{CC.Clr} data on {CC.Sys}{type.Namespace}.{type.Name}{CC.Clr}\n");
+        Console.WriteLine($"Invoking Run with {CC.Sys}{(test ? "test" : "live")}{CC.Clr} data on {CC.Cls}{type.Namespace}.{type.Name}{CC.Clr}\n");
 
         var lines = ReadLines(type.GetProperty(test ? "TestFile" : "LiveFile")?.GetValue(null) as string);
         var a1 = RunMethod(type, "Part1", lines);
@@ -48,9 +45,9 @@ internal partial class Program
         var a2 = RunMethod(type, "Part2", lines);
 
         Console.WriteLine();
+        Console.WriteLine($"{CC.Att}===>{CC.Clr} Day {CC.Sys}{day:D2}{CC.Clr} part {CC.Sys}1{CC.Clr} answer: {CC.Ans}{a1}{CC.Clr}");
+        Console.WriteLine($"{CC.Att}===>{CC.Clr} Day {CC.Sys}{day:D2}{CC.Clr} part {CC.Sys}2{CC.Clr} answer: {CC.Ans}{a2}{CC.Clr}");
         Console.WriteLine();
-        Console.WriteLine($"Day {CC.Sys}{day}{CC.Clr} part {CC.Sys}1{CC.Clr} answer: {CC.Ans}{a1}{CC.Clr}");
-        Console.WriteLine($"Day {CC.Sys}{day}{CC.Clr} part {CC.Sys}2{CC.Clr} answer: {CC.Ans}{a2}{CC.Clr}");
         Console.WriteLine();
 
         if (a2 != 0)
@@ -86,7 +83,7 @@ internal partial class Program
     private static Type? GetTypeToProcess(string @namespace, string name) =>
             Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => t.GetCustomAttribute<ForceAttribute>() != null)
-            .ForEach(t => Console.WriteLine($"Type {CC.Sys}{t.Namespace}.{t.Name}{CC.Clr} is forced to be processed."))
+            .ForEach(t => Console.WriteLine($"Processing of type {CC.Cls}{t.Namespace}.{t.Name}{CC.Clr} is being forced via attribute."))
             .FirstOrDefault()
             ??
             Assembly.GetExecutingAssembly().GetTypes()
@@ -96,11 +93,11 @@ internal partial class Program
 
     private static long RunMethod(Type type, string method, string[] lines)
     {
-        Console.WriteLine($"{CC.Att}===>{CC.Clr} Running {CC.Sys}{type.Namespace}.{type.Name}.{method}{CC.Clr}...");
+        Console.WriteLine($"{CC.Att}===>{CC.Clr} Running {CC.Cls}{type.Namespace}.{type.Name}.{method}{CC.Clr}...");
         var sw = Stopwatch.StartNew();
         var answer = (long)(type.GetMethod(method)?.Invoke(null, new object[] { lines }) ?? -1);
         sw.Stop();
-        Console.WriteLine($"{CC.Att}===> {CC.Sys}{type.Namespace}.{type.Name}.{method} {CC.Clr}completed in {CC.Sys}{sw.ElapsedMilliseconds} ms ({sw.Elapsed}){CC.Clr}\n");
+        Console.WriteLine($"{CC.Att}===> {CC.Cls}{type.Namespace}.{type.Name}.{method} {CC.Clr}completed in {CC.Sys}{sw.ElapsedMilliseconds} ms ({sw.Elapsed}){CC.Clr}\n");
         return answer;
     }
 
@@ -132,6 +129,7 @@ internal partial class Program
 
     private const string DayTemplateCode = @"namespace AdventOfCode{Year}
 {
+    //[Force] // uncomment to force processing this type
     class Day{Day}
     {
         public static bool TestData => true;

@@ -1,5 +1,6 @@
 ﻿namespace AdventOfCode2023
 {
+    //[Force]
     class Day09
     {
         public static string TestFile => "2023\\09\\test.txt";
@@ -26,6 +27,9 @@
             stack.Peek().Add(0);
             stack.Peek().Insert(0, 0);
             List<long>? lastList = null;
+
+            var printStack = new Stack<List<long>>();
+
             while (stack.TryPop(out var list))
             {
                 if (lastList != null)
@@ -34,9 +38,16 @@
                     list.Insert(0, list.First() - lastList.First());
                 }
                 lastList = list;
-                Log.WriteLine(string.Join(", ", list));
+                printStack.Push(list);
             }
-            Log.WriteLine("====");
+
+            int offset = 0;
+            while (printStack.TryPop(out var list))
+            {
+                Log.WriteLine(" ".PadLeft(offset) + Log.PrintEnumerableWithPadding(5, list));
+                offset += 3;
+            }
+            Log.WriteLine("================================================");
             Interlocked.Add(ref _answer1, lastList?.Last() ?? 0);
             Interlocked.Add(ref _answer2, lastList?.First() ?? 0);
         }
