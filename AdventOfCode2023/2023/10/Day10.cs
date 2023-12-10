@@ -10,20 +10,9 @@
         public static string TestFile => "2023\\10\\test.txt";
         public static string LiveFile => "2023\\10\\live.txt";
 
-        [Flags]
-        enum StartDirections
-        {
-            None = 0,
-            North = 0x01,
-            South = 0x02,
-            West = 0x04,
-            East = 0x08,
-        }
-
-
-
         public static long Part1(string[] lines)
         {
+
             // look for 'S' character in any of the lines
             int startX = 0;
             int startY = 0;
@@ -52,47 +41,12 @@
             }
 
 
-            StartDirections initialDirection = StartDirections.None;
-
-            // we must find any position that is one step away from S and is valid
-            // and we know, we can go +/- x or +/- y, not both
-            if (x - 1 >= 0)
-            {
-                var c = Get(x - 1, y);
-                if (c == '-' || c == 'F' || c == 'L')
-                    initialDirection |= StartDirections.West;
-            }
-            if (x + 1 < lines[0].Length)
-            {
-                var c = Get(x + 1, y);
-                if (c == '-' || c == '7' || c == 'J')
-                    initialDirection |= StartDirections.East;
-            }
-            if (y + 1 < lines.Length)
-            {
-                var c = Get(x, y + 1);
-                if (c == '|' || c == 'J' || c == 'L')
-                    initialDirection |= StartDirections.South;
-            }
-            if (y - 1 >= 0)
-            {
-                var c = Get(x, y - 1);
-                if (c == '|' || c == 'F' || c == '7')
-                    initialDirection |= StartDirections.North;
-            }
-            Log.WriteLine($"Possible starting directions are {CC.Val}{initialDirection}{CC.Clr}");
+            // make initial move
+            GetVelocityAtStartPoint(out var velocityX, out var velocityY);
+            
 
             var sum = 1L;
             Set(x, y, Get(x, y));
-
-            // make initial move
-            var velocityX = 0;
-            var velocityY = 0;
-
-            if (initialDirection.HasFlag(StartDirections.North)) velocityY = -1;
-            else if (initialDirection.HasFlag(StartDirections.South)) velocityY = 1;
-            else if (initialDirection.HasFlag(StartDirections.West)) velocityX = -1;
-            else if (initialDirection.HasFlag(StartDirections.East)) velocityX = 1;
 
             x += velocityX;
             y += velocityY;
@@ -113,13 +67,7 @@
             x = startX;
             y = startY;
 
-            velocityX = 0;
-            velocityY = 0;
-
-            if (initialDirection.HasFlag(StartDirections.North)) velocityY = -1;
-            else if (initialDirection.HasFlag(StartDirections.South)) velocityY = 1;
-            else if (initialDirection.HasFlag(StartDirections.West)) velocityX = -1;
-            else if (initialDirection.HasFlag(StartDirections.East)) velocityX = 1;
+            GetVelocityAtStartPoint(out velocityX, out velocityY);
 
             do
             {
@@ -210,6 +158,32 @@
                 return (currVelX, currVelY, false);
             }
 
+            void GetVelocityAtStartPoint(out int velocityX, out int velocityY)
+            {
+                velocityX = 0;
+                velocityY = 0;
+                if (startX - 1 >= 0)
+                {
+                    var c = Get(startX - 1, startY);
+                    if (c == '-' || c == 'F' || c == 'L') velocityX = -1;
+                }
+                if (startX + 1 < lines[0].Length)
+                {
+                    var c = Get(startX + 1, startY);
+                    if (c == '-' || c == '7' || c == 'J') velocityX = 1;
+                }
+                if (startY + 1 < lines.Length)
+                {
+                    var c = Get(startX, startY + 1);
+                    if (c == '|' || c == 'J' || c == 'L') velocityY = 1;
+                }
+                if (startY - 1 >= 0)
+                {
+                    var c = Get(startX, startY - 1);
+                    if (c == '|' || c == 'F' || c == '7') velocityY = -1;
+                }
+
+            }
             void RemoveCharacterFE(char ce)
             {
                 for (int y = 0; y < lines.Length; y++)
