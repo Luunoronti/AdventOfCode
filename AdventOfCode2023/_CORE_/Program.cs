@@ -26,27 +26,29 @@ internal partial class Program
             return;
         }
 
-        var name = type.Name;
+        var useTestData = Debugger.IsAttached
+            ? type.GetCustomAttribute<UseLiveDataInDeugAttribute>() == null
+            : type.GetCustomAttribute<AlwaysUseTestDataAttribute>() != null;
 
-        var test = (bool)(type.GetProperty("TestData")?.GetValue(null) ?? true);
-        if (Debugger.IsAttached == false)
-            test = false;
+        Console.WriteLine($"{CC.Sys}{(useTestData ? "Test" : "Live")}{CC.Clr} data is in use");
 
-        Log.Enabled = test;
+        Log.Enabled = Debugger.IsAttached
+            ? type.GetCustomAttribute<DisableLogInDebugAttribute>() == null
+            : type.GetCustomAttribute<AlwaysEnableLogAttribute>() != null;
+
         Console.WriteLine($"Logger is {CC.Sys}{(Log.Enabled ? "on" : "off")}{CC.Clr}");
 
+        Console.WriteLine();
 
-        Console.WriteLine($"Invoking Run with {CC.Sys}{(test ? "test" : "live")}{CC.Clr} data on {CC.Cls}{type.Namespace}.{type.Name}{CC.Clr}\n");
-
-        var lines = ReadLines(type.GetProperty(test ? "TestFile" : "LiveFile")?.GetValue(null) as string);
+        var lines = ReadLines(type.GetProperty(useTestData ? "TestFile" : "LiveFile")?.GetValue(null) as string);
         var a1 = RunMethod(type, "Part1", lines);
 
-        lines = ReadLines(type.GetProperty(test ? "TestFile" : "LiveFile")?.GetValue(null) as string);
+        lines = ReadLines(type.GetProperty(useTestData ? "TestFile" : "LiveFile")?.GetValue(null) as string);
         var a2 = RunMethod(type, "Part2", lines);
 
         Console.WriteLine();
-        Console.WriteLine($"{CC.Att}===>{CC.Clr} Day {CC.Sys}{day:D2}{CC.Clr} part {CC.Sys}1{CC.Clr} answer: {CC.Ans}{a1}{CC.Clr}");
-        Console.WriteLine($"{CC.Att}===>{CC.Clr} Day {CC.Sys}{day:D2}{CC.Clr} part {CC.Sys}2{CC.Clr} answer: {CC.Ans}{a2}{CC.Clr}");
+        Console.WriteLine($"{CC.Att}===>{CC.Clr} Part {CC.Sys}1{CC.Clr} answer: {CC.Ans}{a1}{CC.Clr}");
+        Console.WriteLine($"{CC.Att}===>{CC.Clr} Part {CC.Sys}2{CC.Clr} answer: {CC.Ans}{a2}{CC.Clr}");
         Console.WriteLine();
         Console.WriteLine();
 
@@ -62,21 +64,24 @@ internal partial class Program
         }
 
 
-        Console.WriteLine($"Press {CC.Sys}1{CC.Clr} to copy first answer to clipboard, {CC.Sys}2{CC.Clr} to copy second answer, any other key to quit.");
-        while (true)
+        if (!Debugger.IsAttached)
         {
-            var key = Console.ReadKey(true);
-            if (key.Key == ConsoleKey.D1)
+            Console.WriteLine($"Press {CC.Sys}1{CC.Clr} to copy first answer to clipboard, {CC.Sys}2{CC.Clr} to copy second answer, any other key to quit.");
+            while (true)
             {
-                Clipboard.SetText(a1.ToString());
-                Console.WriteLine($"Answer {CC.Sys}1{CC.Clr} ({CC.Ans}{a1}{CC.Clr}) copied.");
+                var key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.D1)
+                {
+                    Clipboard.SetText(a1.ToString());
+                    Console.WriteLine($"Answer {CC.Sys}1{CC.Clr} ({CC.Ans}{a1}{CC.Clr}) copied.");
+                }
+                else if (key.Key == ConsoleKey.D2)
+                {
+                    Clipboard.SetText(a2.ToString());
+                    Console.WriteLine($"Answer {CC.Sys}2{CC.Clr} ({CC.Ans}{a2}{CC.Clr}) copied.");
+                }
+                else break;
             }
-            else if (key.Key == ConsoleKey.D2)
-            {
-                Clipboard.SetText(a2.ToString());
-                Console.WriteLine($"Answer {CC.Sys}2{CC.Clr} ({CC.Ans}{a2}{CC.Clr}) copied.");
-            }
-            else break;
         }
     }
 
@@ -95,9 +100,20 @@ internal partial class Program
     {
         Console.WriteLine($"{CC.Att}===>{CC.Clr} Running {CC.Cls}{type.Namespace}.{type.Name}.{method}{CC.Clr}...");
         var sw = Stopwatch.StartNew();
+        var met = type.GetMethod(method);
+        if (met == null) return -1;
+
+        var logStatus = Log.Enabled;
+        if (Debugger.IsAttached && met.GetCustomAttribute<DisableLogInDebugAttribute>() != null)
+            Log.Enabled = false;
+        if (!Debugger.IsAttached && met.GetCustomAttribute<AlwaysEnableLogAttribute>() != null)
+            Log.Enabled = true;
+
         var answer = (long)(type.GetMethod(method)?.Invoke(null, new object[] { lines }) ?? -1);
         sw.Stop();
         Console.WriteLine($"{CC.Att}===> {CC.Cls}{type.Namespace}.{type.Name}.{method} {CC.Clr}completed in {CC.Sys}{sw.ElapsedMilliseconds} ms ({sw.Elapsed}){CC.Clr}\n");
+
+        Log.Enabled = logStatus;
         return answer;
     }
 
@@ -130,9 +146,12 @@ internal partial class Program
     private const string DayTemplateCode = @"namespace AdventOfCode{Year}
 {
     //[Force] // uncomment to force processing this type
+    //[AlwaysEnableLog]
+    //[DisableLogInDebug]
+    //[UseLiveDataInDeug]
+    //[AlwaysUseTestData]
     class Day{Day}
     {
-        public static bool TestData => true;
         public static string TestFile => ""{Year}\\{Day}\\test.txt"";
         public static string LiveFile => ""{Year}\\{Day}\\live.txt"";
         
