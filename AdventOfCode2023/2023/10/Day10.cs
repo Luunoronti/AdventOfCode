@@ -2,7 +2,7 @@
 
 namespace AdventOfCode2023
 {
-    //[Force] // uncomment to force processing this type
+    //[Force] // uncomment to force processing of this type
     [AlwaysEnableLog]
     //[DisableLogInDebug]
     [UseLiveDataInDeug]
