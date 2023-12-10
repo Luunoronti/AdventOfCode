@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode2023
+﻿using System.Text;
+
+namespace AdventOfCode2023
 {
     //[Force] // uncomment to force processing this type
     [AlwaysEnableLog]
@@ -43,7 +45,7 @@
 
             // make initial move
             GetVelocityAtStartPoint(out var velocityX, out var velocityY);
-            
+
 
             var sum = 1L;
             Set(x, y, Get(x, y));
@@ -101,12 +103,47 @@
             }
 
 
-            var newLines = new List<string>();
-            for (int ye = 0; ye < lines.Length; ye++)
+
+            if (Log.Enabled)
             {
-                newLines.Add(new string(empty[ye]));
+                var sb = new StringBuilder();
+
+                var clr = CC.Sys;
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    for (int j = 0; j < lines[0].Length; j++)
+                    {
+                        var c = GetFE(j, i);
+
+                        var cc = c switch
+                        {
+                            '?' => CC.Val,
+                            '*' => CC.Val,
+                            'S' => CC.Att,
+                            _ => CC.Frm
+                        };
+
+                        bool clrC = cc != clr;
+                        clr = cc;
+
+                        if (clrC) sb.Append($"{clr}{c}");
+                        else sb.Append($"{c}");
+                    }
+                    sb.AppendLine($"");
+                }
+                Log.WriteLine(sb.ToString());
             }
-            File.WriteAllLines("..\\..\\..\\2023\\10\\output.txt", newLines);
+
+
+            sum2 = 0;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                for (int j = 0; j < lines[0].Length; j++)
+                {
+                    var c = GetFE(j, i);
+                    if (c == '?' || c == '*') sum2++;
+                }
+            }
 
             char Translate(char ic)
                 => ic switch
@@ -115,6 +152,8 @@
                     'J' => '┘',
                     'F' => '┌',
                     '7' => '┐',
+                    '|' => '│',
+                    '-' => '─',
                     _ => ic
                 };
             char Get(int x, int y) => lines[y][x];
@@ -270,21 +309,7 @@
 
             return sum / 2;
         }
-        public static long Part2(string[] lines)
-        {
-            // read our output file instead of standard lines, so we have our polygon ready
-            lines = File.ReadAllLines("..\\..\\..\\2023\\10\\output.txt");
-
-            int sum = 0;
-            foreach(var l in lines)
-            {
-                foreach(var c in l)
-                {
-                    if (c == '?' || c == '*') sum++;
-                }
-            }
-
-            return sum;
-        }
+        private static int sum2;
+        public static long Part2(string[] lines) => sum2;
     }
 }
