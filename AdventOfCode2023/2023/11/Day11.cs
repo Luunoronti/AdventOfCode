@@ -64,7 +64,10 @@
                 for (int j = 0; j < lines.Length; j++)
                 {
                     if (lines[j][i] == '#')
-                        emptyColumns[i] = false;
+                    {
+                        emptyColumns[i] = false;                                   
+                        break;
+                    }
                 }
             }
             return emptyColumns;
