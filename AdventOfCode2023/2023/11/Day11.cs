@@ -1,7 +1,4 @@
-﻿using System.Text;
-using static System.Windows.Forms.LinkLabel;
-
-namespace AdventOfCode2023
+﻿namespace AdventOfCode2023
 {
     //[Force] // uncomment to force processing this type
     [AlwaysEnableLog]
@@ -18,65 +15,11 @@ namespace AdventOfCode2023
         public static string TestFile => "2023\\11\\test.txt";
         public static string LiveFile => "2023\\11\\live.txt";
 
-
-        private static void PrintMap(IEnumerable<string> map, string title = "")
-        {
-            if (Log.Enabled == false) return;
-
-            var sb = new StringBuilder();
-
-            if (string.IsNullOrEmpty(title) == false) sb.AppendLine(title);
-
-            var lastC = CC.Sys;
-            foreach (var item in map)
-            {
-                foreach (var c in item)
-                {
-                    var clr = CC.Frm;
-                    if (c == '#')
-                        clr = CC.Att;
-
-                    if (clr != lastC)
-                        sb.Append(clr);
-                    sb.Append(c);
-                    lastC = clr;
-                }
-                sb.AppendLine();
-
-            }
-            sb.AppendLine(CC.Clr);
-            Log.WriteLine(sb.ToString());
-        }
-        private static List<string> InvertMap(string[] lines)
-        {
-            var nl2 = new List<string>();
-            var sb = new StringBuilder();
-            for (int j = 0; j < lines[0].Length; j++)
-            {
-                sb.Clear();
-                for (int i = 0; i < lines.Length; i++)
-                {
-                    sb.Append(lines[i][j]);
-                }
-                nl2.Add(sb.ToString());
-            }
-            return nl2;
-        }
-        private static int CountEmptyLinesBefore(int x, bool[] data)
-        {
-            var sum = 0;
-            for (int i = 0; i < Math.Min(data.Length, x); i++)
-            {
-                if (data[i])
-                    sum++;
-            }
-            return sum;
-        }
-        private static List<Star> GetStarsWithPositions(List<string> map, bool[] emptyRowsMap, bool[] emptyColumnsMap, long expanse = 2)
+        private static List<Star> GetStarsWithPositions(string[] map, bool[] emptyRowsMap, bool[] emptyColumnsMap, long expanse = 2)
         {
             var ret = new List<Star>();
             long currY = 0;
-            for (int y = 0; y < map.Count; y++)
+            for (int y = 0; y < map.Length; y++)
             {
                 if (emptyRowsMap[y])
                     currY += expanse;
@@ -128,19 +71,10 @@ namespace AdventOfCode2023
         }
         public static long Part1(string[] lines)
         {
-            var map = new List<string>(lines);
-            var mapInverted = InvertMap(lines);
-
             var emptyRows = GetRowsEmptyFull(lines);
             var emptyColumns = GetColumnsEmptyFull(lines);
 
-            Log.WriteLine("Rows: " + string.Join(" ", emptyRows));
-            Log.WriteLine("Cols: " + string.Join(" ", emptyColumns));
-
-            PrintMap(map, "Map");
-            PrintMap(mapInverted, "Map inverted");
-
-            var stars = GetStarsWithPositions(map, emptyRows, emptyColumns);
+            var stars = GetStarsWithPositions(lines, emptyRows, emptyColumns);
             var sum = 0L;
             for (int i = 0; i < stars.Count; i++)
             {
@@ -156,17 +90,9 @@ namespace AdventOfCode2023
         }
         public static long Part2(string[] lines)
         {
-            var map = new List<string>(lines);
-            var mapInverted = InvertMap(lines);
-
-            PrintMap(map, "Map");
-            PrintMap(mapInverted, "Map inverted");
-
             var emptyRows = GetRowsEmptyFull(lines);
             var emptyColumns = GetColumnsEmptyFull(lines);
-
-
-            var stars = GetStarsWithPositions(map, emptyRows, emptyColumns, 1000000);
+            var stars = GetStarsWithPositions(lines, emptyRows, emptyColumns, 1000000);
 
             var sum = 0L;
             for (int i = 0; i < stars.Count; i++)
