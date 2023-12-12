@@ -1,149 +1,124 @@
-using System.DirectoryServices;
+
+
+//!!!!!!!!!!!!!
+//
+// this code is copied from
+// https://github.com/encse/adventofcode/blob/master/2023/Day12/Solution.cs
+// I've got first part via brute force permutation generator.
+// but it failed miserably at second part.
+// I still don't understand this code (mostly because it's db linq), but i've got it here to debug and get a grasp of it.
+// it does, however, work
+
+
+
+using System.Collections.Immutable;
+using Cache = System.Collections.Generic.Dictionary<(string, System.Collections.Immutable.ImmutableStack<int>), long>;
 
 namespace AdventOfCode2023
 {
     //[Force] // uncomment to force processing this type
     //[AlwaysEnableLog]
     //[DisableLogInDebug]
-    //[UseLiveDataInDeug]
+    [UseLiveDataInDeug]
     //[AlwaysUseTestData]
     class Day12
     {
         public static string TestFile => "2023\\12\\test.txt";
         public static string LiveFile => "2023\\12\\live.txt";
 
-        private static long[] GetGroups(string line) => line.Split(' ')[1].SplitAsArrayOfLongs(',');
 
+        private static long Solve(string[] input, int repeat) => (
+       from line in input
+       let parts = line.Split(" ")
+       let pattern = Unfold(parts[0], '?', repeat)
+       let numString = Unfold(parts[1], ',', repeat)
+       let nums = numString.Split(',').Select(int.Parse)
+       select
+           Compute(pattern, ImmutableStack.CreateRange(nums.Reverse()), new Cache())
+   ).Sum();
 
-        private static List<string> GetPossiblePermutations(string line, IEnumerable<long> groups)
+        private static string Unfold(string st, char join, int unfold) =>
+            string.Join(join, Enumerable.Repeat(st, unfold));
+
+        private static long Compute(string pattern, ImmutableStack<int> nums, Cache cache)
         {
-            var list = new List<string>();
-            int counter = 0;
-            foreach (var group in groups)
+            if (!cache.ContainsKey((pattern, nums)))
             {
-                if(list.Count > 0)
-                {
-                    var list2 = new List<string>(list);
-                    list.Clear();
-                    foreach (var l in list2)
-                    {
-
-                        for (int i = 0; i < line.Length - group + 1; i++)
-                        {
-                            var str = l + $".{"".PadLeft(i, '.')}{"".PadRight((int)group, '#')}";
-                            if (str.Length > line.Length) continue;
-                            list.Add(str);
-                        }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine(counter);
-                    for (int i = 0; i < line.Length - group + 1; i++)
-                    {
-                        list.Add($"{"".PadLeft(i, '.')}{"".PadRight((int)group, '#')}");
-                    }
-                }
+                cache[(pattern, nums)] = Dispatch(pattern, nums, cache);
             }
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                list[i] = list[i].PadRight(line.Length, '.');
-            }
-            return list;
+            return cache[(pattern, nums)];
         }
 
-
-        private static List<string> FilterOutPermutations(string line, List<string> permutations)
+        private static long Dispatch(string pattern, ImmutableStack<int> nums, Cache cache)
         {
-            var ret = new List<string>();
-
-            foreach (var permutation in permutations)
+            return pattern.FirstOrDefault() switch
             {
-                bool failed = false;
-                for (int i = 0; i < line.Length; i++)
-                {
-                    var c = line[i];
-
-                    if (c == '#')
-                    {
-                        if (permutation[i] != '#')
-                        {
-                            failed = true;
-                            break;
-                        }
-                    }
-                    if (c == '.')
-                    {
-                        if (permutation[i] != '.')
-                        {
-                            failed = true;
-                            break;
-                        }
-                    }
-                }
-                if (!failed)
-                    ret.Add(permutation);
-            }
-
-            return ret;
+                '.' => ProcessDot(pattern, nums, cache),
+                '?' => ProcessQuestion(pattern, nums, cache),
+                '#' => ProcessHash(pattern, nums, cache),
+                _ => ProcessEnd(pattern, nums, cache),
+            };
         }
 
-
-        private static long ProcessLine(string line, int copyAmount = 1)
+        private static long ProcessEnd(string _, ImmutableStack<int> nums, Cache __)
         {
-            var groups = GetGroups(line);
-            if (copyAmount > 1)
-            {
-                var gr = new List<long>();
-                for (int i = 0; i < copyAmount; i++)
-                    gr.AddRange(groups);
-
-                groups = gr.ToArray();
-            }
-            // create all possible arrangements
-            var mapLine = line.Split(' ')[0];
-
-            if (copyAmount > 1)
-            {
-                var ln = new List<string>();
-                for (int i = 0; i < copyAmount; i++)
-                    ln.Add(mapLine);
-
-                mapLine = string.Join("?", ln);
-            }
-
-
-
-            var possibilities = GetPossiblePermutations(mapLine, groups);
-
-            var filtered = FilterOutPermutations(mapLine, possibilities);
-
-            var sum = filtered.Count;
-            Log.WriteLine($"Possible: {possibilities.Count}, filtered: {sum} for line {line}");
-
-            return sum;
+            // the good case is when there are no numbers left at the end of the pattern
+            return nums.Any() ? 0 : 1;
         }
+
+        private static long ProcessDot(string pattern, ImmutableStack<int> nums, Cache cache)
+        {
+            // consume one spring and recurse
+            return Compute(pattern[1..], nums, cache);
+        }
+
+        private static long ProcessQuestion(string pattern, ImmutableStack<int> nums, Cache cache)
+        {
+            // recurse both ways
+            return Compute("." + pattern[1..], nums, cache) + Compute("#" + pattern[1..], nums, cache);
+        }
+
+        private static long ProcessHash(string pattern, ImmutableStack<int> nums, Cache cache)
+        {
+            // take the first number and consume that many dead springs, recurse
+
+            if (!nums.Any())
+            {
+                return 0; // no more numbers left, this is no good
+            }
+
+            var n = nums.Peek();
+            nums = nums.Pop();
+
+            var potentiallyDead = pattern.TakeWhile(s => s == '#' || s == '?').Count();
+
+            if (potentiallyDead < n)
+            {
+                return 0; // not enough dead springs 
+            }
+            else if (pattern.Length == n)
+            {
+                return Compute("", nums, cache);
+            }
+            else if (pattern[n] == '#')
+            {
+                return 0; // dead spring follows the range -> not good
+            }
+            else
+            {
+                return Compute(pattern[(n + 1)..], nums, cache);
+            }
+        }
+
         public static long Part1(string[] lines)
         {
-            ProcessLine(lines[1]);
-            var sum = 0L;
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string? line = lines[i];
-                sum += ProcessLine(line);
-            }
-            return sum;
+            return Solve(lines, 1);
+
         }
         public static long Part2(string[] lines)
         {
-            var sum = 0L;
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string? line = lines[i];
-                sum += ProcessLine(line, 5);
-            }
-            return sum;
+
+            return Solve(lines, 5);
         }
     }
 }
