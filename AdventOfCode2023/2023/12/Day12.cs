@@ -11,6 +11,10 @@
 
 
 
+// after rewriting and a bunch of logs, I understand it a bit.
+//TODO: when i get a free time, I'll try to make something of my own
+
+
 using System.Collections.Immutable;
 using Cache = System.Collections.Generic.Dictionary<(string, System.Collections.Immutable.ImmutableStack<int>), long>;
 
@@ -25,9 +29,6 @@ namespace AdventOfCode2023
     {
         public static string TestFile => "2023\\12\\test.txt";
         public static string LiveFile => "2023\\12\\live.txt";
-
-
-
 
 
         private static string In(int indent) => "".PadLeft(indent);
