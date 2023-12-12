@@ -15,96 +15,135 @@ namespace AdventOfCode2023
         private static long[] GetGroups(string line) => line.Split(' ')[1].SplitAsArrayOfLongs(',');
 
 
-        private static long GetPossiblePermutations(string line, IEnumerable<long> groups, string current, List<string> allPossible)
+        private static List<string> GetPossiblePermutations(string line, IEnumerable<long> groups)
         {
-            if (groups.Count() == 0)
-            {
-                allPossible.Add(current.PadRight(line.Length, '.'));
-                return 0;
-            }
-
-            long myGroup = groups.ElementAt(0);
-            var len = line.Length;
-            if (string.IsNullOrEmpty(current) == false) len -= current.Length;
-            for (int i = 0; i < line.Length; i++)
-            {
-                if (len <= 1 + i + myGroup)
-                    return 0; // that's it, we cant do more
-
-                // if a sum of all our groups made it not possible, and
-                if (len <= i + groups.Sum() + groups.Count() - 1)
-                {
-                    //allPossible.Add(current.PadRight(line.Length, '.'));
-                    return 0;
-                }
-
-                var str = (string.IsNullOrEmpty(current) ? "" : current + '.') + new string('.', i) + new string('#', (int)myGroup);
-              
-                GetPossiblePermutations(line, groups.TakeLast(groups.Count() - 1), str, allPossible);
-            }
-            return 0;
-        }
-
-        private static long ProcessLine(string line)
-        {
-            var groups = GetGroups(line);
-            Log.WriteLine($"Groups for line {line}: {groups.ToReadable()}");
-
-            // create all possible arrangements
-            List<string> possibilities = new List<string>();
-
-            GetPossiblePermutations(line, groups, null, possibilities);
-            foreach(var possibility in possibilities)
-            {
-                Log.WriteLine(possibility);
-
-            }
-
-
-
-
-
-
-
-
-
-
-            int stringIndex = 0;
-            while (true)
-            {
-                for (int i = 0; i < groups.Length; i++)
-                {
-                    var group = groups[i];
-
-                }
-            }
-
-
-
-
+            var list = new List<string>();
+            int counter = 0;
             foreach (var group in groups)
             {
+                if(list.Count > 0)
+                {
+                    var list2 = new List<string>(list);
+                    list.Clear();
+                    foreach (var l in list2)
+                    {
 
+                        for (int i = 0; i < line.Length - group + 1; i++)
+                        {
+                            var str = l + $".{"".PadLeft(i, '.')}{"".PadRight((int)group, '#')}";
+                            if (str.Length > line.Length) continue;
+                            list.Add(str);
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(counter);
+                    for (int i = 0; i < line.Length - group + 1; i++)
+                    {
+                        list.Add($"{"".PadLeft(i, '.')}{"".PadRight((int)group, '#')}");
+                    }
+                }
+            }
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i] = list[i].PadRight(line.Length, '.');
+            }
+            return list;
+        }
+
+
+        private static List<string> FilterOutPermutations(string line, List<string> permutations)
+        {
+            var ret = new List<string>();
+
+            foreach (var permutation in permutations)
+            {
+                bool failed = false;
+                for (int i = 0; i < line.Length; i++)
+                {
+                    var c = line[i];
+
+                    if (c == '#')
+                    {
+                        if (permutation[i] != '#')
+                        {
+                            failed = true;
+                            break;
+                        }
+                    }
+                    if (c == '.')
+                    {
+                        if (permutation[i] != '.')
+                        {
+                            failed = true;
+                            break;
+                        }
+                    }
+                }
+                if (!failed)
+                    ret.Add(permutation);
+            }
+
+            return ret;
+        }
+
+
+        private static long ProcessLine(string line, int copyAmount = 1)
+        {
+            var groups = GetGroups(line);
+            if (copyAmount > 1)
+            {
+                var gr = new List<long>();
+                for (int i = 0; i < copyAmount; i++)
+                    gr.AddRange(groups);
+
+                groups = gr.ToArray();
+            }
+            // create all possible arrangements
+            var mapLine = line.Split(' ')[0];
+
+            if (copyAmount > 1)
+            {
+                var ln = new List<string>();
+                for (int i = 0; i < copyAmount; i++)
+                    ln.Add(mapLine);
+
+                mapLine = string.Join("?", ln);
             }
 
 
 
-            return 0;
+            var possibilities = GetPossiblePermutations(mapLine, groups);
+
+            var filtered = FilterOutPermutations(mapLine, possibilities);
+
+            var sum = filtered.Count;
+            Log.WriteLine($"Possible: {possibilities.Count}, filtered: {sum} for line {line}");
+
+            return sum;
         }
         public static long Part1(string[] lines)
         {
-            // test
-            ProcessLine(lines[lines.Length - 1]);
+            ProcessLine(lines[1]);
             var sum = 0L;
-            foreach (var line in lines)
+            for (int i = 0; i < lines.Length; i++)
             {
-                //                sum += ProcessLine(line);
+                string? line = lines[i];
+                sum += ProcessLine(line);
             }
             return sum;
         }
         public static long Part2(string[] lines)
         {
-            return 0;
+            var sum = 0L;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string? line = lines[i];
+                sum += ProcessLine(line, 5);
+            }
+            return sum;
         }
     }
 }
