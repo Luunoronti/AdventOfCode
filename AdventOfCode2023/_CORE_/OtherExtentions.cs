@@ -4,6 +4,7 @@
     {
         public static string ToReadable(this IEnumerable<int>? array, string delimeter = ", ") => array == null ? "<null>" : $"{string.Join(delimeter, array)}";
         public static string ToReadable(this IEnumerable<long>? array, string delimeter = ", ") => array == null ? "<null>" : $"{string.Join(delimeter, array)}";
+
         public static List<T> SortRet<T>(this List<T> list, IComparer<T> comparer)
         {
             list.Sort(comparer);

@@ -1,3 +1,5 @@
+using System;
+
 namespace AdventOfCode2023
 {
     //[Force] // uncomment to force processing this type
@@ -16,19 +18,28 @@ namespace AdventOfCode2023
 
         private static List<Pattern> GetPatterns(string[] lines)
         {
-            var current = new Pattern();
-            var list = new List<Pattern> { current };
+            var list = new List<Pattern>();
+            var tmpString = new List<string>();
 
             foreach (var line in lines)
             {
                 if (string.IsNullOrEmpty(line))
                 {
-                    current.ConstructPatterns();
-                    current = new Pattern();
-                    list.Add(current);
-                    continue;
+                    if (tmpString.Count > 0)
+                    {
+                        list.Add(new Pattern(tmpString));
+                        tmpString.Clear();
+                    }
                 }
-                current.AddLine(line);
+                else
+                {
+                    tmpString.Add(line);
+                }
+            }
+            if (tmpString.Count > 0)
+            {
+                list.Add(new Pattern(tmpString));
+                tmpString.Clear();
             }
             return list;
         }
@@ -38,28 +49,19 @@ namespace AdventOfCode2023
             var patterns = GetPatterns(lines);
 
             var sum = 0L;
-            foreach (var pattern in patterns)
+            for (int i = 0; i < patterns.Count; i++)
             {
-                var hr = pattern.FindHorizontalReflections(fixSmudges: false, invalidPosition: (-1, -1), out _);
+                Pattern? pattern = patterns[i];
+                var horizontal = pattern.HorizontalReflections;
+                var vertical = pattern.VerticalReflections;
 
-                if (hr.Item3)
-                {
-                    Log.WriteLine($"Found horizontal: {hr.Item1}, {hr.Item2}");
-                    // this is rows to top
-                    sum += (hr.Item1 * 100);
-                }
-                else
-                {
-                    var vr = pattern.FindVerticalReflections(fixSmudges: false, invalidPosition: (-1, -1), out var _);
+                Log.WriteLine($"Pattern {CC.Att}{i:D02}{CC.Clr}: Found horizontal reflections: {CC.Val}{string.Join(", ", horizontal)}{CC.Clr}");
+                Log.WriteLine($"Pattern {CC.Att}{i:D02}{CC.Clr}: Found vertical reflections: {CC.Val}{string.Join(", ", vertical)}{CC.Clr}");
 
-                    if (vr.Item3)
-                    {
-                        Log.WriteLine($"Found vertical: {vr.Item1}, {vr.Item2}");
+                if (horizontal.Count > 0) sum += horizontal[0].Line1 * 100;
+                else if (vertical.Count > 0) sum += vertical[0].Line1;
+                else Log.WriteLine($"{CC.Err}Pattern {i:D02} has no reflections!{CC.Clr}");
 
-                        var columnsToTheLeft = vr.Item1;
-                        sum += columnsToTheLeft;
-                    }
-                }
                 Log.WriteLine();
             }
 
@@ -73,40 +75,33 @@ namespace AdventOfCode2023
             for (int i = 0; i < patterns.Count; i++)
             {
                 Pattern? pattern = patterns[i];
-                // find with no smudge, to see which position is bad
-                var hrns = pattern.FindHorizontalReflections(fixSmudges: false, invalidPosition: (-1, -1), out _);
-                var hr = pattern.FindHorizontalReflections(fixSmudges: true, invalidPosition: (hrns.Item1, hrns.Item2), out var smudgeFound);
+                var horizontal = pattern.HorizontalReflections;
+                var vertical = pattern.VerticalReflections;
 
-                if (hr.Item3)
-                {
-                    Log.WriteLine($"Pattern {i}: Found horizontal: {hr.Item1}, {hr.Item2}");
-                    // this is rows to top
-                    sum += (hr.Item1 * 100);
-                }
-                else if (hrns.Item3)
-                {
-                    Log.WriteLine($"Pattern {i}: Found horizontal (same as with no smudge): {hrns.Item1}, {hrns.Item2}");
-                    // this is rows to top
-                    sum += (hrns.Item1 * 100);
-                }
-                else
-                {
-                    var vrns = pattern.FindHorizontalReflections(fixSmudges: false, invalidPosition: (-1, -1), out _);
-                    var vr = pattern.FindVerticalReflections(fixSmudges: !smudgeFound, invalidPosition: (vrns.Item1, vrns.Item2), out var _);
+                var horizontal_Smudge = pattern.HorizontalReflectionsWithSmudge;
+                var vertical_Smudge = pattern.VerticalReflectionsWithSmudge;
 
-                    if (vr.Item3)
-                    {
-                        Log.WriteLine($"Pattern {i}: Found vertical: {vr.Item1}, {vr.Item2}");
-                        var columnsToTheLeft = vr.Item1;
-                        sum += columnsToTheLeft;
-                    }
-                    else if (vrns.Item3)
-                    {
-                        Log.WriteLine($"Pattern {i}: Found vertical (same as with no smudge): {vrns.Item1}, {vrns.Item2}");
-                        var columnsToTheLeft = vrns.Item1;
-                        sum += columnsToTheLeft;
-                    }
-                }
+                var horizontal_Smudge_distinct = horizontal_Smudge.Except(horizontal).ToList();
+                var vertical_Smudge_distinct = vertical_Smudge.Except(vertical).ToList();
+
+
+                Log.WriteLine($"Pattern {CC.Att}{i:D02}{CC.Clr}: Found horizontal reflections: {CC.Val}{string.Join(", ", horizontal)}{CC.Clr}");
+                Log.WriteLine($"Pattern {CC.Att}{i:D02}{CC.Clr}: Found horizontal reflections (smudge): {CC.Val}{string.Join(", ", horizontal_Smudge)}{CC.Clr}");
+                Log.WriteLine($"Pattern {CC.Att}{i:D02}{CC.Clr}: Found horizontal reflections (smudge, except): {CC.Val}{string.Join(", ", horizontal_Smudge_distinct)}{CC.Clr}");
+
+                Log.WriteLine($"Pattern {CC.Att}{i:D02}{CC.Clr}: Found vertical reflections: {CC.Val}{string.Join(", ", vertical)}{CC.Clr}");
+                Log.WriteLine($"Pattern {CC.Att}{i:D02}{CC.Clr}: Found vertical reflections (smudge): {CC.Val}{string.Join(", ", vertical_Smudge)}{CC.Clr}");
+                Log.WriteLine($"Pattern {CC.Att}{i:D02}{CC.Clr}: Found vertical reflections (smudge, except): {CC.Val}{string.Join(", ", vertical_Smudge_distinct)}{CC.Clr}");
+
+
+
+
+                if (horizontal_Smudge_distinct.Count > 0) sum += horizontal_Smudge_distinct[0].Line1 * 100;
+                else if (vertical_Smudge_distinct.Count > 0) sum += vertical_Smudge_distinct[0].Line1;
+                else if (horizontal.Count > 0) sum += horizontal[0].Line1 * 100;
+                else if (vertical.Count > 0) sum += vertical[0].Line1;
+                else Log.WriteLine($"{CC.Err}Pattern {i:D02} has no reflections!{CC.Clr}");
+
                 Log.WriteLine();
             }
 
@@ -115,122 +110,117 @@ namespace AdventOfCode2023
 
 
 
+        struct Reflection
+        {
+            public int Line1;
+            public int Line2;
+            public override string ToString() => $"{Line1}-{Line2}";
+        }
         class Pattern
         {
-            private List<string> horizontal = new();
-            private List<string> rotated = new(); // use this to find columns (treat them as rows)
-            internal void AddLine(string line)
-            {
-                horizontal.Add(line);
+            internal List<Reflection> VerticalReflections { get; }
+            internal List<Reflection> VerticalReflectionsWithSmudge { get; }
+            internal List<Reflection> HorizontalReflections { get; }
+            internal List<Reflection> HorizontalReflectionsWithSmudge { get; }
 
-            }
-            internal void ConstructPatterns()
+            public Pattern(List<string> lines)
             {
-                rotated.Clear();
-                // rotate strings 90 degrees    
-                for (int j = 0; j < horizontal[0].Length; j++)
-                {
-                    var str = "";
-                    for (int i = 0; i < horizontal.Count; i++)
-                    {
-                        str += horizontal[i][j];
-                    }
-                    rotated.Add(str);
-                }
+                HorizontalReflections = FindReflections(lines).ToList();
+                HorizontalReflectionsWithSmudge = FindReflectionsWithSmudge(lines).ToList();
+
+                lines = RotatePattern(lines);
+
+                VerticalReflections = FindReflections(lines).ToList();
+                VerticalReflectionsWithSmudge = FindReflectionsWithSmudge(lines).ToList();
             }
 
 
-            internal (int, int, bool) FindReflection(List<string> input, bool fixSmudges, (int, int) invalidPosition, out bool smudgeFound)
+            private static IEnumerable<Reflection> FindReflections(List<string> input)
             {
-                smudgeFound = false;
-                int smudgesFound = 0;
-                string smudgedLine = "";
-                int smudgedPos = 0;
                 for (int i = 0; i < input.Count - 1; i++)
                 {
-                    //if (i + 1 == invalidPosition.Item1 && i + 2 == invalidPosition.Item2)
-                    //    continue;
-
                     var reflectionFailed = false;
                     for (int pos = i + 1, pos2 = i; pos < input.Count && pos2 >= 0; pos++, pos2--)
                     {
                         var s1 = input[pos];
                         var s2 = input[pos2];
-
                         if (s1 != s2)
                         {
-                            // not same, reflection failed
-                            if (fixSmudges)
-                            {
-                                var difference = 0;
-                                for (int si = 0; si < s1.Length; si++)
-                                {
-                                    if (s1[si] != s2[si])
-                                        difference++;
-                                }
-                                if (difference == 1)
-                                {
-                                    if(smudgesFound == 0)
-                                    {
-                                        smudgedPos = pos2;
-                                        smudgedLine = input[pos2];
-
-                                        input[pos2] = input[pos]; // override one of the strings
-
-                                        // we must reconstruct rotated pattern
-                                        if (input == horizontal)
-                                            ConstructPatterns();
-
-                                        smudgeFound = true;
-                                        smudgesFound++;
-                                    }
-                                    else
-                                    {
-                                        Log.WriteLine("More than one candidate found to be a smudge! Restoring original.");
-                                        reflectionFailed = true;
-                                        input[smudgedPos] = smudgedLine;
-                                        
-                                        // we must reconstruct rotated pattern
-                                        if (input == horizontal)
-                                            ConstructPatterns();
-                                        smudgesFound = 0;
-                                    }
-                                   
-                                }
-                                else
-                                {
-                                    reflectionFailed = true;
-                                }
-                            }
-                            else
-                            {
-                                reflectionFailed = true;
-                            }
+                            reflectionFailed = true;
                         }
-                    }
-                    if (i + 1 == invalidPosition.Item1 && i + 2 == invalidPosition.Item2)
-                    {
-                        Log.WriteLine("Smudge: found same position as invalid. Looking for more.");
-                        reflectionFailed = true;
                     }
 
                     if (reflectionFailed == false)
                     {
-                        if (smudgeFound)
-                        {
-                            Log.WriteLine("Smudge: found.");
-                        }
                         // becase we start at 0, we need to add one
-                        return (i + 1, i + 2, true);
+                        yield return new Reflection { Line1 = i + 1, Line2 = i + 2 };
+                    }
+                }
+            }
+            private static IEnumerable<Reflection> FindReflectionsWithSmudge(List<string> input)
+            {
+                for (int i = 0; i < input.Count - 1; i++)
+                {
+                    var reflectionFailed = false;
+                    var smudgeCountForProble = 0;
+                    for (int pos = i + 1, pos2 = i; pos < input.Count && pos2 >= 0; pos++, pos2--)
+                    {
+                        var s1 = input[pos];
+                        var s2 = input[pos2];
+
+                        // count differences between strings.
+                        var diffCount = 0;
+                        for (int si = 0; si < s1.Length; si++)
+                            if (s1[si] != s2[si])
+                                diffCount++;
+
+                        if (diffCount == 0)
+                        {
+                            continue;
+                        }
+                        if (diffCount > 1)
+                        {
+                            reflectionFailed = true;
+                            break;
+                        }
+
+                        if (diffCount == 1)
+                        {
+                            if (smudgeCountForProble > 0)
+                            {
+                                reflectionFailed = true;
+                                break;
+                            }
+                            smudgeCountForProble++;
+                        }
                     }
 
-
+                    if (reflectionFailed == false)
+                    {
+                        // becase we start at 0, we need to add one
+                        yield return new Reflection { Line1 = i + 1, Line2 = i + 2 };
+                    }
                 }
-
-                return (0, 0, false);
             }
-            internal (int, int, bool) FindHorizontalReflections(bool fixSmudges, (int, int) invalidPosition, out bool smudgeFound) => FindReflection(horizontal, fixSmudges, invalidPosition, out smudgeFound);
-            internal (int, int, bool) FindVerticalReflections(bool fixSmudges, (int, int) invalidPosition, out bool smudgeFound) => FindReflection(rotated, fixSmudges, invalidPosition, out smudgeFound);
+
+
+            private static List<string> RotatePattern(List<string> input)
+            {
+                var rotated = new List<string>();
+                // rotate strings 90 degrees    
+                for (int j = 0; j < input[0].Length; j++)
+                {
+                    var str = "";
+                    for (int i = 0; i < input.Count; i++)
+                    {
+                        str += input[i][j];
+                    }
+                    rotated.Add(str);
+                }
+                return rotated;
+            }
+
+
         }
     }
 }
