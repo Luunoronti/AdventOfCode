@@ -144,6 +144,8 @@ namespace AdventOfCode2023
             {
                 smudgeFound = false;
                 int smudgesFound = 0;
+                string smudgedLine = "";
+                int smudgedPos = 0;
                 for (int i = 0; i < input.Count - 1; i++)
                 {
                     //if (i + 1 == invalidPosition.Item1 && i + 2 == invalidPosition.Item2)
@@ -168,27 +170,32 @@ namespace AdventOfCode2023
                                 }
                                 if (difference == 1)
                                 {
-                                    // one char is different, so we may as well assume that one
-                                    // to be a smudge
-                                    //Log.WriteLine($"Line {pos2} before change");
-                                    //Log.WriteLine(input[pos2]);
-
-                                    input[pos2] = input[pos]; // override one of the strings
-
-
-                                    //Log.WriteLine($"Line {pos2} after change");
-                                    //Log.WriteLine(input[pos2]);
-
-                                    // we must reconstruct rotated pattern
-                                    ConstructPatterns();
-
-                                    smudgeFound = true;
-                                    smudgesFound++;
-
-                                    if(smudgesFound>1)
+                                    if(smudgesFound == 0)
                                     {
-                                        Log.WriteLine("More than one candidate found to be a smudge!");
+                                        smudgedPos = pos2;
+                                        smudgedLine = input[pos2];
+
+                                        input[pos2] = input[pos]; // override one of the strings
+
+                                        // we must reconstruct rotated pattern
+                                        if (input == horizontal)
+                                            ConstructPatterns();
+
+                                        smudgeFound = true;
+                                        smudgesFound++;
                                     }
+                                    else
+                                    {
+                                        Log.WriteLine("More than one candidate found to be a smudge! Restoring original.");
+                                        reflectionFailed = true;
+                                        input[smudgedPos] = smudgedLine;
+                                        
+                                        // we must reconstruct rotated pattern
+                                        if (input == horizontal)
+                                            ConstructPatterns();
+                                        smudgesFound = 0;
+                                    }
+                                   
                                 }
                                 else
                                 {
