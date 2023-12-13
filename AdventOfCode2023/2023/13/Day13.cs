@@ -1,5 +1,3 @@
-using System;
-
 namespace AdventOfCode2023
 {
     //[Force] // uncomment to force processing this type

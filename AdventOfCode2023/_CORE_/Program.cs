@@ -1,6 +1,13 @@
-﻿using AdventOfCode2023;
+﻿// Note: If we are to run live data, download them from AoC. 
+// Huge thanks to Nick Kusters for pointing out that live data should not be kept on GitHub,
+// and allowing to copy his download code.
+
+
+using AdventOfCode2023;
 using System.Diagnostics;
+using System.Net;
 using System.Reflection;
+using System.Windows.Forms;
 
 internal partial class Program
 {
@@ -40,10 +47,14 @@ internal partial class Program
 
         Console.WriteLine();
 
-        var lines = ReadLines(type.GetProperty(useTestData ? "TestFile" : "LiveFile")?.GetValue(null) as string);
+        // if we are to run live data, download them from AoC. 
+        // thanks to Nick Kusters for pointing out that live data should not be kept on GitHub,
+        // and allowing to copy his download code.
+
+        var lines = ReadInput(type, useTestData: useTestData);
         var a1 = RunMethod(type, "Part1", lines);
 
-        lines = ReadLines(type.GetProperty(useTestData ? "TestFile" : "LiveFile")?.GetValue(null) as string);
+        lines = ReadInput(type, useTestData: useTestData);
         var a2 = RunMethod(type, "Part2", lines);
 
         Console.WriteLine();
@@ -117,9 +128,52 @@ internal partial class Program
         return answer;
     }
 
-    private static string[] ReadLines(string? file)
+    private static string[] ReadInput(Type dayClassType, bool useTestData)
+    {
+        if (dayClassType.GetProperty(useTestData ? "TestFile" : "LiveFile")?.GetValue(null) is not string file)
+        {
+            Console.WriteLine($"{CC.Err}Failed to obtain file name from Day type {dayClassType.Namespace}.{dayClassType.Name}{CC.Clr}");
+            return Array.Empty<string>();
+        }
+
+        var fileName = $"..\\..\\..\\{file}";
+
+        if (useTestData == false)
+        {
+            if (File.Exists(fileName) == false || new FileInfo(fileName).Length == 0)
+            {
+                // deconstruct year and data from type name
+                var year = int.Parse(dayClassType.Namespace?.Replace("AdventOfCode", "") ?? "0");
+                var day = int.Parse(dayClassType.Name.Replace("Day", ""));
+                var content = GetLiveCode(year, day);
+                File.WriteAllText(fileName, content);
+            }
+        }
+
+
+        var lines = File.ReadAllLines(fileName);
+        if (lines.Length == 0)
+        {
+            Console.WriteLine($"{CC.Err}There are no lines to process. Did you forget to fill in data into the file?{CC.Clr}");
+            Console.WriteLine($"{fileName}");
+        }
+        Console.WriteLine($"{CC.Att}===> {CC.Sys}{lines.Length}{CC.Clr} lines of data read from {CC.Sys}{Path.GetFileName(fileName)}{CC.Clr}");
+        return lines;
+    }
+    private static string[] ReadLines(string? file, bool isLiveCode, int year, int day)
     {
         var fileName = $"..\\..\\..\\{file}";
+
+        if (isLiveCode)
+        {
+            if (File.Exists(fileName) == false || new FileInfo(fileName).Length == 0)
+            {
+                var content = GetLiveCode(year, day);
+                File.WriteAllText(fileName, content);
+            }
+        } 
+        
+
         var lines = File.ReadAllLines(fileName);
         if (lines.Length == 0)
         {
@@ -139,17 +193,34 @@ internal partial class Program
             File.WriteAllText(prefix + $"Day{day:D2}.cs", DayTemplateCode.Replace("{Year}", year.ToString()).Replace("{Day}", day.ToString("D2")));
         if (File.Exists(prefix + $"test.txt") == false)
             File.WriteAllText(prefix + $"test.txt", "");
-        if (File.Exists(prefix + $"live.txt") == false)
-            File.WriteAllText(prefix + $"live.txt", "");
+    }
+
+    private static Dictionary<(int, int), string> liveCode = new();
+
+    // Note: If we are to run live data, download them from AoC. 
+    // Huge thanks to Nick Kusters for pointing out that live data should not be kept on GitHub,
+    // and allowing to copy his download code.
+    internal static string GetLiveCode(int year, int day)
+    {
+        string session = File.ReadAllText($"..\\..\\..\\session.txt");
+        string url = $"https://adventofcode.com/{year}/day/{day}/input";
+
+#pragma warning disable SYSLIB0014 // Type or member is obsolete
+        var wc = new WebClient();
+#pragma warning restore SYSLIB0014 // Type or member is obsolete
+        wc.Headers.Add(HttpRequestHeader.UserAgent, "https://github.com/Luunoronti/AdventOfCode");
+        wc.Headers.Add(HttpRequestHeader.Cookie, $"{nameof(session)}={session}");
+        string contents = wc.DownloadString(url);
+        return contents;
     }
 
     private const string DayTemplateCode = @"namespace AdventOfCode{Year}
 {
-    //[Force] // uncomment to force processing this type
-    //[AlwaysEnableLog]
-    //[DisableLogInDebug]
-    //[UseLiveDataInDeug]
-    //[AlwaysUseTestData]
+    //[Force]                   // uncomment to force processing this type (regardless of which day it is according to DateTime)
+    //[AlwaysEnableLog]         // if uncommented, Log.Write() and Log.WriteLine() will still be honored in runs without a debugger (do not confuse with Debug/Release configuration)
+    //[DisableLogInDebug]       // if uncommented, Log will be disabled even when under debugger
+    //[UseLiveDataInDeug]       // if uncommented and under a debug session, will use live data (problem data) instead of test data
+    //[AlwaysUseTestData]       // if uncommented, will use test data in both debugging session and non-debugging session
     class Day{Day}
     {
         public static string TestFile => ""{Year}\\{Day}\\test.txt"";
@@ -165,5 +236,6 @@ internal partial class Program
         }
     }
 }";
+
 
 }
