@@ -16,7 +16,6 @@
 
 
 using System.Collections.Immutable;
-using Cache = System.Collections.Generic.Dictionary<(string, System.Collections.Immutable.ImmutableStack<int>), long>;
 
 namespace AdventOfCode2023
 {
@@ -33,7 +32,9 @@ namespace AdventOfCode2023
 
         private static string In(int indent) => "".PadLeft(indent);
         private static int lineSize = 0;
-        private static long Compute(string pattern, ImmutableStack<int> nums, Cache cache, int indent = 0)
+        private static Dictionary<(string, ImmutableStack<int>), long> cache = new();
+
+        private static long Compute(string pattern, ImmutableStack<int> nums, int indent = 0)
         {
             var key = (pattern, nums);
             if (cache.TryGetValue(key, out var value))
@@ -42,19 +43,27 @@ namespace AdventOfCode2023
                 return value;
             }
 
-            var c = pattern.FirstOrDefault();
+            if (pattern.Length == 0)
+            {
+                // the good case is when there are no numbers left at the end of the pattern
+                cache[key] = nums.Any() ? 0 : 1;
+                return cache[key];
+            }
+
+
+            var c = pattern[0];
             switch (c)
             {
                 case '.':
                     // consume one spring and recurse
                     Log.WriteLine($"{pattern.PadLeft(lineSize)}, {nums.ToReadable()}{CC.Frm} ('.') Consume one spring and recurse{CC.Clr}");
-                    cache[key] = Compute(pattern[1..], nums, cache, indent + 1);
+                    cache[key] = Compute(pattern[1..], nums,  indent + 1);
                  //   Log.WriteLine($"{In(indent)}{key.pattern}, {key.nums.ToReadable()} => {cache[key]}");
                     break;
                 case '?':
                     // recurse both ways
                     Log.WriteLine($"{pattern.PadLeft(lineSize)}, {nums.ToReadable()}{CC.Frm} ('?') Recurse both ways (for '.' and '#'){CC.Clr}");
-                    cache[key] = Compute("#" + pattern[1..], nums, cache, indent + 1) + Compute("." + pattern[1..], nums, cache, indent + 1);
+                    cache[key] = Compute("#" + pattern[1..], nums, indent + 1) + Compute("." + pattern[1..], nums, indent + 1);
                  //   Log.WriteLine($"{In(indent)}{key.pattern}, {key.nums.ToReadable()} => {cache[key]}");
                     break;
                 case '#':
@@ -79,7 +88,7 @@ namespace AdventOfCode2023
                         else if (pattern.Length == n)
                         {
                             Log.WriteLine($"{pattern.PadLeft(lineSize)}, {nums.ToReadable()}{CC.Frm} ('#') pattern len == n, compute empty string {CC.Clr}");
-                            cache[key] = Compute("", nums, cache, indent + 1);
+                            cache[key] = Compute("", nums, indent + 1);
                     //        Log.WriteLine($"{In(indent)}{key.pattern}, {key.nums.ToReadable()} => {cache[key]}");
                         }
                         else if (pattern[n] == '#')
@@ -91,18 +100,12 @@ namespace AdventOfCode2023
                         else
                         {
                             Log.WriteLine($"{pattern.PadLeft(lineSize)}, {nums.ToReadable()}{CC.Frm} ('#') compute for next number on stack (n + 1) {CC.Clr}");
-                            cache[key] = Compute(pattern[(n + 1)..], nums, cache, indent + 1);
+                            cache[key] = Compute(pattern[(n + 1)..], nums, indent + 1);
                          //   Log.WriteLine($"{In(indent)}{key.pattern}, {key.nums.ToReadable()} => {cache[key]}");
                         }
                     }
                     break;
-                default:
-                    // the good case is when there are no numbers left at the end of the pattern
-                    cache[key] = nums.Any() ? 0 : 1;
-                 //   Log.WriteLine($"{In(indent)}{key.pattern}, {key.nums.ToReadable()} => {cache[key]}");
-                    break;
             }
-
             return cache[key];
         }
 
@@ -115,14 +118,10 @@ namespace AdventOfCode2023
             var nums = string.Join(',', Enumerable.Repeat(parts[1], repeat)).Split(',').Select(int.Parse);
 
             var range = ImmutableStack.CreateRange(nums.Reverse());
-            var cache = new Cache();
+            cache.Clear();
             lineSize = line.Length;
-            return Compute(pattern, range, cache);
+            return Compute(pattern, range);
         }
-
-
-
-
 
 
 
