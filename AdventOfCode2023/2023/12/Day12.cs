@@ -90,7 +90,7 @@ namespace AdventOfCode2023
                         }
                         else
                         {
-                            Log.WriteLine($"{pattern.PadLeft(lineSize)}, {nums.ToReadable()}{CC.Frm} ('#') compute for (n + 1) {CC.Clr}");
+                            Log.WriteLine($"{pattern.PadLeft(lineSize)}, {nums.ToReadable()}{CC.Frm} ('#') compute for next number on stack (n + 1) {CC.Clr}");
                             cache[key] = Compute(pattern[(n + 1)..], nums, cache, indent + 1);
                          //   Log.WriteLine($"{In(indent)}{key.pattern}, {key.nums.ToReadable()} => {cache[key]}");
                         }
