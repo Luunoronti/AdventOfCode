@@ -58,8 +58,15 @@ internal partial class Program
         var a2 = RunMethod(type, "Part2", lines);
 
         Console.WriteLine();
-        Console.WriteLine($"{CC.Att}===>{CC.Clr} Part {CC.Sys}1{CC.Clr} answer: {CC.Ans}{a1}{CC.Clr}");
+        Console.Write($"{CC.Att}===>{CC.Clr} Part {CC.Sys}1{CC.Clr} answer: {CC.Ans}{a1}{CC.Clr}");
+        var expectedAsnwer1 = useTestData ? type.GetCustomAttribute<ExpectedTestAnswerPart1Attribute>()?.Answer ?? 0L : 0L;
+        if (expectedAsnwer1 > 0 && expectedAsnwer1 != a1)
+            Console.Write($"    {CC.Err}PART 1 FAILED!{CC.Clr} Expected answer is: {CC.Ans}{expectedAsnwer1}{CC.Clr}");
+        Console.WriteLine();
         Console.WriteLine($"{CC.Att}===>{CC.Clr} Part {CC.Sys}2{CC.Clr} answer: {CC.Ans}{a2}{CC.Clr}");
+        var expectedAsnwer2 = useTestData ? type.GetCustomAttribute<ExpectedTestAnswerPart2Attribute>()?.Answer ?? 0L : 0L;
+        if (expectedAsnwer2 > 0 && expectedAsnwer2 != a2)
+            Console.Write($"    {CC.Err}PART 2 FAILED!{CC.Clr} Expected answer is: {CC.Ans}{expectedAsnwer2}{CC.Clr}");
         Console.WriteLine();
         Console.WriteLine();
 
@@ -130,26 +137,20 @@ internal partial class Program
 
     private static string[] ReadInput(Type dayClassType, bool useTestData)
     {
-        if (dayClassType.GetProperty(useTestData ? "TestFile" : "LiveFile")?.GetValue(null) is not string file)
-        {
-            Console.WriteLine($"{CC.Err}Failed to obtain file name from Day type {dayClassType.Namespace}.{dayClassType.Name}{CC.Clr}");
-            return Array.Empty<string>();
-        }
+        var year = int.Parse(dayClassType.Namespace?.Replace("AdventOfCode", "") ?? "0");
+        var day = int.Parse(dayClassType.Name.Replace("Day", ""));
 
-        var fileName = $"..\\..\\..\\{file}";
+        var fileName = $"..\\..\\..\\{year}\\{day:D2}\\{(useTestData ? "test" : "live")}.txt";
 
         if (useTestData == false)
         {
             if (File.Exists(fileName) == false || new FileInfo(fileName).Length == 0)
             {
                 // deconstruct year and data from type name
-                var year = int.Parse(dayClassType.Namespace?.Replace("AdventOfCode", "") ?? "0");
-                var day = int.Parse(dayClassType.Name.Replace("Day", ""));
                 var content = GetLiveCode(year, day);
                 File.WriteAllText(fileName, content);
             }
         }
-
 
         var lines = File.ReadAllLines(fileName);
         if (lines.Length == 0)
@@ -171,8 +172,8 @@ internal partial class Program
                 var content = GetLiveCode(year, day);
                 File.WriteAllText(fileName, content);
             }
-        } 
-        
+        }
+
 
         var lines = File.ReadAllLines(fileName);
         if (lines.Length == 0)
@@ -216,11 +217,13 @@ internal partial class Program
 
     private const string DayTemplateCode = @"namespace AdventOfCode{Year}
 {
-    //[Force]                   // uncomment to force processing this type (regardless of which day it is according to DateTime)
-    //[AlwaysEnableLog]         // if uncommented, Log.Write() and Log.WriteLine() will still be honored in runs without a debugger (do not confuse with Debug/Release configuration)
-    //[DisableLogInDebug]       // if uncommented, Log will be disabled even when under debugger
-    //[UseLiveDataInDeug]       // if uncommented and under a debug session, will use live data (problem data) instead of test data
-    //[AlwaysUseTestData]       // if uncommented, will use test data in both debugging session and non-debugging session
+    //[Force]                    // uncomment to force processing this type (regardless of which day it is according to DateTime)
+    //[AlwaysEnableLog]          // if uncommented, Log.Write() and Log.WriteLine() will still be honored in runs without a debugger (do not confuse with Debug/Release configuration)
+    //[DisableLogInDebug]        // if uncommented, Log will be disabled even when under debugger
+    //[UseLiveDataInDeug]        // if uncommented and under a debug session, will use live data (problem data) instead of test data
+    //[AlwaysUseTestData]        // if uncommented, will use test data in both debugging session and non-debugging session
+    [ExpectedTestAnswerPart1(0)] // if != 0, will report failure if expected answer != given answer
+    [ExpectedTestAnswerPart2(0)] // if != 0, will report failure if expected answer != given answer
     class Day{Day}
     {
         public static string TestFile => ""{Year}\\{Day}\\test.txt"";

@@ -20,4 +20,18 @@
     class AlwaysEnableLogAttribute : Attribute
     {
     }
+
+    [AttributeUsage(AttributeTargets.Class)]
+    class ExpectedTestAnswerPart1Attribute : Attribute
+    {
+        public ExpectedTestAnswerPart1Attribute(long answer) { Answer = answer; }
+        public long Answer { get; set; }
+    }
+    [AttributeUsage(AttributeTargets.Class)]
+    class ExpectedTestAnswerPart2Attribute : Attribute
+    {
+        public ExpectedTestAnswerPart2Attribute(long answer) { Answer = answer; }
+        public long Answer { get; set; }
+    }
+
 }

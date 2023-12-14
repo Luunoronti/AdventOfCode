@@ -10,3 +10,4 @@
 /AdventOfCode2023/bin/Debug/net6.0-windows
 **/[Ll]ive.txt*
 /AdventOfCode2023/session.txt
+/AdventOfCode2023/bin/Release/net6.0-windows
