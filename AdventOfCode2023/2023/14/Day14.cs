@@ -15,7 +15,7 @@ namespace AdventOfCode2023
         public static long Part1(string[] lines)
         {
             var platform = new Platform(lines);
-            platform.MoveAllNorth();
+            platform.MoveAll(MoveDirection.North);
             return platform.CalculateTotawWeight();
         }
 
@@ -31,7 +31,7 @@ namespace AdventOfCode2023
             else
             {
                 // perform all 4 swings
-                platform.MoveAll(MoveDirection.Noth);
+                platform.MoveAll(MoveDirection.North);
                 platform.MoveAll(MoveDirection.West);
                 platform.MoveAll(MoveDirection.South);
                 platform.MoveAll(MoveDirection.East);
@@ -49,6 +49,9 @@ namespace AdventOfCode2023
 
         public static long Part2(string[] lines)
         {
+            // this takes 2 seconds.
+            // too long, if i was to operate on proper mem representation, and move
+            // objects 
             const long repetitions = 1_000_000_000;
 
             // we will use our old platform implementation here.
@@ -103,7 +106,7 @@ namespace AdventOfCode2023
 
         enum MoveDirection
         {
-            Noth,
+            North,
             South,
             East,
             West
@@ -155,6 +158,7 @@ namespace AdventOfCode2023
                     Console.WriteLine();
                 }
             }
+
             public long MoveAll(MoveDirection direction)
             {
                 var moved = 0;
@@ -175,7 +179,7 @@ namespace AdventOfCode2023
                 return moved;
             }
 
-            public void MoveAllNorth() => MoveAll(MoveDirection.Noth);
+            public void MoveAllNorth() => MoveAll(MoveDirection.North);
 
             public long CalculateTotawWeight() => _allRocks.Sum(rock => rock.Weight);
 
@@ -220,7 +224,7 @@ namespace AdventOfCode2023
 
                 switch (direction)
                 {
-                    case MoveDirection.Noth:
+                    case MoveDirection.North:
                         if (Y == 0) return false; // can't move beyond the platform
                         return MoveTo(X, Y - 1);
 
