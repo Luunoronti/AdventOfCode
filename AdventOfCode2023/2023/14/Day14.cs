@@ -15,7 +15,7 @@ namespace AdventOfCode2023
         public static long Part1(string[] lines)
         {
             var platform = new Platform(lines);
-            platform.MoveAllNorht();
+            platform.MoveAllNorth();
             return platform.CalculateTotawWeight();
         }
 
@@ -175,7 +175,7 @@ namespace AdventOfCode2023
                 return moved;
             }
 
-            public void MoveAllNorht() => MoveAll(MoveDirection.Noth);
+            public void MoveAllNorth() => MoveAll(MoveDirection.Noth);
 
             public long CalculateTotawWeight() => _allRocks.Sum(rock => rock.Weight);
 
