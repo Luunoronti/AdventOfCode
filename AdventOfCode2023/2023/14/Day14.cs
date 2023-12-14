@@ -295,12 +295,6 @@ namespace AdventOfCode2023
 
             //PrintMap(map, width, heigth);
 
-            //TiltNorth(map, heigth, width);
-            //TiltEast(map, heigth, width);
-            //TiltSouth(map, heigth, width);
-            //TiltWest(map, heigth, width);
-
-
             // tilt up (north)
             var sw2 = Stopwatch.StartNew();
             TiltNorth(map, width, heigth);
@@ -314,11 +308,6 @@ namespace AdventOfCode2023
             var answer = ComputeWeight(map, width, heigth);
             sw3.Stop();
             Log.WriteLine($"{CC.Sys}{nameof(ComputeWeight)}{CC.Clr} took {CC.Val}{sw3.Elapsed} ({sw3.ElapsedMilliseconds} ms){CC.Clr}");
-
-
-
-
-
 
             return answer;
         }
