@@ -1,9 +1,11 @@
+using Cache = System.Collections.Generic.Dictionary<int, (int hash, long weigth)>;
+
 namespace AdventOfCode2023
 {
     //[Force]                   // uncomment to force processing this type (regardless of which day it is according to DateTime)
     //[AlwaysEnableLog]         // if uncommented, Log.Write() and Log.WriteLine() will still be honored in runs without a debugger (do not confuse with Debug/Release configuration)
     //[DisableLogInDebug]       // if uncommented, Log will be disabled even when under debugger
-    //[UseLiveDataInDeug]       // if uncommented and under a debug session, will use live data (problem data) instead of test data
+    [UseLiveDataInDeug]       // if uncommented and under a debug session, will use live data (problem data) instead of test data
     //[AlwaysUseTestData]       // if uncommented, will use test data in both debugging session and non-debugging session
     class Day14
     {
@@ -16,100 +18,99 @@ namespace AdventOfCode2023
             platform.MoveAllNorht();
             return platform.CalculateTotawWeight();
         }
+
+        private static (string map, int hash, long weight) SwingGetHashAndComputeWeight(string input, int mapWidth, int mapHeight, int direction)
+        {
+            return (input, input.GetHashCode(), 0);
+        }
+
+        private static (int hash, long weigth, bool isHit) Swing(int hash, MoveDirection direction, Platform platform, Cache cache)
+        {
+            if ( cache.TryGetValue(hash, out var ret))
+            {
+                //Log.WriteLine("Cache hit!");
+                //platform.Print(Console.CursorLeft, Console.CursorTop);
+                //Console.WriteLine();
+                return (ret.hash, ret.weigth, true);
+            }
+            else
+            {
+                // perform all 4 swings
+                platform.MoveAll(MoveDirection.Noth);
+                platform.MoveAll(MoveDirection.West);
+                platform.MoveAll(MoveDirection.South);
+                platform.MoveAll(MoveDirection.East);
+
+
+                //platform.Print(Console.CursorLeft, Console.CursorTop);
+                //Console.WriteLine();
+
+                var newHash = platform.GetHash();
+                var weigth = platform.CalculateTotawWeight();
+
+                cache[hash] = (newHash, weigth);
+                return (newHash, weigth, false);
+            }
+        }
+
         public static long Part2(string[] lines)
         {
-            var platform = new Platform2(lines);
-            platform.DoSpins(1_000_000_000);
+            // we will use our old platform implementation here.
+            // it is somehow slow, but it works
+            // if we are too slow, we will implement other approach
+            var platform = new Platform(lines);
 
-            var target = 1_000_000_000;
-            for (int i = 0; i < target; i++)
+            var cache = new Cache();
+            var cachesList = new List<int>();
+
+            var currentHash = platform.GetHash();
+            var currentWeight = 0L;
+            int numberOfSteps = 0;
+            for (var i = 0; i < 1_000_000_000; i++)
             {
-                platform.DoASpint();
-                //Console.WriteLine();
-                //platform.Print(Console.CursorLeft, Console.CursorTop);
-            }
-
-            return platform.CalculateTotawWeight();
-        }
-
-
-        // new approach, with a byte map that we will work with
-        // in unsafe mode, to speed up
-        class Platform2
-        {
-            public Platform2(string[] lines)
-            {
-                var linesLen = lines.Length;
-                var lines0Len = lines[0].Length;
-                mapWidth = lines0Len;
-                mapHeight = linesLen;
-                _map = new byte[mapWidth * mapHeight];
-
-                for (int y = 0; y < linesLen; y++)
+                var ret = Swing(currentHash, MoveDirection.Noth, platform, cache);
+                currentHash = ret.hash;
+                currentWeight = ret.weigth;
+                if (ret.isHit)
                 {
-                    for (int x = 0; x < lines0Len; x++)
-                    {
-                        var c = lines[y][x];
-                        if (c == '.') continue;
+                    var index = cachesList.IndexOf(ret.hash);
+                    // we should compute our way out, so we don't have to
+                    // iterate over a dictionary for X times
+                    var oneIteration = cachesList.Count - index;
+                    var remainingSteps = 1_000_000_000 - numberOfSteps;
 
-                        _map[y * mapWidth + x] = (byte)(c == 'O' ? 1 : 2); // 1 means movable rock, 2 means non movable 
+                    var fullIterations = remainingSteps / oneIteration;
+                    var remaining = (remainingSteps - (fullIterations * oneIteration) - 1);
+
+                    // step remaining times
+                    for (int r = 0; r < remaining; r++)
+                    {
+                        var (hash, weigth) = cache[currentHash];
+                        currentHash = hash;
+                        currentWeight = weigth;
                     }
+                    return currentWeight;
+                }
+                else
+                {
+                    // add this to a list
+                    cachesList.Add(currentHash);
+                }
+                currentHash = ret.hash;
+                currentWeight = ret.weigth;
+                numberOfSteps++;
+
+                if(numberOfSteps % 1_000_000 == 0)
+                {
+                    var pr = (double)numberOfSteps / (double)1_000_000_000;
+
+                    Console.WriteLine($"{numberOfSteps} - {pr*100}");
                 }
             }
-            private byte[] _map;
-            private int mapWidth;
-            private int mapHeight;
 
 
-            private unsafe void MoveNorth(byte* p)
-            {
-                // note: we can't move first row to the north
-                // so we stat at second row
-                for (int i = mapWidth; i < mapWidth * mapHeight; i++)
-                {
-                    var r = *(p + i);
-                    if (r == 0 || r == 2) continue;
-                    //var x = i % mapWidth;
-                    var y = i;// / mapHeight;
-
-                    while (y >= 0 && (*p + y) == 0)
-                        y -= mapWidth;
-
-                    // clear at our pos
-                    p[i] = 0;
-
-                    // set at new pos
-                    p[y] = r;
-}
-            }
-            public unsafe void DoSpins(long count)
-            {
-                fixed (byte* p = _map)
-                {
-                    for (var i = 0; i < count; i++)
-                    {
-                        MoveNorth(p);
-
-                        if (i % 1_000_000 == 0)
-                        {
-                            var per = (double)i / (double)count;
-                            Console.WriteLine(per * 100);
-                        }
-                    }
-                }
-            }
-            public long DoASpint()
-            {
-                return 0;
-            }
-            public long CalculateTotawWeight()
-            {
-                return 0;
-            }
+            return currentWeight;//platform.CalculateTotawWeight();
         }
-
-
-
 
         // old, OO approach to a map
         enum MoveDirection
@@ -188,15 +189,11 @@ namespace AdventOfCode2023
             }
 
             public void MoveAllNorht() => MoveAll(MoveDirection.Noth);
-            public long DoASpint()
-            {
-                return MoveAll(MoveDirection.Noth)
-                + MoveAll(MoveDirection.West)
-                + MoveAll(MoveDirection.South)
-                + MoveAll(MoveDirection.East);
-            }
-
+           
             public long CalculateTotawWeight() => _allRocks.Sum(rock => rock.Weight);
+
+            public string GetStringRepr() => string.Join("", Map.Select(m => m == null ? '.' : (m.IsMovable ? 'O' : '#')));
+            public int GetHash() => GetStringRepr().GetHashCode();
         }
         class Rock
         {
