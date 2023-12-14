@@ -19,18 +19,13 @@ namespace AdventOfCode2023
             return platform.CalculateTotawWeight();
         }
 
-        private static (string map, int hash, long weight) SwingGetHashAndComputeWeight(string input, int mapWidth, int mapHeight, int direction)
+        private static (int hash, long weigth, bool isHit) FullSwing(int hash, Platform platform, Cache cache)
         {
-            return (input, input.GetHashCode(), 0);
-        }
-
-        private static (int hash, long weigth, bool isHit) Swing(int hash, MoveDirection direction, Platform platform, Cache cache)
-        {
-            if ( cache.TryGetValue(hash, out var ret))
+            if (cache.TryGetValue(hash, out var ret))
             {
-                //Log.WriteLine("Cache hit!");
+                Log.WriteLine("Cache hit!");
                 //platform.Print(Console.CursorLeft, Console.CursorTop);
-                //Console.WriteLine();
+                //Log.WriteLine();
                 return (ret.hash, ret.weigth, true);
             }
             else
@@ -41,9 +36,8 @@ namespace AdventOfCode2023
                 platform.MoveAll(MoveDirection.South);
                 platform.MoveAll(MoveDirection.East);
 
-
                 //platform.Print(Console.CursorLeft, Console.CursorTop);
-                //Console.WriteLine();
+                //Log.WriteLine();
 
                 var newHash = platform.GetHash();
                 var weigth = platform.CalculateTotawWeight();
@@ -55,6 +49,8 @@ namespace AdventOfCode2023
 
         public static long Part2(string[] lines)
         {
+            const long repetitions = 1_000_000_000;
+
             // we will use our old platform implementation here.
             // it is somehow slow, but it works
             // if we are too slow, we will implement other approach
@@ -66,18 +62,20 @@ namespace AdventOfCode2023
             var currentHash = platform.GetHash();
             var currentWeight = 0L;
             int numberOfSteps = 0;
-            for (var i = 0; i < 1_000_000_000; i++)
+            for (var i = 0; i < repetitions; i++)
             {
-                var ret = Swing(currentHash, MoveDirection.Noth, platform, cache);
+                var ret = FullSwing(currentHash, platform, cache);
                 currentHash = ret.hash;
                 currentWeight = ret.weigth;
                 if (ret.isHit)
                 {
                     var index = cachesList.IndexOf(ret.hash);
                     // we should compute our way out, so we don't have to
-                    // iterate over a dictionary for X times
+                    // iterate over a dictionary for X times. as we are in cache already, we know nothing
+                    // will change in terms of map permutations, no new result will be produced.
+                    // we just need to compute, which of our (already computed) results is the one
                     var oneIteration = cachesList.Count - index;
-                    var remainingSteps = 1_000_000_000 - numberOfSteps;
+                    var remainingSteps = repetitions - numberOfSteps;
 
                     var fullIterations = remainingSteps / oneIteration;
                     var remaining = (remainingSteps - (fullIterations * oneIteration) - 1);
@@ -99,20 +97,10 @@ namespace AdventOfCode2023
                 currentHash = ret.hash;
                 currentWeight = ret.weigth;
                 numberOfSteps++;
-
-                if(numberOfSteps % 1_000_000 == 0)
-                {
-                    var pr = (double)numberOfSteps / (double)1_000_000_000;
-
-                    Console.WriteLine($"{numberOfSteps} - {pr*100}");
-                }
             }
-
-
             return currentWeight;//platform.CalculateTotawWeight();
         }
 
-        // old, OO approach to a map
         enum MoveDirection
         {
             Noth,
@@ -162,7 +150,6 @@ namespace AdventOfCode2023
                     for (int mx = 0; mx < MapWidth; mx++)
                     {
                         var r = GetAt(mx, my);
-
                         Console.Write(r == null ? '.' : r);
                     }
                     Console.WriteLine();
@@ -189,7 +176,7 @@ namespace AdventOfCode2023
             }
 
             public void MoveAllNorht() => MoveAll(MoveDirection.Noth);
-           
+
             public long CalculateTotawWeight() => _allRocks.Sum(rock => rock.Weight);
 
             public string GetStringRepr() => string.Join("", Map.Select(m => m == null ? '.' : (m.IsMovable ? 'O' : '#')));
@@ -209,9 +196,7 @@ namespace AdventOfCode2023
             public bool IsMovable { get; }
             public int X { get; private set; }
             public int Y { get; private set; }
-
             public int Weight => IsMovable ? _platform.MapHeight - Y : 0;
-
             private bool MoveTo(int newX, int newY)
             {
                 if (!IsMovable) return false; // can't move at all
@@ -258,11 +243,7 @@ namespace AdventOfCode2023
 
                 return false;
             }
-
-            public override string ToString()
-            {
-                return IsMovable ? "O" : "#";
-            }
+            public override string ToString() => IsMovable ? "O" : "#";
         }
     }
 }
