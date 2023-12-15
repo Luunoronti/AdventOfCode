@@ -1,7 +1,7 @@
 
 namespace AdventOfCode2023
 {
-    [Force] // uncomment to force processing this type
+    //[Force] // uncomment to force processing this type
     //[AlwaysEnableLog]
     //[DisableLogInDebug]
     //[UseLiveDataInDeug]
@@ -15,52 +15,46 @@ namespace AdventOfCode2023
             // these cache operations reduce Part 2 time, from ~30 minutes on my PC, to milliseconds
             if (cache.TryGetValue((pattern.Length, groups.Length), out var ret))
                 return ret;
-            return cache[(pattern.Length, groups.Length)] = ProcessPatternInt(pattern, groups, cache);
-        }
 
-        private static long ProcessPatternInt(ReadOnlySpan<char> pattern, ReadOnlySpan<int> groups, Dictionary<(int, int), long> cache)
-        {
             var sum = 0L;
 
             var isLast = groups.Length == 1;
             var group = groups[0];
 
             if (!isLast)
-                group++; // add '.'
+                group++; // add '.' to the group. it is required for any but last group
 
             if (group > pattern.Length)
-                return 0;
+                return cache[(pattern.Length, groups.Length)] = 0;
 
             for (int i = 0; i <= pattern.Length - group; i++)
             {
                 // first of all, check if there are any '#' characters before start of our group proposed place
                 // if so, those are not satisfied, and this pattern is not valid
-                if (AreHashesPresent(pattern[..i]))
+                if (pattern[..i].IndexOf('#') != -1)
                     break;
 
+                // then check if we can actually put the group in proposed space
                 if (!IsPlacementPossible(pattern.Slice(i, group), isLast: isLast))
                     continue;
 
-                if (isLast && AreHashesPresent(pattern[(i + group)..]))
+                // and, if this is last group, check if there are any '#' characters
+                // after the group
+                if (isLast && pattern[(i + group)..].IndexOf('#') != -1)
                     continue;
 
-                var num = i + group;
                 if (isLast)
                 {
                     sum++;
                 }
                 else
                 {
-                    var r = ProcessPattern(pattern[num..], groups[1..], cache);
-                    if (r != 0)
-                    {
-                        sum += r;
-                    }
+                    // process next group for this propsed pattern
+                    sum += ProcessPattern(pattern[(i + group)..], groups[1..], cache);
                 }
             }
-            return sum;
+            return cache[(pattern.Length, groups.Length)] = sum;
 
-            static bool AreHashesPresent(ReadOnlySpan<char> span) => span.IndexOf('#') != -1;
             static bool IsPlacementPossible(ReadOnlySpan<char> span, bool isLast)
             {
                 var dot = span.IndexOf('.');
