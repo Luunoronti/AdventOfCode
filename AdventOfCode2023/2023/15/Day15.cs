@@ -116,6 +116,7 @@ namespace AdventOfCode2023
         }
         public static long Part2(string[] lines)
         {
+            return Part2_Di(lines);
             var parts = string.Join("", lines).Replace("\r", "").Replace("\n", "").Replace(" ", "").Split(',');
 
             var boxes = Enumerable.Range(0, 256).Select(i => new Box()).ToArray();
