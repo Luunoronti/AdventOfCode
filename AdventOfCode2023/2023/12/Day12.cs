@@ -1,8 +1,39 @@
-
+﻿
 namespace AdventOfCode2023
 {
+    // Idea:
+    // We do not use strings, but we span over a single patter string
+    // and we pass a smaller span to the reccurrent function, instead of a string copy
+    // so we loose actual pattern inside reccurrent functions, but we don't have to
+    // create new string copies
+
+    // when we walk down the group list,
+    // we call a method reccurelntly that get all possible (valid) placements
+    // of said group in the pattern. 
+    // if not the last group, method will add all possible placements of next group(s) in the list, for each of current group placements
+    // if it is last group in list, method will return the amount of possible placements.
+
+    // this all takes a lot of time
+    // but can be sped up by using a cache:
+    // ┌─────────────┬────────────────────────────┬──────────────────┐
+    // │ Data source | Time without cache         | Time with cache  │
+    // ├─────────────┼────────────────────────────┼──────────────────┤
+    // │Test         | 83ms                       | 0.5ms            |
+    // │Live         | Over an hour, didn't wait  | 120ms            |
+    // └─────────────┴────────────────────────────┴──────────────────┘
+    // These are times from my machine ofc, from within Visual Studio Debug mode
+    // Release mode yields these results, just for comparison:
+    // ┌─────────────┬────────────────────────────┬──────────────────┐
+    // │ Data source | Time without cache         | Time with cache  │
+    // ├─────────────┼────────────────────────────┼──────────────────┤
+    // │Test         | 83ms                       | 0.2ms            |
+    // │Live         | Over an hour, didn't wait  | 74ms             |
+    // └─────────────┴────────────────────────────┴──────────────────┘
+    // These are times from my machine ofc, from within Visual Studio Debug mode
+
+
     //[Force] // uncomment to force processing this type
-    //[AlwaysEnableLog]
+    [AlwaysEnableLog]
     //[DisableLogInDebug]
     //[UseLiveDataInDeug]
     //[AlwaysUseTestData]
@@ -49,7 +80,7 @@ namespace AdventOfCode2023
                 }
                 else
                 {
-                    // process next group for this propsed pattern
+                    // process next group for this proposed pattern
                     sum += ProcessPattern(pattern[(i + group)..], groups[1..], cache);
                 }
             }
@@ -80,6 +111,8 @@ namespace AdventOfCode2023
         // and it's being used a lot in <insert frameworks for some popular gaming platforms I can't mention here> initialization routines
         private static long SolveLine(string line, int repeats)
         {
+            Log.WriteLine($"Line {lineC++}");
+
             var parts = line.Split(" ");
             // we construct pattern the same way other code (bellow) does
             var pattern = string.Join('?', Enumerable.Repeat(parts[0], repeats));
@@ -87,6 +120,7 @@ namespace AdventOfCode2023
             return ProcessPattern(pattern.AsSpan(), nums, new Dictionary<(int, int), long>());
         }
 
+        static int lineC = 0;
         public static long Part1(string[] lines) => lines.Select(l => SolveLine(l, 1)).Sum();
         public static long Part2(string[] lines) => lines.Select(l => SolveLine(l, 5)).Sum();
     }

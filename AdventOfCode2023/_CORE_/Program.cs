@@ -226,9 +226,6 @@ internal partial class Program
     [ExpectedTestAnswerPart2(0)] // if != 0, will report failure if expected answer != given answer
     class Day{Day}
     {
-        public static string TestFile => ""{Year}\\{Day}\\test.txt"";
-        public static string LiveFile => ""{Year}\\{Day}\\live.txt"";
-        
         public static long Part1(string[] lines)
         {
             return 0;
