@@ -1,5 +1,12 @@
 ﻿static class CC
 {
+    public const string Save = "\u001b7";
+    public const string Rest = "\u001b8";
+
+    public const string CursorHide = "\u001b[?25l";
+    public const string CursorShow = "\u001b[?25h";
+
+
     public const string Clr = "\u001b[0m";
     public const string Sys = "\u001b[38;2;75;180;237m";
     public const string Val = "\u001b[38;2;220;180;30m";

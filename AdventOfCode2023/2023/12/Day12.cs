@@ -11,54 +11,157 @@
 // for solutions, create all possible solutions for second group, and so on.
 // also, because we know part of the solution was good, we just need to check part that is 'new'
 
-
-
-
+using System.Collections.Concurrent;
 using System.Collections.Immutable;
 
 namespace AdventOfCode2023
 {
+    //[Force] // uncomment to force processing this type
+    //[AlwaysEnableLog]
+    //[DisableLogInDebug]
+    [UseLiveDataInDeug]
+    //[AlwaysUseTestData]
+    [ExpectedTestAnswerPart1(21)] // if != 0, will report failure if expected answer != given answer
+    [ExpectedTestAnswerPart2(525152)] // if != 0, will report failure if expected answer != given answer
     class Day12
     {
-        public static string TestFile => "2023\\12\\test.txt";
-        public static string LiveFile => "2023\\12\\live.txt";
+        private static bool AreHashesBefore(ReadOnlySpan<char> span) => span.IndexOf('#') != -1;
 
+        private static int groupsLen = 0;
+        private static long ProcessPattern(ReadOnlySpan<char> pattern, ReadOnlySpan<int> groups, Dictionary<(int, int), long> cache)
+        {
+            if (cache.TryGetValue((pattern.Length, groups.Length), out var ret))
+                return ret;
+
+            static bool IsPlacementPossible(ReadOnlySpan<char> span, bool isLast)
+            {
+                var dot = span.IndexOf('.');
+                if (dot != -1)
+                {
+                    if (!isLast)
+                    {
+                        if (dot != span.Length - 1)
+                            return false;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                if (!isLast && span[^1] == '#') return false;
+                return true;
+            }
+            var sum = 0L;
+            try
+            {
+                var isLast = groups.Length == 1;
+
+                var group = groups[0];
+                var newProposals = new Queue<int>();
+
+                if (!isLast)
+                    group++; // add '.'
+
+                if (group > pattern.Length)
+                    return 0;
+
+                for (int i = 0; i <= pattern.Length - group; i++)
+                {
+                    // first of all, check if there are any '#' characters before start of our group proposed place
+                    // if so, those are not satisfied, and this pattern is not valid
+                    if (AreHashesBefore(pattern[..i]))
+                        break;
+
+                    if (!IsPlacementPossible(pattern.Slice(i, group), isLast: isLast))
+                        continue;
+
+                    var num = i + group;
+
+                    if (isLast)
+                    {
+                        sum++;
+                        
+                    }
+                    else
+                    {
+                        sum += ProcessPattern(pattern[num..], groups[1..], cache);
+                    }
+                    Log.WriteLine($"{group}: {i}");
+                }
+            }
+            finally
+            {
+                cache[(pattern.Length, groups.Length)] = sum;
+            }
+            return sum;
+        }
+
+        // THIS METHOD CONTAINS GOTO!! :D
+        // Please don't judge me, but sometimes it's best for readability, 
+        // and it's being used a lot in <insert frameworks for some popular gaming platforms I can't mention here> initialization routines
         private static long SolveLine(string line, int repeats)
         {
+            //line = "?###???????? 3,2,1";
+
             var parts = line.Split(" ");
             // we construct pattern the same way other code (bellow) does
             var pattern = string.Join('?', Enumerable.Repeat(parts[0], repeats));
             // here, we create a queue of all groups, instead of just enumerable
-            var nums = new Queue<int>(Enumerable.Repeat(parts[1].Split(',').Select(int.Parse), repeats).SelectMany(x => x));
+            var nums = Enumerable.Repeat(parts[1].Split(',').Select(int.Parse), repeats).SelectMany(x => x).ToArray();
+            var cache = new Dictionary<(int, int), long>();
+            groupsLen = nums.Length;
+            var su = ProcessPattern(pattern.AsSpan(), new ReadOnlySpan<int>(nums), cache);
 
-            // two queues of solutions
-            var list1 = new Queue<string>();
-            var list2 = new Queue<string>();
-
-            // make new variables so we don't mess our assignments because of poor naming :)
-            var srcList = list1;
-            var dstList = list2;
-
-            // we add a start string to our src queue, so we don't have to deal with empty source inside our loop.
-            srcList.Enqueue("");
-
-            while (nums.TryDequeue(out var group))  // if there are no more groups to check against, end this loop
-            {
-                // look for all (valid) solutions for this group
-                // and add them to second list
-
-                
-
-                // clear surce (we don't need it anymore) and switch 
-                srcList.Clear();
-                (dstList, srcList) = (srcList, dstList);
-            }
-
-            return 0;
+            return su;
         }
 
-        public static long Part1(string[] lines) => lines.Select(l => SolveLine(l, 1)).Sum();
-        public static long Part2(string[] lines) => lines.Select(l => SolveLine(l, 5)).Sum();
+        public static long Part1(string[] lines)
+        {
+            var ss = SolveLine("?.#?????????###.?# 1,1,2,1,5,1", 1);
+            if (ss != 3)
+            {
+
+            }
+            var sum = 0L;
+            //foreach (var line in lines)
+            //{
+            //    var s1 = SolveLine(line, 1);
+            //    var s2 = Day12_SomeoneElsesCode.Solve(line, 1);
+            //    if (s1 != s2)
+            //    {
+
+            //    }
+            //    sum += s1;
+            //}
+            return sum;
+            //lines.Select(l => SolveLine(l, 1)).Sum();
+        }
+        public static long Part2(string[] lines)
+        {
+            var sum = 0L;
+            //var queue = new ConcurrentQueue<long>();
+            //for (int i = 0; i < lines.Length; i++)
+            //{
+            //    string? line = lines[i];
+            //    ThreadPool.QueueUserWorkItem((o) =>
+            //    {
+            //        queue.Enqueue(SolveLine(line, 5));
+            //    });
+            //}
+
+            //Log.Write($"{CC.CursorHide}");
+            //while (queue.Count != lines.Length)
+            //{
+            //    Log.Write($"{CC.Save}{queue.Count}{CC.Rest}");
+            //    Thread.Sleep(1);
+            //}
+            //Log.Write($"{CC.CursorShow}");
+
+            //while (queue.TryDequeue(out var s))
+            //    sum += s;
+
+            return sum;
+        }
     }
 
 
@@ -173,7 +276,7 @@ namespace AdventOfCode2023
 
 
 
-        private static long Solve(string line, int repeat)
+        public static long Solve(string line, int repeat)
         {
             var parts = line.Split(" ");
             var pattern = string.Join('?', Enumerable.Repeat(parts[0], repeat));
