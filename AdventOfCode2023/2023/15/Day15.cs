@@ -1,6 +1,7 @@
 using System.Text;
 using Box = System.Collections.Generic.List<(string label, int focalLength)?>;
 using BoxDi = System.Collections.Generic.Dictionary<string, int>;
+using SttingSpan = System.ReadOnlySpan<char>;
 
 namespace AdventOfCode2023
 {
@@ -114,13 +115,15 @@ namespace AdventOfCode2023
             }
             return focusingPower;
         }
-        public static long Part2(string[] lines)
-        {
-            return Part2_Di(lines);
-            var parts = string.Join("", lines).Replace("\r", "").Replace("\n", "").Replace(" ", "").Split(',');
 
+
+
+        [RemoveSpacesFromInput]
+        [RemoveNewLinesFromInput]
+        public static long Part2(string input)
+        {
             var boxes = Enumerable.Range(0, 256).Select(i => new Box()).ToArray();
-            
+            var parts = input.ToString().Split(',');
             foreach (var part in parts)
             {
                 var sp = part.Split(new char[] { '-', '=' });
@@ -172,5 +175,6 @@ namespace AdventOfCode2023
             }
             return focusingPower;
         }
+
     }
 }

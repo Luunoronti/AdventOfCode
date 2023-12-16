@@ -34,4 +34,10 @@
         public long Answer { get; set; }
     }
 
+[AttributeUsage(AttributeTargets.Method)]
+    public class RemoveNewLinesFromInputAttribute : Attribute { }
+
+    [AttributeUsage(AttributeTargets.Method)]
+    public class RemoveSpacesFromInputAttribute : Attribute { }
+
 }

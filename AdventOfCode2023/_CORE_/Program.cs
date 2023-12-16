@@ -1,13 +1,8 @@
-﻿// Note: If we are to run live data, download them from AoC. 
-// Huge thanks to Nick Kusters for pointing out that live data should not be kept on GitHub,
-// and allowing to copy his download code.
-
-
-using AdventOfCode2023;
+﻿using AdventOfCode2023;
 using System.Diagnostics;
 using System.Net;
 using System.Reflection;
-using System.Windows.Forms;
+using StringSpan = System.ReadOnlySpan<char>;
 
 internal partial class Program
 {
@@ -48,23 +43,21 @@ internal partial class Program
         Console.WriteLine();
 
         // if we are to run live data, download them from AoC. 
-        // thanks to Nick Kusters for pointing out that live data should not be kept on GitHub,
-        // and allowing to copy his download code.
+        // thanks to Nick Kusters (https://www.youtube.com/@NKCSS) for pointing out that live data should not be kept on GitHub
 
-        var lines = ReadInput(type, useTestData: useTestData);
-        var a1 = RunMethod(type, "Part1", lines);
-
-        lines = ReadInput(type, useTestData: useTestData);
-        var a2 = RunMethod(type, "Part2", lines);
+        var a1 = RunMethod(type, "Part1", useTestData);
+        var a2 = RunMethod(type, "Part2", useTestData);
 
         Console.WriteLine();
         Console.Write($"{CC.Att}===>{CC.Clr} Part {CC.Sys}1{CC.Clr} answer: {CC.Ans}{a1}{CC.Clr}");
         var expectedAsnwer1 = useTestData ? type.GetCustomAttribute<ExpectedTestAnswerPart1Attribute>()?.Answer ?? 0L : 0L;
+
         if (expectedAsnwer1 > 0 && expectedAsnwer1 != a1)
             Console.Write($"    {CC.Err}PART 1 FAILED!{CC.Clr} Expected answer is: {CC.Ans}{expectedAsnwer1}{CC.Clr}");
         Console.WriteLine();
-        Console.WriteLine($"{CC.Att}===>{CC.Clr} Part {CC.Sys}2{CC.Clr} answer: {CC.Ans}{a2}{CC.Clr}");
+        Console.Write($"{CC.Att}===>{CC.Clr} Part {CC.Sys}2{CC.Clr} answer: {CC.Ans}{a2}{CC.Clr}");
         var expectedAsnwer2 = useTestData ? type.GetCustomAttribute<ExpectedTestAnswerPart2Attribute>()?.Answer ?? 0L : 0L;
+
         if (expectedAsnwer2 > 0 && expectedAsnwer2 != a2)
             Console.Write($"    {CC.Err}PART 2 FAILED!{CC.Clr} Expected answer is: {CC.Ans}{expectedAsnwer2}{CC.Clr}");
         Console.WriteLine();
@@ -80,7 +73,6 @@ internal partial class Program
             Clipboard.SetText(a1.ToString());
             Console.WriteLine($"Answer {CC.Sys}1{CC.Clr} ({CC.Ans}{a1}{CC.Clr}) has been copied to clipboard automatically.");
         }
-
 
         if (!Debugger.IsAttached)
         {
@@ -114,11 +106,18 @@ internal partial class Program
             .FirstOrDefault()
             ;
 
-    private static long RunMethod(Type type, string method, string[] lines)
+    private delegate long RunMethodStrParam(string input);
+    private delegate long RunMethodStrLinesParam(string[] input);
+    private delegate long RunMethodSpanParam(StringSpan input);
+
+
+    private delegate long RunMethodSpanWidthHeigthParam(StringSpan input, int lineWidth, int lineHeigth);
+
+
+    private static long RunMethod(Type type, string methodName, bool useTestData)
     {
-        Console.WriteLine($"{CC.Att}===>{CC.Clr} Running {CC.Cls}{type.Namespace}.{type.Name}.{method}{CC.Clr}...");
-        var sw = Stopwatch.StartNew();
-        var met = type.GetMethod(method);
+        Console.WriteLine($"{CC.Att}===>{CC.Clr} Running {CC.Cls}{type.Namespace}.{type.Name}.{methodName}{CC.Clr}...");
+        var met = type.GetMethod(methodName);
         if (met == null) return -1;
 
         var logStatus = Log.Enabled;
@@ -127,7 +126,78 @@ internal partial class Program
         if (!Debugger.IsAttached && met.GetCustomAttribute<AlwaysEnableLogAttribute>() != null)
             Log.Enabled = true;
 
-        var answer = (long)(type.GetMethod(method)?.Invoke(null, new object[] { lines }) ?? -1);
+        var method = type.GetMethod(methodName);
+        if (method == null)
+        {
+            Log.WriteLine($"{CC.Err}Unable to find method {CC.Sys}{methodName}{CC.Err} on type {CC.Sys}{type.Namespace}.{type.Name}{CC.Clr}");
+            return 0;
+        }
+
+        var methodParameters = method.GetParameters();
+        var answer = 0L;
+        Stopwatch sw = new();
+
+
+        bool HasParameters(params Type[] types)
+        {
+            if (methodParameters.Length != types.Length)
+                return false;
+            for (int i = 0; i < types.Length; i++)
+            {
+                if (methodParameters[i].ParameterType != types[i])
+                    return false;
+            }
+            return true;
+        }
+        string ProcessInputForMethod(string input)
+        {
+            if (method.GetCustomAttribute<RemoveNewLinesFromInputAttribute>() != null)
+                input = input.Replace("\n", "").Replace("\r", "");
+            if (method.GetCustomAttribute<RemoveSpacesFromInputAttribute>() != null)
+                input = input.Replace(" ", "");
+            return input;
+        }
+
+
+        if (HasParameters(typeof(StringSpan), typeof(int), typeof(int)))
+        {
+            var lines = ReadInputLines(type, useTestData: useTestData);
+            var width = lines[0].Length;
+            var height = lines.Length;
+            var input = ProcessInputForMethod(string.Join("", lines).Replace("\n", "").Replace("\r", ""));
+
+            var del = method.CreateDelegate<RunMethodSpanWidthHeigthParam>();
+            sw.Start();
+            answer = del(input.AsSpan(), width, height);
+        }
+        else if (HasParameters(typeof(string[])))
+        {
+            var lines = ReadInputLines(type, useTestData: useTestData);
+            var del = method.CreateDelegate<RunMethodStrLinesParam>();
+
+            sw.Start();
+            answer = del(lines);
+        }
+        else if (HasParameters(typeof(string)))
+        {
+            var text = ReadInputText(type, useTestData: useTestData);
+            text = ProcessInputForMethod(text);
+            var del = method.CreateDelegate<RunMethodStrParam>();
+
+            sw.Start();
+            answer = del(text);
+        }
+        else if (HasParameters(typeof(StringSpan)))
+        {
+            var text = ReadInputText(type, useTestData: useTestData);
+            text = ProcessInputForMethod(text);
+            var span = text.AsSpan();
+            var del = method.CreateDelegate<RunMethodSpanParam>();
+
+            sw.Start();
+            answer = del(span);
+        }
+
         sw.Stop();
         Console.WriteLine($"{CC.Att}===> {CC.Cls}{type.Namespace}.{type.Name}.{method} {CC.Clr}completed in {CC.Sys}{sw.ElapsedMilliseconds} ms ({sw.Elapsed}){CC.Clr}\n");
 
@@ -135,7 +205,7 @@ internal partial class Program
         return answer;
     }
 
-    private static string[] ReadInput(Type dayClassType, bool useTestData)
+    private static string[] ReadInputLines(Type dayClassType, bool useTestData)
     {
         var year = int.Parse(dayClassType.Namespace?.Replace("AdventOfCode", "") ?? "0");
         var day = int.Parse(dayClassType.Name.Replace("Day", ""));
@@ -146,7 +216,7 @@ internal partial class Program
         {
             if (File.Exists(fileName) == false || new FileInfo(fileName).Length == 0)
             {
-                // deconstruct year and data from type name
+                // reconstruct year and data from type name
                 var content = GetLiveCode(year, day);
                 File.WriteAllText(fileName, content);
             }
@@ -161,21 +231,24 @@ internal partial class Program
         Console.WriteLine($"{CC.Att}===> {CC.Sys}{lines.Length}{CC.Clr} lines of data read from {CC.Sys}{Path.GetFileName(fileName)}{CC.Clr}");
         return lines;
     }
-    private static string[] ReadLines(string? file, bool isLiveCode, int year, int day)
+    private static string ReadInputText(Type dayClassType, bool useTestData)
     {
-        var fileName = $"..\\..\\..\\{file}";
+        var year = int.Parse(dayClassType.Namespace?.Replace("AdventOfCode", "") ?? "0");
+        var day = int.Parse(dayClassType.Name.Replace("Day", ""));
 
-        if (isLiveCode)
+        var fileName = $"..\\..\\..\\{year}\\{day:D2}\\{(useTestData ? "test" : "live")}.txt";
+
+        if (useTestData == false)
         {
             if (File.Exists(fileName) == false || new FileInfo(fileName).Length == 0)
             {
+                // reconstruct year and data from type name
                 var content = GetLiveCode(year, day);
                 File.WriteAllText(fileName, content);
             }
         }
 
-
-        var lines = File.ReadAllLines(fileName);
+        var lines = File.ReadAllText(fileName);
         if (lines.Length == 0)
         {
             Console.WriteLine($"{CC.Err}There are no lines to process. Did you forget to fill in data into the file?{CC.Clr}");
@@ -199,7 +272,7 @@ internal partial class Program
     private static Dictionary<(int, int), string> liveCode = new();
 
     // Note: If we are to run live data, download them from AoC. 
-    // Huge thanks to Nick Kusters for pointing out that live data should not be kept on GitHub,
+    // Huge thanks to Nick Kusters (https://www.youtube.com/@NKCSS) for pointing out that live data should not be kept on GitHub,
     // and allowing to copy his download code.
     internal static string GetLiveCode(int year, int day)
     {
@@ -215,7 +288,10 @@ internal partial class Program
         return contents;
     }
 
-    private const string DayTemplateCode = @"namespace AdventOfCode{Year}
+    private const string DayTemplateCode = @"
+using StringSpan = System.ReadOnlySpan<char>;
+
+namespace AdventOfCode{Year}
 {
     //[Force]                    // uncomment to force processing this type (regardless of which day it is according to DateTime)
     //[AlwaysEnableLog]          // if uncommented, Log.Write() and Log.WriteLine() will still be honored in runs without a debugger (do not confuse with Debug/Release configuration)
@@ -226,11 +302,17 @@ internal partial class Program
     [ExpectedTestAnswerPart2(0)] // if != 0, will report failure if expected answer != given answer
     class Day{Day}
     {
-        public static long Part1(string[] lines)
+        //[RemoveSpacesFromInput]
+        //[RemoveNewLinesFromInput]
+        // change to string or string[] to get other types of input
+        public static long Part1(StringSpan lines)
         {
             return 0;
         }
-        public static long Part2(string[] lines)
+        //[RemoveSpacesFromInput]
+        //[RemoveNewLinesFromInput]
+        // change to string or string[] to get other types of input
+        public static long Part2(StringSpan lines)
         {
             return 0;
         }

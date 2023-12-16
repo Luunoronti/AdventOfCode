@@ -1,5 +1,8 @@
 ﻿static class CC
 {
+    public const char DotReplacement = '⁰';
+
+
     public const string Save = "\u001b7";
     public const string Rest = "\u001b8";
 

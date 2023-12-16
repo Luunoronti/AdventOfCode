@@ -43,5 +43,29 @@
                 action?.Invoke(enumerable.ElementAt(i), i);
             return enumerable;
         }
+
+
+        public static T As<T>(this ReadOnlySpan<char> chars, IFormatProvider? formatProvider = null) where T : ISpanParsable<T> => T.Parse(chars, formatProvider);
+
+
+        public static char GetAt(this ReadOnlySpan<char> span, int x, int y, int width, int heigth, out bool outOfBounds)
+        {
+            if (x < 0 || y < 0 || x >= width || y >= heigth) { outOfBounds = true; return (char)0; }
+            outOfBounds = false;
+            return span[y * width + x];
+        }
+        public static byte GetAt(this Span<byte> span, int x, int y, int width, int heigth, out bool outOfBounds)
+        {
+            if (x < 0 || y < 0 || x >= width || y >= heigth) { outOfBounds = true; return 0; }
+            outOfBounds = false;
+            return span[y * width + x];
+        }
+        public static void SetAt(this Span<byte> span, byte value, int x, int y, int width, int heigth, out bool outOfBounds)
+        {
+            if (x < 0 || y < 0 || x >= width || y >= heigth) { outOfBounds = true; return; }
+            outOfBounds = false;
+            span[y * width + x] = value;
+        }
+
     }
 }
