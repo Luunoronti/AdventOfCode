@@ -337,8 +337,7 @@ namespace AdventOfCode2023
 
                 var clr = (byte)Math.Max(30, Math.Min(255, (int)(250 * per)));
                 return (20, clr, clr);
-            }
-            );
+            });
             mapDrawer.SetContent(lines, replaceDots: true);
             mapDrawer.FillForegroundColor(30, 30, 30);
             mapDrawer.FillBackgroundColor(0, 0, 0);
@@ -356,14 +355,14 @@ namespace AdventOfCode2023
                 while (beams.TryDequeue(out var beam))
                     beam.Update(lines, map, width, height, beams2);
 
+                (beams, beams2) = (beams2, beams);
+
 #if DRAWMAPENABLED
-                var positions = beams2.Select(b => (b.X, b.Y));
-                foreach (var (X, Y) in positions)
-                    mapDrawer.SetBackgroundColor(X, Y, r: 180, g: 180, b: 40);
+                foreach (var (x, y) in beams.Select(b => (b.X, b.Y)))
+                    mapDrawer.SetBackgroundColor(x, y, r: 180, g: 180, b: 40);
                 mapDrawer.DrawAndWait(DrawMapDelay);
 #endif
 
-                (beams, beams2) = (beams2, beams);
             }
 
 #if DRAWMAPENABLED
