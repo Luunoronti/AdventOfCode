@@ -1,6 +1,7 @@
 ﻿#define DRAWMAPENABLED
 
 using Microsoft.VisualBasic.Logging;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using StringSpan = System.ReadOnlySpan<char>;
@@ -211,9 +212,10 @@ namespace AdventOfCode2023
 #endif
         }
 
-        private static void DrawMap(StringSpan input, Span<byte> map, int width, int heigth, List<(int, int)> currentPositions, int sleep = 0)
+        private static void DrawMap(StringSpan input, Span<byte> map, Span<byte> bkColorBuffer, int width, int heigth, List<(int, int)> currentPositions, int sleep = 0)
         {
 #if DRAWMAPENABLED
+            // public const string HBg = "\u001b[48;2;180;180;30m";
             if (Log.Enabled == false) return;
             var sb = new StringBuilder();
 
@@ -223,22 +225,20 @@ namespace AdventOfCode2023
                 {
                     var c = input.GetAt(x, y, width, heigth, out _);
                     var m = map.GetAt(x, y, width, heigth, out _);
+                    var bk = bkColorBuffer.GetAt(x, y, width, heigth, out _);
 
                     // replace dot because our terminal (and Cascadia Nerd Cove font)
                     // shows 3 dots (...) as it's own glyph, which makes it a bit harder to read
                     if (c == '.') c = CC.DotReplacement;
 
-                    var colorFlag = CC.Frm;
-                    if (m != 0)
-                        colorFlag = CC.Sys;
+                    // rgb coloring
+                    var percent = ((float)BitOperations.PopCount(m) / Enum.GetValues<BeamDirection>().Length);
+                    var r = Math.Max(0, Math.Min(255, 30 + (int)(75 * percent)));
+                    var g = Math.Max(0, Math.Min(255, 30 + (int)(210 * percent)));
+                    var b = Math.Max(0, Math.Min(255, 30 + (int)(180 * percent)));
 
-                    if(currentPositions.Contains((x, y)))
-                        sb.Append($"{CC.HBg}");
-
-                    sb.Append($"{colorFlag}{c}");
-
-                    if (currentPositions.Contains((x, y)))
-                        sb.Append($"{CC.Clr}");
+                    sb.Append($"\u001b[38;2;{r};{g};{b}m\u001b[48;2;{bk};{bk};0m");
+                    sb.Append($"{c}");
                 }
 
                 sb.AppendLine($"{CC.Clr}");
@@ -404,11 +404,15 @@ namespace AdventOfCode2023
         }
 
         private static byte[]? _mapMemory = null;
+        private static byte[]? _bkColorBuffer = null;
         private static unsafe long EnergizeMapWithBeam(StringSpan lines, int width, int height, int beamStartX, int beamStartY, BeamDirection initialDirection)
         {
             // need a field map
             if (_mapMemory == null || _mapMemory.Length != (width * height))
                 _mapMemory = new byte[width * height];
+
+            if (_bkColorBuffer == null || _bkColorBuffer.Length != (width * height))
+                _bkColorBuffer = new byte[width * height];
 
             // we could also use stackalloc like this:
             // var map2 = stackalloc byte[width * height];
@@ -419,6 +423,9 @@ namespace AdventOfCode2023
 
             var map = _mapMemory.AsSpan();
             map.Clear(); // clear map after last use
+
+            var colorBuffer = _bkColorBuffer.AsSpan();
+            colorBuffer.Clear(); // clear map after last use
 
             InitDrawMap();
 
@@ -436,7 +443,19 @@ namespace AdventOfCode2023
                     beam.Update(lines, map, width, height, beams2);
 
                 var positions = beams2.Select(b => (b.X, b.Y));
-                DrawMap(lines, map, width, height, positions.ToList(), sleep: DrawMapDelay);
+
+                foreach (var position in positions)
+                {
+                    colorBuffer.SetAt(180, position.X, position.Y, width, height, out _);
+                }
+                
+
+                DrawMap(lines, map, colorBuffer, width, height, positions.ToList(), sleep: DrawMapDelay);
+
+                for(int i = 0; i < colorBuffer.Length; i++)
+                    colorBuffer[i] = (byte)Math.Max(0, colorBuffer[i] - 10);
+
+
                 (beams, beams2) = (beams2, beams);
             }
 
