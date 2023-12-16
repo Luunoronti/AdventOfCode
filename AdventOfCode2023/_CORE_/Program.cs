@@ -9,9 +9,6 @@ internal partial class Program
     [STAThread]
     private static void Main(string[] _)
     {
-        Console.ReadLine();
-
-
         var maxthreads = Math.Max(1, Environment.ProcessorCount);
         ThreadPool.SetMaxThreads(maxthreads, Environment.ProcessorCount);
         Console.WriteLine($"Max ThreadPool threads set to {CC.Sys}{maxthreads}{CC.Clr}");

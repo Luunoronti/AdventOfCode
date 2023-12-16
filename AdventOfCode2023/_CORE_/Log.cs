@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Text;
 
-static class Log
+static partial class Log
 {
     public static bool Enabled { get; set; }
     public static void WriteLine(string message) { if (Enabled) Console.WriteLine(message); }
@@ -131,5 +131,9 @@ static class Log
         }
         return sb.ToString();
     }
+    public static MapContext CreateRectangularMapContext(int width, int height) => new(width, height);
 
 }
+
+
+

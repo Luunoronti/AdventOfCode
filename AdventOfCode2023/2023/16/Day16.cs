@@ -1,9 +1,7 @@
 ﻿#define DRAWMAPENABLED
 
-using Microsoft.VisualBasic.Logging;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using System.Text;
 using StringSpan = System.ReadOnlySpan<char>;
 
 namespace AdventOfCode2023
@@ -11,7 +9,7 @@ namespace AdventOfCode2023
     //[Force]                    // uncomment to force processing this type (regardless of which day it is according to DateTime)
     [AlwaysEnableLog]          // if uncommented, Log.Write() and Log.WriteLine() will still be honored in runs without a debugger (do not confuse with Debug/Release configuration)
     //[DisableLogInDebug]        // if uncommented, Log will be disabled even when under debugger
-    //[UseLiveDataInDeug]        // if uncommented and under a debug session, will use live data (problem data) instead of test data
+    [UseLiveDataInDeug]        // if uncommented and under a debug session, will use live data (problem data) instead of test data
     //[AlwaysUseTestData]        // if uncommented, will use test data in both debugging session and non-debugging session
     [ExpectedTestAnswerPart1(46)] // if != 0, will report failure if expected answer != given answer
     [ExpectedTestAnswerPart2(51)] // if != 0, will report failure if expected answer != given answer
@@ -129,7 +127,7 @@ namespace AdventOfCode2023
                     if (Direction == BeamDirection.Up || Direction == BeamDirection.Down)
                     {
                         beamsToProcess.Enqueue(new NewBeam { X = X + 1, Y = Y, Direction = BeamDirection.Right });
-                        beamsToProcess.Enqueue(new NewBeam { X = X + - 1, Y = Y, Direction = BeamDirection.Left });
+                        beamsToProcess.Enqueue(new NewBeam { X = X + -1, Y = Y, Direction = BeamDirection.Left });
                     }
                     else
                     {
@@ -153,103 +151,6 @@ namespace AdventOfCode2023
                     return;
                 }
             }
-        }
-
-
-
-        private static int dm_consoleTop;
-        private static void InitDrawMap()
-        {
-#if DRAWMAPENABLED
-            dm_consoleTop = Console.CursorTop;
-            Log.Write(CC.CursorHide);
-#endif
-        }
-        private static void CloseDrawMap()
-        {
-#if DRAWMAPENABLED
-            Log.Write(CC.CursorShow);
-#endif
-        }
-        private static void DrawMap(ProcessParameters parameters, int sleep = 0)
-        {
-#if DRAWMAPENABLED
-            if (Log.Enabled == false) return;
-            var sb = new StringBuilder();
-
-            for (int y = 0; y < parameters.Height; y++)
-            {
-                for (int x = 0; x < parameters.Width; x++)
-                {
-                    var c = parameters.Input.GetAt(x, y, parameters.Width, parameters.Height, out _);
-                    var m = parameters.Map.GetAt(x, y, parameters.Width, parameters.Height, out _);
-
-                    // replace dot because our terminal (and Cascadia Nerd Cove font)
-                    // shows 3 dots (...) as it's own glyph, which makes it a bit harder to read
-                    if (c == '.') c = CC.DotReplacement;
-
-                    var colorFlag = CC.Frm;
-                    if (m != 0)
-                        colorFlag = CC.Sys;
-
-                    if (x == parameters.X && y == parameters.Y)
-                        sb.Append($"{CC.HBg}");
-
-                    sb.Append($"{colorFlag}{c}");
-
-                    if (x == parameters.X && y == parameters.Y)
-                        sb.Append($"{CC.Clr}");
-                }
-
-                sb.AppendLine($"{CC.Clr}");
-            }
-
-            Console.CursorTop = dm_consoleTop;
-            Console.CursorLeft = 0;
-            Log.WriteLine(sb.ToString());
-
-            Thread.Sleep(sleep);
-#endif
-        }
-
-        private static void DrawMap(StringSpan input, Span<byte> map, Span<byte> bkColorBuffer, int width, int heigth, List<(int, int)> currentPositions, int sleep = 0)
-        {
-#if DRAWMAPENABLED
-            // public const string HBg = "\u001b[48;2;180;180;30m";
-            if (Log.Enabled == false) return;
-            var sb = new StringBuilder();
-
-            for (int y = 0; y < heigth; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    var c = input.GetAt(x, y, width, heigth, out _);
-                    var m = map.GetAt(x, y, width, heigth, out _);
-                    var bk = bkColorBuffer.GetAt(x, y, width, heigth, out _);
-
-                    // replace dot because our terminal (and Cascadia Nerd Cove font)
-                    // shows 3 dots (...) as it's own glyph, which makes it a bit harder to read
-                    if (c == '.') c = CC.DotReplacement;
-
-                    // rgb coloring
-                    var percent = ((float)BitOperations.PopCount(m) / Enum.GetValues<BeamDirection>().Length);
-                    var r = Math.Max(0, Math.Min(255, 30 + (int)(75 * percent)));
-                    var g = Math.Max(0, Math.Min(255, 30 + (int)(210 * percent)));
-                    var b = Math.Max(0, Math.Min(255, 30 + (int)(180 * percent)));
-
-                    sb.Append($"\u001b[38;2;{r};{g};{b}m\u001b[48;2;{bk};{bk};0m");
-                    sb.Append($"{c}");
-                }
-
-                sb.AppendLine($"{CC.Clr}");
-            }
-
-            Console.CursorTop = dm_consoleTop;
-            Console.CursorLeft = 0;
-            Log.WriteLine(sb.ToString());
-
-            Thread.Sleep(sleep);
-#endif
         }
 
 
@@ -282,7 +183,7 @@ namespace AdventOfCode2023
                 if (c == '.')
                 {
                     parameters.StepInDirection();
-                    DrawMap(parameters, DrawMapDelay);
+                    //                    DrawMap(parameters, DrawMapDelay);
                     continue;
                 }
 
@@ -302,7 +203,7 @@ namespace AdventOfCode2023
                         _ => throw new NotImplementedException(),
                     };
                     parameters.StepInDirection();
-                    DrawMap(parameters, DrawMapDelay);
+                    //   DrawMap(parameters, DrawMapDelay);
 
                     continue;
                 }
@@ -321,7 +222,7 @@ namespace AdventOfCode2023
                         _ => throw new NotImplementedException(),
                     };
                     parameters.StepInDirection();
-                    DrawMap(parameters, DrawMapDelay);
+                    // DrawMap(parameters, DrawMapDelay);
 
                     continue;
                 }
@@ -344,7 +245,7 @@ namespace AdventOfCode2023
                             Input = parameters.Input,
                             Map = parameters.Map
                         };
-                        DrawMap(param1, DrawMapDelay);
+                        //     DrawMap(param1, DrawMapDelay);
                         ProcessBeam(param1);
 
                         var param2 = new ProcessParameters
@@ -357,14 +258,14 @@ namespace AdventOfCode2023
                             Input = parameters.Input,
                             Map = parameters.Map
                         };
-                        DrawMap(param2, DrawMapDelay);
+                        //     DrawMap(param2, DrawMapDelay);
                         ProcessBeam(param2);
 
                         return;
                     }
                     // else just continue
                     parameters.StepInDirection();
-                    DrawMap(parameters, DrawMapDelay);
+                    //     DrawMap(parameters, DrawMapDelay);
                     continue;
                 }
                 if (c == '|')
@@ -397,22 +298,22 @@ namespace AdventOfCode2023
                     }
                     // else just continue
                     parameters.StepInDirection();
-                    DrawMap(parameters, DrawMapDelay);
+                    //   DrawMap(parameters, DrawMapDelay);
                     continue;
                 }
             }
         }
 
         private static byte[]? _mapMemory = null;
-        private static byte[]? _bkColorBuffer = null;
         private static unsafe long EnergizeMapWithBeam(StringSpan lines, int width, int height, int beamStartX, int beamStartY, BeamDirection initialDirection)
         {
+#if DRAWMAPENABLED
+            Console.ReadLine();
+            Console.WriteLine("Processing...");
+#endif
             // need a field map
             if (_mapMemory == null || _mapMemory.Length != (width * height))
                 _mapMemory = new byte[width * height];
-
-            if (_bkColorBuffer == null || _bkColorBuffer.Length != (width * height))
-                _bkColorBuffer = new byte[width * height];
 
             // we could also use stackalloc like this:
             // var map2 = stackalloc byte[width * height];
@@ -424,11 +325,24 @@ namespace AdventOfCode2023
             var map = _mapMemory.AsSpan();
             map.Clear(); // clear map after last use
 
-            var colorBuffer = _bkColorBuffer.AsSpan();
-            colorBuffer.Clear(); // clear map after last use
+#if DRAWMAPENABLED
+            var bitCountMax = Enum.GetValues<BeamDirection>().Length;
+            var mapDrawer = Log.CreateRectangularMapContext(width, height);
+            mapDrawer.Init();
+            mapDrawer.SetBackgroundPostProcess((@in, _, _) => ((byte)Math.Max(0, @in.Item1 - 10), (byte)Math.Max(0, @in.Item2 - 10), (byte)Math.Max(0, @in.Item3 - 10)));
+            mapDrawer.SetForegroundPostProcess((@in, x, y) =>
+            {
+                var m = _mapMemory[y * width + x];
+                var per = (float)BitOperations.PopCount(m) / (float)bitCountMax;
 
-            InitDrawMap();
-
+                var clr = (byte)Math.Max(30, Math.Min(255, (int)(250 * per)));
+                return (20, clr, clr);
+            }
+            );
+            mapDrawer.SetContent(lines, replaceDots: true);
+            mapDrawer.FillForegroundColor(30, 30, 30);
+            mapDrawer.FillBackgroundColor(0, 0, 0);
+#endif
 
             // just for fun, we'll do a object way, with Update() method instead of
             // recursion
@@ -442,24 +356,19 @@ namespace AdventOfCode2023
                 while (beams.TryDequeue(out var beam))
                     beam.Update(lines, map, width, height, beams2);
 
+#if DRAWMAPENABLED
                 var positions = beams2.Select(b => (b.X, b.Y));
-
-                foreach (var position in positions)
-                {
-                    colorBuffer.SetAt(180, position.X, position.Y, width, height, out _);
-                }
-                
-
-                DrawMap(lines, map, colorBuffer, width, height, positions.ToList(), sleep: DrawMapDelay);
-
-                for(int i = 0; i < colorBuffer.Length; i++)
-                    colorBuffer[i] = (byte)Math.Max(0, colorBuffer[i] - 10);
-
+                foreach (var (X, Y) in positions)
+                    mapDrawer.SetBackgroundColor(X, Y, r: 180, g: 180, b: 40);
+                mapDrawer.DrawAndWait(DrawMapDelay);
+#endif
 
                 (beams, beams2) = (beams2, beams);
             }
 
-            CloseDrawMap();
+#if DRAWMAPENABLED
+            mapDrawer.Close();
+#endif
 
 
             //// process with beam from starting point (0, 0), to the right
