@@ -21,4 +21,5 @@
     public const string Frm = "\u001b[38;2;80;80;80m";
 
     public const string ABg = "\u001b[48;2;30;30;30m";
+    public const string HBg = "\u001b[48;2;180;180;30m";
 }

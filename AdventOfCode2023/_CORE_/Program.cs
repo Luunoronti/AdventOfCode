@@ -111,7 +111,9 @@ internal partial class Program
     private delegate long RunMethodSpanParam(StringSpan input);
 
 
-    private delegate long RunMethodSpanWidthHeigthParam(StringSpan input, int lineWidth, int lineHeigth);
+    private delegate long RunMethodSpanWidthHeigthParam(StringSpan input, int lineWidth, int lineCount);
+    private delegate long RunMethodStringWidthHeigthParam(string input, int lineWidth, int lineCount);
+    private delegate long RunMethodStringArrWidthHeigthParam(string[] input, int lineWidth, int lineCount);
 
 
     private static long RunMethod(Type type, string methodName, bool useTestData)
@@ -136,8 +138,7 @@ internal partial class Program
         var methodParameters = method.GetParameters();
         var answer = 0L;
         Stopwatch sw = new();
-
-
+        
         bool HasParameters(params Type[] types)
         {
             if (methodParameters.Length != types.Length)
@@ -158,17 +159,36 @@ internal partial class Program
             return input;
         }
 
-
         if (HasParameters(typeof(StringSpan), typeof(int), typeof(int)))
         {
             var lines = ReadInputLines(type, useTestData: useTestData);
             var width = lines[0].Length;
-            var height = lines.Length;
+            var count = lines.Length;
             var input = ProcessInputForMethod(string.Join("", lines).Replace("\n", "").Replace("\r", ""));
 
             var del = method.CreateDelegate<RunMethodSpanWidthHeigthParam>();
             sw.Start();
-            answer = del(input.AsSpan(), width, height);
+            answer = del(input.AsSpan(), width, count);
+        }
+        else if (HasParameters(typeof(string), typeof(int), typeof(int)))
+        {
+            var lines = ReadInputLines(type, useTestData: useTestData);
+            var width = lines[0].Length;
+            var count = lines.Length;
+            var input = ProcessInputForMethod(string.Join("", lines).Replace("\n", "").Replace("\r", ""));
+
+            var del = method.CreateDelegate<RunMethodStringWidthHeigthParam>();
+            sw.Start();
+            answer = del(input, width, count);
+        }
+        else if (HasParameters(typeof(string[]), typeof(int), typeof(int)))
+        {
+            var lines = ReadInputLines(type, useTestData: useTestData);
+            var width = lines[0].Length;
+            var count = lines.Length;
+            var del = method.CreateDelegate<RunMethodStringArrWidthHeigthParam>();
+            sw.Start();
+            answer = del(lines, width, count);
         }
         else if (HasParameters(typeof(string[])))
         {
@@ -305,14 +325,14 @@ namespace AdventOfCode{Year}
         //[RemoveSpacesFromInput]
         //[RemoveNewLinesFromInput]
         // change to string or string[] to get other types of input
-        public static long Part1(StringSpan lines)
+        public static long Part1(StringSpan input, int lineWidth, int count)
         {
             return 0;
         }
         //[RemoveSpacesFromInput]
         //[RemoveNewLinesFromInput]
         // change to string or string[] to get other types of input
-        public static long Part2(StringSpan lines)
+        public static long Part2(StringSpan input, int lineWidth, int count)
         {
             return 0;
         }

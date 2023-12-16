@@ -1,5 +1,6 @@
 ﻿#define DRAWMAPENABLED
 
+using System.Runtime.InteropServices;
 using System.Text;
 using StringSpan = System.ReadOnlySpan<char>;
 
@@ -15,7 +16,7 @@ namespace AdventOfCode2023
     class Day16
     {
         [Flags]
-        enum BeamDirection
+        enum BeamDirection : byte
         {
             Left = 0x01,
             Right = 0x02,
@@ -23,17 +24,20 @@ namespace AdventOfCode2023
             Down = 0x08,
         }
 
+        // try to make this struct as small as possible
+        // to fit on stack
+        [StructLayout(LayoutKind.Sequential)]
         ref struct ProcessParameters
         {
-            public StringSpan Input;
+            public StringSpan Input; // each span is sizeof(ref) + sizeof(int)
             public Span<byte> Map;
-            public int Width;
-            public int Heigth;
-            public int X;
-            public int Y;
+            public short Width;
+            public short Height;
+            public short X;
+            public short Y;
             public BeamDirection Direction;
 
-            // helper method that will get called a lot, so make it here
+            // helper method that will get called in few places, so make it here
             public void StepInDirection()
             {
                 switch (Direction)
@@ -46,10 +50,6 @@ namespace AdventOfCode2023
             }
         }
 
-        [RemoveSpacesFromInput]
-        [RemoveNewLinesFromInput]
-        // change to string or string[] to get other types of input
-        public static long Part1(StringSpan lines, int width, int height) => StartAnalyzing(lines, width, height, 0, 0, BeamDirection.Right);
 
         private static int dm_consoleTop;
         private static void InitDrawMap()
@@ -71,28 +71,28 @@ namespace AdventOfCode2023
             if (Log.Enabled == false) return;
             var sb = new StringBuilder();
 
-            for (int y = 0; y < parameters.Heigth; y++)
+            for (int y = 0; y < parameters.Height; y++)
             {
                 for (int x = 0; x < parameters.Width; x++)
                 {
-                    var c = parameters.Input.GetAt(x, y, parameters.Width, parameters.Heigth, out _);
-                    var m = parameters.Map.GetAt(x, y, parameters.Width, parameters.Heigth, out _);
-
-
-                    var colorFlag = CC.Frm;
-                    if (x == parameters.X && y == parameters.Y)
-                    {
-                        colorFlag = CC.Val;
-                    }
-                    else if (m != 0)
-                    {
-                        colorFlag = CC.Sys;
-                    }
+                    var c = parameters.Input.GetAt(x, y, parameters.Width, parameters.Height, out _);
+                    var m = parameters.Map.GetAt(x, y, parameters.Width, parameters.Height, out _);
 
                     // replace dot because our terminal (and Cascadia Nerd Cove font)
                     // shows 3 dots (...) as it's own glyph, which makes it a bit harder to read
                     if (c == '.') c = CC.DotReplacement;
+
+                    var colorFlag = CC.Frm;
+                    if (m != 0)
+                        colorFlag = CC.Sys;
+
+                    if (x == parameters.X && y == parameters.Y)
+                        sb.Append($"{CC.HBg}");
+                    
                     sb.Append($"{colorFlag}{c}");
+                    
+                    if (x == parameters.X && y == parameters.Y)
+                        sb.Append($"{CC.Clr}");
                 }
 
                 sb.AppendLine($"{CC.Clr}");
@@ -111,12 +111,12 @@ namespace AdventOfCode2023
             // loop exit logic inside
             while (true)
             {
-                var c = parameters.Input.GetAt(parameters.X, parameters.Y, parameters.Width, parameters.Heigth, out var outOfBounds);
+                var c = parameters.Input.GetAt(parameters.X, parameters.Y, parameters.Width, parameters.Height, out var outOfBounds);
                 // beam has left the map
                 if (outOfBounds)
                     return;
-                
-                var m = parameters.Map.GetAt(parameters.X, parameters.Y, parameters.Width, parameters.Heigth, out outOfBounds);
+
+                var m = parameters.Map.GetAt(parameters.X, parameters.Y, parameters.Width, parameters.Height, out outOfBounds);
 
                 // beam has left the map - this should not happen, map is the same dimensions as input
                 if (outOfBounds)
@@ -129,7 +129,7 @@ namespace AdventOfCode2023
 
                 // we 'energize' our spot
                 // and save our direction
-                parameters.Map.SetAt((byte)(m | (byte)parameters.Direction), parameters.X, parameters.Y, parameters.Width, parameters.Heigth, out _);
+                parameters.Map.SetAt((byte)(m | (byte)parameters.Direction), parameters.X, parameters.Y, parameters.Width, parameters.Height, out _);
 
                 // if our current place is empty space ('.'), continue in same direction
                 if (c == '.')
@@ -190,9 +190,9 @@ namespace AdventOfCode2023
                         var param1 = new ProcessParameters
                         {
                             Direction = BeamDirection.Right,
-                            X = parameters.X + 1,
+                            X = (short)(parameters.X + 1),
                             Y = parameters.Y,
-                            Heigth = parameters.Heigth,
+                            Height = parameters.Height,
                             Width = parameters.Width,
                             Input = parameters.Input,
                             Map = parameters.Map
@@ -203,9 +203,9 @@ namespace AdventOfCode2023
                         var param2 = new ProcessParameters
                         {
                             Direction = BeamDirection.Left,
-                            X = parameters.X - 1,
+                            X = (short)(parameters.X - 1),
                             Y = parameters.Y,
-                            Heigth = parameters.Heigth,
+                            Height = parameters.Height,
                             Width = parameters.Width,
                             Input = parameters.Input,
                             Map = parameters.Map
@@ -229,8 +229,8 @@ namespace AdventOfCode2023
                         {
                             Direction = BeamDirection.Down,
                             X = parameters.X,
-                            Y = parameters.Y + 1,
-                            Heigth = parameters.Heigth,
+                            Y = (short)(parameters.Y + 1),
+                            Height = parameters.Height,
                             Width = parameters.Width,
                             Input = parameters.Input,
                             Map = parameters.Map
@@ -240,8 +240,8 @@ namespace AdventOfCode2023
                         {
                             Direction = BeamDirection.Up,
                             X = parameters.X,
-                            Y = parameters.Y - 1,
-                            Heigth = parameters.Heigth,
+                            Y = (short)(parameters.Y - 1),
+                            Height = parameters.Height,
                             Width = parameters.Width,
                             Input = parameters.Input,
                             Map = parameters.Map
@@ -256,21 +256,32 @@ namespace AdventOfCode2023
             }
         }
 
-        private static long StartAnalyzing(StringSpan lines, int width, int heigth, int x, int y, BeamDirection initialDirection)
+        private static byte[]? _mapMemory = null;
+        private static unsafe long EnergizeMapWithBeam(StringSpan lines, int width, int heigth, int beamStartX, int beamStartY, BeamDirection initialDirection)
         {
             // need a field map
-            var mapMemory = new byte[width * heigth];
-            var map = mapMemory.AsSpan();
+            if (_mapMemory == null || _mapMemory.Length != (width * heigth))
+                _mapMemory = new byte[width * heigth];
+
+            // we could also use stackalloc like this:
+            // var map2 = stackalloc byte[width * height];
+            // var map = new Span<byte>(map2, width * height);
+            // but this would limit our possible map size, as
+            // stack space is limited, especially given the fact
+            // that we use recursion 
+
+            var map = _mapMemory.AsSpan();
+            map.Clear(); // clear map after last use
 
             InitDrawMap();
             // process with beam from starting point (0, 0), to the right
             ProcessBeam(new ProcessParameters
             {
                 Direction = initialDirection,
-                X = x,
-                Y = y,
-                Heigth = heigth,
-                Width = width,
+                X = (short)beamStartX,
+                Y = (short)beamStartY,
+                Height = (short)heigth,
+                Width = (short)width,
                 Input = lines,
                 Map = map
             });
@@ -289,30 +300,32 @@ namespace AdventOfCode2023
         [RemoveSpacesFromInput]
         [RemoveNewLinesFromInput]
         // change to string or string[] to get other types of input
-        public static long Part2(StringSpan lines, int width, int height)
+        public static long Part1(StringSpan input, int lineWidth, int count) => EnergizeMapWithBeam(input, lineWidth, count, 0, 0, BeamDirection.Right);
+
+        [RemoveSpacesFromInput]
+        [RemoveNewLinesFromInput]
+        // change to string or string[] to get other types of input
+        public static long Part2(StringSpan input, int lineWidth, int count)
         {
             // our method is fast enough to just search for each possibility independently
             // we could try to keep the same map from steps before, and skip 
             // beams that were already traversed
+            // also, because we are using one map buffer, we can't use threads
             long sum = 0L;
-            
-            for (int i = 0; i < width; i++)
+
+            for (int i = 0; i < lineWidth; i++)
             {
-                sum = Math.Max(sum, StartAnalyzing(lines, width, height, i, 0, BeamDirection.Down));
-                sum = Math.Max(sum, StartAnalyzing(lines, width, height, i, height - 1, BeamDirection.Up));
+                sum = Math.Max(sum, EnergizeMapWithBeam(input, lineWidth, count, i, 0, BeamDirection.Down));
+                sum = Math.Max(sum, EnergizeMapWithBeam(input, lineWidth, count, i, count - 1, BeamDirection.Up));
             }
 
-            for (int i = 0; i < height; i++)
+            for (int i = 0; i < count; i++)
             {
-                sum = Math.Max(sum, StartAnalyzing(lines, width, height, 0, 0, BeamDirection.Right));
-                sum = Math.Max(sum, StartAnalyzing(lines, width, height, width - 1, height - 1, BeamDirection.Left));
+                sum = Math.Max(sum, EnergizeMapWithBeam(input, lineWidth, count, 0, 0, BeamDirection.Right));
+                sum = Math.Max(sum, EnergizeMapWithBeam(input, lineWidth, count, lineWidth - 1, count - 1, BeamDirection.Left));
             }
             return sum;
         }
-
-
-
-
 
     }
 }
