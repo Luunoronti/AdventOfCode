@@ -25,7 +25,7 @@ namespace AdventOfCode2023
         }
 
         // try to make this struct as small as possible
-        // to fit on stack
+        // to fit as many as possible (we use recursion, so stack size is important)
         [StructLayout(LayoutKind.Sequential)]
         ref struct ProcessParameters
         {
