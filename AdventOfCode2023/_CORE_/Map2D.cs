@@ -1,20 +1,21 @@
-﻿class Map1D
+﻿using StringSpan = System.ReadOnlySpan<char>;
+class Map2D
 {
     public int Width { get; }
     public int Height { get; }
     public int Length { get; }
-    public Map1D(int width, int height)
+    public Map2D(int width, int height)
     {
         Width = width;
         Height = height;
         Length = width * height;
     }
 }
-class Map1D<T> : Map1D
+class Map2D<T> : Map2D
 {
-    private T[] _map;
+    protected T[] _map;
 
-    public Map1D(int width, int height) : base(width, height) => _map = new T[Length];
+    public Map2D(int width, int height) : base(width, height) => _map = new T[Length];
 
     public T At(int x, int y, out bool outOfRange)
     {
@@ -52,13 +53,28 @@ class Map1D<T> : Map1D
         return _map[pos] = value;
     }
 
+    public T AtOffset(int offset)
+    {
+        if (offset < 0 || offset >= Length) return default;
+        return _map[offset];
+    }
+
+
 }
-class Map1DSpan<T> : Map1D
+class Map2DSpan<T> : Map2D<T>
 {
-    public Map1DSpan(int width, int height) : base(width, height) { }
+    public Map2DSpan(int width, int height) : base(width, height) { }
+    public Map2DSpan(int width, int height, StringSpan input, Func<char, T> mapFunc) : base(width, height) => Map(input, mapFunc);
 
-    public Span<T> ToSpan() => default;
+    public Span<T> AsSpan() => _map.AsSpan();
+    public void Map(StringSpan input, Func<char, T> mapFunc)
+    {
+        if (mapFunc == null) throw new ArgumentNullException(nameof(mapFunc));
+        var len = Math.Min(_map.Length, input.Length);
+        var span = _map.AsSpan();
+        for (int i = 0; i < len; i++)
+        {
+            span[i] = mapFunc(input[i]);
+        }
+    }
 }
-
-
-

@@ -7,12 +7,14 @@ static partial class Log
 {
     public class MapContext : IDisposable
     {
+        private const int DrawTimeIncreaseDecreaseStepDefault = 5;
+
         private int _consoleTop;
         private readonly char[] _chars;
         private readonly int[] _foregrounds;
         private readonly int[] _background;
-        private Func<(byte, byte, byte), int, int, (byte, byte, byte)>? _backgroundPostProcess; // in, x, y, out
-        private Func<(byte, byte, byte), int, int, (byte, byte, byte)>? _foregroundPostProcess; // in, x, y, out
+        private Func<(byte r, byte g, byte b), (int x, int y), (byte r, byte g, byte b)>? _backgroundPostProcess; // in, x, y, out
+        private Func<(byte r, byte g, byte b), (int x, int y), (byte r, byte g, byte b)>? _foregroundPostProcess; // in, x, y, out
 
         internal MapContext(int width, int heigth)
         {
@@ -25,6 +27,10 @@ static partial class Log
         }
         public int Width { get; }
         public int Height { get; }
+
+        private int _initialDrawDesiredTime;
+        private int _drawDesiredTime;
+        private int _drawTimeIncreaseStep = 5;
 
         public void SetContent(StringSpan content, bool replaceDots = false)
         {
@@ -84,8 +90,8 @@ static partial class Log
         public void FillBackgroundColor(int color) => _background.AsSpan().Fill(color);
         public void FillBackgroundColor(byte r, byte g, byte b) => _background.AsSpan().Fill(r | g << 8 | b << 16);
 
-        public void SetBackgroundPostProcess(Func<(byte, byte, byte), int, int, (byte, byte, byte)> postProcessFunction) => _backgroundPostProcess = postProcessFunction;
-        public void SetForegroundPostProcess(Func<(byte, byte, byte), int, int, (byte, byte, byte)> postProcessFunction) => _foregroundPostProcess = postProcessFunction;
+        public void SetBackgroundPostProcess(Func<(byte r, byte g, byte b), (int x, int y), (byte r, byte g, byte b)> postProcessFunction) => _backgroundPostProcess = postProcessFunction;
+        public void SetForegroundPostProcess(Func<(byte r, byte g, byte b), (int x, int y), (byte r, byte g, byte b)> postProcessFunction) => _foregroundPostProcess = postProcessFunction;
         public void Draw()
         {
             // post background
@@ -97,8 +103,8 @@ static partial class Log
                     for (int x = 0; x < Width; x++)
                     {
                         var c = span.GetBytesAt(x, y, Width, Height, out _);
-                        var p = _backgroundPostProcess((c.a, c.b, c.c), x, y);
-                        span.SetAt(p.Item1, p.Item2, p.Item3, 0, x, y, Width, Height, out _);
+                        var (r, g, b) = _backgroundPostProcess((c.a, c.b, c.c), (x, y));
+                        span.SetAt(r, g, b, 0, x, y, Width, Height, out _);
                     }
                 }
             }
@@ -111,31 +117,53 @@ static partial class Log
                     for (int x = 0; x < Width; x++)
                     {
                         var c = span.GetBytesAt(x, y, Width, Height, out _);
-                        var p = _foregroundPostProcess((c.a, c.b, c.c), x, y);
-                        span.SetAt(p.Item1, p.Item2, p.Item3, 0, x, y, Width, Height, out _);
+                        var (r, g, b) = _foregroundPostProcess((c.a, c.b, c.c), (x, y));
+                        span.SetAt(r, g, b, 0, x, y, Width, Height, out _);
                     }
                 }
             }
 
+            if (Console.KeyAvailable)
+            {
+                var k = Console.ReadKey(true);
+                if (k.KeyChar == '+')
+                {
+                    _drawDesiredTime += _drawTimeIncreaseStep;
+                }
+                else if (k.KeyChar == '0')
+                {
+                    _drawDesiredTime = _initialDrawDesiredTime;
+                }
+                else if (k.KeyChar == '-')
+                {
+                    _drawDesiredTime -= _drawTimeIncreaseStep;
+                    _drawDesiredTime = Math.Max(0, _drawDesiredTime);
+                }
+            }
+
+           
             DrawRectangularMap(_chars, _foregrounds, _background, Width, Height);
         }
 
-        public void DrawAndWait(int time)
+        public void DrawAndWait()
         {
             var sw = Stopwatch.StartNew();
             Draw();
             sw.Stop();
-            var remaining = time - sw.ElapsedMilliseconds;
+            var remaining = _drawDesiredTime - sw.ElapsedMilliseconds;
             if (remaining > 0)
             {
                 Thread.Sleep((int)remaining);
             }
         }
 
-        public void Init()
+
+        public void Init(int drawDesiredTime, int drawTimeIncreaseDecreaseStep = DrawTimeIncreaseDecreaseStepDefault)
         {
             _consoleTop = Console.CursorTop;
             Write(CC.CursorHide);
+            _initialDrawDesiredTime = _drawDesiredTime = drawDesiredTime;
+            _drawTimeIncreaseStep = drawTimeIncreaseDecreaseStep;
         }
         public void Close()
         {
@@ -145,7 +173,7 @@ static partial class Log
         private void DrawRectangularMap(StringSpan content, Span<int> foreground, Span<int> background, int width, int height)
         {
             if (Enabled == false) return;
-            var sb = new StringBuilder(width * height * 40 );
+            var sb = new StringBuilder(width * height * 40);
             var lastR = -1; var lastG = -1; var lastB = -1;
             var lastBR = -1; var lastBG = -1; var lastBB = -1;
 
@@ -179,6 +207,7 @@ static partial class Log
             }
             Console.CursorTop = _consoleTop;
             Console.CursorLeft = 0;
+            WriteLine($"Press \'+\' to increase animation delay, \'-\' to decrease, \'0\' to reset. Current: {_drawDesiredTime} ms");
             WriteLine(sb.ToString());
         }
 

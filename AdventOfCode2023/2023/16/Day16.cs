@@ -15,7 +15,7 @@ namespace AdventOfCode2023
     [ExpectedTestAnswerPart2(51)] // if != 0, will report failure if expected answer != given answer
     class Day16
     {
-        private const int DrawMapDelay = 40;
+        private const int DrawMapDelay = 5;
         [Flags]
         enum BeamDirection : byte
         {
@@ -308,8 +308,8 @@ namespace AdventOfCode2023
         private static unsafe long EnergizeMapWithBeam(StringSpan lines, int width, int height, int beamStartX, int beamStartY, BeamDirection initialDirection)
         {
 #if DRAWMAPENABLED
+            Log.WriteLine("Press any key to continue...");
             Console.ReadLine();
-            Console.WriteLine("Processing...");
 #endif
             // need a field map
             if (_mapMemory == null || _mapMemory.Length != (width * height))
@@ -328,11 +328,11 @@ namespace AdventOfCode2023
 #if DRAWMAPENABLED
             var bitCountMax = Enum.GetValues<BeamDirection>().Length;
             var mapDrawer = Log.CreateRectangularMapContext(width, height);
-            mapDrawer.Init();
-            mapDrawer.SetBackgroundPostProcess((@in, _, _) => ((byte)Math.Max(0, @in.Item1 - 10), (byte)Math.Max(0, @in.Item2 - 10), (byte)Math.Max(0, @in.Item3 - 10)));
-            mapDrawer.SetForegroundPostProcess((@in, x, y) =>
+            mapDrawer.Init(DrawMapDelay);
+            mapDrawer.SetBackgroundPostProcess((@in, _) => ((byte)Math.Max(0, @in.Item1 - 10), (byte)Math.Max(0, @in.Item2 - 10), (byte)Math.Max(0, @in.Item3 - 10)));
+            mapDrawer.SetForegroundPostProcess((@in, pos) =>
             {
-                var m = _mapMemory[y * width + x];
+                var m = _mapMemory[pos.y * width + pos.x];
                 var per = (float)BitOperations.PopCount(m) / (float)bitCountMax;
 
                 var clr = (byte)Math.Max(30, Math.Min(255, (int)(250 * per)));
@@ -360,7 +360,7 @@ namespace AdventOfCode2023
 #if DRAWMAPENABLED
                 foreach (var (x, y) in beams.Select(b => (b.X, b.Y)))
                     mapDrawer.SetBackgroundColor(x, y, r: 180, g: 180, b: 40);
-                mapDrawer.DrawAndWait(DrawMapDelay);
+                mapDrawer.DrawAndWait();
 #endif
 
             }

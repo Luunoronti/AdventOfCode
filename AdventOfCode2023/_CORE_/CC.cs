@@ -22,4 +22,6 @@
 
     public const string ABg = "\u001b[48;2;30;30;30m";
     public const string HBg = "\u001b[48;2;180;180;30m";
+
+    public static string BgRGB(int r, int g, int b) => $"\u001b[48;2;{r};{g};{b}m";
 }
