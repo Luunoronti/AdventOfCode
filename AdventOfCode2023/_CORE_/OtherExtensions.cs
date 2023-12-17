@@ -48,6 +48,66 @@
         public static T As<T>(this ReadOnlySpan<char> chars, IFormatProvider? formatProvider = null) where T : ISpanParsable<T> => T.Parse(chars, formatProvider);
 
 
+
+        public static T At<T>(this Span<T> span, int x, int y, int width, out bool outOfRange)
+        {
+            var pos = y * width + x;
+            if (pos < 0 || pos >= span.Length)
+            {
+                outOfRange = true;
+                return default;
+            }
+            outOfRange = false;
+            return span[pos];
+        }
+        public static T At<T>(this Span<T> span, int x, int y, int width)
+        {
+            var pos = y * width + x;
+            if (pos < 0 || pos >= span.Length) return default;
+            return span[pos];
+        }
+        public static T At<T>(this Span<T> span, int x, int y, int width, T value, out bool outOfRange)
+        {
+            var pos = y * width + x;
+            if (pos < 0 || pos >= span.Length)
+            {
+                outOfRange = true;
+                return default;
+            }
+            outOfRange = false;
+            return span[pos] = value;
+        }
+        public static T At<T>(this Span<T> span, int x, int y, int width, T value)
+        {
+            var pos = y * width + x;
+            if (pos < 0 || pos >= span.Length) return default;
+            return span[pos] = value;
+        }
+
+        public static T At<T>(this ReadOnlySpan<T> span, int x, int y, int width, out bool outOfRange)
+        {
+            var pos = y * width + x;
+            if (pos < 0 || pos >= span.Length)
+            {
+                outOfRange = true;
+                return default;
+            }
+            outOfRange = false;
+            return span[pos];
+        }
+        public static T At<T>(this ReadOnlySpan<T> span, int x, int y, int width)
+        {
+            var pos = y * width + x;
+            if (pos < 0 || pos >= span.Length) return default;
+            return span[pos];
+        }
+
+
+
+
+
+
+
         public static char GetAt(this ReadOnlySpan<char> span, int x, int y, int width, int height, out bool outOfBounds)
         {
             if (x < 0 || y < 0 || x >= width || y >= height) { outOfBounds = true; return (char)0; }

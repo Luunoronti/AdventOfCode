@@ -3,7 +3,6 @@ using AdventOfCode2023;
 using System.Diagnostics;
 using System.Text;
 using StringSpan = System.ReadOnlySpan<char>;
-
 static partial class Log
 {
     public class MapContext : IDisposable
