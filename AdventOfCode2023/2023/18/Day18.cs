@@ -283,11 +283,15 @@ namespace AdventOfCode2023
             Log.WriteLine($"AABB area: {((long)aabb.width * aabb.height):N0} m2");
             Log.WriteLine($"Initial vertex count: {commands.Length}");
 
+            // idea: If we could create a triangles representation of our mesh
+            // and sum their areas, we could solve the problem quite fast and easy
+
             // convert our vertices to a single mesh, with double precision
             var vertices = ConvertToMesh(commands);
             // triangulate mesh
             var triangles = Triangulate(vertices);
 
+            // problem: triangles appear to overlap, and we may have a double precision issues
             var area = ComputeArea(triangles);
             return area;
         }
