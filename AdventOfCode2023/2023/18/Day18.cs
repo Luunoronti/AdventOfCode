@@ -6,7 +6,7 @@ namespace AdventOfCode2023
     //[Force]                    // uncomment to force processing this type (regardless of which day it is according to DateTime)
     //[AlwaysEnableLog]          // if uncommented, Log.Write() and Log.WriteLine() will still be honored in runs without a debugger (do not confuse with Debug/Release configuration)
     //[DisableLogInDebug]        // if uncommented, Log will be disabled even when under debugger
-    //[UseLiveDataInDeug]        // if uncommented and under a debug session, will use live data (problem data) instead of test data
+    [UseLiveDataInDeug]        // if uncommented and under a debug session, will use live data (problem data) instead of test data
     //[AlwaysUseTestData]        // if uncommented, will use test data in both debugging session and non-debugging session
     [ExpectedTestAnswerPart1(62)] // if != 0, will report failure if expected answer != given answer
     [ExpectedTestAnswerPart2(952_408_144_115)] // if != 0, will report failure if expected answer != given answer
@@ -29,7 +29,9 @@ namespace AdventOfCode2023
             CalculateCommandsXY(commands);
             // create AABB to see how much data we need to generate
             var aabb = GetAABB(commands);
-            Log.WriteLine($"AABB: ({aabb.x}, {aabb.y}, width: {aabb.width}, height: {aabb.height})");
+            Log.WriteLine($"AABB x: {aabb.x}, y: {aabb.y}, width: {aabb.width}, height: {aabb.height}");
+            Log.WriteLine($"AABB area: {((long)aabb.width * aabb.height):N0} m2");
+
             // create our dig map
             var map = new Map2DSpan<int>(aabb.width, aabb.height);
             // estimate our starting position (will be saved in first commands object)
@@ -56,6 +58,7 @@ namespace AdventOfCode2023
             CalculateCommandsXY(commands);
             var aabb = GetAABB(commands);
 
+            Log.WriteLine($"AABB x: {aabb.x}, y: {aabb.y}, width: {aabb.width}, height: {aabb.height}");
             Log.WriteLine($"AABB area: {((long)aabb.width * aabb.height):N0} m2");
             Log.WriteLine($"Initial vertex count: {commands.Length}");
 
@@ -124,6 +127,27 @@ namespace AdventOfCode2023
                 this.v3 = v3;
             }
         }
+
+
+
+
+        #region Voxels => simple mesh generation
+
+        // we will use greedy meshing approach
+
+        // when we deal with voxels, we generate mesh by sticking all the voxels together
+        // but this will produce very ineficient mesh
+        // there are, however, ways to simplify this mesh
+        // and this is what we will do here
+
+
+
+
+         
+
+
+        #endregion
+
 
 
 
@@ -336,6 +360,11 @@ namespace AdventOfCode2023
 
 
         #region Triangularization
+        /////////////////////////
+        /// This does not work really well, because of overlap and double precision issues.
+        /// I'll try sectors and BSP tree (Quake 1 approach)
+        /////////////////////////
+
         private static List<Vertex2D> ConvertToMesh(Span<DigCommand> commands)
         {
             var ret = new List<Vertex2D>(commands.Length);
