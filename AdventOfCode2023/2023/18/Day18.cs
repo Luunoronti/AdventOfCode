@@ -244,11 +244,8 @@ namespace AdventOfCode2023
         // change to string or string[] to get other types of input
         public static long Part1(string[] lines, int lineWidth, int count)
         {
-            //if (Log.Enabled)
-            //{
-            //    Log.WriteLine("Press <Enter> to continue...");
-            //    Console.ReadLine();
-            //}
+            // Part 1 will do with simple mark and flood
+            // Keep it here to test Triangulate approach as well
 
             // create commands
             var commands = CreateCommands(lines).AsSpan();
