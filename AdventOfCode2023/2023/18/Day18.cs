@@ -1,7 +1,5 @@
 ﻿
 using System.Text;
-using static System.Windows.Forms.LinkLabel;
-using StringSpan = System.ReadOnlySpan<char>;
 
 namespace AdventOfCode2023
 {
@@ -14,6 +12,70 @@ namespace AdventOfCode2023
     [ExpectedTestAnswerPart2(952_408_144_115)] // if != 0, will report failure if expected answer != given answer
     class Day18
     {
+
+
+
+        //[RemoveSpacesFromInput]
+        [RemoveNewLinesFromInput]
+        // change to string or string[] to get other types of input
+        public static long Part1(string[] lines, int lineWidth, int count)
+        {
+            // Part 1 will do with simple mark and flood
+            // Keep it here to test Triangulate approach as well
+
+            // create commands
+            var commands = CreateCommands(lines).AsSpan();
+            // create x, y coordinates for each command
+            CalculateCommandsXY(commands);
+            // create AABB to see how much data we need to generate
+            var aabb = GetAABB(commands);
+            Log.WriteLine($"AABB: ({aabb.x}, {aabb.y}, width: {aabb.width}, height: {aabb.height})");
+            // create our dig map
+            var map = new Map2DSpan<int>(aabb.width, aabb.height);
+            // estimate our starting position (will be saved in first commands object)
+            CalculateWorldPositions(commands, aabb);
+            // now, process commands to create trenches. also, color them accordingly
+            DigTrenches(commands, map);
+
+            //DrawMap(map);
+            // now, get start position of fill
+            var fillStart = GetFloodFillStartPosition(map, commands[0].x, commands[0].y);
+            FloodFillNonZero(map, fillStart.X, fillStart.Y);
+
+            // count non-zero values in our map
+            var sum = CountNonZeroColors(map);
+            return sum;
+        }
+        //[RemoveSpacesFromInput]
+        [RemoveNewLinesFromInput]
+        // change to string or string[] to get other types of input
+        public static long Part2(string[] lines, int lineWidth, int count)
+        {
+            // create commands
+            var commands = CreateCommands2(lines).AsSpan();
+            CalculateCommandsXY(commands);
+            var aabb = GetAABB(commands);
+
+            Log.WriteLine($"AABB area: {((long)aabb.width * aabb.height):N0} m2");
+            Log.WriteLine($"Initial vertex count: {commands.Length}");
+
+            // idea: If we could create a triangles representation of our mesh
+            // and sum their areas, we could solve the problem quite fast and easy
+
+            // convert our vertices to a single mesh, with double precision
+            var vertices = ConvertToMesh(commands);
+            // triangulate mesh
+            var triangles = Triangulate(vertices);
+
+            // problem: triangles appear to overlap, and we may have a double precision issues
+            var area = ComputeArea(triangles);
+            return area;
+        }
+
+
+
+
+
         enum Direction : byte
         {
             Xnegative = 0,
@@ -37,6 +99,36 @@ namespace AdventOfCode2023
             public int width;
             public int height;
         }
+        struct Vertex2D
+        {
+            public double x;
+            public double y;
+
+            public Vertex2D(double x, double y)
+            {
+                this.x = x;
+                this.y = y;
+            }
+        }
+
+        struct Triangle
+        {
+            public Vertex2D v1;
+            public Vertex2D v2;
+            public Vertex2D v3;
+
+            public Triangle(Vertex2D v1, Vertex2D v2, Vertex2D v3)
+            {
+                this.v1 = v1;
+                this.v2 = v2;
+                this.v3 = v3;
+            }
+        }
+
+
+
+
+        #region Draw and fill approach (on my beloved 2d map)
 
         private static void CalculateCommandsXY(Span<DigCommand> commands)
         {
@@ -239,64 +331,11 @@ namespace AdventOfCode2023
             }
             return sum;
         }
-        //[RemoveSpacesFromInput]
-        [RemoveNewLinesFromInput]
-        // change to string or string[] to get other types of input
-        public static long Part1(string[] lines, int lineWidth, int count)
-        {
-            // Part 1 will do with simple mark and flood
-            // Keep it here to test Triangulate approach as well
 
-            // create commands
-            var commands = CreateCommands(lines).AsSpan();
-            // create x, y coordinates for each command
-            CalculateCommandsXY(commands);
-            // create AABB to see how much data we need to generate
-            var aabb = GetAABB(commands);
-            Log.WriteLine($"AABB: ({aabb.x}, {aabb.y}, width: {aabb.width}, height: {aabb.height})");
-            // create our dig map
-            var map = new Map2DSpan<int>(aabb.width, aabb.height);
-            // estimate our starting position (will be saved in first commands object)
-            CalculateWorldPositions(commands, aabb);
-            // now, process commands to create trenches. also, color them accordingly
-            DigTrenches(commands, map);
-
-            //DrawMap(map);
-            // now, get start position of fill
-            var fillStart = GetFloodFillStartPosition(map, commands[0].x, commands[0].y);
-            FloodFillNonZero(map, fillStart.X, fillStart.Y);
-
-            // count non-zero values in our map
-            var sum = CountNonZeroColors(map);
-            return sum;
-        }
-        //[RemoveSpacesFromInput]
-        [RemoveNewLinesFromInput]
-        // change to string or string[] to get other types of input
-        public static long Part2(string[] lines, int lineWidth, int count)
-        {
-            // create commands
-            var commands = CreateCommands2(lines).AsSpan();
-            CalculateCommandsXY(commands);
-            var aabb = GetAABB(commands);
-
-            Log.WriteLine($"AABB area: {((long)aabb.width * aabb.height):N0} m2");
-            Log.WriteLine($"Initial vertex count: {commands.Length}");
-
-            // idea: If we could create a triangles representation of our mesh
-            // and sum their areas, we could solve the problem quite fast and easy
-
-            // convert our vertices to a single mesh, with double precision
-            var vertices = ConvertToMesh(commands);
-            // triangulate mesh
-            var triangles = Triangulate(vertices);
-
-            // problem: triangles appear to overlap, and we may have a double precision issues
-            var area = ComputeArea(triangles);
-            return area;
-        }
+        #endregion
 
 
+        #region Triangularization
         private static List<Vertex2D> ConvertToMesh(Span<DigCommand> commands)
         {
             var ret = new List<Vertex2D>(commands.Length);
@@ -328,32 +367,6 @@ namespace AdventOfCode2023
             }
             return area;
         }
-        struct Vertex2D
-        {
-            public double x;
-            public double y;
-
-            public Vertex2D(double x, double y)
-            {
-                this.x = x;
-                this.y = y;
-            }
-        }
-
-        struct Triangle
-        {
-            public Vertex2D v1;
-            public Vertex2D v2;
-            public Vertex2D v3;
-
-            public Triangle(Vertex2D v1, Vertex2D v2, Vertex2D v3)
-            {
-                this.v1 = v1;
-                this.v2 = v2;
-                this.v3 = v3;
-            }
-        }
-
 
 
 
@@ -385,7 +398,7 @@ namespace AdventOfCode2023
                 }
                 cur_ind = (begin_ind + 1) % N;
 
-                result.Add(new Triangle (tempPolygon[begin_ind], tempPolygon[cur_ind], tempPolygon[(begin_ind + 2) % N]));
+                result.Add(new Triangle(tempPolygon[begin_ind], tempPolygon[cur_ind], tempPolygon[(begin_ind + 2) % N]));
 
                 //if (triangulate == false)
                 //{
@@ -451,6 +464,16 @@ namespace AdventOfCode2023
             }
             return false;
         }
+        #endregion
+
+
+
+
+
+
+
+
+       
     }
 
 
