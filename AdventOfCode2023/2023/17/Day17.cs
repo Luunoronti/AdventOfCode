@@ -20,10 +20,101 @@ namespace AdventOfCode2023
         enum Direction : byte
         {
             Xnegative = 0,
-            Xpositive = 1,
-            Ynegative = 2,
+            Ynegative = 1,
+            Xpositive = 2,
             Ypositive = 3
         }
+
+
+        struct Node
+        {
+            public Node(int x, int y, Direction direction, int dirMoves)
+            {
+                this.x = x;
+                this.y = y;
+                this.direction = direction;
+                this.dirMoves = dirMoves;
+            }
+            public int x;
+            public int y;
+            public Direction direction;
+            public int dirMoves;
+        }
+        static int TraverseAma(StringSpan input, int width, int height, int minSteps, int maxSteps)
+        {
+            Map2DSpan<int> inputHeats = new(width, height, input, (c) => (c - '0'));
+
+            // two 4-dimensional arrays, one for heats and one for visit flag
+            var heatsMap = new int[width * height * 4 * maxSteps]; // 4 is number of possible directions
+            var visitMap = new bool[width * height * 4 * maxSteps];
+
+            var heats = heatsMap.AsSpan();
+            var visit = visitMap.AsSpan();
+
+            //TODO: for now let's do a PQ, but maybe I can think of something better (more GC friendly) later
+            var queue = new PriorityQueue<Node, long>();
+
+            // we try to add nodes on both directions here
+
+
+
+            // start with two possible directions, right and down
+            queue.Enqueue(new Node(0, 0, Direction.Xpositive, 0), 0);
+            queue.Enqueue(new Node(0, 0, Direction.Ypositive, 0), 0);
+
+
+            while (queue.TryDequeue(out var node, out var priority))
+            {
+                if (visit[MakeOffset(node, width, maxSteps)])
+                    continue;  // this node (with this configuration) has already been visited
+
+                var heat = heats[MakeOffset(node, width, maxSteps)];
+
+                // mark this node as visited
+                visit[MakeOffset(node, width, maxSteps)] = true;
+
+                // move "forward" for max number of allowed steps
+                for (int steps = 0; steps < maxSteps; steps++)
+                {
+                    var ny = node.y + steps * (-2 + (int)node.direction);
+                    var nx = node.x + steps * (-1 + (int)node.direction);
+
+                    var newNode = new Node(nx, ny, node.direction, steps);
+                    TryAddNode(newNode, heat, queue, inputHeats, heats, visit, width, height, maxSteps);
+                }
+                
+            }
+            return 0;
+
+
+            // this would be the method declaration if we were to follow DRY.
+            // I'd argue this is not as nice, the amount of parameters is kinda huge
+            // and we need all of them. some just cause captures, some can't be members or globals (spans)
+        }
+
+
+        private static void TryAddNode(Node node, int heat, PriorityQueue<Node, long> queue, Map2DSpan<int> inputHeats, Span<int> heats, Span<bool> visit, int width, int heigth, int maxSteps)
+        {
+            if (node.x < 0 || node.x >= width || node.y < 0 || node.y >= heigth)
+                return;
+
+            var offset = MakeOffset(node, width, maxSteps);
+
+            if (visit[offset])
+                return; // this node has already been visited, we do not need to queue and waste time
+
+            heat += inputHeats.At(node.x, node.y);
+            heats[offset] = heat;
+            queue.Enqueue(node, heat);
+        }
+
+
+        private static int MakeOffset(Node node, int width, int maxSteps) => (node.y * width * 4 * maxSteps) + (node.x * 4 * maxSteps) + ((int)node.direction * maxSteps) + node.dirMoves;
+        private static int MakeOffset(int x, int y, Direction direction, int steps, int width, int maxSteps) => (y * width * 4 * maxSteps) + (x * 4 * maxSteps) + ((int)direction * maxSteps) + steps;
+
+
+
+
 
 #if DRAWMAPENABLED
 #if SHOW_HIT_MISS_ON_MAP
@@ -67,7 +158,7 @@ namespace AdventOfCode2023
 #if DRAWMAPENABLED
             Log.WriteLine("Press any key to continue...");
             Console.ReadLine();
-
+            Console.Clear();
 #if SHOW_HIT_MISS_ON_MAP
             Log.WriteLine($"{CurrCellClrStr} {CC.Clr} - Current cell");
             Log.WriteLine($"{StepStarvationClrStr} {CC.Clr} - Step starvation");
@@ -122,7 +213,6 @@ namespace AdventOfCode2023
                 };
                 mapDrawer.SetBackgroundColor(x, y, (byte)clr.r, (byte)clr.g, (byte)clr.b);
 #endif
-
                 var heat = visited[y][x].GetValueOrDefault((direction, directionMoves));
 
                 if (directionMoves < maxSteps)
@@ -130,8 +220,11 @@ namespace AdventOfCode2023
 
                 if (directionMoves >= minSteps)
                 {
-                    Move(y, x, L90(direction), heat, 0, mapDrawer);
-                    Move(y, x, R90(direction), heat, 0, mapDrawer);
+                    var left = direction switch { Direction.Ynegative => Direction.Xnegative, Direction.Xnegative => Direction.Ypositive, Direction.Ypositive => Direction.Xpositive, Direction.Xpositive => Direction.Ynegative, };
+                    var right = direction switch { Direction.Ynegative => Direction.Xpositive, Direction.Xpositive => Direction.Ypositive, Direction.Ypositive => Direction.Xnegative, Direction.Xnegative => Direction.Ynegative, };
+
+                    Move(y, x, left, heat, 0, mapDrawer);
+                    Move(y, x, right, heat, 0, mapDrawer);
                 }
 
 #if DRAWMAPENABLED
@@ -144,7 +237,7 @@ namespace AdventOfCode2023
             var maxX = map.Width - 1;
 
 #if DRAWMAPENABLED
-            for(int i = 0; i < 60; i++) mapDrawer.DrawAndWait();
+            for (int i = 0; i < 60; i++) mapDrawer.DrawAndWait();
             mapDrawer.Close();
 #endif
             return visited[maxY][maxX].Min(x => x.Value);
@@ -207,22 +300,7 @@ namespace AdventOfCode2023
                 }
             }
 
-            static Direction L90(Direction direction) => direction switch
-            {
-                Direction.Ynegative => Direction.Xnegative,
-                Direction.Xnegative => Direction.Ypositive,
-                Direction.Ypositive => Direction.Xpositive,
-                Direction.Xpositive => Direction.Ynegative,
-                _ => throw new ArgumentException()
-            };
-            static Direction R90(Direction direction) => direction switch
-            {
-                Direction.Ynegative => Direction.Xpositive,
-                Direction.Xpositive => Direction.Ypositive,
-                Direction.Ypositive => Direction.Xnegative,
-                Direction.Xnegative => Direction.Ynegative,
-                _ => throw new ArgumentException()
-            };
+
         }
     }
 }

@@ -49,17 +49,30 @@ internal partial class Program
         var a2 = RunMethod(type, "Part2", useTestData);
 
         Console.WriteLine();
-        Console.Write($"{CC.Att}===>{CC.Clr} Part {CC.Sys}1{CC.Clr} answer: {CC.Ans}{a1}{CC.Clr}");
+        Console.Write($"{CC.Att}===>{CC.Clr} Part {CC.Sys}1{CC.Clr} answer: {CC.Ans}{a1:N0}{CC.Clr}");
         var expectedAsnwer1 = useTestData ? type.GetCustomAttribute<ExpectedTestAnswerPart1Attribute>()?.Answer ?? 0L : 0L;
 
         if (expectedAsnwer1 > 0 && expectedAsnwer1 != a1)
-            Console.Write($"    {CC.Err}PART 1 FAILED!{CC.Clr} Expected answer: {CC.Ans}{expectedAsnwer1}{CC.Clr}");
+        {
+            Console.Write($"    {CC.Err}PART 1 FAILED!{CC.Clr} Expected answer: {CC.Ans}{expectedAsnwer1:N0}{CC.Clr}");
+            if (expectedAsnwer1 > a1)
+                Console.Write($" (Too small)");
+            else
+                Console.Write($" (Too big)");
+        }
         Console.WriteLine();
-        Console.Write($"{CC.Att}===>{CC.Clr} Part {CC.Sys}2{CC.Clr} answer: {CC.Ans}{a2}{CC.Clr}");
+        Console.Write($"{CC.Att}===>{CC.Clr} Part {CC.Sys}2{CC.Clr} answer: {CC.Ans}{a2:N0}{CC.Clr}");
         var expectedAsnwer2 = useTestData ? type.GetCustomAttribute<ExpectedTestAnswerPart2Attribute>()?.Answer ?? 0L : 0L;
 
         if (expectedAsnwer2 > 0 && expectedAsnwer2 != a2)
-            Console.Write($"    {CC.Err}PART 2 FAILED!{CC.Clr} Expected answer: {CC.Ans}{expectedAsnwer2}{CC.Clr}");
+        {
+            Console.Write($"    {CC.Err}PART 2 FAILED!{CC.Clr} Expected answer: {CC.Ans}{expectedAsnwer2:N0}{CC.Clr}");
+            if(expectedAsnwer2 > a2)
+                Console.Write($" (Too small) - {(expectedAsnwer2 - a2):N0} missing");
+            else
+                Console.Write($" (Too big) - {(a2 - expectedAsnwer2):N0} over");
+
+        }
         Console.WriteLine();
         Console.WriteLine();
 
