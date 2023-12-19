@@ -1,9 +1,6 @@
-using System;
 using System.Data;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-
-//using RuleSet = System.Collections.Generic.List<(string name, string @default, System.Collections.Generic.List<(int field, byte operand, long reqVal, string trg)> rules)>;
 
 namespace AdventOfCode2023
 {
@@ -41,13 +38,9 @@ namespace AdventOfCode2023
         private const byte opGreater = 0x10;
         private const byte opLess = 0x20;
 
-        private const byte xField = 1;
-        private const byte mField = 2;
-        private const byte aField = 3;
-        private const byte sField = 4;
-
         // just want to play with direct memory representation, and see if it's going to be faster than
         // using collections
+        // and if i can do it :)
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         struct Flow
         {
@@ -193,7 +186,7 @@ namespace AdventOfCode2023
 
         // one liner :)
         // it combines operation code and which field is to act upon, into one byte
-        private static byte GetFieldAndOperand(int fld, Operation op) => (byte)(fld switch { Xid => xField, Mid => mField, Aid => aField, Sid => sField, _ => throw new NotImplementedException() } | op switch { Operation.LessThan => opLess, Operation.GreaterThan => opGreater, _ => throw new NotImplementedException() });
+        private static byte GetFieldAndOperand(int fld, Operation op) => (byte)(fld switch { Xid => Xid, Mid => Mid, Aid => Aid , Sid => Sid, _ => throw new NotImplementedException() } | op switch { Operation.LessThan => opLess, Operation.GreaterThan => opGreater, _ => throw new NotImplementedException() });
 
         private static Span<Part> ParseAndBuildParts(string[] input)
         {
@@ -244,7 +237,7 @@ namespace AdventOfCode2023
 
             // moved this to own method, but we want our compiler to optimize it as much as possible
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            unsafe int Operate(int currentOffset, Rule* rule, Part part, out bool noOp)
+            static unsafe int Operate(int currentOffset, Rule* rule, Part part, out bool noOp)
             {
                 noOp = false;
                 // get op value
@@ -254,17 +247,17 @@ namespace AdventOfCode2023
 
                 if ((opFlags & opGreater) == opGreater)
                 {
-                    if (field == xField && part.x > opValue) return rule->trgOffset;
-                    else if (field == mField && part.m > opValue) return rule->trgOffset;
-                    else if (field == aField && part.a > opValue) return rule->trgOffset;
-                    else if (field == sField && part.s > opValue) return rule->trgOffset;
+                    if (field == Xid && part.x > opValue) return rule->trgOffset;
+                    else if (field == Mid && part.m > opValue) return rule->trgOffset;
+                    else if (field == Aid && part.a > opValue) return rule->trgOffset;
+                    else if (field == Sid && part.s > opValue) return rule->trgOffset;
                 }
                 else if ((opFlags & opLess) == opLess)
                 {
-                    if (field == xField && part.x < opValue) return rule->trgOffset;
-                    else if (field == mField && part.m < opValue) return rule->trgOffset;
-                    else if (field == aField && part.a < opValue) return rule->trgOffset;
-                    else if (field == sField && part.s < opValue) return rule->trgOffset;
+                    if (field == Xid && part.x < opValue) return rule->trgOffset;
+                    else if (field == Mid && part.m < opValue) return rule->trgOffset;
+                    else if (field == Aid && part.a < opValue) return rule->trgOffset;
+                    else if (field == Sid && part.s < opValue) return rule->trgOffset;
                 }
                 noOp = true;
                 return currentOffset + Rule.Size;
