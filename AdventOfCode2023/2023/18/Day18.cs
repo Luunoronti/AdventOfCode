@@ -1,5 +1,9 @@
-﻿
-using System.Text;
+﻿#define DRAWMAPENABLED
+//#define DRAWSEGMENTNORMALS
+
+using System.Drawing.Text;
+using System.Numerics;
+using static System.Windows.Forms.DataFormats;
 
 namespace AdventOfCode2023
 {
@@ -12,7 +16,7 @@ namespace AdventOfCode2023
     [ExpectedTestAnswerPart2(952_408_144_115)] // if != 0, will report failure if expected answer != given answer
     class Day18
     {
-
+        private static Log.MapContext mapDrawer;
 
 
         //[RemoveSpacesFromInput]
@@ -20,39 +24,51 @@ namespace AdventOfCode2023
         // change to string or string[] to get other types of input
         public static long Part1(string[] lines, int lineWidth, int count)
         {
-            // Part 1 will do with simple mark and flood
-            // Keep it here to test Triangulate approach as well
-
             // create commands
             var commands = CreateCommands(lines).AsSpan();
             // create x, y coordinates for each command
             CalculateCommandsXY(commands);
             // create AABB to see how much data we need to generate
             var aabb = GetAABB(commands);
-            Log.WriteLine($"AABB x: {aabb.x}, y: {aabb.y}, width: {aabb.width}, height: {aabb.height}");
-            Log.WriteLine($"AABB area: {((long)aabb.width * aabb.height):N0} m2");
-
-            // create our dig map
-            var map = new Map2DSpan<int>(aabb.width, aabb.height);
-            // estimate our starting position (will be saved in first commands object)
+            // recalculate positions to positive coordinates (this step may not be required in final version, but it's nice to have it for now)
             CalculateWorldPositions(commands, aabb);
-            // now, process commands to create trenches. also, color them accordingly
-            DigTrenches(commands, map);
 
-            //DrawMap(map);
-            // now, get start position of fill
-            var fillStart = GetFloodFillStartPosition(map, commands[0].x, commands[0].y);
-            FloodFillNonZero(map, fillStart.X, fillStart.Y);
 
-            // count non-zero values in our map
-            var sum = CountNonZeroColors(map);
-            return sum;
+            // init map
+#if DRAWMAPENABLED
+            mapDrawer = Log.CreateRectangularMapContext(aabb.width, aabb.height);
+            mapDrawer.Init(5);
+            // mapDrawer.SetBackgroundPostProcess((@in, _) => (r: (byte)Math.Max(0, @in.r - 5), g: (byte)Math.Max(0, @in.g - 5), b: (byte)Math.Max(0, @in.b - 5)));
+            mapDrawer.FillForegroundColor(180, 180, 180);
+            mapDrawer.FillBackgroundColor(0, 0, 0);
+#endif
+            // convert our map to vertices and perform greedy meshing
+            var vertices = ConvertToMesh(commands);
+
+
+            // we need a better way to know out starting position
+            // or a better way to calculate normal
+            var fillStart = new Point(vertices[0].x, vertices[0].y - 1);
+            StartGreedyMeshing(vertices, fillStart.X, fillStart.Y, Direction.Ynegative, aabb.width, aabb.height);
+
+            // just an endless loop to draw map
+            mapDrawer.DrawAndWait();
+            Log.WriteLine("Completed");
+            while (true)
+            {
+                //                mapDrawer.DrawAndWait();
+                Thread.Sleep(1); // be nice to OS
+            }
+
+            return 0;// sum;
         }
         //[RemoveSpacesFromInput]
         [RemoveNewLinesFromInput]
         // change to string or string[] to get other types of input
         public static long Part2(string[] lines, int lineWidth, int count)
         {
+            Console.ReadLine();
+
             // create commands
             var commands = CreateCommands2(lines).AsSpan();
             CalculateCommandsXY(commands);
@@ -65,20 +81,105 @@ namespace AdventOfCode2023
             // idea: If we could create a triangles representation of our mesh
             // and sum their areas, we could solve the problem quite fast and easy
 
+
+
             // convert our vertices to a single mesh, with double precision
             var vertices = ConvertToMesh(commands);
-            // triangulate mesh
-            var triangles = Triangulate(vertices);
-
-            // problem: triangles appear to overlap, and we may have a double precision issues
-            var area = ComputeArea(triangles);
-            return area;
+            return 0;// area;
         }
 
 
 
 
+        private static void DrawSegmentsToMapDrawer(Span<Segment> segments, int width)
+        {
+            void VerticalLine(Span<char> buffer, Span<int> colorBuffer, int width, Segment segment)
+            {
+                var min = Math.Min(segment.y1, segment.y2);
+                var max = Math.Max(segment.y1, segment.y2);
 
+                for (int i = min; i < max; i++)
+                {
+                    var cu = buffer.At(segment.x1, i, width);
+                    if (cu == '─')
+                        buffer.At(segment.x1, i, width, '┼');
+                    else
+                        buffer.At(segment.x1, i, width, '│');
+
+                    colorBuffer.At(segment.x1, i, width, segment.color);
+                }
+#if DRAWSEGMENTNORMALS
+                var nx = segment.x1 + segment.normal.x;
+                var ny = min + (max - min) / 2;
+                buffer.At(nx, ny, width, (segment.normal.x > 0 ? '>' : '<'));
+                colorBuffer.At(nx, ny, width, segment.color);
+#endif
+            }
+            void HorizontalLine(Span<char> buffer, Span<int> colorBuffer, int width, Segment segment)
+            {
+                var min = Math.Min(segment.x1, segment.x2);
+                var max = Math.Max(segment.x1, segment.x2);
+
+                for (int i = min; i < max; i++)
+                {
+                    var cu = buffer.At(i, segment.y1, width);
+                    if (cu == '│')
+                        buffer.At(i, segment.y1, width, '┼');
+                    else
+                        buffer.At(i, segment.y1, width, '─');
+
+                    //buffer.At(i, segment.y1, width, '─');
+                    colorBuffer.At(i, segment.y1, width, segment.color);
+                }
+
+#if DRAWSEGMENTNORMALS
+                var nx = min + (max - min) / 2;
+                var ny = segment.y1 + segment.normal.y;
+                buffer.At(nx, ny, width, (segment.normal.y > 0 ? 'v' : '^'));
+                colorBuffer.At(nx, ny, width, segment.color);
+#endif
+            }
+
+            if (Log.Enabled == false) return;
+
+            var charBuffer = new char[mapDrawer.Width * mapDrawer.Height];
+            charBuffer.AsSpan().Fill(' ');
+            var colorBuffer = new int[mapDrawer.Width * mapDrawer.Height];
+
+            foreach (var segment in segments)
+            {
+                if (segment.x1 == segment.x2) VerticalLine(charBuffer, colorBuffer, width, segment);
+                else HorizontalLine(charBuffer, colorBuffer, width, segment);
+            }
+
+            mapDrawer.SetContent(charBuffer);
+            mapDrawer.SetForegroundColors(colorBuffer);
+        }
+        private static void FillRectangleColors(List<Rectangle> rectangles, int width)
+        {
+            var colorBuffer = new int[mapDrawer.Width * mapDrawer.Height].AsSpan();
+            foreach (var rect in rectangles)
+            {
+                for (int y = rect.y; y < rect.y + rect.height; y++)
+                {
+                    for (var x = rect.x; x < rect.x + rect.width; x++)
+                    {
+                        colorBuffer.At(x, y, width, rect.color);
+                    }
+                }
+            }
+            mapDrawer.SetBackgroundColors(colorBuffer);
+        }
+        private static List<Vertex2D> ConvertToMesh(Span<DigCommand> commands)
+        {
+            var ret = new List<Vertex2D>(commands.Length);
+            for (int i = 0; i < commands.Length; i++)
+                ret.Add(new Vertex2D(commands[i].x, commands[i].y, commands[i].color));
+            return ret;
+        }
+
+
+        #region Structs
         enum Direction : byte
         {
             Xnegative = 0,
@@ -86,7 +187,6 @@ namespace AdventOfCode2023
             Xpositive = 2,
             Ypositive = 3
         }
-
         struct DigCommand
         {
             public int x;
@@ -104,16 +204,16 @@ namespace AdventOfCode2023
         }
         struct Vertex2D
         {
-            public double x;
-            public double y;
-
-            public Vertex2D(double x, double y)
+            public int x;
+            public int y;
+            public int color;
+            public Vertex2D(int x, int y, int color)
             {
                 this.x = x;
                 this.y = y;
+                this.color = color;
             }
         }
-
         struct Triangle
         {
             public Vertex2D v1;
@@ -127,23 +227,535 @@ namespace AdventOfCode2023
                 this.v3 = v3;
             }
         }
+        struct Vector2D
+        {
+            public static Vector2D Up = new Vector2D(0, -1);
+            public static Vector2D Down = new Vector2D(0, 1);
+            public static Vector2D Left = new Vector2D(-1, 0);
+            public static Vector2D Right = new Vector2D(1, 0);
+
+            public int x;
+            public int y;
+
+            public Vector2D(int x, int y)
+            {
+                this.x = x;
+                this.y = y;
+            }
+            public static bool operator ==(Vector2D a, Vector2D b) => (a.x == b.x) && (a.y == b.y);
+            public static bool operator !=(Vector2D a, Vector2D b) => (a.x != b.x) || (a.y != b.y);
+
+            public override readonly bool Equals(object obj)
+            {
+                if (obj is Vector2D v2) return this == v2;
+                return false;
+            }
+        }
+        class Rectangle
+        {
+            public int x;
+            public int y;
+            public int width;
+            public int height;
+
+            public int Left
+            {
+                get => x;
+                set
+                {
+                    if (x < value)
+                    {
+                        var delta = value - x;
+                        x = value;
+                        width -= delta;
+                    }
+                    else
+                    {
+                        var delta = x - value;
+                        x = value;
+                        width += delta;
+                    }
+                }
+            }
+            public int Right
+            {
+                get { return x + width; }
+                set => width = value - x;
+            }
+            public int Top
+            {
+                get => y;
+                set
+                {
+                    if (y < value)
+                    {
+                        var delta = value - y;
+                        y = value;
+                        height -= delta;
+                    }
+                    else
+                    {
+                        var delta = y - value;
+                        y = value;
+                        height += delta;
+                    }
+                }
+            }
+            public int Bottom
+            {
+                get { return y + height; }
+                set => height = value - y;
+            }
+
+            public int color;
+        }
+        struct Segment
+        {
+            public int x1;
+            public int y1;
+            public int x2;
+            public int y2;
+
+            public int XMin => Math.Min(x1, x2);
+            public int XMax => Math.Max(x1, x2);
+
+            public int YMin => Math.Min(y1, y2);
+            public int YMax => Math.Max(y1, y2);
+
+            public Vector2D normal;
+            public int color;
+
+            public long Length => Math.Abs(x1 - x2) + Math.Abs(y2 - y1); // this works for aligned segments only, which we have
+        }
+        enum NormalDirection { SmallerToHigher, HigherToSmaller }
+        #endregion
+
+        #region Greedy meshing
+        private static Span<Segment> ConstructSegments(List<Vertex2D> vertices)
+        {
+            var segments = new Segment[vertices.Count];
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                var v1 = vertices[i];
+                var v2 = i == vertices.Count - 1 ? vertices[0] : vertices[i + 1];
+
+                var y_1 = v1.y;
+                var y_2 = v2.y;
+                if (v2.x == v1.x)
+                {
+                    //if(v1.y < v2.y)
+                    //{
+                    //    y_2++;
+                    //}
+                    //else
+                    //{
+                    //    y_1++;
+                    //}
+                }
 
 
+                var segment = new Segment { x1 = v1.x, y1 = y_1, x2 = v2.x, y2 = y_2, color = v1.color };
+
+                segments[i] = segment;
+            }
+            return segments.AsSpan();
+        }
+
+        private static NormalDirection GetNormalFromStartPosition(Segment segment0, int startX, int startY)
+        {
+            var normX = 0;
+            var normY = 0;
+            if (segment0.x1 == segment0.x2)
+                normY = Math.Sign(startY - segment0.y1);
+            if (segment0.y1 == segment0.y2)
+                normX = Math.Sign(startX - segment0.x1);
+
+            return normX != 0 ? normX < 0 ? NormalDirection.HigherToSmaller : NormalDirection.SmallerToHigher : normY < 0 ? NormalDirection.HigherToSmaller : NormalDirection.SmallerToHigher;
+        }
+        private static void AssignNormals(Span<Segment> segments, NormalDirection normalDirection)
+        {
+            for (int i = 0; i < segments.Length; i++)
+            {
+                var s = segments[i];
+
+                if (s.x1 == s.x2)
+                {
+                    if (s.y1 < s.y2)
+                    {
+                        segments[i].normal = normalDirection == NormalDirection.SmallerToHigher ? Vector2D.Left : Vector2D.Right;
+                    }
+                    else
+                    {
+                        segments[i].normal = normalDirection == NormalDirection.SmallerToHigher ? Vector2D.Right : Vector2D.Left;
+                    }
+                }
+                else
+                {
+                    if (s.x1 < s.x2)
+                    {
+                        segments[i].normal = normalDirection == NormalDirection.SmallerToHigher ? Vector2D.Down : Vector2D.Up;
+                    }
+                    else
+                    {
+                        segments[i].normal = normalDirection == NormalDirection.SmallerToHigher ? Vector2D.Up : Vector2D.Down;
+                    }
+                }
+            }
+        }
+
+        private static ReadOnlySpan<Segment> GetVerticalSegments(Span<Segment> segments)
+        {
+            // count segments
+            var sum = 0;
+            for (int i = 0; i < segments.Length; i++)
+            {
+                if (segments[i].x1 == segments[i].x2)
+                    sum++;
+            }
+            var offset = 0;
+            var buffer = new Segment[sum];
+            for (int i = 0; i < segments.Length; i++)
+            {
+                if (segments[i].x1 == segments[i].x2)
+                    buffer[offset++] = segments[i];
+            }
+            return buffer.AsSpan();
+        }
+        private static ReadOnlySpan<Segment> GetHorizontalSegments(Span<Segment> segments)
+        {
+            // count segments
+            var sum = 0;
+            for (int i = 0; i < segments.Length; i++)
+            {
+                if (segments[i].y1 == segments[i].y2)
+                    sum++;
+            }
+            var offset = 0;
+            var buffer = new Segment[sum];
+            for (int i = 0; i < segments.Length; i++)
+            {
+                if (segments[i].y1 == segments[i].y2)
+                    buffer[offset++] = segments[i];
+            }
+            return buffer.AsSpan();
+        }
 
 
-        #region Voxels => simple mesh generation
+        private static void StartGreedyMeshing(List<Vertex2D> vertices, int startX, int startY, Direction direction, int width, int heigth)
+        {
+            // construct our segments
+            var segments = ConstructSegments(vertices);
+            var seg0Normal = GetNormalFromStartPosition(segments[0], startX, startY);
+            AssignNormals(segments, seg0Normal);
 
-        // we will use greedy meshing approach
+            DrawSegmentsToMapDrawer(segments, width);
 
-        // when we deal with voxels, we generate mesh by sticking all the voxels together
-        // but this will produce very ineficient mesh
-        // there are, however, ways to simplify this mesh
-        // and this is what we will do here
+            // sort segments, and create two sets, vertical lines and horizontal lines
+            var horizontalSegments = GetHorizontalSegments(segments);
+            var verticalSegments = GetVerticalSegments(segments);
+
+            var rectangles = CreateRectangles(segments, horizontalSegments, verticalSegments, width, heigth);
+            FillRectangleColors(rectangles, width);
+
+            Log.WriteLine($"{rectangles.Count} rectangles created.");
+        }
 
 
+        private static Rectangle CreateRectangleLeftToRight(Segment segment, Segment prevSegment, Segment nextSegment,
+            ReadOnlySpan<Segment> horizontalSegments, ReadOnlySpan<Segment> verticalSegments, int width, int heigth)
+        {
+            var startx = segment.x1 + 1;
+            var miny = Math.Min(segment.y1, segment.y2);
+            var maxy = Math.Max(segment.y1, segment.y2);
+
+            if (prevSegment.normal == Vector2D.Down && miny == prevSegment.y1)
+                miny++;
+
+            if (prevSegment.normal == Vector2D.Down && maxy == prevSegment.y1)
+                maxy++;
+
+            if (nextSegment.normal == Vector2D.Down && miny == nextSegment.y1)
+                miny++;
+
+            if (miny >= maxy) return default;
+
+            var maxAllowedX = width;
+
+            for (int i = 0; i < verticalSegments.Length; i++)
+            {
+                var s = verticalSegments[i];
+                if (s.x1 < startx) continue;
+
+                if (s.y2 < miny && s.y1 < miny) continue;
+                if (s.y2 >= maxy && s.y1 >= maxy) continue;
+
+                maxAllowedX = Math.Min(maxAllowedX, s.x1);
+            }
+
+            // for now, grow till the end, just to test
+            var rect = new Rectangle
+            {
+                color = segment.color,
+                x = startx,
+                y = miny,
+                width = maxAllowedX - startx,
+                height = maxy - miny
+            };
+
+            return rect;
+        }
+
+        private static Rectangle CreateRectangleRightToLeft(Segment segment, Segment prevSegment, Segment nextSegment,
+           ReadOnlySpan<Segment> horizontalSegments, ReadOnlySpan<Segment> verticalSegments,
+           int width, int heigth)
+        {
+            var startx = segment.x1 - 1;
+            var miny = Math.Min(segment.y1, segment.y2);
+            var maxy = Math.Max(segment.y1, segment.y2);
+
+            if (prevSegment.normal == Vector2D.Down && miny == prevSegment.y1)
+                miny++;
+
+            if (prevSegment.normal == Vector2D.Down && maxy == prevSegment.y1)
+                maxy++;
+
+            if (nextSegment.normal == Vector2D.Down && miny == nextSegment.y1)
+                miny++;
+
+            if (miny >= maxy) return default;
+
+            var minAllowedX = 0;
+
+            for (int i = 0; i < verticalSegments.Length; i++)
+            {
+                var s = verticalSegments[i];
+                if (s.x1 > startx) continue;
+
+                if (s.y2 < miny && s.y1 < miny) continue;
+                if (s.y2 >= maxy && s.y1 >= maxy) continue;
+
+                minAllowedX = Math.Max(minAllowedX, s.x1);
+            }
+
+            // for now, grow till the end, just to test
+            var rect = new Rectangle
+            {
+                color = segment.color,
+                x = minAllowedX + 1,
+                y = miny,
+                width = startx - minAllowedX,
+                height = maxy - miny
+            };
+
+            return rect;
+        }
+
+        private static Rectangle CreateRectangleTopToBottom(Segment segment, Segment prevSegment, Segment nextSegment,
+         ReadOnlySpan<Segment> horizontalSegments, ReadOnlySpan<Segment> verticalSegments,
+         int width, int heigth)
+        {
+            var starty = segment.y1 + 1;
+            var minx = Math.Min(segment.x1, segment.x2);
+            var maxx = Math.Max(segment.x1, segment.x2);
+
+            if (prevSegment.normal == Vector2D.Right && minx == prevSegment.x1)
+                minx++;
+
+            if (minx >= maxx) return default;
+
+            var maxAllowedY = heigth;
+
+            for (int i = 0; i < horizontalSegments.Length; i++)
+            {
+                var s = horizontalSegments[i];
+                if (s.y1 < starty) continue;
+
+                if (s.x2 < minx && s.x1 < minx) continue;
+                if (s.x2 >= maxx && s.x1 >= maxx) continue;
+
+                maxAllowedY = Math.Min(maxAllowedY, s.y1);
+            }
+
+            // for now, grow till the end, just to test
+            var rect = new Rectangle
+            {
+                color = segment.color,
+                x = minx,
+                y = starty,
+                width = maxx - minx,
+                height = maxAllowedY - starty
+            };
+
+            return rect;
+        }
+
+        private static Rectangle CreateRectangleBottomToTop(Segment segment, Segment prevSegment, Segment nextSegment,
+         ReadOnlySpan<Segment> horizontalSegments, ReadOnlySpan<Segment> verticalSegments,
+         int width, int heigth)
+        {
+            var starty = segment.y1 - 1;
+            var minx = Math.Min(segment.x1, segment.x2);
+            var maxx = Math.Max(segment.x1, segment.x2);
+
+            if (nextSegment.normal == Vector2D.Right && minx == nextSegment.x1)
+                minx++;
+
+            if (minx >= maxx) return default;
+
+            var minAllowedY = 0;
+
+            for (int i = 0; i < horizontalSegments.Length; i++)
+            {
+                var s = horizontalSegments[i];
+                if (s.y1 > starty) continue;
+
+                if (s.x2 < minx && s.x1 < minx) continue;
+                if (s.x2 >= maxx && s.x1 >= maxx) continue;
+
+                minAllowedY = Math.Max(minAllowedY, s.y1);
+            }
+
+            // for now, grow till the end, just to test
+            var rect = new Rectangle
+            {
+                color = segment.color,
+                x = minx,
+                y = minAllowedY + 1,
+                width = maxx - minx,
+                height = starty - minAllowedY
+            };
+
+            return rect;
+        }
+
+        private static List<Rectangle> CreateRectangles(Span<Segment> segments, ReadOnlySpan<Segment> horizontalSegments, ReadOnlySpan<Segment> verticalSegments, int width, int heigth)
+        {
+            static void Create(List<Rectangle> currentRects, Vector2D normal, Span<Segment> segments, ReadOnlySpan<Segment> horizontalSegments, ReadOnlySpan<Segment> verticalSegments, int width, int heigth)
+            {
+                for (int i = 0; i < segments.Length; i++)
+                {
+                    var seg = segments[i];
+                    if (seg.normal != normal)
+                        continue;
+                    var prev = i > 0 ? segments[i - 1] : segments[^1];
+                    var next = i < segments.Length - 1 ? segments[i + 1] : segments[0];
+
+                    Rectangle rect = default;
+
+                    if (normal == Vector2D.Right) rect = CreateRectangleLeftToRight(seg, prev, next, horizontalSegments, verticalSegments, width, heigth);
+                    //else if (normal == Vector2D.Left) rect = CreateRectangleRightToLeft(seg, prev, next, horizontalSegments, verticalSegments, width, heigth);
+                    //else if (normal == Vector2D.Up) rect = CreateRectangleBottomToTop(seg, prev, next, horizontalSegments, verticalSegments, width, heigth);
+                    //else if (normal == Vector2D.Down) rect = CreateRectangleTopToBottom(seg, prev, next, horizontalSegments, verticalSegments, width, heigth);
+
+                    if (rect.width > 0 && rect.height > 0)
+                    {
+                        currentRects.Add(rect);
+                        //if(currentRects.Count > 10)
+                        //    return;
+                    }
+                }
+            }
+
+            static bool IsValueWithin(int v, int v1, int v2)
+            {
+                return v >= v1 && v <= v2;
+            }
+            static bool IsSegmentOnRect(int x1, int x2, int left, int right)
+            {
+                if (x1 == left || x2 == right) return true;
+                if (x1 >= left && x1 <= right) return true;
+                if (x2 >= left && x2 <= right) return true;
+
+                if (left >= x1 && left <= x2) return true;
+                if (right >= x1 && right <= x2) return true;
+                return false;
+            }
+            static bool IsRectOnRect(int left1, int right1, int left2, int right2)
+            {
+                if (left1 == left2 || right1 == right2) return true;
+                if (left1 >= left2 && left1 <= right2) return true; // rect pt1 on rect 2
+                if (right1 >= left2 && right1 <= right2) return true; // rect pt2 on rect 2
+
+                if (left2 >= left1 && left2 <= right1) return true; // rect pt1 on rect 1
+                if (right2 >= left1 && right2 <= right1) return true; // rect pt2 on rect 1
+                return false;
+            }
+
+            static void GreedyGrowTopBottom(List<Rectangle> currentRects, ReadOnlySpan<Segment> horizontalSegments, int width, int heigth)
+            {
+                for (int i = 0; i < currentRects.Count; i++)
+                {
+                    var rect = currentRects[i];
+
+                    var minimum = 0;
+                    var maximum = heigth;
+
+                    // do not grow beyond any segments
+                    for (int s = 0; s < horizontalSegments.Length; s++)
+                    {
+                        var seg = horizontalSegments[s];
+
+                        if (IsSegmentOnRect(seg.XMin, seg.XMax, rect.Left, rect.Right))
+                        {
+                            if (seg.y1 <= rect.Top) minimum = Math.Max(minimum, seg.y1 + 1);
+                            else if (seg.y1 >= rect.Bottom) maximum = Math.Min(maximum, seg.y1);
+                        }
+                    }
+
+                    // do not grow beyond any rectangle
+                    for (int i1 = 0; i1 < currentRects.Count; i1++)
+                    {
+                        var r2 = currentRects[i1];
+                        if (r2 == rect) continue;
+
+                        if (IsRectOnRect(rect.Left, rect.Right, r2.Left, r2.Right))
+                        {
+                            if (r2.Bottom < rect.Top) minimum = Math.Max(minimum, r2.Bottom);
+                            else if (r2.Top > rect.Bottom) maximum = Math.Min(maximum, r2.Top);
+                        }
+                    }
+
+                    rect.Top = minimum;
+                    rect.Bottom = maximum;
+                }
+            }
+
+            var ret = new List<Rectangle>();
+
+            Create(ret, Vector2D.Right, segments, horizontalSegments, verticalSegments, width, heigth);
+            GreedyGrowTopBottom(ret, horizontalSegments, width, heigth);
 
 
-         
+            //Create(ret, Vector2D.Left, segments, horizontalSegments, verticalSegments, width, heigth);
+            //Create(ret, Vector2D.Down, segments, horizontalSegments, verticalSegments, width, heigth);
+            //Create(ret, Vector2D.Up, segments, horizontalSegments, verticalSegments, width, heigth);
+
+            // greedy grow those rectangles
+
+
+            ret.Clear();
+
+
+            for (int i = 0; i < segments.Length; i++)
+            {
+                var seg = segments[i];
+                var prev = i > 0 ? segments[i - 1] : segments[^1];
+                var next = i < segments.Length - 1 ? segments[i + 1] : segments[0];
+               
+                Rectangle rect = default;
+
+                if (seg.normal == Vector2D.Right) rect = new Rectangle { x = seg.x1 + 1, y = seg.YMin + 2, width = 1, height = 1, color = seg.color };
+                else if (seg.normal == Vector2D.Left) rect = new Rectangle { x = seg.x1 - 1, y = seg.YMin + 2, width = 1, height = 1, color = seg.color };
+               
+                else if (seg.normal == Vector2D.Up) rect = new Rectangle { x = seg.XMin + 1, y = seg.y1-1 , width = 1, height = 1, color = seg.color };
+                else if (seg.normal == Vector2D.Down) rect = new Rectangle { x = seg.XMin + 1, y = seg.y1 + 1, width = 1, height = 1, color = seg.color };
+
+                ret.Add(rect);
+            }
+
+
+            return ret;
+        }
 
 
         #endregion
@@ -196,22 +808,7 @@ namespace AdventOfCode2023
                 }
             }
         }
-        private static void DigTrenches(Span<DigCommand> commands, Map2DSpan<int> map)
-        {
-            for (int i = 0; i < commands.Length; ++i)
-            {
-                DigCommand cmd = commands[i];
-                var dir = cmd.direction;
-                var steps = cmd.steps;
-                var dx = dir switch { Direction.Xpositive => 1, Direction.Xnegative => -1, _ => 0 };
-                var dy = dir switch { Direction.Ypositive => 1, Direction.Ynegative => -1, _ => 0 };
 
-                for (int x = cmd.x, y = cmd.y, s = 0; s < steps; x += dx, y += dy, ++s)
-                {
-                    map.At(x, y, cmd.color);
-                }
-            }
-        }
         private static DigCommand[] CreateCommands(string[] lines)
         {
             var ret = new DigCommand[lines.Length];
@@ -249,261 +846,7 @@ namespace AdventOfCode2023
             }
             return ret;
         }
-
-        private static void DrawMap(Map2DSpan<int> map)
-        {
-            if (Log.Enabled == false) return;
-
-            var sb = new StringBuilder();
-            for (int y = 0; y < map.Height; y++)
-            {
-                for (int x = 0; x < map.Width; x++)
-                {
-                    var at = map.At(x, y);
-                    if (at <= 0)
-                        sb.Append($"{CC.Clr}{' '}");
-                    else
-                    {
-                        var r = (byte)(at >> 16);
-                        var g = (byte)(at >> 8);
-                        var b = (byte)(at >> 0);
-                        sb.Append($"{CC.FgRGB(r, g, b)}{'█'}");
-                    }
-                }
-                sb.AppendLine(CC.Clr);
-            }
-            Log.WriteLine(sb.ToString());
-        }
-        private static void PrintCommands(Span<DigCommand> commands)
-        {
-            for (int i = 0; i < commands.Length; i++)
-            {
-                var c = commands[i];
-
-                var r = (byte)(c.color >> 16);
-                var g = (byte)(c.color >> 8);
-                var b = (byte)(c.color >> 0);
-
-                Log.WriteLine($"({c.x}, {c.y}) => {c.steps} steps in {c.direction} with {CC.FgRGB(r, g, b)}█{CC.Clr} {c.color:X}");
-            }
-        }
-        private static void FloodFillNonZero(Map2DSpan<int> map, int sx, int sy, int color = 0x808080)
-        {
-            // we work with queue instead of recursion
-            var fillQueue = new Queue<Point>();
-
-            fillQueue.Enqueue(new Point(sx, sy));
-
-            while (fillQueue.TryDequeue(out var p))
-            {
-                var x = p.X;
-                var y = p.Y;
-
-                var at = map.At(x, y, out var outOfBounds);
-                if (outOfBounds)
-                    continue;
-                if (at > 0)
-                    continue;
-
-                map.At(x, y, color);
-
-                AddPointIfZero(fillQueue, map, x + 1, y);
-                AddPointIfZero(fillQueue, map, x, y + 1);
-                AddPointIfZero(fillQueue, map, x - 1, y);
-                AddPointIfZero(fillQueue, map, x, y - 1);
-            }
-
-            void AddPointIfZero(Queue<Point> queue, Map2DSpan<int> map, int x, int y)
-            {
-                var at = map.At(x, y, out var outOfBounds);
-                if (!outOfBounds && at == 0)
-                    fillQueue.Enqueue(new Point { X = x, Y = y });
-            }
-        }
-        private static bool IsPointInsideTrench(Map2DSpan<int> map, int px, int py)
-        {
-            var hits = 0;
-            if (map.At(px, py) > 0) return false;
-
-            for (int x = px - 1, y = py - 1; px >= 0 && py >= 0; px--, py--)
-            {
-                if (map.At(px, py) > 0)
-                    hits++;
-            }
-            return hits % 2 != 0;
-        }
-
-        readonly static int[] sps_xes = new int[8] { 1, 1, 0, -1, -1, -1, -1, 1 };
-        readonly static int[] sps_ys = new int[8] { 0, 1, 1, 1, 0, -1, -1, -1 };
-        private static Point GetFloodFillStartPosition(Map2DSpan<int> map, int x, int y)
-        {
-            for (int i = 0; i < sps_xes.Length; i++)
-            {
-                if (IsPointInsideTrench(map, x + sps_xes[i], y + sps_ys[i])) return new Point(x + sps_xes[i], y + sps_ys[i]);
-            }
-            throw new Exception("Unable to find start point for flood fill.");
-        }
-        private static int CountNonZeroColors(Map2DSpan<int> map)
-        {
-            var len = map.Length;
-            var s = map.AsSpan();
-            var sum = 0;
-            for (int i = 0; i < len; i++)
-            {
-                if (s[i] > 0)
-                    sum++;
-            }
-            return sum;
-        }
-
         #endregion
 
-
-        #region Triangularization
-        /////////////////////////
-        /// This does not work really well, because of overlap and double precision issues.
-        /// I'll try sectors and BSP tree (Quake 1 approach)
-        /////////////////////////
-
-        private static List<Vertex2D> ConvertToMesh(Span<DigCommand> commands)
-        {
-            var ret = new List<Vertex2D>(commands.Length);
-            for (int i = 0; i < commands.Length; i++)
-                ret.Add(new Vertex2D(commands[i].x, commands[i].y));
-            return ret;
-        }
-
-        private static double GetLen(Vertex2D v1, Vertex2D v2) => Math.Sqrt(Math.Pow(v2.x - v1.x, 2) + Math.Pow(v2.y - v1.y, 2));
-        private static double ComputeArea(Triangle triangle)
-        {
-            // side lengths
-            var s1 = GetLen(triangle.v1, triangle.v2);
-            var s2 = GetLen(triangle.v2, triangle.v3);
-            var s3 = GetLen(triangle.v3, triangle.v1);
-            // semi perimeter
-            var sp = ((s1 + s2 + s3) / 2);
-            // Heron’s 
-            return Math.Sqrt(sp * (sp - s1) * (sp - s2) * (sp - s3));
-        }
-        private static long ComputeArea(List<Triangle> triangles)
-        {
-            var area = 0l;
-            for (int i = 0; i < triangles.Count; i++)
-            {
-                var triangle = triangles[i];
-                // floor it (or ceil?) - let's Round for now and see the result
-                area += (long)Math.Floor(ComputeArea(triangle));
-            }
-            return area;
-        }
-
-
-
-
-        // mesh triangulation. we will need to move it to some tools stuff
-        private static List<Triangle> Triangulate(List<Vertex2D> mesh)
-        {
-            var result = new List<Triangle>();
-            var tempPolygon = new List<Vertex2D>(mesh);
-            //var convPolygon = new List<Vertex2D>();
-
-            int begin_ind = 0;
-            int cur_ind;
-            int begin_ind1;
-            int N = mesh.Count;
-            int Range;
-
-            if (Square(tempPolygon) < 0)
-                tempPolygon.Reverse();
-
-            while (N >= 3)
-            {
-                while ((PMSquare(tempPolygon[begin_ind], tempPolygon[(begin_ind + 1) % N],
-                          tempPolygon[(begin_ind + 2) % N]) < 0) ||
-                          (Intersect(tempPolygon, begin_ind, (begin_ind + 1) % N, (begin_ind + 2) % N) == true))
-                {
-                    begin_ind++;
-                    begin_ind %= N;
-                }
-                cur_ind = (begin_ind + 1) % N;
-
-                result.Add(new Triangle(tempPolygon[begin_ind], tempPolygon[cur_ind], tempPolygon[(begin_ind + 2) % N]));
-
-                //if (triangulate == false)
-                //{
-                //    begin_ind1 = cur_ind;
-                //    while ((PMSquare(tempPolygon[cur_ind], tempPolygon[(cur_ind + 1) % N],
-                //                    tempPolygon[(cur_ind + 2) % N]) > 0) && ((cur_ind + 2) % N != begin_ind))
-                //    {
-                //        if ((Intersect(tempPolygon, begin_ind, (cur_ind + 1) % N, (cur_ind + 2) % N) == true) ||
-                //            (PMSquare(tempPolygon[begin_ind], tempPolygon[(begin_ind + 1) % N],
-                //                      tempPolygon[(cur_ind + 2) % N]) < 0))
-                //            break;
-                //        convPolygon.Add(tempPolygon[(cur_ind + 2) % N]);
-                //        cur_ind++;
-                //        cur_ind %= N;
-                //    }
-                //}
-
-                Range = cur_ind - begin_ind;
-                if (Range > 0)
-                {
-                    tempPolygon.RemoveRange(begin_ind + 1, Range);
-                }
-                else
-                {
-                    tempPolygon.RemoveRange(begin_ind + 1, N - begin_ind - 1);
-                    tempPolygon.RemoveRange(0, cur_ind + 1);
-                }
-                N = tempPolygon.Count;
-                begin_ind++;
-                begin_ind %= N;
-            }
-
-            return result;
-        }
-        private static double PMSquare(Vertex2D v1, Vertex2D v2) => v2.x * v1.y - v1.x * v2.y;
-        private static double PMSquare(Vertex2D p1, Vertex2D p2, Vertex2D p3) => ((p3.x - p1.x) * (p2.y - p1.y)) - ((p2.x - p1.x) * (p3.y - p1.y));
-
-        private static double Square(List<Vertex2D> mesh)
-        {
-            var S = 0d;
-            if (mesh.Count >= 3)
-            {
-                for (int i = 0; i < mesh.Count - 1; i++)
-                    S += PMSquare(mesh[i], mesh[i + 1]);
-                S += PMSquare(mesh[^1], mesh[0]);
-            }
-            return S;
-        }
-        private static bool Intersect(List<Vertex2D> mesh, int vertex1Ind, int vertex2Ind, int vertex3Ind)
-        {
-            double s1, s2, s3;
-            for (int i = 0; i < mesh.Count; i++)
-            {
-                if ((i == vertex1Ind) || (i == vertex2Ind) || (i == vertex3Ind))
-                    continue;
-                s1 = PMSquare(mesh[vertex1Ind], mesh[vertex2Ind], mesh[i]);
-                s2 = PMSquare(mesh[vertex2Ind], mesh[vertex3Ind], mesh[i]);
-                if (((s1 < 0) && (s2 > 0)) || ((s1 > 0) && (s2 < 0)))
-                    continue;
-                s3 = PMSquare(mesh[vertex3Ind], mesh[vertex1Ind], mesh[i]);
-                if (((s3 >= 0) && (s2 >= 0)) || ((s3 <= 0) && (s2 <= 0)))
-                    return true;
-            }
-            return false;
-        }
-        #endregion
-
-
-
-
-
-
-
-
-       
     }
-
-
 }
