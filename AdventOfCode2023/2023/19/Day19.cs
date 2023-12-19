@@ -1,8 +1,9 @@
+using System;
 using System.Data;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-using RuleSet = System.Collections.Generic.List<(string name, string @default, System.Collections.Generic.List<(char field, char operand, long reqVal, string trg)> rules)>;
+//using RuleSet = System.Collections.Generic.List<(string name, string @default, System.Collections.Generic.List<(int field, byte operand, long reqVal, string trg)> rules)>;
 
 namespace AdventOfCode2023
 {
@@ -24,8 +25,14 @@ namespace AdventOfCode2023
         private const char Achar = 'a';
         private const char Schar = 's';
 
+        private const int Xid = 0;
+        private const int Mid = 1;
+        private const int Aid = 2;
+        private const int Sid = 3;
+
         private const char GTchar = '>';
         private const char LTchar = '<';
+        private enum Operation { GreaterThan, LessThan }
 
         private const int ErrorIndex = -1;
         private const int AcceptIndex = -2;
@@ -67,9 +74,9 @@ namespace AdventOfCode2023
             public long Sum => Accepted ? (x + m + a + s) : 0;
         }
 
-        private static RuleSet ParseRules(string[] input)
+        private static List<(string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules)> ParseRules(string[] input)
         {
-            RuleSet parsedRules = new();
+            List<(string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules)> parsedRules = new();
 
             for (int i = 0; i < input.Length; i++)
             {
@@ -91,7 +98,7 @@ namespace AdventOfCode2023
                 // now, split flow
                 var flowSp = flowStr.Split(',');
 
-                List<(char, char, long, string)> rules = new();
+                List<(int, Operation, long, string)> rules = new();
                 foreach (var fs in flowSp)
                 {
                     var sp3 = fs.Split(":");
@@ -108,12 +115,26 @@ namespace AdventOfCode2023
                         var op = rule[1];
                         var value = long.Parse(rule[2..]);
 
-                        rules.Add((field, op, value, trg));
+                        rules.Add((GetIndex(field), GetOperand(op), value, trg));
                     }
                 }
                 parsedRules.Add((name, defaultRule, rules));
             }
             return parsedRules;
+        }
+
+        private static int GetIndex(char ch) => ch switch
+        {
+            Xchar => 0,
+            Mchar => 1,
+            Achar => 2,
+            Schar => 3,
+            _ => throw new NotImplementedException(),
+        };
+        private static Operation GetOperand(char op)
+        {
+            if (op == GTchar) return Operation.GreaterThan;
+            return Operation.LessThan;
         }
 
         private unsafe static byte[] BuildWorkflowsSystem(string[] input)
@@ -171,7 +192,7 @@ namespace AdventOfCode2023
 
         // one liner :)
         // it combines operation code and which field is to act upon, into one byte
-        private static byte GetFieldAndOperand(char fld, char op) => (byte)(fld switch { Xchar => xField, Mchar => mField, Achar => aField, Schar => sField, _ => throw new NotImplementedException() } | op switch { LTchar => opLess, GTchar => opGreater, _ => throw new NotImplementedException() });
+        private static byte GetFieldAndOperand(int fld, Operation op) => (byte)(fld switch { Xid => xField, Mid => mField, Aid => aField, Sid => sField, _ => throw new NotImplementedException() } | op switch { Operation.LessThan => opLess, Operation.GreaterThan => opGreater, _ => throw new NotImplementedException() });
 
         private static Span<Part> ParseAndBuildParts(string[] input)
         {
@@ -272,29 +293,27 @@ namespace AdventOfCode2023
         }
 
 
-        private static long Aggregate(Dictionary<char, (long start, long end)> ranges) => ranges.Aggregate(1L, (acc, kvp) => acc *= (kvp.Value.end - kvp.Value.start + 1));
-        private static long ProcessGreaterThan(Dictionary<char, (long start, long end)> ranges, RuleSet flows, (char field, char operand, long reqVal, string trg) rule)
+        private static long Aggregate(List<(long start, long end)> ranges) => ranges.Aggregate(1L, (acc, v) => acc *= v.end - v.start + 1);
+        private static long ProcessGreaterThan(List<(long start, long end)> ranges, List<(string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules)> flows, (int field, Operation operand, long reqVal, string trg) rule)
         {
-            if (rule.trg == RejectValue)
-                return 0;
-
-            Dictionary<char, (long start, long end)> newRanges = new(ranges);
+            // clone our ranges before we go any deeper
+            List<(long start, long end)> newRanges = new(ranges);
 
             // get max value required by this rule
             var max = Math.Max(ranges[rule.field].start, rule.reqVal + 1);
-            
+
             newRanges[rule.field] = (max, ranges[rule.field].end);
+            
+            // if our rule is Accept, return our ranges
             if (rule.trg == AcceptValue)
                 return Aggregate(newRanges);
 
+            // it's not accept, nor reject, so go deeper
             return MakeSumRanges(newRanges, flows, flows.SingleOrDefault(f => f.name == rule.trg));
         }
-        private static long ProcessLessThan(Dictionary<char, (long start, long end)> ranges, RuleSet flows, (char field, char operand, long reqVal, string trg) rule)
+        private static long ProcessLessThan(List<(long start, long end)> ranges, List<(string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules)> flows, (int field, Operation operand, long reqVal, string trg) rule)
         {
-            if (rule.trg == RejectValue)
-                return 0;
-
-            Dictionary<char, (long start, long end)> newRanges = new(ranges);
+            List<(long start, long end)> newRanges = new(ranges);
 
             // store new min value for this range
             var min = Math.Min(ranges[rule.field].end, rule.reqVal - 1);
@@ -306,36 +325,42 @@ namespace AdventOfCode2023
             return MakeSumRanges(newRanges, flows, flows.SingleOrDefault(f => f.name == rule.trg));
         }
 
-        private static long MakeSumRanges(Dictionary<char, (long start, long end)> ranges, RuleSet flows, (string name, string @default, List<(char field, char operand, long reqVal, string trg)> rules) startFlow)
+        private static long MakeSumRanges(List<(long start, long end)> ranges, List<(string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules)> flows, (string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules) current)
         {
             long sum = 0;
 
-            // process rules
-            foreach (var rule in startFlow.rules)
+            // process rules, and step into all inner rule sets recurrently 
+            foreach (var rule in current.rules)
             {
-                Dictionary<char, (long start, long end)> newRanges = new(ranges);
+                var index = rule.field;
 
-                if (rule.operand == GTchar && ranges[rule.field].end > rule.reqVal)
+                if (rule.reqVal < ranges[index].end && rule.reqVal > ranges[index].start)
                 {
-                    sum += ProcessGreaterThan(ranges, flows, rule);
-                    ranges[rule.field] = (ranges[rule.field].start, rule.reqVal);
-                }
-                else if (ranges[rule.field].start < rule.reqVal)
-                {
-                    sum += ProcessLessThan(ranges, flows, rule);
-                    ranges[rule.field] = (rule.reqVal, ranges[rule.field].end);
+                    if (rule.operand == Operation.GreaterThan)
+                    {
+                        if (rule.trg != RejectValue)
+                            sum += ProcessGreaterThan(ranges, flows, rule);
+                        ranges[index] = (ranges[index].start, rule.reqVal);
+                    }
+                    else 
+                    {
+                        if (rule.trg != RejectValue) 
+                            sum += ProcessLessThan(ranges, flows, rule);
+                        ranges[index] = (rule.reqVal, ranges[index].end);
+                    }
                 }
             }
 
-            if (startFlow.@default == RejectValue)
+            if (current.@default == RejectValue)
                 return sum;
 
-            if (startFlow.@default == AcceptValue)
+            if (current.@default == AcceptValue)
                 return sum + Aggregate(ranges);
 
-            return sum + MakeSumRanges(ranges, flows, flows.SingleOrDefault(f => f.name == startFlow.@default));
+            return sum + MakeSumRanges(ranges, flows, flows.SingleOrDefault(f => f.name == current.@default));
         }
 
+      
         [RemoveSpacesFromInput]
         //[RemoveNewLinesFromInput]
         // change to string or string[] to get other types of input
@@ -343,13 +368,7 @@ namespace AdventOfCode2023
         {
             var rules = ParseRules(input);
 
-            return MakeSumRanges(new()
-            {
-                {Xchar, (1, 4000) },
-                {Mchar, (1, 4000) },
-                {Achar, (1, 4000) },
-                {Schar, (1, 4000) }
-            }, rules, rules.SingleOrDefault(f => f.name == "in"));
+            return MakeSumRanges(Enumerable.Range(1, 4).Select(i => (1L, 4000L)).ToList(), rules, rules.SingleOrDefault(f => f.name == "in"));
         }
     }
 }
