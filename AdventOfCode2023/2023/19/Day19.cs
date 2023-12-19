@@ -198,39 +198,42 @@ namespace AdventOfCode2023
                 .ToArray().AsSpan();
         }
 
-        private unsafe static void Process(Span<Part> parts, int partindex, byte[] flowBuffer)
+        private unsafe static void Process(Span<Part> parts, byte[] flowBuffer)
         {
             fixed (byte* ptr = flowBuffer)
             {
-                int offset = *((int*)ptr);
-                while (true)
+                for(int i = 0; i < parts.Length; i++)
                 {
-                    var flow = (Flow*)(ptr + offset); offset += Flow.Size;
-                    var transferred = false;
-                    for (int i = 0; i < flow->rules; i++)
+                    int offset = *((int*)ptr);
+                    while (true)
                     {
-                        var rule = (Rule*)(ptr + offset);
-                        offset = Operate(offset, rule, parts[partindex], out var noOp);
-                        transferred = !noOp;
-                        if (transferred)
-                            break;
-                    }
-                    if (!transferred)
-                    {
-                        // default here
-                        offset = flow->@default;
-                    }
+                        var flow = (Flow*)(ptr + offset); offset += Flow.Size;
+                        var transferred = false;
+                        for (int r = 0; r < flow->rules; r++)   // r is not used inside this loop
+                        {
+                            var rule = (Rule*)(ptr + offset);
+                            offset = Operate(offset, rule, parts[i], out var noOp);
+                            transferred = !noOp;
+                            if (transferred)
+                                break;
+                        }
+                        if (!transferred)
+                        {
+                            // default here
+                            offset = flow->@default;
+                        }
 
-                    if (offset == ErrorIndex) throw new InvalidOperationException("Error value detected");
-                    if (offset == AcceptIndex)
-                    {
-                        parts[partindex].Accepted = true;
-                        return;
-                    }
-                    if (offset == RejectIndex)
-                    {
-                        parts[partindex].Accepted = false;
-                        return;
+                        if (offset == ErrorIndex) throw new InvalidOperationException("Error value detected");
+                        if (offset == AcceptIndex)
+                        {
+                            parts[i].Accepted = true;
+                            break;
+                        }
+                        if (offset == RejectIndex)
+                        {
+                            parts[i].Accepted = false;
+                            break;
+                        }
                     }
                 }
             }
@@ -274,8 +277,7 @@ namespace AdventOfCode2023
             var parts = ParseAndBuildParts(input);
 
             // process
-            for (int i = 0; i < parts.Length; i++)
-                Process(parts, i, flowbuffer);
+            Process(parts, flowbuffer);
 
             // get answer
             long answer = 0L;
