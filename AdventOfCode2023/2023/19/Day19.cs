@@ -118,11 +118,12 @@ namespace AdventOfCode2023
         private unsafe static byte[] BuildWorkflowsSystem(string[] input)
         {
             var parsed = ParseRules(input);
-            var indices = new Dictionary<string, int>();
-
-            indices[ErrorValue] = -1;
-            indices[AcceptValue] = -2;
-            indices[RejectValue] = -3;
+            var indices = new Dictionary<string, int>
+            {
+                [ErrorValue] = ErrorIndex,
+                [AcceptValue] = AcceptIndex,
+                [RejectValue] = RejectIndex
+            };
 
             var totalCount = parsed.Count * Flow.Size + parsed.Select(p => p.rules.Count * Rule.Size).Sum();
 
@@ -165,23 +166,20 @@ namespace AdventOfCode2023
             }
 
             return buffer;
-            // one liner :)
-            // it combines operation and what field operation is to act upon, into one byte
-            byte GetFieldAndOperand(char fld, char op) => (byte)(fld switch { Xchar => xField, Mchar => mField, Achar => aField, Schar => sField, _ => throw new NotImplementedException() } | op switch { LTchar => opLess, GTchar => opGreater, _ => throw new NotImplementedException() });
         }
+
+        // one liner :)
+        // it combines operation code and which field is to act upon, into one byte
+        private static byte GetFieldAndOperand(char fld, char op) => (byte)(fld switch { Xchar => xField, Mchar => mField, Achar => aField, Schar => sField, _ => throw new NotImplementedException() } | op switch { LTchar => opLess, GTchar => opGreater, _ => throw new NotImplementedException() });
+
         private static Span<Part> ParseAndBuildParts(string[] input)
         {
             var elIndex = input.ToList().IndexOf("");
-
-            var parts = new Part[input.Length - elIndex - 1];
-
-            for (int i = elIndex + 1; i < input.Length; i++)
-            {
-                // we assume that values will be in XMAS order
-                var sp = input[i][1..^1].Split(new char[] { ',', '=', Xchar, Mchar, Achar, Schar }, StringSplitOptions.RemoveEmptyEntries);
-                parts[i - elIndex - 1] = new Part { x = long.Parse(sp[0]), m = long.Parse(sp[1]), a = long.Parse(sp[2]), s = long.Parse(sp[3]) };
-            }
-            return parts.AsSpan();
+            // we assume that values will be in XMAS order
+            return input[(elIndex + 1)..]
+                .Select(l => l[1..^1].Split(new char[] { ',', '=', Xchar, Mchar, Achar, Schar }, StringSplitOptions.RemoveEmptyEntries))
+                .Select(sp => new Part { x = long.Parse(sp[0]), m = long.Parse(sp[1]), a = long.Parse(sp[2]), s = long.Parse(sp[3]) })
+                .ToArray().AsSpan();
         }
 
         private unsafe static void Process(Span<Part> parts, int partindex, byte[] flowBuffer)
@@ -248,7 +246,7 @@ namespace AdventOfCode2023
             }
         }
 
-        //[RemoveSpacesFromInput]
+        [RemoveSpacesFromInput]
         //[RemoveNewLinesFromInput]
         // change to string or string[] to get other types of input
         public static long Part1(string[] input, int lineWidth, int count)
@@ -335,7 +333,7 @@ namespace AdventOfCode2023
             return sum + MakeSumRanges(ranges, flows, flows.SingleOrDefault(f => f.name == startFlow.@default));
         }
 
-        //[RemoveSpacesFromInput]
+        [RemoveSpacesFromInput]
         //[RemoveNewLinesFromInput]
         // change to string or string[] to get other types of input
         public static long Part2(string[] input, int lineWidth, int count)
