@@ -38,6 +38,8 @@ namespace AdventOfCode2023
         private const byte aField = 3;
         private const byte sField = 4;
 
+        // just want to play with direct memory representation, and see if it's going to be faster than
+        // using collections
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         struct Flow
         {
@@ -269,20 +271,20 @@ namespace AdventOfCode2023
         }
 
 
-        private static long Sum(Dictionary<char, (long start, long end)> ranges) => ranges.Aggregate(1L, (a, b) => a *= (b.Value.end - b.Value.start + 1));
+        private static long Aggregate(Dictionary<char, (long start, long end)> ranges) => ranges.Aggregate(1L, (acc, kvp) => acc *= (kvp.Value.end - kvp.Value.start + 1));
         private static long ProcessGreaterThan(Dictionary<char, (long start, long end)> ranges, RuleSet flows, (char field, char operand, long reqVal, string trg) rule)
         {
             if (rule.trg == RejectValue)
                 return 0;
 
-            Dictionary<char, (long start, long end)> newRanges = new Dictionary<char, (long start, long end)>(ranges);
+            Dictionary<char, (long start, long end)> newRanges = new(ranges);
 
             // get max value required by this rule
-            var max = Math.Max(newRanges[rule.field].start, rule.reqVal + 1);
-            newRanges[rule.field] = (max, newRanges[rule.field].end);
-
+            var max = Math.Max(ranges[rule.field].start, rule.reqVal + 1);
+            
+            newRanges[rule.field] = (max, ranges[rule.field].end);
             if (rule.trg == AcceptValue)
-                return Sum(newRanges);
+                return Aggregate(newRanges);
 
             return MakeSumRanges(newRanges, flows, flows.SingleOrDefault(f => f.name == rule.trg));
         }
@@ -294,11 +296,11 @@ namespace AdventOfCode2023
             Dictionary<char, (long start, long end)> newRanges = new(ranges);
 
             // store new min value for this range
-            var min = Math.Min(newRanges[rule.field].end, rule.reqVal - 1);
-            newRanges[rule.field] = (newRanges[rule.field].start, min);
+            var min = Math.Min(ranges[rule.field].end, rule.reqVal - 1);
+            newRanges[rule.field] = (ranges[rule.field].start, min);
 
             if (rule.trg == AcceptValue)
-                return Sum(newRanges);
+                return Aggregate(newRanges);
 
             return MakeSumRanges(newRanges, flows, flows.SingleOrDefault(f => f.name == rule.trg));
         }
@@ -328,7 +330,7 @@ namespace AdventOfCode2023
                 return sum;
 
             if (startFlow.@default == AcceptValue)
-                return sum + Sum(ranges);
+                return sum + Aggregate(ranges);
 
             return sum + MakeSumRanges(ranges, flows, flows.SingleOrDefault(f => f.name == startFlow.@default));
         }
