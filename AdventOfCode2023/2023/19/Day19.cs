@@ -74,7 +74,8 @@ namespace AdventOfCode2023
             public long Sum => Accepted ? (x + m + a + s) : 0;
         }
 
-        private static List<(string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules)> ParseRules(string[] input)
+        private static List<(string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules)> 
+            ParseRules(string[] input)
         {
             List<(string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules)> parsedRules = new();
 
@@ -294,14 +295,14 @@ namespace AdventOfCode2023
 
 
         private static long Aggregate(List<(long start, long end)> ranges) => ranges.Aggregate(1L, (acc, v) => acc *= v.end - v.start + 1);
-        private static long ProcessGreaterThan(List<(long start, long end)> ranges, List<(string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules)> flows, (int field, Operation operand, long reqVal, string trg) rule)
+        private static long ProcessGreaterThan((int field, Operation operand, long reqVal, string trg) rule, List<(string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules)> flows, List<(long start, long end)> ranges)
         {
             // clone our ranges before we go any deeper
             List<(long start, long end)> newRanges = new(ranges);
 
             // get max value required by this rule
-            var max = Math.Max(ranges[rule.field].start, rule.reqVal + 1);
-
+            var s = ranges[rule.field].start;
+            var max = Math.Max(rule.reqVal + 1, s);
             newRanges[rule.field] = (max, ranges[rule.field].end);
             
             // if our rule is Accept, return our ranges
@@ -309,23 +310,27 @@ namespace AdventOfCode2023
                 return Aggregate(newRanges);
 
             // it's not accept, nor reject, so go deeper
-            return MakeSumRanges(newRanges, flows, flows.SingleOrDefault(f => f.name == rule.trg));
+            return MakeSumRanges(flows.SingleOrDefault(f => f.name == rule.trg), flows, newRanges);
         }
-        private static long ProcessLessThan(List<(long start, long end)> ranges, List<(string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules)> flows, (int field, Operation operand, long reqVal, string trg) rule)
+        private static long ProcessLessThan((int field, Operation operand, long reqVal, string trg) rule, List<(string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules)> flows, List<(long start, long end)> ranges)
         {
             List<(long start, long end)> newRanges = new(ranges);
 
             // store new min value for this range
-            var min = Math.Min(ranges[rule.field].end, rule.reqVal - 1);
+            var e = ranges[rule.field].end;
+            var min = Math.Min(rule.reqVal - 1, e);
             newRanges[rule.field] = (ranges[rule.field].start, min);
 
             if (rule.trg == AcceptValue)
                 return Aggregate(newRanges);
 
-            return MakeSumRanges(newRanges, flows, flows.SingleOrDefault(f => f.name == rule.trg));
+            return MakeSumRanges(flows.SingleOrDefault(f => f.name == rule.trg), flows, newRanges);
         }
 
-        private static long MakeSumRanges(List<(long start, long end)> ranges, List<(string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules)> flows, (string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules) current)
+        private static long MakeSumRanges(
+            (string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules) current, 
+            List<(string name, string @default, List<(int field, Operation operand, long reqVal, string trg)> rules)> flows, 
+            List<(long start, long end)> ranges)
         {
             long sum = 0;
 
@@ -339,13 +344,13 @@ namespace AdventOfCode2023
                     if (rule.operand == Operation.GreaterThan)
                     {
                         if (rule.trg != RejectValue)
-                            sum += ProcessGreaterThan(ranges, flows, rule);
+                            sum += ProcessGreaterThan(rule, flows, ranges);
                         ranges[index] = (ranges[index].start, rule.reqVal);
                     }
                     else 
                     {
                         if (rule.trg != RejectValue) 
-                            sum += ProcessLessThan(ranges, flows, rule);
+                            sum += ProcessLessThan(rule, flows, ranges);
                         ranges[index] = (rule.reqVal, ranges[index].end);
                     }
                 }
@@ -357,7 +362,7 @@ namespace AdventOfCode2023
             if (current.@default == AcceptValue)
                 return sum + Aggregate(ranges);
 
-            return sum + MakeSumRanges(ranges, flows, flows.SingleOrDefault(f => f.name == current.@default));
+            return sum + MakeSumRanges(flows.SingleOrDefault(f => f.name == current.@default), flows, ranges);
         }
 
       
@@ -367,8 +372,7 @@ namespace AdventOfCode2023
         public static long Part2(string[] input, int lineWidth, int count)
         {
             var rules = ParseRules(input);
-
-            return MakeSumRanges(Enumerable.Range(1, 4).Select(i => (1L, 4000L)).ToList(), rules, rules.SingleOrDefault(f => f.name == "in"));
+            return MakeSumRanges(rules.SingleOrDefault(f => f.name == "in"), rules, Enumerable.Range(1, 4).Select(i => (1L, 4000L)).ToList());
         }
     }
 }
