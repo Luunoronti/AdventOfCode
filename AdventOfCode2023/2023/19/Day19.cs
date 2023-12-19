@@ -1,4 +1,5 @@
 using System.Data;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 using RuleSet = System.Collections.Generic.List<(string name, string @default, System.Collections.Generic.List<(char field, char operand, long reqVal, string trg)> rules)>;
@@ -219,6 +220,8 @@ namespace AdventOfCode2023
                 }
             }
 
+            // moved this to own method, but we want our compiler to optimize it as much as possible
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             unsafe int Operate(int currentOffset, Rule* rule, Part part, out bool noOp)
             {
                 noOp = false;
