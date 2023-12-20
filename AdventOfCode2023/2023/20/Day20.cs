@@ -67,8 +67,6 @@ namespace AdventOfCode2023
             {
                 if (pulse.IsHighPulse) HighLevelPulsesCount++;
                 else LowLevelPulsesCount++;
-
-                //Log.WriteLine($"Processing pulse: [{pulse.From}] => ({(pulse.IsHighPulse ? "Hi" : "Lo")}) [{pulse.To}]");
                 _queuedPulses.Enqueue(pulse);
             }
             public bool Process()
@@ -322,8 +320,7 @@ namespace AdventOfCode2023
         {
             button.Push();
             while (device.Process())
-                Thread.Sleep(0);
-            //Log.WriteLine($"{CC.Sys} =====> {CC.Clr} Device processed. High level pulses: {CC.Val}{device.HighLevelPulsesCount}{CC.Clr}, low level pulses: {CC.Val}{device.LowLevelPulsesCount}{CC.Clr}\n");
+                Thread.Sleep(0);  
         }
         //[RemoveSpacesFromInput]
         //[RemoveNewLinesFromInput]
