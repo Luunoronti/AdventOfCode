@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Numerics;
+using System.Reflection;
 
 namespace AdventOfCode2023
 {
@@ -11,6 +12,143 @@ namespace AdventOfCode2023
     [ExpectedTestAnswerPart2(0)] // if != 0, will report failure if expected answer != given answer
     class Day20
     {
+        // each module is 128 bits in size
+
+
+
+
+
+        private const ulong MT_FlipFlop = (ulong)1 << 62;
+        private const ulong MT_Conjunction = (ulong)1 << 63;
+        private const ulong MT_Output = (ulong)1 << 63 | 1 << 62;
+
+        private const ulong HIGH = (ulong)1 << 63;
+
+
+        // we are using statics, to prevent dereference cost on objects
+        //private static class Part1WithBytes
+        //{
+        //    private static long signalLowCount;
+        //    private static long signalHighCount;
+
+        //    private static ulong[] _modules; // MODULES, 4 bytes store, 4 bytes targets
+        //    private static ulong[] _signals; // SIGNALS, 4 bytes (1-bit) target, 1 bit: H/L, 4 bytes source
+
+        //    private static int currentExecutingOffset = 0;
+        //    private static int currentStoringOffset = 0;
+
+
+        //    private static void Signal(Span<ulong> queue, uint source, uint target, ulong isHigh)
+        //    {
+        //        if (isHigh > 0) signalHighCount++;
+        //        else signalLowCount++;
+
+        //        var qooLen = queue.Length;
+        //        var v = (ulong)target << 32;
+        //        v |= isHigh;
+        //        v |= source;
+
+        //        queue[currentStoringOffset++] = v;
+        //        if (currentStoringOffset >= qooLen) currentStoringOffset = 0;
+        //    }
+        //    private static void Process()
+        //    {
+        //        var qoo = _signals.AsSpan();
+        //        var qooLen = qoo.Length;
+        //        var mod = _modules.AsSpan();
+
+        //        while (true)
+        //        {
+        //            // get signal
+        //            var signal = qoo[currentExecutingOffset];
+        //            if (signal == ulong.MaxValue) return;// this is a special, end of queue, value
+        //            qoo[currentExecutingOffset] = ulong.MaxValue;
+        //            currentExecutingOffset++; if (currentExecutingOffset >= qooLen) currentExecutingOffset = 0;
+
+        //            // split signal
+        //            var signalSource = signal & 0xffffffff;
+        //            var signalTarget = (signal >> 32) & 0xeffffffff;
+        //            var isHigh = signal & 0x80000000;
+
+
+        //            // process modules
+        //            for (int m = 0; m < 62; m++)
+        //            {
+        //                var b = ((signalTarget >> m) & 0xffffff);
+        //                if (b == 1)
+        //                {
+        //                    // m is index of our module. go there (in mem), and process
+        //                    var modV1 = mod[m];
+        //                    var modV2 = mod[m + 1];
+
+        //                    // first 2 bits are type of module, so get those
+        //                    var type = modV1 & 0xc000000000000000;
+        //                    var store = modV1 & ~0xc000000000000000;
+
+        //                    if (type == MT_FlipFlop)
+        //                    {
+        //                        // if signal is high, do nothing
+        //                        if (isHigh > 0) continue;
+
+                                
+        //                        store = ~store;
+
+
+
+        //                        // store value, and do nothing more
+        //                        mod[m] = (type << 62) | isHigh;
+
+
+
+
+        //                        // invert our stored value
+        //                        mod[localO] = (byte)(1 - mod[localO]);
+
+        //                        // signal all
+        //                        localO = moduleOffset + 3;
+        //                        var v = mod[moduleOffset + 1];
+        //                        for (int i = 0, count = mod[moduleOffset + 2]; i < count; i++)
+        //                            Signal(qoo, module, mod[localO + i], v);
+        //                    }
+        //                    else if (type == MT_Conjunction)
+        //                    {
+
+        //                    }
+        //                    else if (type == MT_Output)
+        //                    {
+        //                        // store value, and do nothing more
+        //                        mod[m] = (type << 62) | isHigh;
+        //                        continue;
+        //                    }
+        //                    else
+        //                    {
+        //                        throw new InvalidProgramException("Invalid module type: " + type);
+        //                    }
+
+
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // steps:
         // define all possible modules as classes, deriving from Module class
         // define a Device class that will hold all modules
@@ -24,8 +162,8 @@ namespace AdventOfCode2023
         private const string BroadcastModuleName = "broadcast";
         private const string RxModuleName = "rx";
 
-        private const bool HIGH = true;
-        private const bool LOW = false; 
+        //private const bool HIGH = true;
+        private const bool LOW = false;
 
         class Pulse
         {
@@ -248,7 +386,7 @@ namespace AdventOfCode2023
                 registers[pulse.From] = pulse.IsHighPulse;
 
                 if (registers.Any(m => m.Value == LOW))
-                    SendPulseToAll(HIGH); // note: low -> high. See description
+                    SendPulseToAll(HIGH > 0); // note: low -> high. See description
                 else
                     SendPulseToAll(LOW); // note: high -> low. See description
             }
@@ -308,7 +446,7 @@ namespace AdventOfCode2023
         {
             public override string Name => RxModuleName;
             public Rx(string name, string targets) : base(name, targets) { }
-            private bool _state = HIGH; // start in on state
+            private bool _state = HIGH > 0; // start in on state
             public bool State => _state;
 
             public bool IsLow => _state == LOW;
@@ -323,7 +461,7 @@ namespace AdventOfCode2023
         {
             button.Push();
             while (device.Process())
-                Thread.Sleep(0);  
+                Thread.Sleep(0);
         }
         //[RemoveSpacesFromInput]
         //[RemoveNewLinesFromInput]
