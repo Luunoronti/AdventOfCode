@@ -24,6 +24,9 @@ namespace AdventOfCode2023
         private const string BroadcastModuleName = "broadcast";
         private const string RxModuleName = "rx";
 
+        private const bool HIGH = true;
+        private const bool LOW = false; 
+
         class Pulse
         {
             private string _from;
@@ -245,9 +248,9 @@ namespace AdventOfCode2023
                 memory[pulse.From] = pulse.IsHighPulse;
 
                 if (memory.Any(m => m.Value == false))
-                    SendPulseToAll(true); // note: low -> high. See description
+                    SendPulseToAll(HIGH); // note: low -> high. See description
                 else
-                    SendPulseToAll(false); // note: high -> low. See description
+                    SendPulseToAll(LOW); // note: high -> low. See description
             }
         }
 
@@ -282,7 +285,7 @@ namespace AdventOfCode2023
 
             public void Push()
             {
-                SendPulseToAll(false);
+                SendPulseToAll(LOW);
             }
             internal override void OnPulse(Pulse pulse)
             {
