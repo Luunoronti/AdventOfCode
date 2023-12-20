@@ -12,3 +12,5 @@
 /AdventOfCode2023/session.txt
 /AdventOfCode2023/bin/Release/net6.0-windows
 /AdventOfCode2023/bin/Debug/net7.0-windows
+/AdventOfCodeUWP/bin/x64/Debug
+/AdventOfCodeUWP/obj
