@@ -200,7 +200,7 @@ namespace AdventOfCode2023
         {
             public FlipFlop(string name, string targets) : base(name, targets) { }
 
-            private bool _state = false; // start on off state
+            private bool _state = LOW; // start on off state
             public bool State => _state;
 
             internal override void OnPulse(Pulse pulse)
@@ -226,7 +226,7 @@ namespace AdventOfCode2023
         {
             public Conjunction(string name, string targets) : base(name, targets) { }
 
-            public Dictionary<string, bool> memory = new();
+            public Dictionary<string, bool> registers = new();
 
             protected override void OnAfterMachineCreated(Device device)
             {
@@ -236,18 +236,18 @@ namespace AdventOfCode2023
                 foreach (var module in all)
                 {
                     if (module.HasTarget(Name))
-                        memory.Add(module.Name, false);
+                        registers.Add(module.Name, LOW);
                 }
             }
 
             internal override void OnPulse(Pulse pulse)
             {
-                if (!memory.TryGetValue(pulse.From, out _))
+                if (!registers.TryGetValue(pulse.From, out _))
                     throw new InvalidDataException($"Conjunction module {Name} does not have a memory slot for input {pulse.From}");
 
-                memory[pulse.From] = pulse.IsHighPulse;
+                registers[pulse.From] = pulse.IsHighPulse;
 
-                if (memory.Any(m => m.Value == false))
+                if (registers.Any(m => m.Value == LOW))
                     SendPulseToAll(HIGH); // note: low -> high. See description
                 else
                     SendPulseToAll(LOW); // note: high -> low. See description
@@ -308,10 +308,10 @@ namespace AdventOfCode2023
         {
             public override string Name => RxModuleName;
             public Rx(string name, string targets) : base(name, targets) { }
-            private bool _state = true; // start in on state
+            private bool _state = HIGH; // start in on state
             public bool State => _state;
 
-            public bool IsLow => _state == false;
+            public bool IsLow => _state == LOW;
             internal override void OnPulse(Pulse pulse) { _state = pulse.IsHighPulse; }
 
             protected override void OnAfterMachineCreated(Device device) { }
