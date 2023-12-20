@@ -1,9 +1,4 @@
-﻿
-using Microsoft.VisualBasic.Logging;
-using System.Diagnostics.Metrics;
-using System.Reflection;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using StringSpan = System.ReadOnlySpan<char>;
+﻿using System.Reflection;
 
 namespace AdventOfCode2023
 {
@@ -16,9 +11,18 @@ namespace AdventOfCode2023
     [ExpectedTestAnswerPart2(0)] // if != 0, will report failure if expected answer != given answer
     class Day20
     {
+        // steps:
+        // define all possible modules as classes, deriving from Module class
+        // define a Device class that will hold all modules
+        // Device 
+
         [AttributeUsage(AttributeTargets.Class)] class PrefixAttribute : Attribute { public PrefixAttribute(char prefix) { Prefix = prefix; } public char Prefix { get; set; } }
         private static char[] StdSplitChars = new char[] { ',' };
         private static string DevSplitString = "->";
+        private const string ButtonModuleName = "button";
+        private const string OutputModuleName = "output";
+        private const string BroadcastModuleName = "broadcast";
+        private const string RxModuleName = "rx";
 
         class Pulse
         {
@@ -74,8 +78,7 @@ namespace AdventOfCode2023
 
                 if (!_modules.TryGetValue(pulse.To, out var module))
                 {
-                    Log.WriteLine($"{CC.Err}Pulse from [{pulse.From}] addressed to unknown device [{pulse.To}]. Skipping this pulse.{CC.Clr}");
-                    return _queuedPulses.Count > 0;
+                    throw new InvalidDataException($"Pulse from [{pulse.From}] addressed to unknown device [{pulse.To}].");
                 }
 
                 module.OnPulse(pulse);
@@ -90,15 +93,19 @@ namespace AdventOfCode2023
                     .Where(t => t.prefix != null)
                     .ToDictionary(t => t.prefix.Prefix, t => t.type);
 
+                //////// add special modules
                 // add output module
-                var output = new Output("output", "");
+                var output = new Output("", "");
                 device._modules.Add(output.Name, output);
-
                 // also, add rx module
-                var rx = new Rx("rx", "");
+                var rx = new Rx("", "");
                 device._modules.Add(rx.Name, rx);
+                // button
+                var button = new Button("", BroadcastModuleName);
+                device._modules.Add(button.Name, button);
 
 
+                //////// add modules from schema
                 foreach (var line in input)
                 {
                     var sp1 = line.Split(DevSplitString, StringSplitOptions.TrimEntries);
@@ -106,28 +113,20 @@ namespace AdventOfCode2023
                     var pr_name = sp1[0];
                     var prefix = pr_name[0];
 
-                    if (deviceTypes.TryGetValue(prefix, out var type))
-                    {
-                        if (Activator.CreateInstance(type, new object[] { pr_name[1..], sp1[1] }) is not Module module)
-                            throw new InvalidDataException($"Unable to create module {pr_name}: Unable to construct type.");
-
-                        device._modules.Add(module.Name, module);
-                    }
-                    else
-                    {
+                    if (!deviceTypes.TryGetValue(prefix, out var type))
                         throw new InvalidDataException($"Unable to create module {pr_name}: Module type not found.");
-                    }
-                }
 
-                // also, add button module. it connects to broadcaster
-                // this is the only place with hard coded module name
-                var button = new Button("button", "broadcaster");
-                device._modules.Add(button.Name, button);
+                    if (Activator.CreateInstance(type, new object[] { pr_name[1..], sp1[1] }) is not Module module)
+                        throw new InvalidDataException($"Unable to create module {pr_name}: Unable to construct type.");
+                    device._modules.Add(module.Name, module);
+                }
 
                 _device = device;
 
+                // let modules process the schema, should they want to
                 foreach (var module in device._modules.Values)
                     module.RaiseAfterMachineCreated(device);
+
                 return device;
             }
         }
@@ -174,7 +173,7 @@ namespace AdventOfCode2023
         [Prefix((char)0)]
         class Output : Module
         {
-            public override string Name => "output";
+            public override string Name => OutputModuleName;
             public Output(string name, string targets) : base(name, targets)
             {
             }
@@ -261,7 +260,7 @@ namespace AdventOfCode2023
         [Prefix('b')]
         class Broadcaster : Module
         {
-            public override string Name => "broadcaster";
+            public override string Name => BroadcastModuleName;
             public Broadcaster(string name, string targets) : base(name, targets) { }
 
             internal override void OnPulse(Pulse pulse) => SendPulseToAll(pulse.IsHighPulse);
@@ -280,7 +279,7 @@ namespace AdventOfCode2023
         [Prefix((char)1)]
         class Button : Module
         {
-            public override string Name => "button";
+            public override string Name => ButtonModuleName;
             public Button(string name, string targets) : base(name, targets) { }
 
             public void Push()
@@ -306,7 +305,7 @@ namespace AdventOfCode2023
         /// </summary>
         class Rx : Module
         {
-            public override string Name => "rx";
+            public override string Name => RxModuleName;
             public Rx(string name, string targets) : base(name, targets) { }
             private bool _state = true; // start in on state
             public bool State => _state;
@@ -333,18 +332,12 @@ namespace AdventOfCode2023
         {
             var device = Device.CreateDevice(input);
             // push the button
-            var button = (device.GetModule("button") as Button);
+            var button = (device.GetModule(ButtonModuleName) as Button);
 
             for (int i = 0; i < 1000; i++)
             {
                 PushAndProcess(device, button);
             }
-
-
-            //PushAndProcess(device, button);
-            //PushAndProcess(device, button);
-            //PushAndProcess(device, button);
-
             return device.LowLevelPulsesCount * device.HighLevelPulsesCount;
         }
         //[RemoveSpacesFromInput]
