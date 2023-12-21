@@ -50,7 +50,7 @@ namespace AdventOfCodeUWP
             }
         }
 
-        public static IEnumerable<TestDataModel> GetTestData(int year, int day)
+        public static IEnumerable<DataModel> GetTestData(int year, int day)
         {
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "aocdatabase.db");
             using (SqliteConnection db = new SqliteConnection($"Filename={dbpath}"))
@@ -64,10 +64,12 @@ namespace AdventOfCodeUWP
                 using (var cmd = new SqliteCommand(tableCommand, db))
                 using (var reader = cmd.ExecuteReader())
                 {
+                    int index = 0;
                     while (reader.Read())
                     {
-                        yield return new TestDataModel
+                        yield return new DataModel
                         {
+                            Name = $"Test data {index}",
                             Year = year,
                             Day = day,
                             Index = (int)(long)reader[0],
@@ -80,7 +82,7 @@ namespace AdventOfCodeUWP
                 }
             }
         }
-        
+
         private static string GetSessionKey()
         {
             string dbpath = System.IO.Path.Combine(ApplicationData.Current.LocalFolder.Path, "aocdatabase.db");
@@ -118,8 +120,7 @@ namespace AdventOfCodeUWP
             {
                 db.Open();
 
-                var tableCommand = $"INSERT INTO LiveData VALUES (1, {year}, {day}, @content)";
-
+                var tableCommand = $"INSERT INTO LiveData VALUES ({year + day}, {year}, {day}, @content)";
                 using (var cmd = new SqliteCommand(tableCommand, db))
                 {
                     cmd.Parameters.Add(new SqliteParameter("@content", contents));
@@ -130,7 +131,7 @@ namespace AdventOfCodeUWP
         }
 
 
-        public static LiveDataModel GetLiveData(int year, int day)
+        public static DataModel GetLiveData(int year, int day)
         {
             var liveData = "";
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "aocdatabase.db");
@@ -155,13 +156,14 @@ namespace AdventOfCodeUWP
             if (string.IsNullOrEmpty(liveData))
                 liveData = DownloadAndUpdateLiveData(year, day);
 
-            return new LiveDataModel { Content = liveData, Day = day, Year = year };
+            return new DataModel { Name= "Live data", ApplicableToPart1 = true, ApplicableToPart2 = true, ExpectedValue = 0, Index = 0, Content = liveData, Day = day, Year = year };
         }
     }
 
 
-    public class TestDataModel
+    public class DataModel
     {
+        public string Name { get; set; }
         public int Year { get; set; }
         public int Day { get; set; }
         public int Index { get; set; }
@@ -170,11 +172,5 @@ namespace AdventOfCodeUWP
         public BigInteger ExpectedValue { get; set; }
         public string Content { get; set; }
 
-    }
-    public class LiveDataModel
-    {
-        public int Year { get; set; }
-        public int Day { get; set; }
-        public string Content { get; set; }
     }
 }

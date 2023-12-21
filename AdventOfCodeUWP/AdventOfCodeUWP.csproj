@@ -116,9 +116,11 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="2023\21.cs" />
     <Compile Include="2023\01.cs" />
     <Compile Include="2023\19.cs" />
     <Compile Include="2023\20.cs" />
+    <Compile Include="2023\00.cs" />
     <Compile Include="_CORE_\AocDay.cs" />
     <Compile Include="_CORE_\AoCDayAttribute.cs" />
     <Compile Include="_CORE_\App.xaml.cs">
@@ -168,6 +170,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.SfGrid.UWP">
+      <Version>24.1.41</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -21,6 +21,8 @@ namespace AdventOfCodeUWP
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mjk5MDkyOEAzMjM0MmUzMDJlMzBuRXNYT21EL21xZHV4VGNoZ0xQbkNzQktXQ01KVVNOZ2gwdmJaa3NsdElVPQ==");
+
             DataAccess.InitializeDatabase();
         }
 

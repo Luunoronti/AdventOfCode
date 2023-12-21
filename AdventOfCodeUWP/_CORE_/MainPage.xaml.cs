@@ -37,7 +37,10 @@ namespace AdventOfCodeUWP
             if (args.IsSettingsInvoked)
             {
             }
-            else frame.Navigate(typeof(DayPage), (args.InvokedItem as NavigationViewItem)?.Tag);
+            else
+            {
+                frame.Navigate(typeof(DayPage), args.InvokedItemContainer?.Tag);
+            }
         }
 
         private void ReloadNavigationPane(bool navigateToCurrentDay = true)

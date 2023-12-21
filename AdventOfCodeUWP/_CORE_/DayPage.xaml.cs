@@ -1,4 +1,9 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Reflection;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -11,30 +16,95 @@ namespace AdventOfCodeUWP
     /// </summary>
     public sealed partial class DayPage : Page
     {
+        public ObservableCollection<DataModel> Data { get; } = new ObservableCollection<DataModel>();
+
+
         public DayPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            Loaded += DayPage_Loaded;
         }
 
-        private void EditTestData_Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            var data = DataAccess.GetTestData(2023, 20);
-            var live = DataAccess.GetLiveData(2023, 20);
-            foreach(var d in data)
-            {
+        private Type dayClassType;
+        internal int TypeYear { get; private set; }
+        internal int TypeDay { get; private set; }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            dayClassType = e.Parameter as Type;
+            TypeYear = dayClassType?.GetCustomAttribute<AoCDayAttribute>()?.Year ?? 0;
+            TypeDay = dayClassType?.GetCustomAttribute<AoCDayAttribute>()?.Day ?? 0;
+        }
+        private void DayPage_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            UpdateTestDataFromDB();
+        }
+
+
+        private void UpdateTestDataFromDB()
+        {
+            var data = DataAccess.GetTestData(TypeYear, TypeDay);
+            testDataCheckBoxPanel.Children.Clear();
+            int index = 1;
+            foreach (var d in data)
+            {
+                testDataCheckBoxPanel.Children.Add(new CheckBox { Content = $"Test data {index}", Tag = d });
+            }
+        }
+
+        private void EditTestData_Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) => ShowDataControl();
+
+
+
+
+        private void ShowDataControl()
+        {
+            var itemsToRemove = editDataPivotItem.Items.Where(it => (it as PivotItem).Tag != null).ToList();
+            foreach (var i in itemsToRemove)
+                editDataPivotItem.Items.Remove(i);
+
+            dataEditWnd_LiveDataText.Text = DataAccess.GetLiveData(TypeYear, TypeDay).Content;
+            foreach (var d in DataAccess.GetTestData(TypeYear, TypeDay))
+            {
+                editDataPivotItem.Items.Add(new PivotItem 
+                {
+                    Header = d.Name,
+                    Tag = d,
+                });
             }
 
-            // test data for this day will contain:
-            // date (year) and date (day)
-            // number of test (0...10) (we support maximum of 10 tests per day)
-            // the contents of test (string)
-            // expected value (in string form, because of BigInt)
-            // is this test applicable to Part1, Part 2 or both?
+            dataEditControl.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
 
+        private void EditData_Discard_Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            // do not save data
+            Data.Clear();
+            dataEditControl.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
 
-
+        private void EditData_Save_Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            // save data in data access
 
         }
+
+        private void EditData_RedownloadLive_Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditData_DeleteSelected_Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditData_AddNew_Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
+        private void CommandBar_Closing(object sender, object e) => ((CommandBar)sender).IsOpen = true;
     }
 }
