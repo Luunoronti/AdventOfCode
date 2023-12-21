@@ -13,8 +13,8 @@ namespace AdventOfCode2023
     {
         private const char StartPos = 'S';
         private const char Rock = '#';
-        private const int Part1TestLoopCount = 64;
-        private const int Part2LiveLoop = 26_501_365;
+        private const int Part1LoopCount = 64;
+        private const int Part2LoopCount = 26_501_365;
 
         //[RemoveSpacesFromInput]
         //[RemoveNewLinesFromInput]
@@ -29,10 +29,8 @@ namespace AdventOfCode2023
             Queue<Point> occupied2 = new();
             occupied.Enqueue(startingPosition);
 
-            Log.WriteLine(CC.CursorHide);
             var sum = 0L;
-
-            for (int i = 0; i < Part1TestLoopCount; i++)
+            for (int i = 0; i < Part1LoopCount; i++)
             {
                 occupiedMap.AsSpan().Clear();
 
@@ -50,10 +48,8 @@ namespace AdventOfCode2023
                 }
                 sum = occupied2.Count;
                 (occupied, occupied2) = (occupied2, occupied);
-                Log.Write($"Step {i} / {Part1TestLoopCount}");
                 Console.CursorLeft = 0;
             }
-            Log.WriteLine(CC.CursorShow);
             return sum;
         }
 
