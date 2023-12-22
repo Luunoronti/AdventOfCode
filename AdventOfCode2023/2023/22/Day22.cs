@@ -1,7 +1,7 @@
 namespace AdventOfCode2023
 {
     //[Force]                    // uncomment to force processing this type (regardless of which day it is according to DateTime)
-    //[AlwaysEnableLog]          // if uncommented, Log.Write() and Log.WriteLine() will still be honored in runs without a debugger (do not confuse with Debug/Release configuration)
+    [AlwaysEnableLog]          // if uncommented, Log.Write() and Log.WriteLine() will still be honored in runs without a debugger (do not confuse with Debug/Release configuration)
     //[DisableLogInDebug]        // if uncommented, Log will be disabled even when under debugger
     //[UseLiveDataInDeug]        // if uncommented and under a debug session, will use live data (problem data) instead of test data
     //[AlwaysUseTestData]        // if uncommented, will use test data in both debugging session and non-debugging session
@@ -332,6 +332,7 @@ namespace AdventOfCode2023
             var cubes = GetCubes(string.Join(" ", input));
             //ApplyGravity(cubes);
             ApplyGravityInstant(cubes);
+            Log.WriteLine("Gravity applied");
             ReportPossibleBrickDisintegration(cubes, out var p1, out part2Answer);
             return p1;
         }

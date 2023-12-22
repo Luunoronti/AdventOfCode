@@ -154,11 +154,7 @@ public class Day22_Part1 : MonoBehaviour
 
                 if (ic.Count > 0 && minDist < 0.03f)
                 {
-                    if (cube.Name.StartsWith("D") || cube.Name.StartsWith("E"))
-                    {
-
-                    }
-                    // link cube to cube
+                    // link cube to cube (cube^2 :P)
                     foreach (var _ic in ic)
                     {
                         if (cube.cubesBellow.Contains(_ic) == false)
