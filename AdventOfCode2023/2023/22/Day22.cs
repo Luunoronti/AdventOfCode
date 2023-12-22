@@ -111,7 +111,7 @@ namespace AdventOfCode2023
             // this is good for animation (unity)
             // but here, we could just check for down intersections and move to the 
             // first cube as seen from above
-            // bellow works, but is considerably slower
+            // the following works, but is considerably slower
 
             // see ApplyGravityInstant()
 
@@ -133,9 +133,9 @@ namespace AdventOfCode2023
                     {
                         var delta = 0.5f; 
 
-                        var ic = GetCubesIntersectingBellow(cube, fallenCubes, out var minDist, useSmallRay: false);
-                        // simulation problem. we have bigger delta than our minDist
-                        // compensate
+                        var ic = GetCubesIntersectingBellow(cube, fallenCubes, out var minDist, useShortRay: false);
+                        // simulation problem: we may have bigger delta than our minDist
+                        // this means our frame time is large. compensate
                         if (minDist < delta)
                         {
                             cube.BottomLeft.y -= minDist;
@@ -197,7 +197,7 @@ namespace AdventOfCode2023
                 }
 
                 // check if there are any cubes intersecting with us
-                var ic = GetCubesIntersectingBellow(cube, fallenCubes, out var minDist, useSmallRay: false);
+                var ic = GetCubesIntersectingBellow(cube, fallenCubes, out var minDist, useShortRay: false);
 
                 if (ic.Count == 0)
                 {
@@ -214,8 +214,8 @@ namespace AdventOfCode2023
                     cube.BottomLeft.y = 1;
 
 
-                // we must build our list again, but this time, with small ray, to only detect cubes that are very close to us
-                ic = GetCubesIntersectingBellow(cube, fallenCubes, out minDist, useSmallRay: true);
+                // we must build our list again, but this time, with short ray, to only detect cubes that are very close to us
+                ic = GetCubesIntersectingBellow(cube, fallenCubes, out minDist, useShortRay: true);
 
                 if (ic.Count > 0)
                 {
@@ -240,7 +240,7 @@ namespace AdventOfCode2023
             return false;
         }
 
-        private static List<Cube> GetCubesIntersectingBellow(Cube cube, List<Cube> otherCubes, out float minimumFoundDistance, bool useSmallRay = true)
+        private static List<Cube> GetCubesIntersectingBellow(Cube cube, List<Cube> otherCubes, out float minimumFoundDistance, bool useShortRay = true)
         {
             minimumFoundDistance = float.MaxValue;
             var ret = new List<Cube>();
@@ -254,10 +254,10 @@ namespace AdventOfCode2023
                 if (fc.BottomLeft.y + fc.Size.y <= cube.BottomLeft.y)
                 {
                     // "short" ray check
-                    if (useSmallRay && cube.BottomLeft.y - (fc.BottomLeft.y + fc.Size.y) > 0.1f)
+                    if (useShortRay && cube.BottomLeft.y - (fc.BottomLeft.y + fc.Size.y) > 0.1f)
                         continue;
 
-                    // now, check if our volume intersects cube volume
+                    // now, check if our orthogonal (xz) mapping intersects this cube's mapping.
                     // if so, this cube is bellow us and we should consider it
                     if (DoIntersectInXZPlane(cube, fc))
                     {
@@ -286,24 +286,14 @@ namespace AdventOfCode2023
                 if (!cube.cubesAbove.Any(a => a.cubesBellow.Count == 1 && a.cubesBellow[0] == cube))
                 {
                     part1++;
-
                     // because this cube does not cause any other to fall, 
-                    // it won't count in part 2. so, we can skip that test
-                    // saves us 
+                    // it won't count in part 2. so, we can skip that test.
+                    // saves us some time
                     continue;
                 }
 
                 // part 2
-                var count = CheckFallenAbove_NR(cube, fallenFlags);
-                if (count > 0)
-                {
-                    // cube.WasFallInitiator = true;
-                }
-                else
-                {
-                    //  Log.WriteLine($"Cube {cube} has not cause any other cube to fall.");
-                }
-                part2 += count;
+                part2 += CheckFallenAbove_NR(cube, fallenFlags);
             }
         }
 
@@ -353,6 +343,7 @@ namespace AdventOfCode2023
 
 
         private static int part2Answer;
+
         //[RemoveSpacesFromInput]
         //[RemoveNewLinesFromInput]
         // change to string or string[] to get other types of input
@@ -361,7 +352,6 @@ namespace AdventOfCode2023
             // because of how unity processed our input,
             // we have to format it in special way
             var cubes = GetCubes(string.Join(" ", input));
-            //ApplyGravity(cubes);
             ApplyGravityInstant(cubes);
             Log.WriteLine("Gravity applied");
             ReportPossibleBrickDisintegration(cubes, out var p1, out part2Answer);
