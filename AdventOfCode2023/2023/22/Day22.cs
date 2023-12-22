@@ -268,14 +268,17 @@ namespace AdventOfCode2023
 
 
 
+        private static int part2Answer;
         //[RemoveSpacesFromInput]
         //[RemoveNewLinesFromInput]
         // change to string or string[] to get other types of input
-        public static long Part1(string input, int lineWidth, int count)
+        public static long Part1(string[] input, int lineWidth, int count)
         {
-            var cubes = GetCubes(input);
+            // because of how unity processed our input,
+            // we have to format it in special way
+            var cubes = GetCubes(string.Join(" ", input));
             ApplyGravity(cubes);
-            ReportPossibleBrickDisintegration(cubes, out var p1, out _);
+            ReportPossibleBrickDisintegration(cubes, out var p1, out part2Answer);
             return p1;
         }
         //[RemoveSpacesFromInput]
@@ -283,11 +286,8 @@ namespace AdventOfCode2023
         // change to string or string[] to get other types of input
         public static long Part2(string input, int lineWidth, int count)
         {
-            var cubes = GetCubes(input);
-            ApplyGravity(cubes);
-            ReportPossibleBrickDisintegration(cubes, out var _, out int p2);
-
-            return p2;
+            // we've done everything in part 1...
+            return part2Answer;
         }
     }
 }
