@@ -147,6 +147,13 @@ namespace AdventOfCode2023
         }
         private static void PutCubesDown(List<Cube> cubes)
         {
+            // this method is not the best solution here.
+            // what it does is it moves cubes down by n amount
+            // this is good for animation (unity)
+            // but here, we could just check for down intersections and move to the 
+            // first cube as seen from above
+            // bellow works, but is considerably slower
+
             // sort cubes by their y coordinate
             cubes.Sort((a, b) => a.BottomLeft.y.CompareTo(b.BottomLeft.y));
 
