@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace AdventOfCode2023
 {
     //[Force]                    // uncomment to force processing this type (regardless of which day it is according to DateTime)
@@ -9,6 +11,7 @@ namespace AdventOfCode2023
     [ExpectedTestAnswerPart2(7)] // if != 0, will report failure if expected answer != given answer
     class Day22
     {
+        // duplicate types here, so that we have the same API
         struct Vector3
         {
             public float x;
@@ -22,9 +25,9 @@ namespace AdventOfCode2023
                 this.z = z;
             }
 
-            public static Vector3 operator +(Vector3 a, Vector3 b) => new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
-            public static Vector3 operator -(Vector3 a, Vector3 b) => new Vector3(a.x - b.x, a.y - b.y, a.z - b.z);
-            public override string ToString() => $"{x}, {y}, {z}";
+            public static Vector3 operator +(Vector3 a, Vector3 b) => new(a.x + b.x, a.y + b.y, a.z + b.z);
+            public static Vector3 operator -(Vector3 a, Vector3 b) => new(a.x - b.x, a.y - b.y, a.z - b.z);
+            public override readonly string ToString() => $"{x}, {y}, {z}";
         }
         public struct Rect
         {
@@ -40,38 +43,24 @@ namespace AdventOfCode2023
                 this.width = width;
                 this.height = height;
             }
-            public bool Overlaps(Rect other)
-            {
-                return (other.width + other.x) > x
-                    && other.x < (width + x)
-                    && (other.height + other.y) > y
-                    && other.y < (height + y);
-            }
-            public static bool operator !=(Rect lhs, Rect rhs)
-            {
-                return !(lhs == rhs);
-            }
-            public static bool operator ==(Rect lhs, Rect rhs)
-            {
-                return lhs.x == rhs.x && lhs.y == rhs.y && lhs.width == rhs.width && lhs.height == rhs.height;
-            }
+            public bool Overlaps(Rect other) => (other.width + other.x) > x && other.x < (width + x) && (other.height + other.y) > y && other.y < (height + y);
+            public static bool operator !=(Rect lhs, Rect rhs) => !(lhs == rhs);
+            public static bool operator ==(Rect lhs, Rect rhs) => lhs.x == rhs.x && lhs.y == rhs.y && lhs.width == rhs.width && lhs.height == rhs.height;
 
         }
         class Cube
         {
+            public Vector3 OriginalPosition;
+
             public Vector3 BottomLeft;
             public Vector3 Size;
             public string Name;
-            public override string ToString()
-            {
-                return $"{Name}: {BottomLeft}  -  {BottomLeft + Size}  ({Size})";
-            }
+            public int Index; // we use it for part 2
+            public override string ToString() => $"{Name}: {BottomLeft}  -  {BottomLeft + Size}  ({Size})";
             public List<Cube> cubesBellow = new();
             public List<Cube> cubesAbove = new();
-            public bool IsSupportingCube = false;
-            public bool IsFallenCube = true;
-            public bool IsSingleSupport(Cube supporter)
-                => cubesBellow.Count == 1 && cubesBellow[0] == supporter;
+
+            public bool WasFallInitiator = false;
         }
 
 
@@ -81,7 +70,6 @@ namespace AdventOfCode2023
             // we have to switch y and z
             // this won't affect our computations,
             // just need to remember about it
-
             var ret = new List<Cube>();
             var pairs = input.Split(new char[] { ' ', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -91,13 +79,16 @@ namespace AdventOfCode2023
                 var v1 = new Vector3(sp1[0], sp1[2], sp1[1]);
                 var v2 = new Vector3(sp1[3], sp1[5], sp1[4]);
 
+                Vector3 bl = new(Math.Min(v1.x, v2.x), Math.Min(v1.y, v2.y), Math.Min(v1.z, v2.z));
+
                 // note, we add 1 to our top right coordinate, because, following instructions:
                 //>> A line like 2,2,2~2,2,2 means that both ends of the brick are at the same coordinate -
                 //>> in other words, that the brick is a single cube.
-                Vector3 bl = new(Math.Min(v1.x, v2.x), Math.Min(v1.y, v2.y), Math.Min(v1.z, v2.z));
+                // Also not that we always preserve bottom left position, and expand to the top and right.
+                // We do not care about top and right that much, all we care about is to preserve bottom coordinate
                 Vector3 tr = new Vector3(1, 1, 1) + new Vector3(Math.Max(v1.x, v2.x), Math.Max(v1.y, v2.y), Math.Max(v1.z, v2.z));
 
-                ret.Add(new Cube { BottomLeft = bl, Size = tr - bl, Name = $"{pair}", });
+                ret.Add(new Cube { OriginalPosition = v1, BottomLeft = bl, Size = tr - bl, Name = $"{pair}", Index = ret.Count });
             }
             return ret;
         }
@@ -114,16 +105,18 @@ namespace AdventOfCode2023
 
             // sort cubes by their y coordinate
             cubes.Sort((a, b) => a.BottomLeft.y.CompareTo(b.BottomLeft.y));
+            // re-apply indexes after sorting
+            for (int i1 = 0; i1 < cubes.Count; i1++)
+                cubes[i1].Index = i1;
 
-            // note: position 1 is bottom, so we can't fall from that
             var fallenCubes = new List<Cube>();
             for (int i = 0; i < cubes.Count; i++)
             {
                 Cube cube = cubes[i];
 
+                // note: position 1 is bottom, so we can't fall from that
                 while (cube.BottomLeft.y > 1)
                 {
-
                     // check if there are any cubes intersecting with us
                     var ic = GetCubesIntersectingBellow(cube, fallenCubes, out var minDist);
 
@@ -162,6 +155,9 @@ namespace AdventOfCode2023
         {
             // sort cubes by their y coordinate
             cubes.Sort((a, b) => a.BottomLeft.y.CompareTo(b.BottomLeft.y));
+            // re-apply indexes after sorting
+            for (int i1 = 0; i1 < cubes.Count; i1++)
+                cubes[i1].Index = i1;
 
             // note: position 1 is bottom, so we can't fall from that
             var fallenCubes = new List<Cube>();
@@ -172,6 +168,7 @@ namespace AdventOfCode2023
                 {
                     if (fallenCubes.Contains(cube) == false)
                         fallenCubes.Add(cube);
+                    continue;
                 }
 
                 // check if there are any cubes intersecting with us
@@ -188,11 +185,11 @@ namespace AdventOfCode2023
 
                 // we have something bellow, move to that position
                 cube.BottomLeft.y -= minDist;
-                if (cube.BottomLeft.y < 1)
+                if (cube.BottomLeft.y < 1) // in case we moved bellow 1. shouldn't, but just in case
                     cube.BottomLeft.y = 1;
 
 
-                // we must build our list again, but this time, with small ray
+                // we must build our list again, but this time, with small ray, to only detect cubes that are very close to us
                 ic = GetCubesIntersectingBellow(cube, fallenCubes, out minDist, useSmallRay: true);
 
                 if (ic.Count > 0)
@@ -202,7 +199,6 @@ namespace AdventOfCode2023
                         if (cube.cubesBellow.Contains(_ic) == false) cube.cubesBellow.Add(_ic);
                         if (_ic.cubesAbove.Contains(cube) == false) _ic.cubesAbove.Add(cube);
                     }
-
                     if (fallenCubes.Contains(cube) == false) fallenCubes.Add(cube);
                 }
             }
@@ -218,9 +214,8 @@ namespace AdventOfCode2023
             if (br.Overlaps(ar)) return true;
             return false;
         }
-        
-        private static List<Cube> GetCubesIntersectingBellow(Cube cube, List<Cube> otherCubes,
-            out float minimumFoundDistance, bool useSmallRay = true)
+
+        private static List<Cube> GetCubesIntersectingBellow(Cube cube, List<Cube> otherCubes, out float minimumFoundDistance, bool useSmallRay = true)
         {
             minimumFoundDistance = float.MaxValue;
             var ret = new List<Cube>();
@@ -233,6 +228,7 @@ namespace AdventOfCode2023
                 // but we need to check for that anyway
                 if (fc.BottomLeft.y + fc.Size.y <= cube.BottomLeft.y)
                 {
+                    // "short" ray check
                     if (useSmallRay && cube.BottomLeft.y - (fc.BottomLeft.y + fc.Size.y) > 0.1f)
                         continue;
 
@@ -245,8 +241,6 @@ namespace AdventOfCode2023
                     }
                 }
             }
-
-            // this is not the best solution, but will do
             return ret;
         }
 
@@ -257,69 +251,77 @@ namespace AdventOfCode2023
             part1 = 0;
             part2 = 0;
 
-            // part 1
-            foreach (var cube in cubes)
+            Span<bool> fallenFlags = new(new bool[cubes.Count]);
+
+            for (int i = 0; i < cubes.Count; i++)
             {
-                bool canBeRemoved = true;
-                // if we have found at least one cube above that is supported by us only, 
-                // this brick can not be removed.
-                foreach (var above in cube.cubesAbove)
+                Cube cube = cubes[i];
+
+                // part 1
+                if (!cube.cubesAbove.Any(a => a.cubesBellow.Count == 1 && a.cubesBellow[0] == cube))
+                    part1++;
+
+                // part 2
+
+                fallenFlags.Clear();
+                fallenFlags[cube.Index] = true;
+                CheckFallenAbove(cube, fallenFlags);
+                fallenFlags[cube.Index] = false;
+                var count = 0;
+                for (int s = 0; s < fallenFlags.Length; s++)
                 {
-                    if (above.IsSingleSupport(cube))
+                    if (fallenFlags[s])
                     {
-                        canBeRemoved = false;
+                        count++;
+                    }
+                }
+                if (count > 0)
+                {
+                    cube.WasFallInitiator = true;
+                }
+                else
+                {
+                  //  Log.WriteLine($"Cube {cube} has not cause any other cube to fall.");
+                }
+                part2 += count;
+            }
+
+        }
+
+        private static int callCount = 0;
+        private static int stackDepth = 0;
+
+        private static Dictionary<Cube, int> _alreadyCheckedForFallen = new Dictionary<Cube, int>();
+
+        private static void CheckFallenAbove(Cube cube, Span<bool> fallenFlags, int callInd = 0)
+        {
+            stackDepth = Math.Max(stackDepth, callInd);
+            callCount++;
+
+            if (fallenFlags[cube.Index] == false) return;
+
+            //Debug.Log($"Cube {cube} fallen");
+            foreach (var above in cube.cubesAbove)
+            {
+                var abl = above.cubesBellow;
+                var allFallen = true;
+                for (int i = 0; i < abl.Count; i++)
+                {
+                    if (!fallenFlags[abl[i].Index])
+                    {
+                        allFallen = false;
                         break;
                     }
                 }
-                if (canBeRemoved)
-                {
-                    part1++;
-                }
-            }
-
-            // part 2
-            foreach (var cube in cubes)
-            {
-                // for each cube, clear this flag before each test
-                foreach (var c in cubes) c.IsFallenCube = false;
-
-                //  Debug.Log($"==============================================");
-
-                cube.IsFallenCube = true;
-                CheckFallenAbove(cube);
-                cube.IsFallenCube = false;
-
-                part2 += cubes.Count(c => c.IsFallenCube);
-            }
-
-            //Debug.Log($"Total count of cubes in danger of falling: {sum2}");
-        }
-
-
-
-        private static void CheckFallenAbove(Cube cube)
-        {
-            if (cube.IsFallenCube == false) return;
-
-            //Debug.Log($"Cube {cube} fallen");
-            // get all above cubes that have only one parent, us
-            // and "fall" them
-            foreach (var above in cube.cubesAbove)
-            {
-                // if all cubes bellow are falling, we are too
-                if (above.cubesBellow.All(c => c.IsFallenCube))
-                {
-                    above.IsFallenCube = true;
-                }
+                if (allFallen)
+                    fallenFlags[above.Index] = true;
             }
 
             foreach (var above in cube.cubesAbove)
             {
-                CheckFallenAbove(above);
+                CheckFallenAbove(above, fallenFlags, callInd + 1);
             }
         }
-
-
 
         private static int part2Answer;
         //[RemoveSpacesFromInput]
