@@ -1,0 +1,18 @@
+{
+    "name": "ObjectNoteEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:70733df70a8976841a0958d02187be86"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

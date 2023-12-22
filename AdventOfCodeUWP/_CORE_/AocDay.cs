@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Numerics;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -11,7 +12,11 @@ namespace AdventOfCodeUWP
         {
             if (useLive)
             {
+                var result = Part1();
+                Debug.WriteLine($"{DateTime.Now} => Result from live on Part 1: {result}");
 
+                result = Part2();
+                Debug.WriteLine($"{DateTime.Now} => Result from live on Part 2: {result}");
             }
 
             if (testNumbers != null)

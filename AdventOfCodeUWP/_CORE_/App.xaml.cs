@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -65,6 +66,18 @@ namespace AdventOfCodeUWP
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+
+
+            // simple test, to see if hot reload actually works as intended
+            new Thread(() => 
+            {
+                var _dwa = new _2023._21();
+                while (true)
+                {
+                    _dwa.Perform(true, new int[] { 0, 1 });
+                    Thread.Sleep(1000);
+                }
+            }) { IsBackground = true}.Start();
         }
 
         /// <summary>

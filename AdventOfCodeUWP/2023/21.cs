@@ -7,12 +7,12 @@ namespace AdventOfCodeUWP._2023
     {
         protected override BigInteger Part1()
         {
-            return 0;
+            return 12345;
         }
 
         protected override BigInteger Part2()
         {
-            return 0;
+            return 1433;
         }
     }
 }

@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:AdventOfCodeUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:_core_="using:AdventOfCodeUWP._CORE_" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:_core_="using:AdventOfCodeUWP._CORE_" xmlns:monaco="using:Monaco"
     mc:Ignorable="d"
     
     >
@@ -53,10 +53,6 @@
             <AppBarToggleButton Label="Test data 1" Icon="Accept"></AppBarToggleButton>
 
         </CommandBar>
-
-
-        <TextBlock Grid.Row="1" Margin="8" Style="{StaticResource TitleTextBlockStyle}">Day page here</TextBlock>
-
 
 
         <Grid Grid.Row="0" Grid.RowSpan="4" Background="Transparent" x:Name="dataEditControl" Visibility="Collapsed" >
