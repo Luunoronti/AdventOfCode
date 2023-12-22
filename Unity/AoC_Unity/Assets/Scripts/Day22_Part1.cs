@@ -44,15 +44,28 @@ public class Day22_Part1 : MonoBehaviour
 
     async void Start()
     {
+        // get input (test is in this object itself, live is being downloaded)
         var input = ReadInput();
         Debug.Log($"Got {input.Length} characters in input.");
+
+        // construct our cubes from the input
         var cubes = GetCubes(input);
 
+        // spawn game objects.
+        // this does not work well with live input,
+        // over 1k GOs kill performance.
+        // if i am going to use unity to visualize,
+        // ECS is the way
         if (Animate)
             SpawnObjects(cubes);
 
+        // apply gravity.
+        // this method also animates our spawned cubes
+        // on the scene, so it's async, takes time, 
+        // and we wait for it
         await ApplyGravityAsync(cubes);
 
+        // now, analyze and compute final result
         ReportPossibleBrickDisintegration(cubes);
     }
 
