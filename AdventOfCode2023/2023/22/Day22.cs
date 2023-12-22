@@ -158,7 +158,55 @@ namespace AdventOfCode2023
                     fallenCubes.Add(cube);
             }
         }
+        private static void ApplyGravityInstant(List<Cube> cubes)
+        {
+            // sort cubes by their y coordinate
+            cubes.Sort((a, b) => a.BottomLeft.y.CompareTo(b.BottomLeft.y));
 
+            // note: position 1 is bottom, so we can't fall from that
+            var fallenCubes = new List<Cube>();
+            for (int i = 0; i < cubes.Count; i++)
+            {
+                Cube cube = cubes[i];
+                if (cube.BottomLeft.y == 1)
+                {
+                    if (fallenCubes.Contains(cube) == false)
+                        fallenCubes.Add(cube);
+                }
+
+                // check if there are any cubes intersecting with us
+                var ic = GetCubesIntersectingBellow(cube, fallenCubes, out var minDist, useSmallRay: false);
+
+                if (ic.Count == 0)
+                {
+                    // we have nothing bellow us, drop to the bottom
+                    cube.BottomLeft.y = 1;
+                    if (fallenCubes.Contains(cube) == false)
+                        fallenCubes.Add(cube);
+                    continue;
+                }
+
+                // we have something bellow, move to that position
+                cube.BottomLeft.y -= minDist;
+                if (cube.BottomLeft.y < 1)
+                    cube.BottomLeft.y = 1;
+
+
+                // we must build our list again, but this time, with small ray
+                ic = GetCubesIntersectingBellow(cube, fallenCubes, out minDist, useSmallRay: true);
+
+                if (ic.Count > 0)
+                {
+                    foreach (var _ic in ic)
+                    {
+                        if (cube.cubesBellow.Contains(_ic) == false) cube.cubesBellow.Add(_ic);
+                        if (_ic.cubesAbove.Contains(cube) == false) _ic.cubesAbove.Add(cube);
+                    }
+
+                    if (fallenCubes.Contains(cube) == false) fallenCubes.Add(cube);
+                }
+            }
+        }
 
         private static bool DoIntersectInXZPlane(Cube a, Cube b)
         {
@@ -170,9 +218,11 @@ namespace AdventOfCode2023
             if (br.Overlaps(ar)) return true;
             return false;
         }
-        private static List<Cube> GetCubesIntersectingBellow(Cube cube, List<Cube> otherCubes, out float minimumFoundDistance)
+        
+        private static List<Cube> GetCubesIntersectingBellow(Cube cube, List<Cube> otherCubes,
+            out float minimumFoundDistance, bool useSmallRay = true)
         {
-            minimumFoundDistance = 1;
+            minimumFoundDistance = float.MaxValue;
             var ret = new List<Cube>();
             foreach (var fc in otherCubes)
             {
@@ -183,7 +233,7 @@ namespace AdventOfCode2023
                 // but we need to check for that anyway
                 if (fc.BottomLeft.y + fc.Size.y <= cube.BottomLeft.y)
                 {
-                    if (cube.BottomLeft.y - (fc.BottomLeft.y + fc.Size.y) > 0.1f)
+                    if (useSmallRay && cube.BottomLeft.y - (fc.BottomLeft.y + fc.Size.y) > 0.1f)
                         continue;
 
                     // now, check if our volume intersects cube volume
@@ -280,7 +330,8 @@ namespace AdventOfCode2023
             // because of how unity processed our input,
             // we have to format it in special way
             var cubes = GetCubes(string.Join(" ", input));
-            ApplyGravity(cubes);
+            //ApplyGravity(cubes);
+            ApplyGravityInstant(cubes);
             ReportPossibleBrickDisintegration(cubes, out var p1, out part2Answer);
             return p1;
         }
