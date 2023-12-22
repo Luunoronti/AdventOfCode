@@ -202,13 +202,16 @@ namespace AdventOfCode2023
 
         private static void ReportPossibleBrickDisintegration(List<Cube> cubes, out int part1, out int part2)
         {
+            // technically, we could split this
+            // into part 1 and part 2, but let's just keep it same as in unity
             part1 = 0;
             part2 = 0;
 
+            // part 1
             foreach (var cube in cubes)
             {
                 bool canBeRemoved = true;
-                // if we have found at least any cube above that is supported by us only, 
+                // if we have found at least one cube above that is supported by us only, 
                 // this brick can not be removed.
                 foreach (var above in cube.cubesAbove)
                 {
@@ -222,11 +225,9 @@ namespace AdventOfCode2023
                 {
                     part1++;
                 }
-                else
-                {
-                    cube.IsSupportingCube = true;
-                }
             }
+
+            // part 2
             foreach (var cube in cubes)
             {
                 // for each cube, clear this flag before each test
@@ -243,6 +244,8 @@ namespace AdventOfCode2023
 
             //Debug.Log($"Total count of cubes in danger of falling: {sum2}");
         }
+
+
 
         private static void CheckFallenAbove(Cube cube)
         {
