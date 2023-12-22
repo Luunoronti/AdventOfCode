@@ -32,54 +32,6 @@ namespace AdventOfCode2023
             public float y;
             public float width;
             public float height;
-            public float xMin
-            {
-                get
-                {
-                    return x;
-                }
-                set
-                {
-                    float num = xMax;
-                    x = value;
-                    width = num - x;
-                }
-            }
-            public float yMin
-            {
-                get
-                {
-                    return y;
-                }
-                set
-                {
-                    float num = yMax;
-                    y = value;
-                    width = num - y;
-                }
-            }
-            public float xMax
-            {
-                get
-                {
-                    return width + x;
-                }
-                set
-                {
-                    width = value - x;
-                }
-            }
-            public float yMax
-            {
-                get
-                {
-                    return height + y;
-                }
-                set
-                {
-                    height = value - y;
-                }
-            }
 
             public Rect(float x, float y, float width, float height)
             {
@@ -90,7 +42,10 @@ namespace AdventOfCode2023
             }
             public bool Overlaps(Rect other)
             {
-                return other.xMax > xMin && other.xMin < xMax && other.yMax > yMin && other.yMin < yMax;
+                return (other.width + other.x) > x
+                    && other.x < (width + x)
+                    && (other.height + other.y) > y
+                    && other.y < (height + y);
             }
             public static bool operator !=(Rect lhs, Rect rhs)
             {
@@ -124,7 +79,8 @@ namespace AdventOfCode2023
         {
             // because unity works with reverse coordinate system, 
             // we have to switch y and z
-            // this should not affect our computations
+            // this won't affect our computations,
+            // just need to remember about it
 
             var ret = new List<Cube>();
             var pairs = input.Split(new char[] { ' ', '\n' }, StringSplitOptions.RemoveEmptyEntries);
@@ -145,7 +101,7 @@ namespace AdventOfCode2023
             }
             return ret;
         }
-        private static void PutCubesDown(List<Cube> cubes)
+        private static void ApplyGravity(List<Cube> cubes)
         {
             // this method is not the best solution here.
             // what it does is it moves cubes down by n amount
@@ -206,9 +162,6 @@ namespace AdventOfCode2023
 
         private static bool DoIntersectInXZPlane(Cube a, Cube b)
         {
-            // can we cheat here and use unity? we'll do for now, but
-            // we may want to rewrite Rect operations later, if we migrate our code
-            // to console AoC
             Rect ar = new(a.BottomLeft.x, a.BottomLeft.z, a.Size.x, a.Size.z);
             Rect br = new(b.BottomLeft.x, b.BottomLeft.z, b.Size.x, b.Size.z);
 
@@ -233,11 +186,13 @@ namespace AdventOfCode2023
                     if (cube.BottomLeft.y - (fc.BottomLeft.y + fc.Size.y) > 0.1f)
                         continue;
 
-                    minimumFoundDistance = Math.Min(cube.BottomLeft.y - (fc.BottomLeft.y + fc.Size.y), minimumFoundDistance);
                     // now, check if our volume intersects cube volume
                     // if so, this cube is bellow us and we should consider it
                     if (DoIntersectInXZPlane(cube, fc))
+                    {
+                        minimumFoundDistance = Math.Min(cube.BottomLeft.y - (fc.BottomLeft.y + fc.Size.y), minimumFoundDistance);
                         ret.Add(fc);
+                    }
                 }
             }
 
@@ -254,10 +209,10 @@ namespace AdventOfCode2023
             {
                 bool canBeRemoved = true;
                 // if we have found at least any cube above that is supported by us only, 
-                // this brick cannnot be removed.
+                // this brick can not be removed.
                 foreach (var above in cube.cubesAbove)
                 {
-                    if (above.cubesBellow.Count == 1 && above.cubesBellow.Contains(cube))
+                    if (above.IsSingleSupport(cube))
                     {
                         canBeRemoved = false;
                         break;
@@ -269,7 +224,6 @@ namespace AdventOfCode2023
                 }
                 else
                 {
-                    // count cubes above us
                     cube.IsSupportingCube = true;
                 }
             }
@@ -320,7 +274,7 @@ namespace AdventOfCode2023
         public static long Part1(string input, int lineWidth, int count)
         {
             var cubes = GetCubes(input);
-            PutCubesDown(cubes);
+            ApplyGravity(cubes);
             ReportPossibleBrickDisintegration(cubes, out var p1, out _);
             return p1;
         }
@@ -330,7 +284,7 @@ namespace AdventOfCode2023
         public static long Part2(string input, int lineWidth, int count)
         {
             var cubes = GetCubes(input);
-            PutCubesDown(cubes);
+            ApplyGravity(cubes);
             ReportPossibleBrickDisintegration(cubes, out var _, out int p2);
 
             return p2;

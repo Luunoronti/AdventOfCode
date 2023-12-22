@@ -51,7 +51,7 @@ public class Day22_Part1 : MonoBehaviour
         if (Animate)
             SpawnObjects(cubes);
 
-        await PutCubesDown(cubes);
+        await ApplyGravityAsync(cubes);
 
         ReportPossibleBrickDisintegration(cubes);
     }
@@ -118,7 +118,7 @@ public class Day22_Part1 : MonoBehaviour
         return ret;
     }
 
-    private async UniTask PutCubesDown(List<Cube> cubes)
+    private async UniTask ApplyGravityAsync(List<Cube> cubes)
     {
         // sort cubes by their y coordinate
         cubes.Sort((a, b) => a.BottomLeft.y.CompareTo(b.BottomLeft.y));
@@ -287,11 +287,13 @@ public class Day22_Part1 : MonoBehaviour
                 if (cube.BottomLeft.y - (fc.BottomLeft.y + fc.Size.y) > 0.1f)
                     continue;
 
-                minimumFoundDistance = Math.Min(cube.BottomLeft.y - (fc.BottomLeft.y + fc.Size.y), minimumFoundDistance);
                 // now, check if our volume intersects cube volume
                 // if so, this cube is bellow us and we should consider it
                 if (DoIntersectInXZPlane(cube, fc))
+                {
+                    minimumFoundDistance = Math.Min(cube.BottomLeft.y - (fc.BottomLeft.y + fc.Size.y), minimumFoundDistance);
                     ret.Add(fc);
+                }
             }
         }
 
