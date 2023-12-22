@@ -69,7 +69,7 @@ public class Day22_Part1 : MonoBehaviour
             ApplyGravityInstant(cubes);
 
         // now, analyze and compute final result
-        ReportPossibleBrickDisintegration(cubes);
+        //ReportPossibleBrickDisintegration(cubes);
     }
 
 
@@ -141,39 +141,52 @@ public class Day22_Part1 : MonoBehaviour
 
         // note: position 1 is bottom, so we can't fall from that
         var fallenCubes = new List<Cube>();
-        for (int i = 0; i < cubes.Count; i++)
+        var cubesStillFalling = new List<Cube>(cubes);
+        while (cubesStillFalling.Count > 0)
         {
-            Cube cube = cubes[i];
-            Debug.Log($"Processing cube {i} / {cubes.Count}");
-
-            while (cube.BottomLeft.y > 1)
+            for (int i = 0; i < cubesStillFalling.Count; i++)
             {
+                Cube cube = cubesStillFalling[i];
+                //Debug.Log($"Processing cube {i} / {cubes.Count}");
+
+                var delta = Animate ? (animationSpeed * Time.deltaTime) : 0.5f;  // 1m/s
+
+                var ic = GetCubesIntersectingBellow(cube, fallenCubes, out var minDist, useSmallRay: false);
+                // simulation problem. we have bigger delta than our minDist
+                // compensate
+                if (minDist < delta)
+                {
+                    cube.BottomLeft.y -= minDist;
+                }
+                else
+                {
+                    cube.BottomLeft.y -= delta;  // 1m/s
+                }
+
+                if (cube.BottomLeft.y < 1)
+                {
+                    if (fallenCubes.Contains(cube) == false)
+                    {
+                        fallenCubes.Add(cube);
+                    }
+                    cubesStillFalling.Remove(cube);
+                    cube.BottomLeft.y = 1;
+                }
 
                 // check if there are any cubes intersecting with us
-                var ic = GetCubesIntersectingBellow(cube, fallenCubes, out var minDist);
-
+                ic = GetCubesIntersectingBellow(cube, fallenCubes, out _);
                 if (ic.Count > 0 && minDist < 0.03f)
                 {
                     // link cube to cube (cube^2 :P)
                     foreach (var _ic in ic)
                     {
-                        if (cube.cubesBellow.Contains(_ic) == false)
-                            cube.cubesBellow.Add(_ic);
-
-                        if (_ic.cubesAbove.Contains(cube) == false)
-                            _ic.cubesAbove.Add(cube);
+                        if (cube.cubesBellow.Contains(_ic) == false) cube.cubesBellow.Add(_ic);
+                        if (_ic.cubesAbove.Contains(cube) == false) _ic.cubesAbove.Add(cube);
                     }
-
                     if (fallenCubes.Contains(cube) == false)
                         fallenCubes.Add(cube);
-                    break;
+                    cubesStillFalling.Remove(cube);
                 }
-
-                var delta = Animate ? (animationSpeed * Time.deltaTime) : 0.5f;  // 1m/s
-                cube.BottomLeft.y -= delta;  // 1m/s
-
-                if (cube.BottomLeft.y < 1)
-                    cube.BottomLeft.y = 1;
 
                 // because of how async stops under editor,
                 // it may be possible for this condition to be true
@@ -184,12 +197,67 @@ public class Day22_Part1 : MonoBehaviour
                         new Vector3(cube.transform.position.x, cube.transform.position.y - delta, cube.transform.position.z);
                 }
 
-                // animate our cube
-                if (Animate)
-                    await UniTask.NextFrame();
+               
+
             }
-            if (fallenCubes.Contains(cube) == false)
-                fallenCubes.Add(cube);
+
+            // animate our cube
+            if (Animate)
+                await UniTask.NextFrame();
+            //while (cube.BottomLeft.y > 1)
+            //{
+            //    var delta = Animate ? (animationSpeed * Time.deltaTime) : 0.5f;  // 1m/s
+
+            //    var ic = GetCubesIntersectingBellow(cube, fallenCubes, out var minDist, useSmallRay: false);
+            //    // simulation problem. we have bigger delta than our minDist
+            //    // compensate
+            //    if (minDist < delta)
+            //    {
+            //        cube.BottomLeft.y -= minDist;
+            //    }
+            //    else
+            //    {
+            //        cube.BottomLeft.y -= delta;  // 1m/s
+            //    }
+
+            //    // check if there are any cubes intersecting with us
+            //    ic = GetCubesIntersectingBellow(cube, fallenCubes, out _);
+
+            //    if (ic.Count > 0 && minDist < 0.03f)
+            //    {
+            //        // link cube to cube (cube^2 :P)
+            //        foreach (var _ic in ic)
+            //        {
+            //            if (cube.cubesBellow.Contains(_ic) == false)
+            //                cube.cubesBellow.Add(_ic);
+
+            //            if (_ic.cubesAbove.Contains(cube) == false)
+            //                _ic.cubesAbove.Add(cube);
+            //        }
+
+            //        if (fallenCubes.Contains(cube) == false)
+            //            fallenCubes.Add(cube);
+            //        break;
+            //    }
+
+            //    if (cube.BottomLeft.y < 1)
+            //        cube.BottomLeft.y = 1;
+
+            //    // because of how async stops under editor,
+            //    // it may be possible for this condition to be true
+            //    // that means we quit play mode anyway, so just break
+            //    if (cube.transform != null)
+            //    {
+            //        cube.transform.position =
+            //            new Vector3(cube.transform.position.x, cube.transform.position.y - delta, cube.transform.position.z);
+            //    }
+
+            //    // animate our cube
+            //    if (Animate)
+            //        await UniTask.NextFrame();
+            //}
+            //if (fallenCubes.Contains(cube) == false)
+            //    fallenCubes.Add(cube);
         }
     }
     private void ApplyGravityInstant(List<Cube> cubes)
@@ -279,7 +347,7 @@ public class Day22_Part1 : MonoBehaviour
             // for each cube, clear this flag before each test
             foreach (var c in cubes) c.IsFallenCube = false;
 
-          //  Debug.Log($"==============================================");
+            //  Debug.Log($"==============================================");
 
             cube.IsFallenCube = true;
             CheckFallenAbove(cube);
@@ -332,8 +400,7 @@ public class Day22_Part1 : MonoBehaviour
         if (br.Overlaps(ar)) return true;
         return false;
     }
-    private List<Cube> GetCubesIntersectingBellow(Cube cube, List<Cube> otherCubes,
-            out float minimumFoundDistance, bool useSmallRay = true)
+    private List<Cube> GetCubesIntersectingBellow(Cube cube, List<Cube> otherCubes, out float minimumFoundDistance, bool useSmallRay = true)
     {
         minimumFoundDistance = float.MaxValue;
         var ret = new List<Cube>();
@@ -376,15 +443,15 @@ public class Day22_Part1 : MonoBehaviour
             // so, to visualize properly, we must move
             worldCube.transform.position = c.BottomLeft + (scale / 2);
 
-            var note = worldCube.AddComponent<ObjectNoteInGame>();
-            note.NoteText = c.Name;
-            note.ShowWhenSelected = true;
-            note.ShowWhenUnselected = true;
-            note.ShowInGameEditor = true;
-            note.Alignment = TextAlignment.Left;
-            note.FontSize = 20;
+            //var note = worldCube.AddComponent<ObjectNoteInGame>();
+            //note.NoteText = c.Name;
+            //note.ShowWhenSelected = true;
+            //note.ShowWhenUnselected = true;
+            //note.ShowInGameEditor = true;
+            //note.Alignment = TextAlignment.Left;
+            //note.FontSize = 20;
 
-            worldCube.name = c.Name;
+            //worldCube.name = c.Name;
 
             c.transform = worldCube.transform;
         }
