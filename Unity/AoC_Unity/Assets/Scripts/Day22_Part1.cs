@@ -17,26 +17,17 @@ public class Day22_Part1 : MonoBehaviour
     public bool Animate = true;
     public float animationSpeed = 2;
 
-    class Cube
+    public class Cube
     {
         public Vector3 BottomLeft;
         public Vector3 Size;
-        public string Name;
-        public override string ToString()
-        {
-            return $"{Name}: {BottomLeft}  -  {BottomLeft + Size}  ({Size})";
-        }
+        public int Index; // we use it for part 2
+
+        public override string ToString() => $"{BottomLeft}  -  {BottomLeft + Size}  ({Size})";
         public Transform transform;
 
         public List<Cube> cubesBellow = new();
         public List<Cube> cubesAbove = new();
-
-        public bool IsSupportingCube = false;
-        public bool IsFallenCube = true;
-
-        public bool IsSingleSupport(Cube supporter)
-            => cubesBellow.Count == 1 && cubesBellow[0] == supporter;
-
     }
 
     // attempt to perform all calculations in async
@@ -69,21 +60,23 @@ public class Day22_Part1 : MonoBehaviour
             ApplyGravityInstant(cubes);
 
         // now, analyze and compute final result
-        //ReportPossibleBrickDisintegration(cubes);
+        ReportPossibleBrickDisintegration(cubes, out var sum, out var sum2);
+
+        Debug.Log($"Total count of cubes to be safely removed (Part 1): {sum}");
+        Debug.Log($"Total count of cubes in danger of falling (Part 2): {sum2}");
+
     }
-
-
-
-
-
 
 
     private string ReadLiveInput()
     {
         // we read our live input from a fixed position on C: drive for now
-        // i didn't have the time to work with unity framework yet
+        // I didn't have the time to work on unity framework for AoC yet
+        // and I am not sure I'll do it. On the other hand, it may prove
+        // to be a good visualization tool, especially with ECS
 
-        // but, if file does not exist, create it using Nick's download code
+        // If the file does not exist, create it using Nick Kusters's (https://www.youtube.com/@NKCSS) download code
+        
         var path = $@"C:\temp\aoc\livedata\{Year}_{Day:D0}.txt";
         if (Directory.Exists(path) == false) Directory.CreateDirectory(Path.GetDirectoryName(path));
 
@@ -105,14 +98,19 @@ public class Day22_Part1 : MonoBehaviour
     private string ReadInput() => useLiveData ? ReadLiveInput() : testData;
     private List<Cube> GetCubes(string input)
     {
-        // because unity works with reverse coordinate system, 
-        // we have to switch y and z
-        // this should not affect our computations
+        // Because unity works with left-handed coordinate system,
+        // and we have our data provided with right-handed system
+        // we have to switch y and z. this normally is not enough
+        // because we need to reverse y after switch, but we don't
+        // work with relations here, only world coordinates.
+        // We do this only for our cubes to look naturally in 
+        // unity camera.
+
+        // this won't affect our computations
 
         var ret = new List<Cube>();
         var pairs = input.Split(new char[] { ' ', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-        char ch = 'A';
         foreach (var pair in pairs)
         {
             var sp1 = pair.Split('~', ',').Select(int.Parse).ToArray();
@@ -125,145 +123,95 @@ public class Day22_Part1 : MonoBehaviour
             Vector3 bl = new(Math.Min(v1.x, v2.x), Math.Min(v1.y, v2.y), Math.Min(v1.z, v2.z));
             Vector3 tr = new Vector3(1, 1, 1) + new Vector3(Math.Max(v1.x, v2.x), Math.Max(v1.y, v2.y), Math.Max(v1.z, v2.z));
 
-            ret.Add(new Cube { BottomLeft = bl, Size = tr - bl, Name = $"{ch} {pair}", });
-            if (!useLiveData)
-                ch = ++ch;
-            if (ch > 'Z') ch = 'Z';
+            ret.Add(new Cube { BottomLeft = bl, Size = tr - bl, });
         }
         Debug.Log($"Found {ret.Count} cubes.");
         return ret;
     }
 
+
     private async UniTask ApplyGravityAsync(List<Cube> cubes)
     {
         // sort cubes by their y coordinate
         cubes.Sort((a, b) => a.BottomLeft.y.CompareTo(b.BottomLeft.y));
+        // re-apply indexes after sorting
+        for (int i1 = 0; i1 < cubes.Count; i1++)
+            cubes[i1].Index = i1;
 
         // note: position 1 is bottom, so we can't fall from that
         var fallenCubes = new List<Cube>();
-        var cubesStillFalling = new List<Cube>(cubes);
-        while (cubesStillFalling.Count > 0)
         {
-            for (int i = 0; i < cubesStillFalling.Count; i++)
+            for (int i = 0; i < cubes.Count; i++)
             {
-                Cube cube = cubesStillFalling[i];
-                //Debug.Log($"Processing cube {i} / {cubes.Count}");
+                Cube cube = cubes[i];
 
-                var delta = Animate ? (animationSpeed * Time.deltaTime) : 0.5f;  // 1m/s
+                while (cube.BottomLeft.y > 1)
+                {
+                    var delta = Animate ? (animationSpeed * Time.deltaTime) : 0.5f;  // 1m/s
 
-                var ic = GetCubesIntersectingBellow(cube, fallenCubes, out var minDist, useSmallRay: false);
-                // simulation problem. we have bigger delta than our minDist
-                // compensate
-                if (minDist < delta)
-                {
-                    cube.BottomLeft.y -= minDist;
-                }
-                else
-                {
-                    cube.BottomLeft.y -= delta;  // 1m/s
-                }
-
-                if (cube.BottomLeft.y < 1)
-                {
-                    if (fallenCubes.Contains(cube) == false)
+                    var ic = GetCubesIntersectingBellow(cube, fallenCubes, out var minDist, useSmallRay: false);
+                    // simulation problem. we have bigger delta than our minDist
+                    // compensate
+                    if (minDist < delta)
                     {
-                        fallenCubes.Add(cube);
+                        cube.BottomLeft.y -= minDist;
                     }
-                    cubesStillFalling.Remove(cube);
-                    cube.BottomLeft.y = 1;
-                }
-
-                // check if there are any cubes intersecting with us
-                ic = GetCubesIntersectingBellow(cube, fallenCubes, out _);
-                if (ic.Count > 0 && minDist < 0.03f)
-                {
-                    // link cube to cube (cube^2 :P)
-                    foreach (var _ic in ic)
+                    else
                     {
-                        if (cube.cubesBellow.Contains(_ic) == false) cube.cubesBellow.Add(_ic);
-                        if (_ic.cubesAbove.Contains(cube) == false) _ic.cubesAbove.Add(cube);
+                        cube.BottomLeft.y -= delta;  // 1m/s
                     }
-                    if (fallenCubes.Contains(cube) == false)
-                        fallenCubes.Add(cube);
-                    cubesStillFalling.Remove(cube);
+
+                    // check if there are any cubes intersecting with us
+                    ic = GetCubesIntersectingBellow(cube, fallenCubes, out _);
+
+                    if (ic.Count > 0 && minDist < 0.03f)
+                    {
+                        // link cube to cube (cube^2 :P)
+                        foreach (var _ic in ic)
+                        {
+                            if (cube.cubesBellow.Contains(_ic) == false)
+                                cube.cubesBellow.Add(_ic);
+
+                            if (_ic.cubesAbove.Contains(cube) == false)
+                                _ic.cubesAbove.Add(cube);
+                        }
+
+                        if (fallenCubes.Contains(cube) == false)
+                            fallenCubes.Add(cube);
+                        break;
+                    }
+
+                    if (cube.BottomLeft.y < 1)
+                        cube.BottomLeft.y = 1;
+
+                    // because of how async stops under editor,
+                    // it may be possible for this condition to be true
+                    // that means we quit play mode anyway, so just break
+                    if (cube.transform != null)
+                    {
+                        cube.transform.position =
+                            new Vector3(cube.transform.position.x, cube.transform.position.y - delta, cube.transform.position.z);
+                    }
+
+                    // animate our cube
+                    if (Animate)
+                        await UniTask.NextFrame();
                 }
-
-                // because of how async stops under editor,
-                // it may be possible for this condition to be true
-                // that means we quit play mode anyway, so just break
-                if (cube.transform != null)
-                {
-                    cube.transform.position =
-                        new Vector3(cube.transform.position.x, cube.transform.position.y - delta, cube.transform.position.z);
-                }
-
-               
-
+                if (fallenCubes.Contains(cube) == false)
+                    fallenCubes.Add(cube);
             }
 
-            // animate our cube
-            if (Animate)
-                await UniTask.NextFrame();
-            //while (cube.BottomLeft.y > 1)
-            //{
-            //    var delta = Animate ? (animationSpeed * Time.deltaTime) : 0.5f;  // 1m/s
 
-            //    var ic = GetCubesIntersectingBellow(cube, fallenCubes, out var minDist, useSmallRay: false);
-            //    // simulation problem. we have bigger delta than our minDist
-            //    // compensate
-            //    if (minDist < delta)
-            //    {
-            //        cube.BottomLeft.y -= minDist;
-            //    }
-            //    else
-            //    {
-            //        cube.BottomLeft.y -= delta;  // 1m/s
-            //    }
-
-            //    // check if there are any cubes intersecting with us
-            //    ic = GetCubesIntersectingBellow(cube, fallenCubes, out _);
-
-            //    if (ic.Count > 0 && minDist < 0.03f)
-            //    {
-            //        // link cube to cube (cube^2 :P)
-            //        foreach (var _ic in ic)
-            //        {
-            //            if (cube.cubesBellow.Contains(_ic) == false)
-            //                cube.cubesBellow.Add(_ic);
-
-            //            if (_ic.cubesAbove.Contains(cube) == false)
-            //                _ic.cubesAbove.Add(cube);
-            //        }
-
-            //        if (fallenCubes.Contains(cube) == false)
-            //            fallenCubes.Add(cube);
-            //        break;
-            //    }
-
-            //    if (cube.BottomLeft.y < 1)
-            //        cube.BottomLeft.y = 1;
-
-            //    // because of how async stops under editor,
-            //    // it may be possible for this condition to be true
-            //    // that means we quit play mode anyway, so just break
-            //    if (cube.transform != null)
-            //    {
-            //        cube.transform.position =
-            //            new Vector3(cube.transform.position.x, cube.transform.position.y - delta, cube.transform.position.z);
-            //    }
-
-            //    // animate our cube
-            //    if (Animate)
-            //        await UniTask.NextFrame();
-            //}
-            //if (fallenCubes.Contains(cube) == false)
-            //    fallenCubes.Add(cube);
         }
     }
     private void ApplyGravityInstant(List<Cube> cubes)
     {
         // sort cubes by their y coordinate
         cubes.Sort((a, b) => a.BottomLeft.y.CompareTo(b.BottomLeft.y));
+        // re-apply indexes after sorting
+        for (int i1 = 0; i1 < cubes.Count; i1++)
+            cubes[i1].Index = i1;
+
 
         // note: position 1 is bottom, so we can't fall from that
         var fallenCubes = new List<Cube>();
@@ -310,77 +258,88 @@ public class Day22_Part1 : MonoBehaviour
         }
     }
 
-    private void ReportPossibleBrickDisintegration(List<Cube> cubes)
+    private static void ReportPossibleBrickDisintegration(List<Cube> cubes, out int part1, out int part2)
     {
-        var sum = 0;
-        var sum2 = 0;
-        foreach (var cube in cubes)
+        // technically, we could split this
+        // into part 1 and part 2, but let's just keep it same as in unity
+        part1 = 0;
+        part2 = 0;
+
+        Span<bool> fallenFlags = new(new bool[cubes.Count]);
+
+        for (int i = 0; i < cubes.Count; i++)
         {
-            bool canBeRemoved = true;
-            // if we have found at least any cube above that is supported by us only, 
-            // this brick cannnot be removed.
-            foreach (var above in cube.cubesAbove)
+            Cube cube = cubes[i];
+
+            // part 1
+            if (!cube.cubesAbove.Any(a => a.cubesBellow.Count == 1 && a.cubesBellow[0] == cube))
             {
-                if (above.cubesBellow.Count == 1 && above.cubesBellow.Contains(cube))
-                {
-                    canBeRemoved = false;
-                    break;
-                }
+                part1++;
+
+                // because this cube does not cause any other to fall, 
+                // it won't count in part 2. so, we can skip that test
+                // saves us 
+                continue;
             }
-            if (canBeRemoved)
+
+            // part 2
+            var count = CheckFallenAbove_NR(cube, fallenFlags);
+            if (count > 0)
             {
-                Debug.Log($"Cube can be removed: [{cube}]");
-                sum++;
+                //cube.WasFallInitiator = true;
             }
             else
             {
-                // count cubes above us
-                cube.IsSupportingCube = true;
-                Debug.LogWarning($"Cube can not be removed: [{cube}]");
+                //  Log.WriteLine($"Cube {cube} has not cause any other cube to fall.");
             }
+            part2 += count;
         }
-        Debug.Log($"Total count of cubes to be safely removed: {sum}");
-
-        // 714738 too high
-        foreach (var cube in cubes)
-        {
-            // for each cube, clear this flag before each test
-            foreach (var c in cubes) c.IsFallenCube = false;
-
-            //  Debug.Log($"==============================================");
-
-            cube.IsFallenCube = true;
-            CheckFallenAbove(cube);
-            cube.IsFallenCube = false;
-
-            sum2 += cubes.Count(c => c.IsFallenCube);
-        }
-
-
-
-        Debug.Log($"Total count of cubes in danger of falling: {sum2}");
     }
 
-    private void CheckFallenAbove(Cube cube)
+    private static bool CheckIfAllSupportMarkedForFall(Cube cube, Span<bool> fallenFlags)
     {
-        if (cube.IsFallenCube == false) return;
-
-        //Debug.Log($"Cube {cube} fallen");
-        // get all above cubes that have only one parent, us
-        // and "fall" them
-        foreach (var above in cube.cubesAbove)
+        foreach (var cb in cube.cubesBellow)
         {
-            // if all cubes bellow are falling, we are too
-            if (above.cubesBellow.All(c => c.IsFallenCube))
+            if (!fallenFlags[cb.Index])
+                return false;
+        }
+        return true;
+    }
+
+
+    private static int CheckFallenAbove_NR(Cube startCube, Span<bool> fallenFlags)
+    {
+        var count = 0;
+
+        Queue<Cube> cubesToCheckAndMark = new();
+        fallenFlags.Clear();
+        fallenFlags[startCube.Index] = true;
+
+        cubesToCheckAndMark.Enqueue(startCube);
+        while (cubesToCheckAndMark.TryDequeue(out var cube))
+        {
+            foreach (var above in cube.cubesAbove)
             {
-                above.IsFallenCube = true;
+                // if checked already, don't queue
+                if (fallenFlags[above.Index])
+                    continue;
+
+                // check if all support cubes of the cube above are marked for fall or deletion
+                if (CheckIfAllSupportMarkedForFall(above, fallenFlags))
+                {
+                    // mark this cube for fall
+                    fallenFlags[above.Index] = true;
+
+                    // add to our overall counter
+                    count++;
+
+                    // also, add it to processing
+                    cubesToCheckAndMark.Enqueue(above);
+                }
             }
         }
 
-        foreach (var above in cube.cubesAbove)
-        {
-            CheckFallenAbove(above);
-        }
+        return count;
     }
 
 
@@ -413,7 +372,7 @@ public class Day22_Part1 : MonoBehaviour
             // but we need to check for that anyway
             if (fc.BottomLeft.y + fc.Size.y <= cube.BottomLeft.y)
             {
-                if (useSmallRay && cube.BottomLeft.y - (fc.BottomLeft.y + fc.Size.y) > 0.1f)
+                if (useSmallRay && cube.BottomLeft.y - (fc.BottomLeft.y + fc.Size.y) > 0.5f)
                     continue;
 
                 // now, check if our volume intersects cube volume
@@ -430,8 +389,6 @@ public class Day22_Part1 : MonoBehaviour
         return ret;
     }
 
-
-
     private void SpawnObjects(List<Cube> cubes)
     {
         foreach (var c in cubes)
@@ -442,16 +399,6 @@ public class Day22_Part1 : MonoBehaviour
             // note: pivot of the cube in unity is in the center
             // so, to visualize properly, we must move
             worldCube.transform.position = c.BottomLeft + (scale / 2);
-
-            //var note = worldCube.AddComponent<ObjectNoteInGame>();
-            //note.NoteText = c.Name;
-            //note.ShowWhenSelected = true;
-            //note.ShowWhenUnselected = true;
-            //note.ShowInGameEditor = true;
-            //note.Alignment = TextAlignment.Left;
-            //note.FontSize = 20;
-
-            //worldCube.name = c.Name;
 
             c.transform = worldCube.transform;
         }

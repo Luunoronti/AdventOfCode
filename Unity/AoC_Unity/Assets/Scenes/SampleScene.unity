@@ -365,14 +365,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfc9eef74b1d2b94e8f2cb5d1c8ec1af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useLiveData: 0
+  useLiveData: 1
   testData: 1,0,1~1,2,1 0,0,2~2,0,2 0,2,3~2,2,3 0,0,4~0,2,4 2,0,5~2,2,5 0,1,6~2,1,6
     1,1,8~1,1,9
   expectedTestAnswer: 0
   Year: 2023
   Day: 22
   Animate: 1
-  animationSpeed: 2
+  animationSpeed: 200
 --- !u!4 &1503664788
 Transform:
   m_ObjectHideFlags: 0
