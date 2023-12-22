@@ -5,8 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using UnityEngine;
-using UnityEngine.XR;
 
+// turned out this is Part 1 and 2 :)
 public class Day22_Part1 : MonoBehaviour
 {
     public bool useLiveData;
@@ -54,7 +54,7 @@ public class Day22_Part1 : MonoBehaviour
         // spawn game objects.
         // this does not work well with live input,
         // over 1k GOs kill performance.
-        // if i am going to use unity to visualize,
+        // if i am going to use unity to visualize,       
         // ECS is the way
         if (Animate)
             SpawnObjects(cubes);
@@ -63,7 +63,10 @@ public class Day22_Part1 : MonoBehaviour
         // this method also animates our spawned cubes
         // on the scene, so it's async, takes time, 
         // and we wait for it
-        await ApplyGravityAsync(cubes);
+        if (Animate)
+            await ApplyGravityAsync(cubes);
+        else
+            ApplyGravityInstant(cubes);
 
         // now, analyze and compute final result
         ReportPossibleBrickDisintegration(cubes);
@@ -193,6 +196,55 @@ public class Day22_Part1 : MonoBehaviour
                 fallenCubes.Add(cube);
         }
     }
+    private void ApplyGravityInstant(List<Cube> cubes)
+    {
+        // sort cubes by their y coordinate
+        cubes.Sort((a, b) => a.BottomLeft.y.CompareTo(b.BottomLeft.y));
+
+        // note: position 1 is bottom, so we can't fall from that
+        var fallenCubes = new List<Cube>();
+        for (int i = 0; i < cubes.Count; i++)
+        {
+            Cube cube = cubes[i];
+            if (cube.BottomLeft.y == 1)
+            {
+                if (fallenCubes.Contains(cube) == false)
+                    fallenCubes.Add(cube);
+            }
+
+            // check if there are any cubes intersecting with us
+            var ic = GetCubesIntersectingBellow(cube, fallenCubes, out var minDist, useSmallRay: false);
+
+            if (ic.Count == 0)
+            {
+                // we have nothing bellow us, drop to the bottom
+                cube.BottomLeft.y = 1;
+                if (fallenCubes.Contains(cube) == false)
+                    fallenCubes.Add(cube);
+                continue;
+            }
+
+            // we have something bellow, move to that position
+            cube.BottomLeft.y -= minDist;
+            if (cube.BottomLeft.y < 1)
+                cube.BottomLeft.y = 1;
+
+
+            // we must build our list again, but this time, with small ray
+            ic = GetCubesIntersectingBellow(cube, fallenCubes, out minDist, useSmallRay: true);
+
+            if (ic.Count > 0)
+            {
+                foreach (var _ic in ic)
+                {
+                    if (cube.cubesBellow.Contains(_ic) == false) cube.cubesBellow.Add(_ic);
+                    if (_ic.cubesAbove.Contains(cube) == false) _ic.cubesAbove.Add(cube);
+                }
+
+                if (fallenCubes.Contains(cube) == false) fallenCubes.Add(cube);
+            }
+        }
+    }
 
     private void ReportPossibleBrickDisintegration(List<Cube> cubes)
     {
@@ -284,9 +336,10 @@ public class Day22_Part1 : MonoBehaviour
         if (br.Overlaps(ar)) return true;
         return false;
     }
-    private List<Cube> GetCubesIntersectingBellow(Cube cube, List<Cube> otherCubes, out float minimumFoundDistance)
+    private List<Cube> GetCubesIntersectingBellow(Cube cube, List<Cube> otherCubes,
+            out float minimumFoundDistance, bool useSmallRay = true)
     {
-        minimumFoundDistance = 1;
+        minimumFoundDistance = float.MaxValue;
         var ret = new List<Cube>();
         foreach (var fc in otherCubes)
         {
@@ -297,7 +350,7 @@ public class Day22_Part1 : MonoBehaviour
             // but we need to check for that anyway
             if (fc.BottomLeft.y + fc.Size.y <= cube.BottomLeft.y)
             {
-                if (cube.BottomLeft.y - (fc.BottomLeft.y + fc.Size.y) > 0.1f)
+                if (useSmallRay && cube.BottomLeft.y - (fc.BottomLeft.y + fc.Size.y) > 0.1f)
                     continue;
 
                 // now, check if our volume intersects cube volume
