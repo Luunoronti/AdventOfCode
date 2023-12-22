@@ -110,7 +110,7 @@ namespace AdventOfCode2023
             // first cube as seen from above
             // bellow works, but is considerably slower
 
-            // I'll write second version later :)
+            // see ApplyGravityInstant()
 
             // sort cubes by their y coordinate
             cubes.Sort((a, b) => a.BottomLeft.y.CompareTo(b.BottomLeft.y));
