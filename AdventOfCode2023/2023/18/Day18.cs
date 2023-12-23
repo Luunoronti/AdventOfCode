@@ -219,8 +219,6 @@ namespace AdventOfCode2023
         }
 
 
-
-
         //[RemoveSpacesFromInput]
         [RemoveNewLinesFromInput]
         // change to string or string[] to get other types of input
