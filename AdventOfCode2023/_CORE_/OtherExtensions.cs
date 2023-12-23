@@ -19,6 +19,13 @@
             return st;
         }
 
+        public static T GetLastAndRemove<T>(this List<T> list)
+        {
+            if (list.Count == 0) return default;
+            var t = list.Last();
+            list.RemoveAt(list.Count - 1);
+            return t;
+        }
 
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
         {

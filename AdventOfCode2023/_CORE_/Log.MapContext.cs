@@ -16,6 +16,10 @@ static partial class Log
         private Func<(byte r, byte g, byte b), (int x, int y), (byte r, byte g, byte b)>? _backgroundPostProcess; // in, x, y, out
         private Func<(byte r, byte g, byte b), (int x, int y), (byte r, byte g, byte b)>? _foregroundPostProcess; // in, x, y, out
 
+        private Func<(byte r, byte g, byte b), (int x, int y), (int r, int g, int b)>? _backgroundPostProcessInt; // in, x, y, out
+        private Func<(byte r, byte g, byte b), (int x, int y), (int r, int g, int b)>? _foregroundPostProcessInt; // in, x, y, out
+
+
         internal MapContext(int width, int heigth)
         {
             Width = width;
@@ -53,6 +57,33 @@ static partial class Log
                 content.CopyTo(charSpan);
             }
         }
+        public void SetContent(int x, int y, char c)
+        {
+            _chars.AsSpan().At(x, y, Width, c);
+        }
+        public void SetContent<T>(int x, int y, T c, Func<T, char> mapper)
+        {
+            _chars.AsSpan().At(x, y, mapper(c));
+        }
+        public void SetContent<T>(ReadOnlySpan<T> content, Func<T, char> mapper)
+        {
+            var charSpan = _chars.AsSpan();
+            if (content.Length != charSpan.Length) throw new ArgumentOutOfRangeException(nameof(content));
+            for (int i = 0; i < charSpan.Length; i++)
+            {
+                charSpan[i] = mapper(content[i]);
+            }
+        }
+        public void SetContent<T>(Span<T> content, Func<T, char> mapper)
+        {
+            var charSpan = _chars.AsSpan();
+            if (content.Length != charSpan.Length) throw new ArgumentOutOfRangeException(nameof(content));
+            for (int i = 0; i < charSpan.Length; i++)
+            {
+                charSpan[i] = mapper(content[i]);
+            }
+        }
+
         public void SetColors(Span<int> foreground, Span<int> background)
         {
             foreground.CopyTo(_foregrounds.AsSpan());
@@ -92,8 +123,43 @@ static partial class Log
 
         public void SetBackgroundPostProcess(Func<(byte r, byte g, byte b), (int x, int y), (byte r, byte g, byte b)> postProcessFunction) => _backgroundPostProcess = postProcessFunction;
         public void SetForegroundPostProcess(Func<(byte r, byte g, byte b), (int x, int y), (byte r, byte g, byte b)> postProcessFunction) => _foregroundPostProcess = postProcessFunction;
+
+        public void SetBackgroundPostProcess(Func<(byte r, byte g, byte b), (int x, int y), (int r, int g, int b)> postProcessFunction) => _backgroundPostProcessInt = postProcessFunction;
+        public void SetForegroundPostProcess(Func<(byte r, byte g, byte b), (int x, int y), (int r, int g, int b)> postProcessFunction) => _foregroundPostProcessInt = postProcessFunction;
+
+
         public void Draw()
         {
+            // post background
+            if (_backgroundPostProcessInt != null)
+            {
+                var span = _background.AsSpan();
+                for (int y = 0; y < Height; y++)
+                {
+                    for (int x = 0; x < Width; x++)
+                    {
+                        var c = span.GetBytesAt(x, y, Width, Height, out _);
+                        var (r, g, b) = _backgroundPostProcessInt((c.a, c.b, c.c), (x, y));
+                        span.SetAt((byte)r, (byte)g, (byte)b, 0, x, y, Width, Height, out _);
+                    }
+                }
+            }
+            // post foreground
+            if (_foregroundPostProcessInt != null)
+            {
+                var span = _foregrounds.AsSpan();
+                for (int y = 0; y < Height; y++)
+                {
+                    for (int x = 0; x < Width; x++)
+                    {
+                        var c = span.GetBytesAt(x, y, Width, Height, out _);
+                        var (r, g, b) = _foregroundPostProcessInt((c.a, c.b, c.c), (x, y));
+                        span.SetAt((byte)r, (byte)g, (byte)b, 0, x, y, Width, Height, out _);
+                    }
+                }
+            }
+
+
             // post background
             if (_backgroundPostProcess != null)
             {
