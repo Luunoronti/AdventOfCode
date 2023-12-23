@@ -1,4 +1,6 @@
 ﻿using StringSpan = System.ReadOnlySpan<char>;
+
+
 class Map2D
 {
     public int Width { get; }

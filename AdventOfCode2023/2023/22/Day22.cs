@@ -9,43 +9,6 @@ namespace AdventOfCode2023
     [ExpectedTestAnswerPart2(7)] // if != 0, will report failure if expected answer != given answer
     class Day22
     {
-        // duplicate types here, so that we have the same API
-        struct Vector3
-        {
-            public float x;
-            public float y;
-            public float z;
-
-            public Vector3(float x, float y, float z)
-            {
-                this.x = x;
-                this.y = y;
-                this.z = z;
-            }
-
-            public static Vector3 operator +(Vector3 a, Vector3 b) => new(a.x + b.x, a.y + b.y, a.z + b.z);
-            public static Vector3 operator -(Vector3 a, Vector3 b) => new(a.x - b.x, a.y - b.y, a.z - b.z);
-            public override readonly string ToString() => $"{x}, {y}, {z}";
-        }
-        public struct Rect
-        {
-            public float x;
-            public float y;
-            public float width;
-            public float height;
-
-            public Rect(float x, float y, float width, float height)
-            {
-                this.x = x;
-                this.y = y;
-                this.width = width;
-                this.height = height;
-            }
-            public bool Overlaps(Rect other) => (other.width + other.x) > x && other.x < (width + x) && (other.height + other.y) > y && other.y < (height + y);
-            public static bool operator !=(Rect lhs, Rect rhs) => !(lhs == rhs);
-            public static bool operator ==(Rect lhs, Rect rhs) => lhs.x == rhs.x && lhs.y == rhs.y && lhs.width == rhs.width && lhs.height == rhs.height;
-
-        }
         class Cube
         {
             public Vector3 OriginalPosition;
@@ -240,9 +203,9 @@ namespace AdventOfCode2023
             return false;
         }
 
-        private static List<Cube> GetCubesIntersectingBellow(Cube cube, List<Cube> otherCubes, out float minimumFoundDistance, bool useShortRay = true)
+        private static List<Cube> GetCubesIntersectingBellow(Cube cube, List<Cube> otherCubes, out double minimumFoundDistance, bool useShortRay = true)
         {
-            minimumFoundDistance = float.MaxValue;
+            minimumFoundDistance = double.MaxValue;
             var ret = new List<Cube>();
             foreach (var fc in otherCubes)
             {
