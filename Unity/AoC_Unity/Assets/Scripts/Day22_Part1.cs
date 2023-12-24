@@ -28,6 +28,7 @@ public class Day22_Part1 : MonoBehaviour
 
         public List<Cube> cubesBellow = new();
         public List<Cube> cubesAbove = new();
+        
     }
 
     // attempt to perform all calculations in async
@@ -68,15 +69,41 @@ public class Day22_Part1 : MonoBehaviour
     }
 
 
+    public static bool LineLineIntersection(out Vector3 intersection, Vector3 linePoint1, Vector3 lineVec1, Vector3 linePoint2, Vector3 lineVec2)
+    {
+        
+        Vector3 lineVec3 = linePoint2 - linePoint1;
+        Vector3 crossVec1and2 = Vector3.Cross(lineVec1, lineVec2);
+        Vector3 crossVec3and2 = Vector3.Cross(lineVec3, lineVec2);
+
+        var v = crossVec3and2 * 0.03f;
+
+        float planarFactor = Vector3.Dot(lineVec3, crossVec1and2);
+
+        //is coplanar, and not parrallel
+        if (Mathf.Abs(planarFactor) < 0.0001f && crossVec1and2.sqrMagnitude > 0.0001f)
+        {
+            float s = Vector3.Dot(crossVec3and2, crossVec1and2) / crossVec1and2.sqrMagnitude;
+            intersection = linePoint1 + (lineVec1 * s);
+            return true;
+        }
+        else
+        {
+            intersection = Vector3.zero;
+            return false;
+        }
+    }
+
     private string ReadLiveInput()
     {
+        
         // we read our live input from a fixed position on C: drive for now
         // I didn't have the time to work on unity framework for AoC yet
         // and I am not sure I'll do it. On the other hand, it may prove
         // to be a good visualization tool, especially with ECS
 
         // If the file does not exist, create it using Nick Kusters's (https://www.youtube.com/@NKCSS) download code
-        
+
         var path = $@"C:\temp\aoc\livedata\{Year}_{Day:D0}.txt";
         if (Directory.Exists(path) == false) Directory.CreateDirectory(Path.GetDirectoryName(path));
 

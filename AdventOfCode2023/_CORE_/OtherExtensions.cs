@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode2023
+﻿using System.Numerics;
+
+namespace AdventOfCode2023
 {
     public static class OtherExtensions
     {

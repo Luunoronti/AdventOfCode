@@ -1,9 +1,9 @@
-﻿using System.Numerics;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace AdventOfCode2023
 {
-    //[Force]                    // uncomment to force processing this type (regardless of which day it is according to DateTime)
+   //[Force]                    // uncomment to force processing this type (regardless of which day it is according to DateTime)
     [AlwaysEnableLog]          // if uncommented, Log.Write() and Log.WriteLine() will still be honored in runs without a debugger (do not confuse with Debug/Release configuration)
     //[DisableLogInDebug]        // if uncommented, Log will be disabled even when under debugger
     [UseLiveDataInDeug]        // if uncommented and under a debug session, will use live data (problem data) instead of test data
@@ -15,144 +15,12 @@ namespace AdventOfCode2023
         // each module is 128 bits in size
 
 
-
-
-
         private const ulong MT_FlipFlop = (ulong)1 << 62;
         private const ulong MT_Conjunction = (ulong)1 << 63;
         private const ulong MT_Output = (ulong)1 << 63 | 1 << 62;
 
         private const ulong HIGH = (ulong)1 << 63;
 
-
-        // we are using statics, to prevent dereference cost on objects
-        //private static class Part1WithBytes
-        //{
-        //    private static long signalLowCount;
-        //    private static long signalHighCount;
-
-        //    private static ulong[] _modules; // MODULES, 4 bytes store, 4 bytes targets
-        //    private static ulong[] _signals; // SIGNALS, 4 bytes (1-bit) target, 1 bit: H/L, 4 bytes source
-
-        //    private static int currentExecutingOffset = 0;
-        //    private static int currentStoringOffset = 0;
-
-
-        //    private static void Signal(Span<ulong> queue, uint source, uint target, ulong isHigh)
-        //    {
-        //        if (isHigh > 0) signalHighCount++;
-        //        else signalLowCount++;
-
-        //        var qooLen = queue.Length;
-        //        var v = (ulong)target << 32;
-        //        v |= isHigh;
-        //        v |= source;
-
-        //        queue[currentStoringOffset++] = v;
-        //        if (currentStoringOffset >= qooLen) currentStoringOffset = 0;
-        //    }
-        //    private static void Process()
-        //    {
-        //        var qoo = _signals.AsSpan();
-        //        var qooLen = qoo.Length;
-        //        var mod = _modules.AsSpan();
-
-        //        while (true)
-        //        {
-        //            // get signal
-        //            var signal = qoo[currentExecutingOffset];
-        //            if (signal == ulong.MaxValue) return;// this is a special, end of queue, value
-        //            qoo[currentExecutingOffset] = ulong.MaxValue;
-        //            currentExecutingOffset++; if (currentExecutingOffset >= qooLen) currentExecutingOffset = 0;
-
-        //            // split signal
-        //            var signalSource = signal & 0xffffffff;
-        //            var signalTarget = (signal >> 32) & 0xeffffffff;
-        //            var isHigh = signal & 0x80000000;
-
-
-        //            // process modules
-        //            for (int m = 0; m < 62; m++)
-        //            {
-        //                var b = ((signalTarget >> m) & 0xffffff);
-        //                if (b == 1)
-        //                {
-        //                    // m is index of our module. go there (in mem), and process
-        //                    var modV1 = mod[m];
-        //                    var modV2 = mod[m + 1];
-
-        //                    // first 2 bits are type of module, so get those
-        //                    var type = modV1 & 0xc000000000000000;
-        //                    var store = modV1 & ~0xc000000000000000;
-
-        //                    if (type == MT_FlipFlop)
-        //                    {
-        //                        // if signal is high, do nothing
-        //                        if (isHigh > 0) continue;
-
-                                
-        //                        store = ~store;
-
-
-
-        //                        // store value, and do nothing more
-        //                        mod[m] = (type << 62) | isHigh;
-
-
-
-
-        //                        // invert our stored value
-        //                        mod[localO] = (byte)(1 - mod[localO]);
-
-        //                        // signal all
-        //                        localO = moduleOffset + 3;
-        //                        var v = mod[moduleOffset + 1];
-        //                        for (int i = 0, count = mod[moduleOffset + 2]; i < count; i++)
-        //                            Signal(qoo, module, mod[localO + i], v);
-        //                    }
-        //                    else if (type == MT_Conjunction)
-        //                    {
-
-        //                    }
-        //                    else if (type == MT_Output)
-        //                    {
-        //                        // store value, and do nothing more
-        //                        mod[m] = (type << 62) | isHigh;
-        //                        continue;
-        //                    }
-        //                    else
-        //                    {
-        //                        throw new InvalidProgramException("Invalid module type: " + type);
-        //                    }
-
-
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // steps:
-        // define all possible modules as classes, deriving from Module class
-        // define a Device class that will hold all modules
-        // Device 
 
         [AttributeUsage(AttributeTargets.Class)] class PrefixAttribute : Attribute { public PrefixAttribute(char prefix) { Prefix = prefix; } public char Prefix { get; set; } }
         private static char[] StdSplitChars = new char[] { ',' };
@@ -197,6 +65,7 @@ namespace AdventOfCode2023
 
             private Queue<Pulse> _queuedPulses = new();
             private Dictionary<string, Module> _modules = new();
+            internal int ButtonPushCount;
 
             public long HighLevelPulsesCount { get; private set; }
             public long LowLevelPulsesCount { get; private set; }
@@ -362,6 +231,10 @@ namespace AdventOfCode2023
         [Prefix('&')]
         class Conjunction : Module
         {
+            public bool StoreHistory = false;
+            public int LastTimePulsingHIGH;
+            public int LastDelta;
+
             public Conjunction(string name, string targets) : base(name, targets) { }
 
             public Dictionary<string, bool> registers = new();
@@ -384,11 +257,21 @@ namespace AdventOfCode2023
                     throw new InvalidDataException($"Conjunction module {Name} does not have a memory slot for input {pulse.From}");
 
                 registers[pulse.From] = pulse.IsHighPulse;
-
                 if (registers.Any(m => m.Value == LOW))
+                {
                     SendPulseToAll(HIGH > 0); // note: low -> high. See description
+
+                    if (StoreHistory)
+                    {
+                        //Log.WriteLine($"Device {Name} signaled HIGH at time {Device.TheDevice.ButtonPushCount} (Delta: {LastDelta})");
+                        LastDelta = Device.TheDevice.ButtonPushCount - LastTimePulsingHIGH;
+                        LastTimePulsingHIGH = Device.TheDevice.ButtonPushCount;
+                    }
+                }
                 else
+                {
                     SendPulseToAll(LOW); // note: high -> low. See description
+                }
             }
         }
 
@@ -418,12 +301,17 @@ namespace AdventOfCode2023
         [Prefix((char)1)]
         class Button : Module
         {
+            private int pushCount;
+
             public override string Name => ButtonModuleName;
             public Button(string name, string targets) : base(name, targets) { }
 
             public void Push()
             {
+                pushCount++;
+                Device.TheDevice.ButtonPushCount = pushCount;
                 SendPulseToAll(LOW);
+                
             }
             internal override void OnPulse(Pulse pulse)
             {
@@ -478,12 +366,52 @@ namespace AdventOfCode2023
             }
             return device.LowLevelPulsesCount * device.HighLevelPulsesCount;
         }
+
+        
+
         //[RemoveSpacesFromInput]
         //[RemoveNewLinesFromInput]
         // change to string or string[] to get other types of input
         public static long Part2(string[] input)
         {
-            return 0;
+            var device = Device.CreateDevice(input);
+            // push the button
+            var button = (device.GetModule(ButtonModuleName) as Button);
+
+            // get all dependant devices and ask them to store history
+            List<Conjunction> deps = new();
+            foreach(var dd in device.GetAllModules().Where(d=> d.Targets.Contains("lg")))
+            {
+                if (dd is Conjunction conjunction)
+                {
+                    deps.Add(conjunction);
+                    conjunction.StoreHistory = true;
+                }
+            }
+
+            while (deps.Any(d => d.LastDelta == 0))
+            {
+                PushAndProcess(device, button);
+            }
+
+            var lcm2 = LCM(deps.Select(d => (long)d.LastDelta));
+
+            return lcm2;// device.LowLevelPulsesCount * device.HighLevelPulsesCount;
+
+
+            //return 0;
         }
+        public static long LCM(IEnumerable<long> numbers)
+        {
+            return numbers.Aggregate((a, i) => (a / Gcd(a, i)) * i);
+        }
+
+        private static long Gcd(long n1, long n2)
+        {
+            while (n2 != 0)
+                (n1, n2) = (n2, n1 % n2);
+            return n1;
+        }
+
     }
 }
