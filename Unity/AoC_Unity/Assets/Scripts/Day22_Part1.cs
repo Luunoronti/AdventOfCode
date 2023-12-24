@@ -76,6 +76,8 @@ public class Day22_Part1 : MonoBehaviour
         Vector3 crossVec1and2 = Vector3.Cross(lineVec1, lineVec2);
         Vector3 crossVec3and2 = Vector3.Cross(lineVec3, lineVec2);
 
+        crossVec3and2 = -crossVec3and2;
+
         var v = crossVec3and2 * 0.03f;
 
         float planarFactor = Vector3.Dot(lineVec3, crossVec1and2);
