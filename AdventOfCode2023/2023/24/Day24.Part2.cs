@@ -8,9 +8,8 @@ namespace AdventOfCode2023
 
         private static long UseZ3(List<SingleHail> hail)
         {
-            // too tired for now. will use Z3. but this is not what I wanted to do
-            // cloned the code, just to see if it works.
-            // this is not my code, my solution bellow actually worked in the end
+            // cloned the Z3 code, just to see if it works. I am curious
+            // this is not my code, my solution bellow actually worked
             var ctx = new Context();
             var solver = ctx.MkSolver();
 
@@ -66,8 +65,6 @@ namespace AdventOfCode2023
         // change to string or string[] to get other types of input
         public static long Part2(string[] input)
         {
-            return 0;
-
             var hail = ReadHail(input);
 
 
@@ -75,6 +72,9 @@ namespace AdventOfCode2023
             // but I may look for another solution. 
             // This one is based on the observation that
             // it is enough to solve for first 3 segments. 
+            // And we need to look at first 3 segments, because we need
+            // to solve linear equation that has 6 unknowns.
+            
             // This observation was not done by me, but it may prove useful.
 
             // unfortunately, I have to use 6x6 matrix, and vector6.
@@ -90,15 +90,17 @@ namespace AdventOfCode2023
             // use matrix linear solve equation solution
             // https://www.mathsisfun.com/algebra/systems-linear-equations-matrices.html
 
-            // we can use it find a vector this is perpendicular to 
+            // we can use it to find a vector that is perpendicular to 
             // all hail pos x vel vectors.
             // this vector will be our answer
-            // because of above observation that 3 vectors are enough to solve the problem,
+
+            // because of the fact that 3 vectors are enough to solve the problem,
             // we can use 6x6 matrix of cross products with vector 6 of crossed cross products, to solve for our final vector
             // if we needed more, we would just increase the size of our matrix and vectors, and
             // create cross products accordingly, but at some point, this will become problematic
             // to both write and compute (big matrix inverse is quite slow if not using optimization and SIMD)
-            // but it's more of writing problem, I'd need some way to write 
+            // but it's more of writing problem, I'd need some way to write
+            // there would also be a problem of too many variables in the equation.
 
             var h1 = hail[0];
             var h2 = hail[1];
