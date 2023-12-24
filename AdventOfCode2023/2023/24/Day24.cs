@@ -80,7 +80,9 @@ namespace AdventOfCode2023
             Vector2 l1_dir = new Vector2(lineVec1.x, lineVec1.y);
             Vector2 l2_dir = new Vector2(lineVec2.x, lineVec2.y);
 
-            // make lines Ax + By = k1 and Cx + Dy = k2
+            
+            // make lines expressed as Ax + By = k1 and Cx + Dy = k2
+
             // you can find solutions for line intersections
             // in this format all over
             // conversion is also well known
