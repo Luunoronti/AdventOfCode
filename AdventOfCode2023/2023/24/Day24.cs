@@ -245,22 +245,21 @@ namespace AdventOfCode2023
         {
             var hail = ReadHail(input);
 
-            // everyone seem to use Z3 library.
+
             // I'll try that as well, to see if it works
             // but I may look for another solution. 
             // This one is based on the observation that
             // it is enough to solve for first 3 segments. 
             // This observation was not done by me, but it may prove useful.
-            // If not, will just use Z3 I guess.
 
             // unfortunately, I have to use 6x6 matrix, and vector6.
             // will have to write my own.
             // I'm too sick and tired today for this... :(
             // maybe I'll just copy some matrix code from SO
 
-            // If I fail at this, will have to look for other solutions (Z3...)
 
-
+            // everyone seem to use Z3 library.
+            // lets see how it does
             //return UseZ3(hail);
 
             // use matrix linear solve equation solution
@@ -291,7 +290,7 @@ namespace AdventOfCode2023
             // construct a matrix that will hold cross products for our
             // vectors that we now have
             // this is THE hard part, how not to mess up the order :)
-            // and we need to put h1 - h2 and h3 - h1
+            // and we need to put h1 × h2 and h3 × h1
             // but computationally speaking, this is super-simple,
             // we just put cross products of what we now have (pos/vels)
             // into the matrix
@@ -299,7 +298,7 @@ namespace AdventOfCode2023
 
             Matrix mat = new(6, 6);
 
-            // h1 vel x h2 vel
+            // h1 vel, h2 vel
             mat[0, 0] = 0;
             mat[0, 1] = -h1v.z + h2v.z;
             mat[0, 2] = h1v.y - h2v.y;
@@ -312,7 +311,7 @@ namespace AdventOfCode2023
             mat[2, 1] = h1v.x - h2v.x; 
             mat[2, 2] = 0;
 
-            // h1 vel x h3 vel
+            // h1 vel, h3 vel
             mat[3, 0] = 0;
             mat[3, 1] = -h1v.z + h3v.z;
             mat[3, 2] = h1v.y - h3v.y;
@@ -325,7 +324,7 @@ namespace AdventOfCode2023
             mat[5, 1] = h1v.x - h3v.x;
             mat[5, 2] = 0;
 
-            // h2 pos x h1 pos
+            // h2 pos, h1 pos
             mat[0, 3] = 0;
             mat[0, 4] = -h2p.z + h1p.z;
             mat[0, 5] = h2p.y - h1p.y;
@@ -338,7 +337,7 @@ namespace AdventOfCode2023
             mat[2, 4] = h2p.x - h1p.x;
             mat[2, 5] = 0;
             
-            // h3 pos x h1 pos
+            // h3 pos, h1 pos
             mat[3, 3] = 0;
             mat[3, 4] = -h3p.z + h1p.z;
             mat[3, 5] = h3p.y - h1p.y;
