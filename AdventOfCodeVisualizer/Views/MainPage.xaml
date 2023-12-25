@@ -11,6 +11,7 @@
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="120" />
             <RowDefinition Height="48" />
         </Grid.RowDefinitions>
 
@@ -21,14 +22,35 @@
                 HorizontalScrollMode="Enabled"
                 VerticalScrollMode="Enabled"
                 ManipulationMode="All"
+            
                 >
-            <Image  Source="https://cancanit.com/i/example-test-label.png" />
+            <Border BorderBrush="{ThemeResource AccentTextFillColorPrimaryBrush}" BorderThickness="1">
+                <Grid>
+                    <Image x:Name="image" />
+                    <Grid x:Name="lines">
+                        <!--<Line X1="100" X2="100" Y1="0" Y2="100" StrokeThickness="2" Stroke="Black"></Line>-->
+                    </Grid>
+                </Grid>
+            </Border>
         </ScrollView>
 
-        <Slider Grid.Row="1"
-                StepFrequency="1"
-                Margin="8, 0"
-                ></Slider>
+        <ScrollView
+            Grid.Row="1"
+              ZoomMode="Disabled"
+            HorizontalScrollBarVisibility="Hidden"
+            VerticalScrollBarVisibility="Visible"
+            HorizontalScrollMode="Disabled"
+            VerticalScrollMode="Enabled"
+            >
+            <TextBlock x:Name="message" Margin="12">
+            </TextBlock>
+        </ScrollView>
+        <Slider  
+            x:Name="slider"
+            Grid.Row="2"
+            StepFrequency="1"
+            ValueChanged="slider_ValueChanged"
+            Margin="8, 0"></Slider>
 
     </Grid>
 </Page>

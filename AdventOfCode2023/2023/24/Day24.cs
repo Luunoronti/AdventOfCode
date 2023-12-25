@@ -3,14 +3,14 @@ using System.Runtime.CompilerServices;
 
 namespace AdventOfCode2023
 {
-    [Force]                    // uncomment to force processing this type (regardless of which day it is according to DateTime)
+    //[Force]                    // uncomment to force processing this type (regardless of which day it is according to DateTime)
     [AlwaysEnableLog]          // if uncommented, Log.Write() and Log.WriteLine() will still be honored in runs without a debugger (do not confuse with Debug/Release configuration)
     //[DisableLogInDebug]        // if uncommented, Log will be disabled even when under debugger
     [UseLiveDataInDeug]        // if uncommented and under a debug session, will use live data (problem data) instead of test data
     //[AlwaysUseTestData]        // if uncommented, will use test data in both debugging session and non-debugging session
     [ExpectedTestAnswerPart1(2)] // if != 0, will report failure if expected answer != given answer
     [ExpectedTestAnswerPart2(47)] // if != 0, will report failure if expected answer != given answer
-    [RequestsVisualizer]
+    
     partial class Day24
     {
         class SingleHail

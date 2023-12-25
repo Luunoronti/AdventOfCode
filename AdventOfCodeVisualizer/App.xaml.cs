@@ -2,7 +2,6 @@
 using AdventOfCodeVisualizer.Contracts.Services;
 using AdventOfCodeVisualizer.Core.Contracts.Services;
 using AdventOfCodeVisualizer.Core.Services;
-using AdventOfCodeVisualizer.Helpers;
 using AdventOfCodeVisualizer.Services;
 using AdventOfCodeVisualizer.ViewModels;
 using AdventOfCodeVisualizer.Views;
@@ -85,5 +84,16 @@ public partial class App : Application
         base.OnLaunched(args);
 
         await App.GetService<IActivationService>().ActivateAsync(args);
+
+
+        // currently, I am going to code this as a singleton
+        // however, we shall move it to it's own service at a later stage
+        AocVis.Initialize();
+    }
+
+    internal static void DispatchMessage(byte[] data)
+    {
+        // for now, dispatch to main window only
+        MainPage.OnMessage(data);
     }
 }

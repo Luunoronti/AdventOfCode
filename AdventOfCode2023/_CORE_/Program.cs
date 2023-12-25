@@ -81,7 +81,7 @@ internal partial class Program
 
         if (type.GetCustomAttribute<RequestsVisualizerAttribute>() != null)
         {
-            Log.StartVisualizer();
+            Visualizer.StartVisualizer();
         }
 
         Console.WriteLine();
@@ -130,7 +130,7 @@ internal partial class Program
             Clipboard.SetText(a1.ToString());
             Console.WriteLine($"Answer {CC.Sys}1{CC.Clr} ({CC.Ans}{a1}{CC.Clr}) has been copied to clipboard automatically.");
         }
-        Log.CloseVisualizerPipe();
+        Visualizer.CloseVisualizerPipe();
 
         //if (!Debugger.IsAttached)
         //{

@@ -1,6 +1,4 @@
 ﻿using System.Data;
-using System.Diagnostics;
-using System.Net.Sockets;
 using System.Text;
 
 static partial class Log
@@ -138,48 +136,10 @@ static partial class Log
 
 
 
-    // we will use TcpClient to send data over to the client
-    // but, we are actually the client, we start the process
-    // if it does not exist, and try to connect.
+    
 
 
-    private static TcpClient? __visualizerStream;
-    public static void CloseVisualizerPipe()
-    {
-        if (__visualizerStream != null)
-        {
-            Console.WriteLine($"{CC.Att}===>{CC.Clr} Closing Visualizer connection...");
-            __visualizerStream.Dispose();
-            __visualizerStream = null;
-        }
-    }
-    public static void StartVisualizer()
-    {
-        // if it has already been started from this process, do nothing
-        if (__visualizerStream != null)
-        {
-            return;
-        }
 
-        // start process if does not exist already
-        if (Process.GetProcessesByName("AdventOfCodeVisualizer").Length == 0)
-        {
-            Console.WriteLine($"{CC.Att}===>{CC.Clr} Starting Visualizer process...");
-            Process.Start($"{Program.RootPath}\\..\\AdventOfCodeVisualizer\\bin\\Debug\\AdventOfCodeVisualizer.exe");
-        }
-
-        Console.Write($"{CC.Att}===>{CC.Clr} Opening Visualizer connection...");
-        try
-        {
-            __visualizerStream = new TcpClient("127.0.0.1", 58739); // hard-coded values :)
-            Console.WriteLine("done.");
-        }
-        catch
-        {
-            Console.WriteLine($"{CC.Err}failed, visualization will not be available{CC.Clr}.");
-        }
-
-    }
 
 }
 
