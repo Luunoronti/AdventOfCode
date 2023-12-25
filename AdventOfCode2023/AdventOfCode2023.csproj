@@ -10,11 +10,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="EigenCore" Version="1.0.2-alpha" />
-	  <PackageReference Include="Microsoft.Z3" Version="4.12.2" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Compile Update="Properties\Settings.Designer.cs">
 	    <DesignTimeSharedInput>True</DesignTimeSharedInput>
 	    <AutoGen>True</AutoGen>
@@ -27,6 +22,10 @@
 	    <Generator>SettingsSingleFileGenerator</Generator>
 	    <LastGenOutput>Settings.Designer.cs</LastGenOutput>
 	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="2015\" />
 	</ItemGroup>
 
 </Project>

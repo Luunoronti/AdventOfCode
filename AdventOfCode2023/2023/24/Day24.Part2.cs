@@ -1,65 +1,7 @@
-﻿using Microsoft.Z3;
-
-namespace AdventOfCode2023
+﻿namespace AdventOfCode2023
 {
     partial class Day24
     {
-
-
-        private static long UseZ3(List<SingleHail> hail)
-        {
-            // cloned the Z3 code, just to see if it works. I am curious
-            // this is not my code, my solution bellow actually worked
-            var ctx = new Context();
-            var solver = ctx.MkSolver();
-
-            // Coordinates of the stone
-            var x = ctx.MkIntConst("x");
-            var y = ctx.MkIntConst("y");
-            var z = ctx.MkIntConst("z");
-
-            // Velocity of the stone
-            var vx = ctx.MkIntConst("vx");
-            var vy = ctx.MkIntConst("vy");
-            var vz = ctx.MkIntConst("vz");
-
-            for (var i = 0; i < 3; i++)
-            {
-                var t = ctx.MkIntConst($"t{i}"); // time for the stone to reach the hail
-                var h = hail[i];
-
-                var px = ctx.MkInt(Convert.ToInt64(h.Position.x));
-                var py = ctx.MkInt(Convert.ToInt64(h.Position.y));
-                var pz = ctx.MkInt(Convert.ToInt64(h.Position.z));
-
-                var pvx = ctx.MkInt(Convert.ToInt64(h.Velocity.x));
-                var pvy = ctx.MkInt(Convert.ToInt64(h.Velocity.y));
-                var pvz = ctx.MkInt(Convert.ToInt64(h.Velocity.z));
-
-                var xLeft = ctx.MkAdd(x, ctx.MkMul(t, vx)); // x + t * vx
-                var yLeft = ctx.MkAdd(y, ctx.MkMul(t, vy)); // y + t * vy
-                var zLeft = ctx.MkAdd(z, ctx.MkMul(t, vz)); // z + t * vz
-
-                var xRight = ctx.MkAdd(px, ctx.MkMul(t, pvx)); // px + t * pvx
-                var yRight = ctx.MkAdd(py, ctx.MkMul(t, pvy)); // py + t * pvy
-                var zRight = ctx.MkAdd(pz, ctx.MkMul(t, pvz)); // pz + t * pvz
-
-                solver.Add(t >= 0); // time should always be positive - we don't want solutions for negative time
-                solver.Add(ctx.MkEq(xLeft, xRight)); // x + t * vx = px + t * pvx
-                solver.Add(ctx.MkEq(yLeft, yRight)); // y + t * vy = py + t * pvy
-                solver.Add(ctx.MkEq(zLeft, zRight)); // z + t * vz = pz + t * pvz
-            }
-
-            solver.Check();
-            var model = solver.Model;
-
-            var rx = Convert.ToInt64(model.Eval(x).ToString());
-            var ry = Convert.ToInt64(model.Eval(y).ToString());
-            var rz = Convert.ToInt64(model.Eval(z).ToString());
-
-            return rx + ry + rz;
-        }
-
         //[RemoveSpacesFromInput]
         //[RemoveNewLinesFromInput]
         // change to string or string[] to get other types of input
@@ -81,11 +23,6 @@ namespace AdventOfCode2023
             // will have to write my own.
             // I'm too sick and tired today for this... :(
             // maybe I'll just copy some matrix code from SO
-
-
-            // everyone seem to use Z3 library.
-            // lets see how it does
-            //return UseZ3(hail);
 
             // use matrix linear solve equation solution
             // https://www.mathsisfun.com/algebra/systems-linear-equations-matrices.html

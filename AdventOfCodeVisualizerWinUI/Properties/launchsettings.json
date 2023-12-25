@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "AdventOfCodeVisualizerWinUI (Unpackaged)": {
+        "commandName": "Project"
+      },
+      "AdventOfCodeVisualizerWinUI (Package)": {
+        "commandName": "MsixPackage"
+      }
+    }
+}

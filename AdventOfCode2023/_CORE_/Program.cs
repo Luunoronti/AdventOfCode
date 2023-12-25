@@ -6,17 +6,55 @@ using StringSpan = System.ReadOnlySpan<char>;
 
 internal partial class Program
 {
+    private static int GetAocYear(string[] cmdLine)
+    {
+        var index = cmdLine.ToList().IndexOf("-year");
+        if (index != -1)
+            return int.Parse(cmdLine[index + 1]);
+        return DateTime.Now.Year;
+    }
+    private static int GetAocDay(string[] cmdLine)
+    {
+        var index = cmdLine.ToList().IndexOf("-day");
+        if (index != -1)
+            return int.Parse(cmdLine[index + 1]);
+
+        return DateTime.Now.Day;
+    }
+    private static bool IsCreateYearSelected(string[] cmdLine, out int year)
+    {
+        var index = cmdLine.ToList().IndexOf("-createYear");
+        if (index != -1)
+        {
+            year = int.Parse(cmdLine[index + 1]);
+            return true;
+        }
+        year = 0;
+        return false;
+    }
+
     [STAThread]
-    private static void Main(string[] _)
+    private static void Main(string[] args)
     {
         var maxthreads = Math.Max(1, Environment.ProcessorCount);
         ThreadPool.SetMaxThreads(maxthreads, Environment.ProcessorCount);
         Console.WriteLine($"Max ThreadPool threads set to {CC.Sys}{maxthreads}{CC.Clr}");
 
-        var year = DateTime.Now.Year;
+        var year = GetAocYear(args);
         var ns = $"AdventOfCode{year}";
-        var day = DateTime.Now.Day;
+        var day = GetAocDay(args);
         var dn = $"Day{day:D2}";
+
+        if (IsCreateYearSelected(args, out var yearToCreate))
+        {
+            Console.WriteLine($"{CC.Sys}Will generate full year {yearToCreate}. {CC.Clr}");
+
+            for (int i = 1; i < 26; i++)
+                CreateDayIfDoesNotExist(yearToCreate, i);
+            Console.WriteLine($"{CC.Sys}Year {yearToCreate} types created. {CC.Clr}");
+            return;
+        }
+
 
         CreateDayIfDoesNotExist(year, day);
 
@@ -39,6 +77,12 @@ internal partial class Program
             : type.GetCustomAttribute<AlwaysEnableLogAttribute>() != null;
 
         Console.WriteLine($"Logger is {CC.Sys}{(Log.Enabled ? "on" : "off")}{CC.Clr}");
+
+
+        if (type.GetCustomAttribute<RequestsVisualizerAttribute>() != null)
+        {
+            Log.StartVisualizer();
+        }
 
         Console.WriteLine();
 
@@ -67,7 +111,7 @@ internal partial class Program
         if (expectedAsnwer2 > 0 && expectedAsnwer2 != a2)
         {
             Console.Write($"    {CC.Err}PART 2 FAILED!{CC.Clr} Expected answer: {CC.Ans}{expectedAsnwer2:N0}{CC.Clr}");
-            if(expectedAsnwer2 > a2)
+            if (expectedAsnwer2 > a2)
                 Console.Write($" (Too small) - {(expectedAsnwer2 - a2):N0} missing");
             else
                 Console.Write($" (Too big) - {(a2 - expectedAsnwer2):N0} over");
@@ -86,26 +130,27 @@ internal partial class Program
             Clipboard.SetText(a1.ToString());
             Console.WriteLine($"Answer {CC.Sys}1{CC.Clr} ({CC.Ans}{a1}{CC.Clr}) has been copied to clipboard automatically.");
         }
+        Log.CloseVisualizerPipe();
 
-        if (!Debugger.IsAttached)
-        {
-            Console.WriteLine($"Press {CC.Sys}1{CC.Clr} to copy first answer to clipboard, {CC.Sys}2{CC.Clr} to copy second answer, any other key to quit.");
-            while (true)
-            {
-                var key = Console.ReadKey(true);
-                if (key.Key == ConsoleKey.D1)
-                {
-                    Clipboard.SetText(a1.ToString());
-                    Console.WriteLine($"Answer {CC.Sys}1{CC.Clr} ({CC.Ans}{a1}{CC.Clr}) copied.");
-                }
-                else if (key.Key == ConsoleKey.D2)
-                {
-                    Clipboard.SetText(a2.ToString());
-                    Console.WriteLine($"Answer {CC.Sys}2{CC.Clr} ({CC.Ans}{a2}{CC.Clr}) copied.");
-                }
-                else break;
-            }
-        }
+        //if (!Debugger.IsAttached)
+        //{
+        //    Console.WriteLine($"Press {CC.Sys}1{CC.Clr} to copy first answer to clipboard, {CC.Sys}2{CC.Clr} to copy second answer, any other key to quit.");
+        //    while (true)
+        //    {
+        //        var key = Console.ReadKey(true);
+        //        if (key.Key == ConsoleKey.D1)
+        //        {
+        //            Clipboard.SetText(a1.ToString());
+        //            Console.WriteLine($"Answer {CC.Sys}1{CC.Clr} ({CC.Ans}{a1}{CC.Clr}) copied.");
+        //        }
+        //        else if (key.Key == ConsoleKey.D2)
+        //        {
+        //            Clipboard.SetText(a2.ToString());
+        //            Console.WriteLine($"Answer {CC.Sys}2{CC.Clr} ({CC.Ans}{a2}{CC.Clr}) copied.");
+        //        }
+        //        else break;
+        //    }
+        //}
     }
 
     private static Type? GetTypeToProcess(string @namespace, string name) =>
@@ -129,113 +174,150 @@ internal partial class Program
     private delegate long RunMethodStringArrWidthHeigthParam(string[] input, int lineWidth, int lineCount);
 
 
+
+    private static string __rootPath;
+    public static string RootPath
+    {
+        get
+        {
+            if (__rootPath == null)
+            {
+                if (File.Exists(".\\session.txt"))
+                    __rootPath = ".\\";
+                else
+                    __rootPath = "..\\..\\..\\";
+            }
+
+            return __rootPath;
+        }
+    }
     private static long RunMethod(Type type, string methodName, bool useTestData)
     {
-        Console.WriteLine($"{CC.Att}===>{CC.Clr} Running {CC.Cls}{type.Namespace}.{type.Name}.{methodName}{CC.Clr}...");
-        var met = type.GetMethod(methodName);
-        if (met == null) return -1;
-
         var logStatus = Log.Enabled;
-        if (Debugger.IsAttached && met.GetCustomAttribute<DisableLogInDebugAttribute>() != null)
-            Log.Enabled = false;
-        if (!Debugger.IsAttached && met.GetCustomAttribute<AlwaysEnableLogAttribute>() != null)
-            Log.Enabled = true;
-
-        var method = type.GetMethod(methodName);
-        if (method == null)
+        try
         {
-            Log.WriteLine($"{CC.Err}Unable to find method {CC.Sys}{methodName}{CC.Err} on type {CC.Sys}{type.Namespace}.{type.Name}{CC.Clr}");
-            return 0;
-        }
+            Console.WriteLine($"{CC.Att}===>{CC.Clr} Running {CC.Cls}{type.Namespace}.{type.Name}.{methodName}{CC.Clr}...");
+            var met = type.GetMethod(methodName);
+            if (met == null) return -1;
 
-        var methodParameters = method.GetParameters();
-        var answer = 0L;
-        Stopwatch sw = new();
-        
-        bool HasParameters(params Type[] types)
-        {
-            if (methodParameters.Length != types.Length)
-                return false;
-            for (int i = 0; i < types.Length; i++)
+            if (Debugger.IsAttached && met.GetCustomAttribute<DisableLogInDebugAttribute>() != null)
+                Log.Enabled = false;
+            if (!Debugger.IsAttached && met.GetCustomAttribute<AlwaysEnableLogAttribute>() != null)
+                Log.Enabled = true;
+
+            // set IsTest property if it does exit
+            type.GetProperty("IsTest")?.SetValue(null, (object)useTestData);
+
+
+            var method = type.GetMethod(methodName);
+            if (method == null)
             {
-                if (methodParameters[i].ParameterType != types[i])
-                    return false;
+                Log.WriteLine($"{CC.Err}Unable to find method {CC.Sys}{methodName}{CC.Err} on type {CC.Sys}{type.Namespace}.{type.Name}{CC.Clr}");
+                return 0;
             }
-            return true;
+
+            var methodParameters = method.GetParameters();
+            var answer = 0L;
+            Stopwatch sw = new();
+
+            bool HasParameters(params Type[] types)
+            {
+                if (methodParameters.Length != types.Length)
+                    return false;
+                for (int i = 0; i < types.Length; i++)
+                {
+                    if (methodParameters[i].ParameterType != types[i])
+                        return false;
+                }
+                return true;
+            }
+            string ProcessInputForMethod(string input)
+            {
+                if (method.GetCustomAttribute<RemoveNewLinesFromInputAttribute>() != null)
+                    input = input.Replace("\n", "").Replace("\r", "");
+                if (method.GetCustomAttribute<RemoveSpacesFromInputAttribute>() != null)
+                    input = input.Replace(" ", "");
+                return input;
+            }
+
+            if (HasParameters(typeof(StringSpan), typeof(int), typeof(int)))
+            {
+                var lines = ReadInputLines(type, useTestData: useTestData);
+                if (lines.Length == 0)
+                    return -1;
+
+                var width = lines[0].Length;
+                var count = lines.Length;
+                var input = ProcessInputForMethod(string.Join("", lines).Replace("\n", "").Replace("\r", ""));
+
+                var del = method.CreateDelegate<RunMethodSpanWidthHeigthParam>();
+                sw.Start();
+                answer = del(input.AsSpan(), width, count);
+            }
+            else if (HasParameters(typeof(string), typeof(int), typeof(int)))
+            {
+                var lines = ReadInputLines(type, useTestData: useTestData);
+                if (lines.Length == 0)
+                    return -1;
+                var width = lines[0].Length;
+                var count = lines.Length;
+                var input = ProcessInputForMethod(string.Join("", lines).Replace("\n", "").Replace("\r", ""));
+
+                var del = method.CreateDelegate<RunMethodStringWidthHeigthParam>();
+                sw.Start();
+                answer = del(input, width, count);
+            }
+            else if (HasParameters(typeof(string[]), typeof(int), typeof(int)))
+            {
+                var lines = ReadInputLines(type, useTestData: useTestData);
+                if (lines.Length == 0)
+                    return -1;
+                var width = lines[0].Length;
+                var count = lines.Length;
+                var del = method.CreateDelegate<RunMethodStringArrWidthHeigthParam>();
+                sw.Start();
+                answer = del(lines, width, count);
+            }
+            else if (HasParameters(typeof(string[])))
+            {
+                var lines = ReadInputLines(type, useTestData: useTestData);
+                if (lines.Length == 0)
+                    return -1;
+                var del = method.CreateDelegate<RunMethodStrLinesParam>();
+
+                sw.Start();
+                answer = del(lines);
+            }
+            else if (HasParameters(typeof(string)))
+            {
+                var text = ReadInputText(type, useTestData: useTestData);
+                text = ProcessInputForMethod(text);
+                var del = method.CreateDelegate<RunMethodStrParam>();
+
+                sw.Start();
+                answer = del(text);
+            }
+            else if (HasParameters(typeof(StringSpan)))
+            {
+                var text = ReadInputText(type, useTestData: useTestData);
+                text = ProcessInputForMethod(text);
+                var span = text.AsSpan();
+                var del = method.CreateDelegate<RunMethodSpanParam>();
+
+                sw.Start();
+                answer = del(span);
+            }
+
+            sw.Stop();
+            Console.WriteLine($"{CC.Att}===> {CC.Cls}{type.Namespace}.{type.Name}.{method} {CC.Clr}completed in {CC.Sys}{sw.ElapsedMilliseconds} ms ({sw.Elapsed}){CC.Clr}\n");
+
+            return answer;
         }
-        string ProcessInputForMethod(string input)
+        finally
         {
-            if (method.GetCustomAttribute<RemoveNewLinesFromInputAttribute>() != null)
-                input = input.Replace("\n", "").Replace("\r", "");
-            if (method.GetCustomAttribute<RemoveSpacesFromInputAttribute>() != null)
-                input = input.Replace(" ", "");
-            return input;
+            Log.Enabled = logStatus;
+
         }
-
-        if (HasParameters(typeof(StringSpan), typeof(int), typeof(int)))
-        {
-            var lines = ReadInputLines(type, useTestData: useTestData);
-            var width = lines[0].Length;
-            var count = lines.Length;
-            var input = ProcessInputForMethod(string.Join("", lines).Replace("\n", "").Replace("\r", ""));
-
-            var del = method.CreateDelegate<RunMethodSpanWidthHeigthParam>();
-            sw.Start();
-            answer = del(input.AsSpan(), width, count);
-        }
-        else if (HasParameters(typeof(string), typeof(int), typeof(int)))
-        {
-            var lines = ReadInputLines(type, useTestData: useTestData);
-            var width = lines[0].Length;
-            var count = lines.Length;
-            var input = ProcessInputForMethod(string.Join("", lines).Replace("\n", "").Replace("\r", ""));
-
-            var del = method.CreateDelegate<RunMethodStringWidthHeigthParam>();
-            sw.Start();
-            answer = del(input, width, count);
-        }
-        else if (HasParameters(typeof(string[]), typeof(int), typeof(int)))
-        {
-            var lines = ReadInputLines(type, useTestData: useTestData);
-            var width = lines[0].Length;
-            var count = lines.Length;
-            var del = method.CreateDelegate<RunMethodStringArrWidthHeigthParam>();
-            sw.Start();
-            answer = del(lines, width, count);
-        }
-        else if (HasParameters(typeof(string[])))
-        {
-            var lines = ReadInputLines(type, useTestData: useTestData);
-            var del = method.CreateDelegate<RunMethodStrLinesParam>();
-
-            sw.Start();
-            answer = del(lines);
-        }
-        else if (HasParameters(typeof(string)))
-        {
-            var text = ReadInputText(type, useTestData: useTestData);
-            text = ProcessInputForMethod(text);
-            var del = method.CreateDelegate<RunMethodStrParam>();
-
-            sw.Start();
-            answer = del(text);
-        }
-        else if (HasParameters(typeof(StringSpan)))
-        {
-            var text = ReadInputText(type, useTestData: useTestData);
-            text = ProcessInputForMethod(text);
-            var span = text.AsSpan();
-            var del = method.CreateDelegate<RunMethodSpanParam>();
-
-            sw.Start();
-            answer = del(span);
-        }
-
-        sw.Stop();
-        Console.WriteLine($"{CC.Att}===> {CC.Cls}{type.Namespace}.{type.Name}.{method} {CC.Clr}completed in {CC.Sys}{sw.ElapsedMilliseconds} ms ({sw.Elapsed}){CC.Clr}\n");
-
-        Log.Enabled = logStatus;
-        return answer;
     }
 
     private static string[] ReadInputLines(Type dayClassType, bool useTestData)
@@ -243,7 +325,7 @@ internal partial class Program
         var year = int.Parse(dayClassType.Namespace?.Replace("AdventOfCode", "") ?? "0");
         var day = int.Parse(dayClassType.Name.Replace("Day", ""));
 
-        var fileName = $"..\\..\\..\\{year}\\{day:D2}\\{(useTestData ? "test" : "live")}.txt";
+        var fileName = $"{RootPath}{year}\\{day:D2}\\{(useTestData ? "test" : "live")}.txt";
 
         if (useTestData == false)
         {
@@ -269,7 +351,7 @@ internal partial class Program
         var year = int.Parse(dayClassType.Namespace?.Replace("AdventOfCode", "") ?? "0");
         var day = int.Parse(dayClassType.Name.Replace("Day", ""));
 
-        var fileName = $"..\\..\\..\\{year}\\{day:D2}\\{(useTestData ? "test" : "live")}.txt";
+        var fileName = $"{RootPath}{year}\\{day:D2}\\{(useTestData ? "test" : "live")}.txt";
 
         if (useTestData == false)
         {
@@ -293,7 +375,7 @@ internal partial class Program
 
     private static void CreateDayIfDoesNotExist(int year, int day)
     {
-        var prefix = $"..\\..\\..\\{year}\\{day:D2}\\";
+        var prefix = $"{RootPath}{year}\\{day:D2}\\";
         Directory.CreateDirectory(prefix);
 
         if (File.Exists(prefix + $"Day{day:D2}.cs") == false)
@@ -309,7 +391,7 @@ internal partial class Program
     // and allowing to copy his download code.
     internal static string GetLiveCode(int year, int day)
     {
-        string session = File.ReadAllText($"..\\..\\..\\session.txt");
+        string session = File.ReadAllText($"{RootPath}session.txt");
         string url = $"https://adventofcode.com/{year}/day/{day}/input";
 
 #pragma warning disable SYSLIB0014 // Type or member is obsolete
