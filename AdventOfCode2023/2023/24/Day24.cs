@@ -85,9 +85,10 @@ namespace AdventOfCode2023
             // so normalize and then convert to V2 will work.
             // So I don't have to write Normalize for V2 :)
 
-            // to be 100% correct, this normalization is not required here
-            // but it does make sure that any big velocity will get reduced to 
+            // Normalization makes sure that any big velocity will get reduced to 
             // have length of 1, which means we won't hit big (point + dir) later
+            // This step is very important. If we don't, we will have 
+            // overflows in formulas bellow.
 
             //lineVel1 = Vector3.Normalize(lineVel1); // I wrote Vect2 normalize in the end, it's not a metric ton of code after all :P
             //lineVel2 = Vector3.Normalize(lineVel2); // so, you can use Vector2.Normalize directly, as bellow, without first going to Vector3
@@ -114,19 +115,20 @@ namespace AdventOfCode2023
             // in this format all over
             // conversion is also well known
 
-            // Normals
+            // Normals - note y and x parts are not confused, A is -y
             var A = -l1_dir.y;
             var B = l1_dir.x;
+            var k1 = (A * l1_pos.x) + (B * l1_pos.y);
 
             var C = -l2_dir.y;
             var D = l2_dir.x;
-
-            // Ks 
-            var k1 = (A * l1_pos.x) + (B * l1_pos.y);
             var k2 = (C * l2_pos.x) + (D * l2_pos.y);
 
-            // Intersection
-            var intersectPoint = new Vector2((D * k1 - B * k2) / (A * D - B * C), (-C * k1 + A * k2) / (A * D - B * C));
+            // Intersection itself
+            var intersectPoint = new Vector2(
+                (D * k1 - B * k2) / (A * D - B * C), 
+                (-C * k1 + A * k2) / (A * D - B * C)
+                );
 
             // check if this hit was 'behind' any of our positions
             // if so, it 'was in the past'
