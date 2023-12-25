@@ -59,7 +59,6 @@ static class Visualizer
 
     }
 
-    private static byte[] outputBuff = new byte[1024 * 1024 * 10];
 
 
     public static void SendBitmap(Bitmap bitmap, int frame = -1, int window = 0, string additionalMessage = null)
@@ -67,7 +66,6 @@ static class Visualizer
         if (__visualizerStream == null)
             return;
 
-        var span = outputBuff.AsSpan();
         var frameIndex = (ushort)(frame == -1 ? 0x8000 : (ushort)frame);
         var windowIndex = (ushort)window;
 
@@ -80,6 +78,9 @@ static class Visualizer
             stringData = Encoding.UTF8.GetBytes(additionalMessage);
 
         var size = (int)(8 + 6 + stringData.Length + mem.Length);
+        var data = new byte[size];
+        var span = data.AsSpan();
+
         // for now, test only
         BitConverter.TryWriteBytes(span, size);
         BitConverter.TryWriteBytes(span[4..], (int)MessageIds.BitmapImage);

@@ -195,7 +195,7 @@ namespace AdventOfCode2023
                 if (visualize)
                 {
                     Visualizer.SendBitmap(visBm, additionalMessage: $"{parts.Count} are in progress");
-                    Thread.Sleep(50);
+                    Thread.Sleep(10);
                 }
             }
 
