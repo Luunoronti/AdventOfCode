@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "AdventOfCodeVisualizer (Unpackaged)": {
+        "commandName": "Project"
+      },
+      "AdventOfCodeVisualizer (Package)": {
+        "commandName": "MsixPackage"
+      }
+    }
+}
