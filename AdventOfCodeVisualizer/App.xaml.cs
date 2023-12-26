@@ -95,5 +95,7 @@ public partial class App : Application
     {
         // for now, dispatch to main window only
         MainPage.OnMessage(data);
+
+        System.Diagnostics.Debug.WriteLine(data.Length);    
     }
 }

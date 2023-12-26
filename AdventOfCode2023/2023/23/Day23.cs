@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Drawing;
 using StringSpan = System.ReadOnlySpan<char>;
 
 namespace AdventOfCode2023
@@ -39,25 +40,17 @@ namespace AdventOfCode2023
             private int _search_y = -1;
             public bool startDirRightDownOnly = true;
 
+            private Color visColor = BitmapContext.RandomizeColor(120, 120, 120, 20);
 
-            private Brush visBrush;
-            public PathPart()
-            {
-                var r = new Random();
-                visBrush = new SolidBrush(Color.FromArgb(255, 
-                    (byte)(120 + r.Next(6) * 20), 
-                    (byte)(120 + r.Next(6) * 20), 
-                    (byte)(120 + r.Next(6) * 20)
-                    ));
-            }
-
-            public void Advance(Map2DSpan<Path> map, Map2DSpan<bool> closed, Graphics virGr)
+            public void Advance(Map2DSpan<Path> map, Map2DSpan<bool> closed, BitmapContext bmpC)
             {
                 if (PathSearchFinished) return;
 
                 closed.At(_search_x, _search_y, true);
 
-                virGr?.FillRectangle(visBrush, new Rectangle(_search_x * 4 + 1, _search_y * 4 + 1, 2, 2));
+                bmpC?.SetSelectedColor(visColor);
+
+                bmpC?.FillRectangle(_search_x * 4 + 1, _search_y * 4 + 1, 2, 2);
 
 
                 // if we've found the end
@@ -68,8 +61,9 @@ namespace AdventOfCode2023
                     endPos = new Point(_search_x + 1, _search_y);
                     PathSearchFinished = true;
 
-                    virGr?.DrawRectangle(Pens.Green, new Rectangle((_search_x + 1) * 4, (_search_y + 1) * 4, 4, 4));
-                    virGr?.FillRectangle(visBrush, new Rectangle((_search_x + 1) * 4 + 1, (_search_y + 1) * 4 + 1, 2, 2));
+                    bmpC?.FillRectangle((_search_x+1) * 4 + 1, (_search_y + 1) * 4 + 1, 2, 2);
+                    bmpC?.DrawRectangle((_search_x + 1) * 4 + 1, (_search_y + 1) * 4 + 1, 2, 2, Color.Green);
+                    //virGr?.DrawRectangle(Pens.Green, new Rectangle((_search_x + 1) * 4, (_search_y + 1) * 4, 4, 4));
                     //length++;
                     return;
                 }
@@ -92,8 +86,8 @@ namespace AdventOfCode2023
                         endPos = new Point(_search_x + 1, _search_y);
                         length++;
                         PathSearchFinished = true;
-                        virGr?.DrawRectangle(Pens.Blue, new Rectangle((_search_x + 1) * 4, (_search_y + 1) * 4, 4, 4));
-                        virGr?.FillRectangle(visBrush, new Rectangle((_search_x + 1) * 4 + 1, (_search_y) * 4 + 1, 2, 2));
+                        bmpC?.DrawRectangle((_search_x + 1) * 4, (_search_y + 1) * 4, 4, 4, Color.Blue);
+                        bmpC?.FillRectangle((_search_x + 1) * 4 + 1, _search_y * 4 + 1, 2, 2);
 
                         return;
                     }
@@ -103,9 +97,8 @@ namespace AdventOfCode2023
                         endPos = new Point(_search_x, _search_y + 1);
                         length++;
                         PathSearchFinished = true;
-                        virGr?.DrawRectangle(Pens.Yellow, new Rectangle((_search_x + 1) * 4, (_search_y + 1) * 4, 4, 4));
-                        virGr?.FillRectangle(visBrush, new Rectangle((_search_x) * 4 + 1, (_search_y + 1) * 4 + 1, 2, 2));
-
+                        bmpC?.DrawRectangle((_search_x + 1) * 4, (_search_y + 1) * 4, 4, 4, Color.Yellow);
+                        bmpC?.FillRectangle(_search_x * 4 + 1, (_search_y + 1) * 4 + 1, 2, 2);
                         return;
                     }
                 }
@@ -145,30 +138,12 @@ namespace AdventOfCode2023
             var mapWidth = map.Width;
             var mapHeight = map.Height;
 
-            // create bitmap for visualization
-            using var visBm = new Bitmap(mapWidth * 4, mapHeight * 4, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            using var visGr = Graphics.FromImage(visBm);
-            var closeBrush = new SolidBrush(Color.FromArgb(255, 50, 50, 50));
-            visGr.Clear(Color.Transparent);
-
-            //visGr.FillRectangles(Brushes.DarkGray, Enumerable.Range(0, mapWidth*mapHeight))
-            for (int my = 0; my < mapHeight; my++)
-            {
-                for (int mx = 0; mx < mapWidth; mx++)
-                {
-                    var m = map.At(mx, my);
-                    var brush = m switch
-                    {
-                        Path.StartPos => Brushes.Cyan,
-                        Path.Closed => closeBrush,
-                        _ => Brushes.Transparent,
-                    };
-                    if (startPos.X == mx && startPos.Y == my)
-                        brush = Brushes.Cyan;
-
-                    visGr.FillRectangle(brush, new Rectangle(mx * 4, my * 4, 4, 4));
-                }
-            }
+            using var bmpC = new BitmapContext(mapWidth, mapHeight, scalingFactor: 4);
+            bmpC.SetSelectedColor(50, 50, 50);
+            for (var i = 0; i < map.Length; i++) if (map.AtOffset(i) == Path.Closed) bmpC.SetPixel(i);
+            bmpC.SelectedColor = Color.Cyan;
+            bmpC.SetPixel(startPos.X, startPos.Y);
+            bmpC.ScalingFactor = 1;
 
 
             Map2DSpan<bool> closed = new Map2DSpan<bool>(mapWidth, mapHeight);
@@ -180,7 +155,7 @@ namespace AdventOfCode2023
                     var part = parts[i];
                     if (part.PathSearchFinished) continue;
 
-                    parts[i].Advance(map, closed, visualize ? visGr : null);
+                    parts[i].Advance(map, closed, visualize ? bmpC : null);
                     // search ended. attempt to spawn new parts from this one
                     if (part.PathSearchFinished)
                     {
@@ -193,10 +168,7 @@ namespace AdventOfCode2023
                 }
 
                 if (visualize)
-                {
-                    Visualizer.SendBitmap(visBm, additionalMessage: $"{parts.Count} are in progress");
-                    Thread.Sleep(10);
-                }
+                    Visualizer.SendBitmap(bmpC, additionalMessage: $"{parts.Count} are in progress");
             }
 
             parts.ForEach((p, i) => p.Index = i);

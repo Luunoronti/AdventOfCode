@@ -10,6 +10,7 @@ namespace AdventOfCodeVisualizer.Views;
 
 enum MessageIds
 {
+    Clear,
     BitmapImage,
 }
 
@@ -31,6 +32,9 @@ public sealed partial class MainPage : Page
         //var ds = data.Length > 8 ? data.AsSpan()[8..] : null;
         switch (msgId)
         {
+            case MessageIds.Clear:
+                OnMessage_Clear();
+                break;
             case MessageIds.BitmapImage:
                 OnMessage_BitmapImage(data);
                 break;
@@ -82,6 +86,13 @@ public sealed partial class MainPage : Page
         }
     }
 
+    private void OnMessage_Clear()
+    {
+        Frames.Clear();
+        slider.Maximum = slider.Minimum = 0;
+        message.Text = "";
+        image.Source = null;
+    }
     private void OnMessage_BitmapImage(byte[] data)
     {
         // frame index (0 or more)
