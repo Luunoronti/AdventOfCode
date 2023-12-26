@@ -1,4 +1,6 @@
 
+using System.Security.Cryptography;
+using System.Text;
 using StringSpan = System.ReadOnlySpan<char>;
 
 namespace AdventOfCode2015
@@ -17,6 +19,11 @@ namespace AdventOfCode2015
         // change to string or string[] to get other types of input
         public static long Part1(StringSpan input, int lineWidth, int count)
         {
+
+            
+            var ret = MD5.HashData(Encoding.ASCII.GetBytes("abcdef609043"));
+
+
             return 0;
         }
         //[RemoveSpacesFromInput]

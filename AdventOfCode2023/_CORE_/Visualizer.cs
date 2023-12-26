@@ -37,6 +37,8 @@ static class Visualizer
             return;
         }
 
+        bool isProgramStarting = false;
+
         // start process if does not exist already
         if (Process.GetProcessesByName("AdventOfCodeVisualizer").Length == 0)
         {
@@ -44,25 +46,36 @@ static class Visualizer
 
             //Process.Start($"{Program.RootPath}\\..\\AdventOfCodeVisualizer\\bin\\Debug\\AdventOfCodeVisualizer.exe");
             Process.Start($"{Program.RootPath}\\..\\AdventOfCodeVisualizer\\bin\\x86\\Release\\net7.0-windows10.0.19041.0\\win10-x86\\AdventOfCodeVisualizer.exe");
+            isProgramStarting = true;
         }
 
         Console.Write($"{CC.Att}===>{CC.Clr} Opening Visualizer connection...");
-        try
+
+        int counter = 0;
+        while (true)
         {
-            Thread.Sleep(1000);    //TODO: remove
-            __visualizerTcp = new TcpClient("127.0.0.1", 58739); // hard-coded values :)
-            __visualizerTcp.NoDelay = true;
-
-            __visualizerStream = __visualizerTcp.GetStream();
-            Console.WriteLine("done.");
-
-            ClearAll();
+            try
+            {
+                counter++;
+                Thread.Sleep(1000);    //TODO: remove
+                __visualizerTcp = new TcpClient("127.0.0.1", 58739); // hard-coded values :)
+                __visualizerTcp.NoDelay = true;
+                __visualizerStream = __visualizerTcp.GetStream();
+                Console.WriteLine("done.");
+                ClearAll();
+                break;
+            }
+            catch
+            {
+                if (isProgramStarting && counter < 5)
+                {
+                    Console.Write('.');
+                    continue;
+                }
+                else
+                    Console.WriteLine($"{CC.Err}failed, visualization will not be available{CC.Clr}.");
+            }
         }
-        catch
-        {
-            Console.WriteLine($"{CC.Err}failed, visualization will not be available{CC.Clr}.");
-        }
-
     }
     public static void ClearAll()
     {
@@ -129,6 +142,42 @@ static class Visualizer
     }
 
 
+
+    public static void SendMap2dSpan<T>(Map2DSpan<T> map, Func<T, Map2DSpan<T>, int, int, Color> mapper, int frame = -1, int window = 0, string additionalMessage = null)
+    {
+        using var bitmap = new Bitmap(map.Width, map.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+        // Lock the bitmap's bits.  
+        var rect = new Rectangle(0, 0, map.Width, map.Height);
+        var bmpData = bitmap.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, bitmap.PixelFormat);
+        // Get the address of the first line.
+        var ptr = bmpData.Scan0;
+
+        // Declare an array to hold the bytes of the bitmap.
+        var bytes = Math.Abs(bmpData.Stride) * map.Height;
+        var rgbValues = new byte[bytes];
+        var span = rgbValues.AsSpan();
+        var offset = 0;
+        for (var y = 0; y < map.Height; y++)
+        {
+            for (var x = 0; x < map.Width; x++)
+            {
+                var c = mapper(map[x, y], map, x, y);
+                span[offset] = c.B; offset++;
+                span[offset] = c.G; offset++;
+                span[offset] = c.R; offset++;
+                span[offset] = c.A; offset++;
+            }
+        }
+
+        // Copy the RGB values back to the bitmap
+        System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
+
+        // Unlock the bits.
+        bitmap.UnlockBits(bmpData);
+
+        SendBitmap(bitmap, frame, window, additionalMessage);
+    }
+
     static int __test = 0;
 }
 
@@ -156,15 +205,15 @@ class BitmapContext : IDisposable
     }
 
     #region Color
-    private static int Clr(int c) => Math.Max(0, Math.Min(c, 255));
-    private static Color Clr(int r, int g, int b) => Color.FromArgb(Clr(255), Clr(r), Clr(g), Clr(b));
-    private static Color Clr(int a, int r, int g, int b) => Color.FromArgb(Clr(a), Clr(r), Clr(g), Clr(b));
+    private static int Clamp(int c) => Math.Max(0, Math.Min(c, 255));
+    public static Color Clr(int r, int g, int b) => Color.FromArgb(Clamp(255), Clamp(r), Clamp(g), Clamp(b));
+    public static Color Clr(int a, int r, int g, int b) => Color.FromArgb(Clamp(a), Clamp(r), Clamp(g), Clamp(b));
 
     public void SetSelectedColor(int a, int r, int g, int b) => SelectedColor = Clr(a, r, g, b);
     public void SetSelectedColor(int r, int g, int b) => SelectedColor = Clr(r, g, b);
     public void SetSelectedColor(Color color) => SelectedColor = color;
     #endregion
-    
+
     internal BitmapContext(int width, int height, Color clearColor, int scalingFactor = 1)
     {
         _width = width;

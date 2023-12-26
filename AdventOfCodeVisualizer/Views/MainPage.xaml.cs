@@ -73,7 +73,7 @@ public sealed partial class MainPage : Page
         //output.SetSource(imgBuff);
         image.Source = source;
 
-       
+
     }
 
     private void slider_ValueChanged(object sender, Microsoft.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
@@ -91,6 +91,7 @@ public sealed partial class MainPage : Page
         Frames.Clear();
         slider.Maximum = slider.Minimum = 0;
         message.Text = "";
+        msgPanel.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
         image.Source = null;
     }
     private void OnMessage_BitmapImage(byte[] data)
@@ -115,6 +116,7 @@ public sealed partial class MainPage : Page
         if (strmsgSize > 0)
         {
             stringMessage = Encoding.UTF8.GetString(data, 8 + 6, strmsgSize);
+            msgPanel.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
         }
 
 
@@ -124,37 +126,9 @@ public sealed partial class MainPage : Page
             slider.Maximum = Frames.Count;
             slider.Minimum = 1;
         }
-        
+
         if (slider.Value == Frames.Count - 1)
             slider.Value = Frames.Count;
-
-        ////image.Source = output;
-
-        //if (asLastFrame)
-        //{
-        //    Frames.Add(output);
-
-        //    slider.Maximum = Frames.Count;
-        //    slider.Minimum = 1;
-        //    if (image.Source == null)
-        //    {
-        //        image.Source = output;
-        //    }
-        //}
-        //else
-        //{
-        //    if (frameIndex >= Frames.Count)
-        //    {
-        //        Frames.AddRange(Enumerable.Range(Frames.Count, frameIndex).Select(i => (BitmapSource)null!));
-        //    }
-        //    Frames[frameIndex] = output;
-        //    if (slider.Value == frameIndex + 1)
-        //    {
-        //        image.Source = output;
-        //    }
-        //    slider.Maximum = Frames.Count;
-        //    slider.Minimum = 1;
-        //}
     }
 
 
@@ -170,5 +144,5 @@ public sealed partial class MainPage : Page
         InitializeComponent();
     }
 
-   
+
 }

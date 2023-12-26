@@ -3,9 +3,18 @@
 
 class Map2D
 {
-    public int Width { get; }
-    public int Height { get; }
-    public int Length { get; }
+    public int Width
+    {
+        get;
+    }
+    public int Height
+    {
+        get;
+    }
+    public int Length
+    {
+        get;
+    }
     public Map2D(int width, int height)
     {
         Width = width;
@@ -61,7 +70,26 @@ class Map2D<T> : Map2D
         return _map[offset];
     }
 
-
+    public T this[int x, int y]
+    {
+        get => At(x, y);
+        set => At(x, y, value);
+    }
+    public long Count(Func<T, bool> mapper)
+    {
+        var c = 0L;
+        for (var i = 0; i < _map.Length; i++)
+            if (mapper(_map[i]))
+                c++;
+        return c;
+    }
+    public long Sum(Func<T, long> mapper)
+    {
+        var c = 0L;
+        for (var i = 0; i < _map.Length; i++)
+            c += mapper(_map[i]);
+        return c;
+    }
 }
 class Map2DSpan<T> : Map2D<T>
 {

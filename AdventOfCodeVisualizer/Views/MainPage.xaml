@@ -11,7 +11,7 @@
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="120" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="48" />
         </Grid.RowDefinitions>
 
@@ -24,7 +24,7 @@
                 ManipulationMode="All"
             
                 >
-            <Border BorderBrush="{ThemeResource AccentTextFillColorPrimaryBrush}" BorderThickness="1">
+            <Border BorderBrush="{ThemeResource AccentTextFillColorPrimaryBrush}" BorderThickness="1" CornerRadius="0">
                 <Grid>
                     <Image x:Name="image" />
                     <Grid x:Name="lines">
@@ -35,14 +35,16 @@
         </ScrollView>
 
         <ScrollView
+            x:Name="msgPanel"
             Grid.Row="1"
-              ZoomMode="Disabled"
+            Height="130"
+            ZoomMode="Disabled"
             HorizontalScrollBarVisibility="Hidden"
             VerticalScrollBarVisibility="Visible"
             HorizontalScrollMode="Disabled"
             VerticalScrollMode="Enabled"
             >
-            <TextBlock x:Name="message" Margin="12">
+            <TextBlock x:Name="message" Margin="12" >
             </TextBlock>
         </ScrollView>
         <Slider  
@@ -50,7 +52,7 @@
             Grid.Row="2"
             StepFrequency="1"
             ValueChanged="slider_ValueChanged"
-            Margin="8, 0"></Slider>
+            Margin="16, 8"></Slider>
 
     </Grid>
 </Page>
