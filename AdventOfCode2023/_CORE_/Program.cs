@@ -19,6 +19,7 @@ internal partial class Program
         if (index != -1)
             return int.Parse(cmdLine[index + 1]);
 
+        if (DateTime.Now.Month != 12) return 60;
         return DateTime.Now.Day;
     }
     private static bool IsCreateYearSelected(string[] cmdLine, out int year)
@@ -375,6 +376,8 @@ internal partial class Program
 
     private static void CreateDayIfDoesNotExist(int year, int day)
     {
+        if (day > 25) return;
+
         var prefix = $"{RootPath}{year}\\{day:D2}\\";
         Directory.CreateDirectory(prefix);
 
