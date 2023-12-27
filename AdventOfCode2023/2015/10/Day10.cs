@@ -1,4 +1,5 @@
 
+using System.Text;
 using StringSpan = System.ReadOnlySpan<char>;
 
 namespace AdventOfCode2015
@@ -12,19 +13,51 @@ namespace AdventOfCode2015
     [ExpectedTestAnswerPart2(0)] // if != 0, will report failure if expected answer != given answer
     class Day10
     {
+        private static int Compute(string input, int totalCount)
+        {
+            var sb = new StringBuilder();
+            for (int count = 0; count < totalCount; count++)
+            {
+                List<(char, int)> list = new();
+
+                for (int i = 0; i < input.Length; i++)
+                {
+                    var c = input[i];
+                    if (list.Count == 0)
+                    {
+                        list.Add((c, 1));
+                        continue;
+                    }
+                    var li = list.Count - 1;
+                    if (list[li].Item1 == c)
+                    {
+                        list[li] = (c, list[li].Item2 + 1);
+                        continue;
+                    }
+                    list.Add((c, 1));
+                }
+
+                sb.Clear();
+                foreach (var l in list)
+                {
+                    sb.Append($"{l.Item2}{l.Item1}");
+                }
+
+                input = sb.ToString();
+                Log.WriteLine(input);
+            }
+            return input.Length;
+
+        }
+
+
         //[RemoveSpacesFromInput]
         //[RemoveNewLinesFromInput]
         // change to string or string[] to get other types of input
-        public static long Part1(StringSpan input, int lineWidth, int count)
-        {
-            return 0;
-        }
+        public static long Part1(string input) => Compute(input, 40);
         //[RemoveSpacesFromInput]
         //[RemoveNewLinesFromInput]
         // change to string or string[] to get other types of input
-        public static long Part2(StringSpan input, int lineWidth, int count)
-        {
-            return 0;
-        }
+        public static long Part2(string input) => Compute(input, 50);
     }
 }
