@@ -71,3 +71,6 @@ AdventOfCodeVisualizerWinUI/obj/*
 /AdventOfCodeVisualizer/bin/*
 /AdventOfCodeVisualizer.Core/bin/*
 /AdventOfCode2023/bin/Release/net7.0-windows
+AdventOfCodeVisualizerWPF/obj/*
+AdventOfCodeVisualizerWPF/bin/*
+packages/

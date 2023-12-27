@@ -1,15 +1,17 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Text;
+enum MessageIds
+{
+    Clear,
+    BitmapImage,
+    Diagram,
+}
 
 static class Visualizer
 {
-    enum MessageIds
-    {
-        Clear,
-        BitmapImage,
-    }
-
     // we will use TcpClient to send data over to the client
     // but, we are actually the client, we start the process
     // if it does not exist, and try to connect.
@@ -40,12 +42,10 @@ static class Visualizer
         bool isProgramStarting = false;
 
         // start process if does not exist already
-        if (Process.GetProcessesByName("AdventOfCodeVisualizer").Length == 0)
+        if (Process.GetProcessesByName("AdventOfCodeVisualizerWPF").Length == 0)
         {
             Console.WriteLine($"{CC.Att}===>{CC.Clr} Starting Visualizer process...");
-
-            //Process.Start($"{Program.RootPath}\\..\\AdventOfCodeVisualizer\\bin\\Debug\\AdventOfCodeVisualizer.exe");
-            Process.Start($"{Program.RootPath}\\..\\AdventOfCodeVisualizer\\bin\\x86\\Release\\net7.0-windows10.0.19041.0\\win10-x86\\AdventOfCodeVisualizer.exe");
+            Process.Start($"{Program.RootPath}\\..\\AdventOfCodeVisualizerWPF\\bin\\Debug\\AdventOfCodeVisualizerWPF.exe");
             isProgramStarting = true;
         }
 
@@ -141,8 +141,6 @@ static class Visualizer
         Console.Write(++__test);
     }
 
-
-
     public static void SendMap2dSpan<T>(Map2DSpan<T> map, Func<T, Map2DSpan<T>, int, int, Color> mapper, int frame = -1, int window = 0, string additionalMessage = null)
     {
         using var bitmap = new Bitmap(map.Width, map.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -178,8 +176,157 @@ static class Visualizer
         SendBitmap(bitmap, frame, window, additionalMessage);
     }
 
+    public static void SendRaw(ReadOnlySpan<byte> span)
+    {
+        if (__visualizerStream == null || __visualizerTcp == null)
+            return;
+
+        __visualizerTcp.Client.Send(span);
+        Thread.Sleep(20);
+    }
     static int __test = 0;
 }
+
+
+
+class DiagramContext
+{
+    [StructLayout(LayoutKind.Sequential)]
+    struct DiagramHeader
+    {
+        public static int Size = Marshal.SizeOf(typeof(DiagramHeader));
+        public int nodes;
+        public int connectors;
+        public int nodesOffset;
+        public int connectorsOffset;
+        public int diagramAutoLayout;
+    }
+    struct DiagramNode
+    {
+        public static int Size = Marshal.SizeOf(typeof(DiagramNode));
+        public int x;
+        public int y;
+        public int width;
+        public int height;
+        public int shape;
+        public int id;
+        public int nameStringLen;
+    }
+    struct DiagramConnector
+    {
+        public static int Size = Marshal.SizeOf(typeof(DiagramConnector));
+        public int SourceId;
+        public int TargetId;
+    }
+
+    List<Node> nodes = new();
+    List<Connector> conns = new();
+
+    class Node
+    {
+        internal int x;
+        internal int y;
+        internal int width;
+        internal int height;
+        internal int shape;
+        internal int id;
+        internal string text;
+        internal int textSize;
+    }
+    class Connector
+    {
+        internal int srcDd;
+        internal int dstId;
+        internal string text;
+        internal int textSize;
+    }
+
+    public void AddNode(int id, string text, int x, int y, int width, int height, int shape) // other data here later
+    {
+        if (nodes.Any(n => n.id == id)) throw new ArgumentException("Node Id must be unique across Diagram Context");
+
+        nodes.Add(new Node { id = id, text = text, x = x, y = y, width = width, height = height, shape = shape, textSize = Encoding.UTF8.GetByteCount(text) });
+    }
+    public void AddConnector(int sourceId, int dstId, string text) // other data here later
+          => conns.Add(new Connector { srcDd = sourceId, dstId = dstId, text = text, textSize = Encoding.UTF8.GetByteCount(text) });
+
+    public unsafe void Send(int frame = -1, int window = 0, string additionalMessage = null)
+    {
+        var size = DiagramHeader.Size
+            + DiagramNode.Size * nodes.Count
+            + nodes.Sum(n => n.textSize)
+            + DiagramConnector.Size * conns.Count
+            + conns.Sum(c => c.textSize)
+            ;
+
+        var stringData = new byte[0];
+        if (additionalMessage != null)
+            stringData = Encoding.UTF8.GetBytes(additionalMessage);
+
+
+        var data = new byte[size + 14 + stringData.Length];
+        var sp = data.AsSpan();
+        var frameIndex = (ushort)(frame == -1 ? 0x8000 : (ushort)frame);
+        var windowIndex = (ushort)window;
+        
+
+        BitConverter.TryWriteBytes(sp, size + 14 + stringData.Length);
+        BitConverter.TryWriteBytes(sp[4..], (int)MessageIds.Diagram);
+        BitConverter.TryWriteBytes(sp[8..], frameIndex);
+        BitConverter.TryWriteBytes(sp[10..], windowIndex);
+        BitConverter.TryWriteBytes(sp[12..], (ushort)stringData.Length);
+        if (stringData.Length > 0)
+        {
+            stringData.AsSpan().CopyTo(sp[14..]);
+        }
+
+
+        fixed (byte* p = data)
+        {
+            var offset = 14 + stringData.Length;
+
+            var dh = (DiagramHeader*)(p + offset);
+
+            dh->connectors = conns.Count;
+            dh->nodes = nodes.Count;
+            dh->nodesOffset = DiagramHeader.Size;
+            dh->connectorsOffset = DiagramHeader.Size + DiagramNode.Size * nodes.Count + nodes.Sum(n => n.textSize);
+            dh->diagramAutoLayout = 1;
+
+            offset += DiagramHeader.Size;
+
+            for (var i = 0; i < nodes.Count; i++)
+            {
+                var dn = (DiagramNode*)(p + offset);
+                var n = nodes[i];
+                dn->id = n.id;
+                dn->shape = n.shape;
+                dn->x = n.x;
+                dn->y = n.y;
+                dn->width = n.width;
+                dn->height = n.height;
+                dn->nameStringLen = n.textSize;
+                Encoding.UTF8.GetBytes(n.text, 0, n.text.Length, data, offset + DiagramNode.Size);
+                offset += DiagramNode.Size + dn->nameStringLen;
+            }
+
+            for (var i = 0; i < conns.Count; i++)
+            {
+                var dc = (DiagramConnector*)(p + offset);
+                var n = conns[i];
+                dc->SourceId = n.srcDd;
+                dc->TargetId = n.dstId;
+                //Encoding.UTF8.GetBytes(n.text, 0, n.text.Length, data, offset + DiagramConnector.Size);
+                //offset += DiagramConnector.Size + dn->nameStringLen;
+                offset += DiagramConnector.Size;
+            }
+        }
+        Visualizer.SendRaw(data);
+    }
+
+
+}
+
 
 class BitmapContext : IDisposable
 {
