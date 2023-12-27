@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -11,9 +10,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using Syncfusion.UI.Xaml.Diagram;
-using Syncfusion.UI.Xaml.Diagram.Layout;
-using Syncfusion.UI.Xaml.Diagram.Theming;
+using Microsoft.Msagl.Core.Routing;
+using Microsoft.Msagl.Drawing;
+using Microsoft.Msagl.WpfGraphControl;
 
 namespace AdventOfCodeVisualizerWPF
 {
@@ -61,6 +60,13 @@ namespace AdventOfCodeVisualizerWPF
             AocVis.Initialize();
             RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.NearestNeighbor);
 
+            currentGraphViewer = new GraphViewer();
+            currentGraphViewer.GraphCanvas.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(32, 32, 32));
+
+            graphPanel = new DockPanel();
+            graphPanel.ClipToBounds = true;
+            diagramGrid.Children.Add(graphPanel);
+            currentGraphViewer.BindToPanel(graphPanel);
         }
 
 
@@ -117,78 +123,33 @@ namespace AdventOfCodeVisualizerWPF
             public static int Size = Marshal.SizeOf(typeof(DiagramNode));
             public int x;
             public int y;
-            public int width;
-            public int height;
             public int shape;
             public int id;
             public int nameStringLen;
+            public byte colorR;
+            public byte colorG;
+            public byte colorB;
         }
         struct DiagramConnector
         {
             public static int Size = Marshal.SizeOf(typeof(DiagramConnector));
             public int SourceId;
             public int TargetId;
+            public byte colorR;
+            public byte colorG;
+            public byte colorB;
+            public int Weight;
+            public int LabelLen;
         }
 
-        private NodeViewModel CreateDiagramNode(double offsetX, double offsetY, double width, double height, int nodeId, string text, string shape)
-        {
-            return new NodeViewModel
-            {
-                ID = nodeId,
-                OffsetX = offsetX,
-                OffsetY = offsetY,
-                UnitHeight = height,
-                UnitWidth = width,
-                //Specify shape to the Node from built-in Shape Dictionary
-                Shape = this.Resources[shape],
-                //Apply style to Shape
-                ShapeStyle = this.Resources["ShapeStyle"] as Style,
-                Annotations = new AnnotationCollection() { new AnnotationEditorViewModel() { Content = text } }
-            };
-        }
-        private ConnectorViewModel CreateDiagramConnector(int sourceId, int targetId, bool isAlt)
-        {
-            var resKey = isAlt ? "ConnectorGeometryStyleAlt" : "ConnectorGeometryStyle";
+        private GraphViewer currentGraphViewer;
+        private DockPanel graphPanel;
+        private bool firstGraphIsSet;
 
-            ConnectorViewModel connector = new ConnectorViewModel()
-            {
-                SourceNodeID = sourceId,
-                TargetNodeID = targetId,
-                //Apply Style to TargetDecorator
-                TargetDecoratorStyle = Resources["TargetDecoratorStyle"] as Style,
-                //Apply Style to Geometry of the Connector.
-                ConnectorGeometryStyle = Resources[resKey] as Style,
-                Constraints = ConnectorConstraints.Bridging | ConnectorConstraints.Default,
-                Segments = new ObservableCollection<IConnectorSegment>()
-                {
-                    //Specify the segment as cubic curve segment
-                    new QuadraticCurveSegment()
-                }
-
-            };
-            return connector;
-        }
-        private SfDiagram CreateDiagram()
-        {
-            return new SfDiagram
-            {
-                Background = Brushes.Transparent,
-                PageSettings = new PageSettings { PageBackground = Brushes.Transparent, },
-                Nodes = new NodeCollection(),
-                Connectors = new ConnectorCollection(),
-                Visibility = Visibility.Visible,
-            };
-        }
-        private string GetDiagramNodeShapeName(int shapeId)
-        {
-            if (shapeId == 0) return "Ellipse";
-            return "PredefinedProcess";
-        }
         private unsafe void PrepareAndShowDiagram(byte[] data)
         {
-            diagramGrid.Children.Clear();
-            SfDiagram diagram = null;
-
+            Graph graph = new Graph();
+            graph.Attr.BackgroundColor = new Microsoft.Msagl.Drawing.Color(32, 32, 32);
             fixed (byte* p = data)
             {
                 var dh = (DiagramHeader*)p;
@@ -196,44 +157,69 @@ namespace AdventOfCodeVisualizerWPF
                 var nodesCount = dh->nodes;
                 var connectorsCount = dh->connectors;
 
-                diagram = CreateDiagram();
-
                 for (int i = dh->nodesOffset, n = 0; n < dh->nodes; n++, i += DiagramNode.Size)
                 {
                     var pnode = (DiagramNode*)(p + i);
                     var name = Encoding.UTF8.GetString(data, i + DiagramNode.Size, pnode->nameStringLen);
-                    var node = CreateDiagramNode(pnode->x, pnode->y, pnode->width, pnode->height, pnode->id, name, GetDiagramNodeShapeName(pnode->shape));
-                    (diagram.Nodes as NodeCollection).Add(node);
+
+                    var node = new Microsoft.Msagl.Drawing.Node(pnode->id.ToString()) { LabelText = name, };
+                    node.Attr.Color = new Microsoft.Msagl.Drawing.Color(pnode->colorR, pnode->colorG, pnode->colorB);
+                    node.Label.FontColor = node.Attr.Color;
+                    //node.Attr.Shape = Shape.
+                    graph.AddNode(node);
+
                     i += pnode->nameStringLen;
                 }
                 for (int i = dh->connectorsOffset, n = 0; n < dh->connectors; n++, i += DiagramConnector.Size)
                 {
                     var pconn = (DiagramConnector*)(p + i);
-                    var connector = CreateDiagramConnector(pconn->SourceId, pconn->TargetId, isAlt: false);
-                    (diagram.Connectors as ConnectorCollection).Add(connector);
+                    var name = Encoding.UTF8.GetString(data, i + DiagramConnector.Size, pconn->LabelLen);
+
+                    var e = graph.AddEdge(pconn->SourceId.ToString(), name, pconn->TargetId.ToString());
+                    e.Attr.Color = new Microsoft.Msagl.Drawing.Color(pconn->colorR, pconn->colorG, pconn->colorB);
+                    e.Label.FontColor = e.Attr.Color;
+
+                    e.Attr.Weight = pconn->Weight;
+                    //e.Attr.Separation = 10;
+
+                    i += pconn->LabelLen;
                 }
 
-                if (dh->diagramAutoLayout == 1)  // we'll need more control over this, but add that later
-                {
-                    //Initialize LayoutManager to SfDiagram
-                    diagram.LayoutManager = new LayoutManager()
-                    {
-                        //Initialize Layout for LayoutManager  
-                        Layout = new DirectedTreeLayout()
-                        {
-                            Type = LayoutType.Hierarchical,
-                            Orientation = TreeOrientation.TopToBottom,
-                            HorizontalSpacing = 30,
-                            VerticalSpacing = 50,
-                            AvoidSegmentOverlapping = true,
-                        }
-                    };
-                }
+                //if (dh->diagramAutoLayout == 1)  // we'll need more control over this, but add that later
+                //{
+                //    //Initialize LayoutManager to SfDiagram
+                //    diagram.LayoutManager = new LayoutManager()
+                //    {
+                //        //Initialize Layout for LayoutManager  
+                //        Layout = new DirectedTreeLayout()
+                //        {
+                //            Type = LayoutType.Hierarchical,
+                //            Orientation = TreeOrientation.TopToBottom,
+                //            HorizontalSpacing = 30,
+                //            VerticalSpacing = 50,
+                //            AvoidSegmentOverlapping = true,
+                //        }
+                //    };
+                //}
             }
+            graph.Attr.LayerDirection = LayerDirection.LR;
+            graph.LayoutAlgorithmSettings.EdgeRoutingSettings.EdgeRoutingMode = EdgeRoutingMode.Rectilinear;
+            graph.LayoutAlgorithmSettings.NodeSeparation = 20;
+            graph.LayoutAlgorithmSettings.LiftCrossEdges = true;
+            graph.LayoutAlgorithmSettings.EdgeRoutingSettings.Padding = 5;
 
-            diagram.Theme = new OfficeTheme();
-            diagramGrid.Children.Add(diagram);
+
+            var tr = currentGraphViewer.Transform;
+            currentGraphViewer.Graph = graph;
+            if (firstGraphIsSet)
+                currentGraphViewer.Transform = tr;
+            firstGraphIsSet = true;
+
             SetDiagramVisible();
+        }
+        void WpfApplicationSample_MouseDown(object sender, MsaglMouseEventArgs e)
+        {
+            //statusTextBox.Text = "there was a click...";
         }
         #endregion
 
@@ -326,10 +312,18 @@ namespace AdventOfCodeVisualizerWPF
                 slider.Minimum = 1;
             }
 
-            if (slider.Value == Frames.Count - 1)
-                slider.Value = Frames.Count;
+            if (frameType == FrameType.Diagram)
+            {
+                if (slider.Value == 0)
+                    slider.Value = 1;
+            }
+            else
+            {
+                if (slider.Value == Frames.Count - 1)
+                    slider.Value = Frames.Count;
+            }
         }
-       
+
         #endregion
 
         #region Scroll viewer handling
@@ -457,5 +451,13 @@ namespace AdventOfCodeVisualizerWPF
             }
         }
         #endregion
+
+        private void SliderButton_FrameMM_Button_Click(object sender, RoutedEventArgs e) => slider.Value = Math.Max(slider.Value - 1, 1);
+
+        private void SliderButton_FramePP_Button_Click(object sender, RoutedEventArgs e) => slider.Value = Math.Min(slider.Value + 1, slider.Maximum);
+
+        private void SliderButton_FrameFirst_Button_Click(object sender, RoutedEventArgs e) => slider.Value = 1;
+
+        private void SliderButton_FrameLast_Button_Click(object sender, RoutedEventArgs e) => slider.Value = slider.Maximum;
     }
 }

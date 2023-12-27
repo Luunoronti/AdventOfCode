@@ -191,6 +191,8 @@ static class Visualizer
 
 class DiagramContext
 {
+    public static Color DefaultColor = Color.WhiteSmoke;
+
     [StructLayout(LayoutKind.Sequential)]
     struct DiagramHeader
     {
@@ -206,17 +208,23 @@ class DiagramContext
         public static int Size = Marshal.SizeOf(typeof(DiagramNode));
         public int x;
         public int y;
-        public int width;
-        public int height;
         public int shape;
         public int id;
         public int nameStringLen;
+        public byte colorR;
+        public byte colorG;
+        public byte colorB;
     }
     struct DiagramConnector
     {
         public static int Size = Marshal.SizeOf(typeof(DiagramConnector));
         public int SourceId;
         public int TargetId;
+        public byte colorR;
+        public byte colorG;
+        public byte colorB;
+        public int Weight;
+        public int LabelLen;
     }
 
     List<Node> nodes = new();
@@ -226,29 +234,35 @@ class DiagramContext
     {
         internal int x;
         internal int y;
-        internal int width;
-        internal int height;
         internal int shape;
         internal int id;
         internal string text;
         internal int textSize;
+        internal Color color;
     }
     class Connector
     {
         internal int srcDd;
         internal int dstId;
-        internal string text;
+        internal string Label;
         internal int textSize;
+        internal Color color;
+        public int Weight;
     }
 
-    public void AddNode(int id, string text, int x, int y, int width, int height, int shape) // other data here later
+    public void AddNode(int id, string text, int x, int y, int shape) => AddNode(id, text, x, y, shape, DefaultColor);
+
+    public void AddNode(int id, string text, int x, int y, int shape, Color color)
     {
         if (nodes.Any(n => n.id == id)) throw new ArgumentException("Node Id must be unique across Diagram Context");
-
-        nodes.Add(new Node { id = id, text = text, x = x, y = y, width = width, height = height, shape = shape, textSize = Encoding.UTF8.GetByteCount(text) });
+        nodes.Add(new Node { id = id, text = text, x = x, y = y, shape = shape, textSize = Encoding.UTF8.GetByteCount(text), color = color });
     }
-    public void AddConnector(int sourceId, int dstId, string text) // other data here later
-          => conns.Add(new Connector { srcDd = sourceId, dstId = dstId, text = text, textSize = Encoding.UTF8.GetByteCount(text) });
+    public void AddConnector(int sourceId, int dstId, string label, Color color, int weight = 1) // other data here later
+          => conns.Add(new Connector { srcDd = sourceId, dstId = dstId, Label = label, color = color, Weight = weight, textSize = Encoding.UTF8.GetByteCount(label) });
+
+    public void AddConnector(int sourceId, int dstId, string label, int weight = 1)
+      => AddConnector(sourceId, dstId, label, DefaultColor, weight);
+
 
     public unsafe void Send(int frame = -1, int window = 0, string additionalMessage = null)
     {
@@ -268,7 +282,7 @@ class DiagramContext
         var sp = data.AsSpan();
         var frameIndex = (ushort)(frame == -1 ? 0x8000 : (ushort)frame);
         var windowIndex = (ushort)window;
-        
+
 
         BitConverter.TryWriteBytes(sp, size + 14 + stringData.Length);
         BitConverter.TryWriteBytes(sp[4..], (int)MessageIds.Diagram);
@@ -303,9 +317,10 @@ class DiagramContext
                 dn->shape = n.shape;
                 dn->x = n.x;
                 dn->y = n.y;
-                dn->width = n.width;
-                dn->height = n.height;
                 dn->nameStringLen = n.textSize;
+                dn->colorR = n.color.R;
+                dn->colorG = n.color.G;
+                dn->colorB = n.color.B;
                 Encoding.UTF8.GetBytes(n.text, 0, n.text.Length, data, offset + DiagramNode.Size);
                 offset += DiagramNode.Size + dn->nameStringLen;
             }
@@ -316,9 +331,14 @@ class DiagramContext
                 var n = conns[i];
                 dc->SourceId = n.srcDd;
                 dc->TargetId = n.dstId;
-                //Encoding.UTF8.GetBytes(n.text, 0, n.text.Length, data, offset + DiagramConnector.Size);
-                //offset += DiagramConnector.Size + dn->nameStringLen;
-                offset += DiagramConnector.Size;
+                dc->LabelLen = n.textSize;
+                dc->colorR = n.color.R;
+                dc->colorG = n.color.G;
+                dc->colorB = n.color.B;
+                dc->Weight = n.Weight;
+                Encoding.UTF8.GetBytes(n.Label, 0, n.Label.Length, data, offset + DiagramConnector.Size);
+                offset += DiagramConnector.Size + dc->LabelLen;
+                //offset += DiagramConnector.Size;
             }
         }
         Visualizer.SendRaw(data);

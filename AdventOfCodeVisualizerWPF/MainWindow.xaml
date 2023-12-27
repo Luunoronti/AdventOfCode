@@ -87,10 +87,36 @@
             <TextBlock x:Name="message" Margin="12" Foreground="White" >
             </TextBlock>
         </ScrollViewer>
-        <Slider  
-            x:Name="slider"
-            Grid.Row="2"
-            ValueChanged="slider_ValueChanged"
-            Margin="16, 8"></Slider>
+
+
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Margin="8" VerticalAlignment="Center" Click="SliderButton_FrameFirst_Button_Click">First Frame</Button>
+            <Button Margin="8" Grid.Column="1" VerticalAlignment="Center" Click="SliderButton_FrameMM_Button_Click">--Frame</Button>
+            <Slider  
+                x:Name="slider"
+                Grid.Column="2"
+                SmallChange="1"
+                Minimum="0"
+                Maximum="100"
+                TickFrequency="10"
+                TickPlacement="Both"
+                
+                ValueChanged="slider_ValueChanged"
+                Margin="16, 8"></Slider>
+
+            <Button Margin="8" VerticalAlignment="Center" Grid.Column="3" Click="SliderButton_FramePP_Button_Click">Frame ++</Button>
+            <Button Margin="8" VerticalAlignment="Center" Grid.Column="4" Click="SliderButton_FrameLast_Button_Click">Last Frame</Button>
+
+        </Grid>
+        
     </Grid>
 </Window>

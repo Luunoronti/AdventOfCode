@@ -15,8 +15,33 @@ namespace AdventOfCode2015
         //[RemoveSpacesFromInput]
         //[RemoveNewLinesFromInput]
         // change to string or string[] to get other types of input
-        public static long Part1(StringSpan input, int lineWidth, int count)
+        public static long Part1(string[] input, int lineWidth, int count)
         {
+            var packages = input.Select(int.Parse).ToList();
+            packages.Sort();
+            packages.Reverse();
+
+            var we_3 = packages.Sum() / 3;
+
+            List<int> group1 = new();
+
+            // group 1
+            //while (group1.Sum() != we_3)
+            //{
+            //}
+
+            for (int i = 0; i < packages.Count; i++)
+            {
+                var sum = group1.Sum();
+                var missing = we_3 - sum;
+
+            }
+
+
+            // group 2
+            // group 3
+
+
             return 0;
         }
         //[RemoveSpacesFromInput]

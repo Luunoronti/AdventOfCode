@@ -1,6 +1,6 @@
 namespace AdventOfCode2015
 {
-    //[Force]                    // uncomment to force processing this type (regardless of which day it is according to DateTime)
+    [Force]                    // uncomment to force processing this type (regardless of which day it is according to DateTime)
     //[AlwaysEnableLog]          // if uncommented, Log.Write() and Log.WriteLine() will still be honored in runs without a debugger (do not confuse with Debug/Release configuration)
     //[DisableLogInDebug]        // if uncommented, Log will be disabled even when under debugger
     [UseLiveDataInDeug]        // if uncommented and under a debug session, will use live data (problem data) instead of test data
@@ -23,101 +23,11 @@ namespace AdventOfCode2015
             Destination
         }
 
-        class Wire
-        {
-            public string Name;
-            public ushort Value; // in bits, we could use short, but.. whatever :P
-            public bool hasSignal;
-            public void Set(ushort value)
-            {
-                Value = value;
-                hasSignal = true;
-            }
-            public override string ToString() => $"{Name,3}: {Value,5} [ {Convert.ToString(Value, 2),16} ]";
-        }
-        class Source
-        {
-            public string Name;
-            public Wire wireSource;
-            public ushort scalarSource;
-            public ushort Value => wireSource?.Value ?? scalarSource;
-            public bool HasSignal => wireSource?.hasSignal ?? true;
-            public override string ToString() => $"{Name,3}: {Value,5} [ {Convert.ToString(Value, 2),16} ]";
-
-        }
-
-        class Gate
-        {
-            public Gate() => Id = ++__globalId;
-            public int Id;
-            public GateType Type;
-            public Source Source1;
-            public Source Source2;
-
-            public Wire Destination;
-
-            public bool processed = false;
-
-
-            public bool Process()
-            {
-                if (processed) return false;
-
-                // LSH   c:     0 [                0 ] < 1 =>   t:     0 [                0 ]
-
-                switch (Type)
-                {
-                    case GateType.LShift:
-                        if (Source1.HasSignal == false) return false;
-                        Destination.Set((ushort)(Source1.Value << Source2.Value));
-                        Log.WriteLine($"LSH {CC.Val}{Source1}{CC.Clr} < {CC.Att}{Source2}{CC.Clr} => {CC.Sys}{Destination}{CC.Clr}");
-                        processed = true;
-                        return true;
-
-                    case GateType.RShift:
-                        if (Source1.HasSignal == false) return false;
-                        Destination.Set((ushort)(Source1.Value >> Source2.Value));
-                        Log.WriteLine($"RSH {CC.Val}{Source1}{CC.Clr} > {CC.Att}{Source2}{CC.Clr} => {CC.Sys}{Destination}{CC.Clr}");
-                        processed = true;
-                        return true;
-
-                    case GateType.And:
-                        if (Source1.HasSignal == false || Source2.HasSignal == false) return false;
-                        Destination.Set((ushort)(Source1.Value & Source2.Value));
-                        Log.WriteLine($"AND {CC.Val}{Source1}{CC.Clr} & {CC.Att}{Source2}{CC.Clr} => {CC.Sys}{Destination}{CC.Clr}");
-                        processed = true;
-                        return true;
-
-                    case GateType.Or:
-                        if (Source1.HasSignal == false || Source2.HasSignal == false) return false;
-                        Destination.Set((ushort)(Source1.Value | Source2.Value));
-                        Log.WriteLine($" OR {CC.Val}{Source1}{CC.Clr} | {CC.Att}{Source2}{CC.Clr} => {CC.Sys}{Destination}{CC.Clr}");
-                        processed = true;
-                        return true;
-
-                    case GateType.Not:
-                        if (Source1.HasSignal == false) return false;
-                        Destination.Set((ushort)(~Source1.Value));
-                        Log.WriteLine($"NOT {CC.Val}{Source1}{CC.Clr} ! {"",31} => {CC.Sys}{Destination}{CC.Clr}");
-                        processed = true;
-                        return true;
-                    case GateType.Move:
-                        if (Source1.HasSignal == false) return false;
-                        Destination.Set(Source1.Value);
-                        Log.WriteLine($"MOV {CC.Val}{Source1}{CC.Clr} => {"",30} => {CC.Sys}{Destination}{CC.Clr}");
-                        processed = true;
-                        return true;
-                }
-                return false;
-            }
-        }
-
-
         class Edge
         {
             public string Name;
             public Node Source;
-            public List<Node> Destinations = new ();
+            public List<Node> Destinations = new();
             public ushort Value;
             public bool IsValueLocked;
 
@@ -145,6 +55,7 @@ namespace AdventOfCode2015
                 {
                     case GateType.Destination:
                         processed = true;
+                        Value = Input1.Value;
                         return true;
 
                     case GateType.LShift:
@@ -226,6 +137,7 @@ namespace AdventOfCode2015
                 edges.Add(edge);
                 return edge;
             }
+
             public Device(string[] input)
             {
                 // put our machine together
@@ -411,12 +323,14 @@ namespace AdventOfCode2015
 
                 foreach (var node in nodes)
                 {
+                    var color = node.processed ? Color.DarkViolet : DiagramContext.DefaultColor;
+
                     if (node.Type == GateType.ValueSource)
-                        dc.AddNode(node.Id, $"[ {node.Value} >>>", 0, 0, 80, 30, 1);
+                        dc.AddNode(node.Id, $"[ {node.Value} >>>", 0, 0, 1, color: color);
                     else if (node.Type == GateType.Destination)
-                        dc.AddNode(node.Id, $" >>> {node.Input1.Name} ({node.Value}) ]", 0, 0, 120, 30, 1);
+                        dc.AddNode(node.Id, $" >>> {node.Input1.Name} ({node.Value}) ]", 0, 0, 1, color: color);
                     else
-                        dc.AddNode(node.Id, node.Type.ToString(), 0, 0, 80, 30, 1);
+                        dc.AddNode(node.Id, node.Type.ToString(), 0, 0, 1, color: color);
                 }
 
                 foreach (var edge in edges)
@@ -424,7 +338,16 @@ namespace AdventOfCode2015
                     //if (edge.Source != null && edge.Destination != null)
                     foreach (var dst in edge.Destinations)
                     {
-                        dc.AddConnector(edge.Source?.Id ?? -1, dst?.Id ?? -1, edge.Name);
+
+                        if (edge.IsValueLocked)
+                        {
+                            dc.AddConnector(edge.Source?.Id ?? -1, dst?.Id ?? -1, $"{edge.Name}: {edge.Value}", Color.DarkOrange, 2);
+                        }
+                        else
+                        {
+                            dc.AddConnector(edge.Source?.Id ?? -1, dst?.Id ?? -1, edge.Name);
+                        }
+
                     }
                 }
                 dc.Send();
@@ -433,9 +356,6 @@ namespace AdventOfCode2015
 
         }
 
-        //[RemoveSpacesFromInput]
-        //[RemoveNewLinesFromInput]
-        // change to string or string[] to get other types of input
         public static long Part1(string[] input)
         {
             var device = new Device(input);
@@ -444,21 +364,16 @@ namespace AdventOfCode2015
 
             while (true)
             {
-                //Log.WriteLine("\n==========================");
-                //device.PrintWireValues();
-                //Log.WriteLine("-------------------------");
                 if (!device.Process())
+                {
+                    device.SendDiagram();
                     break;
-                Console.ReadLine();
+                }
+                device.SendDiagram();
             }
-
-            //device.PrintNEGates();
-            //device.PrintWireValues();
-            return 0;// device.GetOrAdd("a").Value;
+            return device.GetEdge("a").Value;
         }
-        //[RemoveSpacesFromInput]
-        //[RemoveNewLinesFromInput]
-        // change to string or string[] to get other types of input
+
         public static long Part2(string[] input)
         {
             return 0;
