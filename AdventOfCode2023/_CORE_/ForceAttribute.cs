@@ -1,5 +1,7 @@
 ﻿//namespace AdventOfCode2023
 //{
+using System.Diagnostics;
+
 [AttributeUsage(AttributeTargets.Class)] class ForceAttribute : Attribute { }
 [AttributeUsage(AttributeTargets.Class)] class AlwaysUseTestDataAttribute : Attribute { }
 [AttributeUsage(AttributeTargets.Class)] class UseLiveDataInDeugAttribute : Attribute { }
@@ -25,3 +27,17 @@ class ExpectedTestAnswerPart2Attribute : Attribute
 
 [AttributeUsage(AttributeTargets.Class)] public class RequestsVisualizerAttribute : Attribute { }
 //}
+class RuntimeWatchdogAttribute : Attribute
+{
+    public RuntimeWatchdogAttribute(int maximumTimeSeconds)
+    {
+        if (Debugger.IsAttached == false)
+            TimeSeconds = maximumTimeSeconds;
+        else
+            TimeSeconds = int.MaxValue;
+    }
+    public long TimeSeconds
+    {
+        get; set;
+    }
+}

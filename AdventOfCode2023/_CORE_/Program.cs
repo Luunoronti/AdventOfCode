@@ -90,8 +90,15 @@ internal partial class Program
         // if we are to run live data, download them from AoC. 
         // thanks to Nick Kusters (https://www.youtube.com/@NKCSS) for pointing out that live data should not be kept on GitHub
 
+        var wd = null as Watchdog;
+        var wda = type.GetCustomAttribute<RuntimeWatchdogAttribute>();
+        if (wda != null) { wd = new Watchdog(); wd.Start((int)wda.TimeSeconds); }
         var a1 = RunMethod(type, "Part1", useTestData);
+        wd?.Stop();
+
+        if (wda != null) { wd = new Watchdog(); wd.Start((int)wda.TimeSeconds); }
         var a2 = RunMethod(type, "Part2", useTestData);
+        wd?.Stop();
 
         Console.WriteLine();
         Console.Write($"{CC.Att}===>{CC.Clr} Part {CC.Sys}1{CC.Clr} answer: {CC.Ans}{a1:N0}{CC.Clr}");
@@ -437,5 +444,36 @@ namespace AdventOfCode{Year}
     }
 }";
 
+}
 
+public class Watchdog
+{
+    private int maxTime;
+    private bool killApp;
+
+    public void Start(int maxTimeS)
+    {
+        killApp = true;
+        maxTime = maxTimeS;
+        new Thread(ThreadFunc) { IsBackground = true }.Start();
+    }
+    public void Stop()
+    {
+        killApp = false;
+    }
+    private void ThreadFunc()
+    {
+        var sw = Stopwatch.StartNew();
+        while (killApp)
+        {
+            sw.Stop();
+            if (sw.Elapsed.TotalSeconds > maxTime)
+            {
+                Console.WriteLine($"{CC.Err}App is being killed by Watchdog ({maxTime} seconds have passed).{CC.Clr}");
+                Environment.Exit(-1);
+            }
+            sw.Start();
+            Thread.Sleep(100);
+        }
+    }
 }
