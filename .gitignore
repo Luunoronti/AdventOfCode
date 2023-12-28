@@ -9,7 +9,7 @@
 /.vs/ProjectEvaluation
 /AdventOfCode2023/bin/Debug/net6.0-windows
 **/[Ll]ive.txt*
-/AdventOfCode2023/session.txt
+**/[Ss]ession.txt
 /AdventOfCode2023/bin/Release/net6.0-windows
 /AdventOfCode2023/bin/Debug/net7.0-windows
 /AdventOfCodeUWP/bin/x64/Debug
@@ -74,3 +74,9 @@ AdventOfCodeVisualizerWinUI/obj/*
 AdventOfCodeVisualizerWPF/obj/*
 AdventOfCodeVisualizerWPF/bin/*
 packages/
+
+AdventOfCode2015/bin/
+AdventOfCode2015/obj/
+
+AmaAocHelpers/bin/
+AmaAocHelpers/obj/

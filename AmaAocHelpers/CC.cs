@@ -1,4 +1,6 @@
-﻿static class CC
+﻿namespace AmaAocHelpers;
+
+static class CC
 {
     public const char DotReplacement = '⁰';
 
@@ -25,4 +27,9 @@
 
     public static string BgRGB(int r, int g, int b) => $"\u001b[48;2;{r};{g};{b}m";
     public static string FgRGB(int r, int g, int b) => $"\u001b[38;2;{r};{g};{b}m";
+
+
+
+    public static string Error(object value) => $"{Err}{value}{Clr}";
+
 }

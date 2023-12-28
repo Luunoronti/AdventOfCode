@@ -25,22 +25,12 @@ namespace AdventOfCode2015
 
             List<int> group1 = new();
 
-            // group 1
-            //while (group1.Sum() != we_3)
-            //{
-            //}
-
             for (int i = 0; i < packages.Count; i++)
             {
                 var sum = group1.Sum();
                 var missing = we_3 - sum;
 
             }
-
-
-            // group 2
-            // group 3
-
 
             return 0;
         }

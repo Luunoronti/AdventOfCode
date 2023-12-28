@@ -13,15 +13,6 @@ internal partial class Program
             return int.Parse(cmdLine[index + 1]);
         return DateTime.Now.Year;
     }
-    private static int GetAocDay(string[] cmdLine)
-    {
-        var index = cmdLine.ToList().IndexOf("-day");
-        if (index != -1)
-            return int.Parse(cmdLine[index + 1]);
-
-        if (DateTime.Now.Month != 12) return 60;
-        return DateTime.Now.Day;
-    }
     private static bool IsCreateYearSelected(string[] cmdLine, out int year)
     {
         var index = cmdLine.ToList().IndexOf("-createYear");
@@ -37,48 +28,31 @@ internal partial class Program
     [STAThread]
     private static void Main(string[] args)
     {
-        var maxthreads = Math.Max(1, Environment.ProcessorCount);
-        ThreadPool.SetMaxThreads(maxthreads, Environment.ProcessorCount);
-        Console.WriteLine($"Max ThreadPool threads set to {CC.Sys}{maxthreads}{CC.Clr}");
+       
 
         var year = GetAocYear(args);
         var ns = $"AdventOfCode{year}";
         var day = GetAocDay(args);
         var dn = $"Day{day:D2}";
 
-        if (IsCreateYearSelected(args, out var yearToCreate))
-        {
-            Console.WriteLine($"{CC.Sys}Will generate full year {yearToCreate}. {CC.Clr}");
+        //if (IsCreateYearSelected(args, out var yearToCreate))
+        //{
+        //    Console.WriteLine($"{CC.Sys}Will generate full year {yearToCreate}. {CC.Clr}");
 
-            for (int i = 1; i < 26; i++)
-                CreateDayIfDoesNotExist(yearToCreate, i);
-            Console.WriteLine($"{CC.Sys}Year {yearToCreate} types created. {CC.Clr}");
-            return;
-        }
+        //    for (int i = 1; i < 26; i++)
+        //        CreateDayIfDoesNotExist(yearToCreate, i);
+        //    Console.WriteLine($"{CC.Sys}Year {yearToCreate} types created. {CC.Clr}");
+        //    return;
+        //}
 
 
         CreateDayIfDoesNotExist(year, day);
 
-        var type = GetTypeToProcess(ns, dn);
+ 
 
-        if (type == null)
-        {
-            Console.WriteLine($"{CC.Err}Type {dn} for year {year} does not exist. It has been recreated, please build your project and run it again. {CC.Clr}");
-            return;
-        }
+        
 
-        var useTestData = Debugger.IsAttached
-            ? type.GetCustomAttribute<UseLiveDataInDeugAttribute>() == null
-            : type.GetCustomAttribute<AlwaysUseTestDataAttribute>() != null;
-
-        Console.WriteLine($"{CC.Sys}{(useTestData ? "Test" : "Live")}{CC.Clr} data is in use");
-
-        Log.Enabled = Debugger.IsAttached
-            ? type.GetCustomAttribute<DisableLogInDebugAttribute>() == null
-            : type.GetCustomAttribute<AlwaysEnableLogAttribute>() != null;
-
-        Console.WriteLine($"Logger is {CC.Sys}{(Log.Enabled ? "on" : "off")}{CC.Clr}");
-
+ 
 
         if (type.GetCustomAttribute<RequestsVisualizerAttribute>() != null)
         {
