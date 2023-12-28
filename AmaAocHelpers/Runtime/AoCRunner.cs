@@ -350,7 +350,11 @@ public class AoCRunner
             //Console.WriteLine($"Answer {CC.Sys}1{CC.Clr} ({CC.Ans}{a1}{CC.Clr}) has been copied to clipboard automatically.");
         }
     }
-
+    public static void CreateAllDays(int year)
+    {
+        for (int i = 1; i < 26; i++)
+            CreateDayIfDoesNotExist(i);
+    }
 
 
     private const string DayTemplateCode = @"

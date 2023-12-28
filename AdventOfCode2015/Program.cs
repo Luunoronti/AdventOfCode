@@ -1,4 +1,5 @@
 ﻿using AmaAocHelpers.Runtime;
 
-AoCRunner.Run(2015, Environment.GetCommandLineArgs(), 1);
+AoCRunner.CreateAllDays(2015);
+AoCRunner.Run(2015, Environment.GetCommandLineArgs(), 4);
 

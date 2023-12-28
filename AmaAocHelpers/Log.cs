@@ -1,6 +1,6 @@
 ﻿namespace AmaAocHelpers;
 
-static partial class Log
+public static partial class Log
 {
     public static bool Enabled
     {
