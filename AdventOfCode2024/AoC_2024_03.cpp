@@ -32,6 +32,7 @@ const long AoC_2024_03::Process(const string& Line, const bool AllowModifiers)
     // so we should be cache friendly
     
     // yes, I should do a single state for full 'mod(', 'do()' and 'don't()' 
+    // and maybe read numbers in one state
     // but, i wanted to make a full state machine for each character, just for fun
     // even if its repeating code
 
@@ -97,6 +98,7 @@ const long AoC_2024_03::Process(const string& Line, const bool AllowModifiers)
             if(ch == ')') { sum += AllowModifiers ? modSwitch ? x * y : 0 : x * y; state = State::Idle; }
             else { state = State::Idle; }
             break;
+            // do and don't processing
         case D:
             if(ch == 'o') { state = State::DO; }
             else { state = State::Idle; } 
@@ -118,10 +120,12 @@ const long AoC_2024_03::Process(const string& Line, const bool AllowModifiers)
             if(ch == '(') { state = State::DontOpenParen; }
             else { state = State::Idle; } 
             break;
+            // if we get here, we may have a valid do()
         case DoOpenParen:
             if(ch == ')') { modSwitch = true; }
             state = State::Idle;
             break;
+            // or a valid don't()
         case DontOpenParen: 
             if(ch == ')') { modSwitch = false; }
             state = State::Idle;
