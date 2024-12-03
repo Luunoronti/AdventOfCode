@@ -9,7 +9,11 @@ enum State
     M, 
     Mu, 
     Mul, 
-    OpenParen, 
+    MulOpenParen,
+
+    MulFirstNumber,
+    MulSecondNumber,
+
     X1, 
     X2, 
     X3, 
@@ -24,6 +28,7 @@ enum State
     DON_T,
     DoOpenParen, 
     DontOpenParen, 
+    Skip,
 };
 
 
@@ -42,5 +47,9 @@ class AoC_2024_03 : public AoCBase
     friend class AoCBase;
 
     const long Process(const string& Line, const bool AllowModifiers);
+    const long Process2(const string& Line, const bool AllowModifiers);
+
+    const long Process_NOMACROS(const string& Line, const bool AllowModifiers);
+    const long Process_MACROS(const string& Line, const bool AllowModifiers);
 };
 
