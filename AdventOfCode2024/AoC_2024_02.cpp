@@ -7,7 +7,7 @@ const int AoC_2024_02::GetDay() const
 
 const int AoC_2024_02::GetExpectedResultStep1() const
 {
-    return 407;
+    return 472;
 }
 
 const int AoC_2024_02::GetExpectedResultStep1Test() const

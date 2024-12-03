@@ -2,7 +2,7 @@
 
 const int AoC_2024_01::GetExpectedResultStep1() const
 {
-    return 1873376;
+    return 2580760;
 }
 
 const int AoC_2024_01::GetExpectedResultStep1Test() const
@@ -12,7 +12,9 @@ const int AoC_2024_01::GetExpectedResultStep1Test() const
 
 const int AoC_2024_01::GetExpectedResultStep2() const
 {
-    return 18997088;
+    // we need this to be in some sort of a cache
+    // so that program can work without typing these here
+    return 25358365;
 }
 
 const int AoC_2024_01::GetExpectedResultStep2Test() const

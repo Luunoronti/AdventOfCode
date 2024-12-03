@@ -35,25 +35,27 @@ void AoCBase::PrintStepResult(const int Step, bool IsTesting, const long& Result
 
 string AoCBase::ReadStringFromFile(int Step) const
 {
-    std::ifstream file(GetFileName());
+    std::ifstream file(GetFileName(Step));
+    std::string output;
     std::string line;
     if(!file.is_open())
     {
-        std::cerr << RED << BLINK << "Error opening file " << GetFileName() << RESET << std::endl;
+        std::cerr << RED << BLINK << "Error opening file " << GetFileName(Step) << RESET << std::endl;
         return line;
     }
-    std::getline(file, line);
+    while(std::getline(file, line))
+        output += line;
     file.close();
-    return line;
+    return output;
 }
 LongListList AoCBase::ReadVerticalVectorsFromFile(int Step) const
 {
-    std::ifstream file(GetFileName());
+    std::ifstream file(GetFileName(Step));
     LongListList vectors;
 
     if(!file.is_open())
     {
-        std::cerr << RED << BLINK << "Error opening file " << GetFileName() << RESET << std::endl;
+        std::cerr << RED << BLINK << "Error opening file " << GetFileName(Step) << RESET << std::endl;
         return vectors;
     }
 
@@ -92,12 +94,12 @@ LongListList AoCBase::ReadVerticalVectorsFromFile(int Step) const
 
 LongListList AoCBase::ReadLongVectorsFromFile(int Step) const
 {
-    std::ifstream file(GetFileName());
+    std::ifstream file(GetFileName(Step));
     LongListList vectors;
 
     if(!file.is_open())
     {
-        std::cerr << RED << BLINK << "Error opening file " << GetFileName() << RESET << std::endl;
+        std::cerr << RED << BLINK << "Error opening file " << GetFileName(Step) << RESET << std::endl;
         return vectors;
     }
 
@@ -118,10 +120,10 @@ LongListList AoCBase::ReadLongVectorsFromFile(int Step) const
     return vectors;
 }
 
-const std::string AoCBase::GetFileName() const
+const std::string AoCBase::GetFileName(const int Step) const
 {
     std::string folder = IsTest() ? "test" : "live";
-    std::string filename = ".\\" + folder + "\\" + std::to_string(GetYear()) + "_" + std::to_string(GetDay()) + ".txt";
+    std::string filename = ".\\" + folder + "\\" + std::to_string(GetYear()) + "_" + std::to_string(GetDay()) + "_" + std::to_string(Step) + ".txt";
     return filename;
 }
 

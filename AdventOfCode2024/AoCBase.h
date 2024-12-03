@@ -15,6 +15,7 @@ using namespace std;
 const string RESET = "\033[0m";
 const string BOLD = "\033[1m";
 const string CLEAR_SCREEN = "\033[2J\033[1;1H";
+const string LINESTART = "\033[0G";
 
 const string DIM = "\033[2m";
 const string UNDERLINE = "\033[4m";
@@ -92,12 +93,24 @@ protected:
     string ReadStringFromFile(int Step) const;
 
     static long GetMinimum(const vector<long>& List);
+
+
+    const __forceinline bool IsDigit(const char ch) const
+    {
+        return std::isdigit(static_cast<unsigned char>(ch));
+    }
+    const __forceinline int8_t ToDigit(const char ch) const
+    {
+        return (int8_t)ch - '0';
+    }
+
+
 public:
     virtual const long Step1() = 0;
     virtual const long Step2() = 0;
 
 private:
-    const std::string GetFileName() const;
+    const std::string GetFileName(const int Step) const;
     bool IsUnderTest{ false };
 };
 
