@@ -122,7 +122,7 @@ const long AoC_2024_03::Process(const string& Line, const bool AllowModifiers)
             IF_DIGIT
                 ADD_DIGIT_TO(y)
                 SET_STATE(Y2)
-                ELSE_IF_CHAR(')')
+            ELSE_IF_CHAR(')')
                 ADD_MUL_TO_SUM 
             SET_STATE(Idle);
             ELSE_IDLE
@@ -130,7 +130,7 @@ const long AoC_2024_03::Process(const string& Line, const bool AllowModifiers)
             IF_DIGIT
                 ADD_DIGIT_TO(y)
                 SET_STATE(Y3)
-                ELSE_IF_CHAR(')')
+            ELSE_IF_CHAR(')')
                 ADD_MUL_TO_SUM 
             SET_STATE(Idle);
             ELSE_IDLE
