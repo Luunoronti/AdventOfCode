@@ -89,8 +89,10 @@ protected:
     LongListList ReadLongVectorsFromFile(int Step) const;
 
     LongListList ReadVerticalVectorsFromFile(int Step) const;
+    string ReadStringFromFile(int Step, int& LinesCount, int& LastLineWidth) const;
     string ReadStringFromFile(int Step) const;
 
+    const int GetFileSingleLineWidth(int Step) const;
     static long GetMinimum(const vector<long>& List);
 
 

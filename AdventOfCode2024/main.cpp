@@ -2,12 +2,14 @@
 #include "AoC_2024_01.h"
 #include "AoC_2024_02.h"
 #include "AoC_2024_03.h"
+#include "AoC_2024_04.h"
 
 int main()
 {
     AoCBase::ExecuteSteps<AoC_2024_01>();
     AoCBase::ExecuteSteps<AoC_2024_02>();
     AoCBase::ExecuteSteps<AoC_2024_03>();
+    AoCBase::ExecuteSteps<AoC_2024_04>();
 
     return 0;
 }

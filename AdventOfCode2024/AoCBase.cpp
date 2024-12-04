@@ -32,8 +32,12 @@ void AoCBase::PrintStepResult(const int Step, bool IsTesting, const long& Result
         << "  ";
 }
 
-
 string AoCBase::ReadStringFromFile(int Step) const
+{
+    int w, h;
+    return ReadStringFromFile(Step, w, h);
+}
+string AoCBase::ReadStringFromFile(int Step, int& LinesCount, int& LastLineWidth) const
 {
     std::ifstream file(GetFileName(Step));
     std::string output;
@@ -44,9 +48,28 @@ string AoCBase::ReadStringFromFile(int Step) const
         return line;
     }
     while(std::getline(file, line))
+    {
         output += line;
+        ++LinesCount;
+    }
+    LastLineWidth = line.size();
     file.close();
     return output;
+}
+
+const int AoCBase::GetFileSingleLineWidth(int Step) const
+{
+    std::ifstream file(GetFileName(Step));
+    std::string line;
+    if(!file.is_open())
+    {
+        std::cerr << RED << BLINK << "Error opening file " << GetFileName(Step) << RESET << std::endl;
+        return -1;
+    }
+    if(!std::getline(file, line))
+        return -1;
+    file.close();
+    return line.size();
 }
 LongListList AoCBase::ReadVerticalVectorsFromFile(int Step) const
 {
