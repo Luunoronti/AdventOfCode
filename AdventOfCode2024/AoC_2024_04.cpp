@@ -18,10 +18,10 @@ const int AoC_2024_04::GetExpectedResultStep2Test() const { return 9; }
 #define IS_A(_x, _y) (IS_CHAR(x+(_x), y+(_y), 'A'))
 #define IS_S(_x, _y) (IS_CHAR(x+(_x), y+(_y), 'S'))
 
-#define IS_X_CURRENT (IS_X(0, 0, 'X'))
-#define IS_M_CURRENT (IS_A(0, 0, 'M'))
-#define IS_A_CURRENT (IS_A(0, 0, 'A'))
-#define IS_S_CURRENT (IS_A(0, 0, 'S'))
+#define IS_X_CURRENT (IS_X(0, 0))
+#define IS_M_CURRENT (IS_A(0, 0))
+#define IS_A_CURRENT (IS_A(0, 0))
+#define IS_S_CURRENT (IS_A(0, 0))
 
 #define IS_MAS_EAST      (IS_M(+1, +0) AND IS_A(+2, +0) AND IS_S(+3, +0))
 #define IS_MAS_WEST      (IS_M(-1, +0) AND IS_A(-2, +0) AND IS_S(-3, +0))
