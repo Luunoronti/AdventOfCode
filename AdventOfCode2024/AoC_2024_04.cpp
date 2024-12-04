@@ -38,7 +38,6 @@ const int AoC_2024_04::GetExpectedResultStep2Test() const { return 9; }
 const long AoC_2024_04::Step1()
 {
     long sum = 0;
-
     int width = 0, height = 0;
     const string buffer = ReadStringFromFile(1, height, width);
     const int size = height * width;
@@ -72,7 +71,7 @@ const long AoC_2024_04::Step2()
     long sum = 0;
     int width = 0, height = 0;
     const string buffer = ReadStringFromFile(1, height, width);
-    const int size = buffer.size();
+    const int size = height, width;
 
     // the position of interest must be an 'A'
     // then we check two possibilities for each diagonal
