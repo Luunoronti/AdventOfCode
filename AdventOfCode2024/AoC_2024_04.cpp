@@ -13,17 +13,20 @@ const int AoC_2024_04::GetExpectedResultStep2Test() const { return 9; }
 
 #define IS_CHAR(_x, _y, c)  ((_x)>=0 && (_y) >= 0 && (_x) < width && (_y) < height && buffer[((_x) + width*(_y))] == c)
 
-#define IS_X_CURRENT (IS_CHAR(x, y, 'X'))
-#define IS_A_CURRENT (IS_CHAR(x, y, 'A'))
-
-#define IS_A(_x, _y) (IS_CHAR(x+(_x), y+(_y), 'A'))
+#define IS_X(_x, _y) (IS_CHAR(x+(_x), y+(_y), 'X'))
 #define IS_M(_x, _y) (IS_CHAR(x+(_x), y+(_y), 'M'))
+#define IS_A(_x, _y) (IS_CHAR(x+(_x), y+(_y), 'A'))
 #define IS_S(_x, _y) (IS_CHAR(x+(_x), y+(_y), 'S'))
 
-#define IS_MAS_EAST  (IS_M(+1, +0) AND IS_A(+2, +0) AND IS_S(+3, +0))
-#define IS_MAS_WEST  (IS_M(-1, +0) AND IS_A(-2, +0) AND IS_S(-3, +0))
-#define IS_MAS_NORTH (IS_M(+0, -1) AND IS_A(+0, -2) AND IS_S(+0, -3))
-#define IS_MAS_SOUTH (IS_M(+0, +1) AND IS_A(+0, +2) AND IS_S(+0, +3))
+#define IS_X_CURRENT (IS_X(0, 0, 'X'))
+#define IS_M_CURRENT (IS_A(0, 0, 'M'))
+#define IS_A_CURRENT (IS_A(0, 0, 'A'))
+#define IS_S_CURRENT (IS_A(0, 0, 'S'))
+
+#define IS_MAS_EAST      (IS_M(+1, +0) AND IS_A(+2, +0) AND IS_S(+3, +0))
+#define IS_MAS_WEST      (IS_M(-1, +0) AND IS_A(-2, +0) AND IS_S(-3, +0))
+#define IS_MAS_NORTH     (IS_M(+0, -1) AND IS_A(+0, -2) AND IS_S(+0, -3))
+#define IS_MAS_SOUTH     (IS_M(+0, +1) AND IS_A(+0, +2) AND IS_S(+0, +3))
 
 #define IS_MAS_NORTHEAST (IS_M(+1, -1) AND IS_A(+2, -2) AND IS_S(+3, -3))
 #define IS_MAS_NORTWEST  (IS_M(-1, -1) AND IS_A(-2, -2) AND IS_S(-3, -3))
