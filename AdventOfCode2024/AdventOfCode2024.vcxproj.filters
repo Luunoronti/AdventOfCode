@@ -13,12 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Base">
+      <UniqueIdentifier>{28d364ad-9e1b-437e-a392-364a9bffbdba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Base">
+      <UniqueIdentifier>{4b3997cd-1781-4121-9650-45dc59d03362}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AoCBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AoC_2024_01.cpp">
@@ -36,17 +39,17 @@
     <ClCompile Include="AoC_2024_05.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AoCBase.cpp">
+      <Filter>Source Files\Base</Filter>
+    </ClCompile>
     <ClCompile Include="AoCBaseWithD3D.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Base</Filter>
     </ClCompile>
     <ClCompile Include="AoCBaseWithWindow.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AoCBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AoC_2024_01.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -62,11 +65,14 @@
     <ClInclude Include="AoC_2024_05.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AoCBase.h">
+      <Filter>Header Files\Base</Filter>
+    </ClInclude>
     <ClInclude Include="AoCBaseWithD3D.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Base</Filter>
     </ClInclude>
     <ClInclude Include="AoCBaseWithWindow.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
