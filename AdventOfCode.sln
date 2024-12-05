@@ -3,20 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode2023", "AdventOfCode2023\AdventOfCode2023.csproj", "{E5BC343D-B0C0-4724-82AB-8D11E6D95FB3}"
-EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PythonTestApp", "PythonTestApp\PythonTestApp.pyproj", "{66BE3C1D-4D58-4B41-9014-15114E178E44}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCodeVisualizer", "AdventOfCodeVisualizer\AdventOfCodeVisualizer.csproj", "{2DAAA676-9E49-4ABF-936C-85905E7A9D61}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCodeVisualizer.Core", "AdventOfCodeVisualizer.Core\AdventOfCodeVisualizer.Core.csproj", "{325AB60B-3703-4E86-9256-677DD0499F6A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCodeVisualizerWPF", "AdventOfCodeVisualizerWPF\AdventOfCodeVisualizerWPF.csproj", "{0E4C9DC5-CBC1-4C1C-91CB-5983560DA7C1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmaAocHelpers", "AmaAocHelpers\AmaAocHelpers.csproj", "{044C8191-2283-4247-A4A2-D22B9CCD121B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2015", "AdventOfCode2015\AdventOfCode2015.csproj", "{9428A020-3E34-4F54-8878-21930CBE388E}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdventOfCode2024", "AdventOfCode2024\AdventOfCode2024.vcxproj", "{1F99F6A7-C570-43FB-9A31-FC6E04267058}"
 EndProject
 Global
