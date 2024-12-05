@@ -1,7 +1,5 @@
 #include "AoCBaseWithD3D.h"
 
-
-
 void AoCBaseWithD3D::OnInitTests()
 {
     EnableDebugLayer();
@@ -9,10 +7,13 @@ void AoCBaseWithD3D::OnInitTests()
     CreateWindow(TEXT("AoCWindowClass"), GetModuleHandle(NULL), TEXT("AoC DirectX12"), 1024, 768);
     ShowWindow(hWnd, SW_SHOW);
 }
+void AoCBaseWithD3D::OnInitStep(const int Step) {}
+void AoCBaseWithD3D::OnCloseStep(const int Step) {}
 
 void AoCBaseWithD3D::OnCloseTests()
 {
-    ::CloseWindow(hWnd);
+    DestroyWindow(hWnd);
+    WaitForWindowClose();
 }
 
 void AoCBaseWithD3D::EnableDebugLayer()

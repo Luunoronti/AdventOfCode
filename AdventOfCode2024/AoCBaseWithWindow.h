@@ -34,8 +34,20 @@ protected:
     virtual void OnInitTests() override;
     virtual void OnCloseTests() override;
 
+    virtual void OnInitStep(const int Step) override;
+    virtual void OnCloseStep(const int Step) override;
+
+    virtual void ProcessWindowMessages();
+
+public:
+    virtual void OnPaint(HDC hdc);
+    virtual void OnWindowDestroyed();
+
+protected:
     void RegisterWindowClass(HINSTANCE hInst, const wchar_t* windowClassName);
     void CreateWindow(const wchar_t* WindowClassName, HINSTANCE hInst, const wchar_t* WindowTitle, uint32_t Width, uint32_t Height);
+    void RequestWindowRedraw() const;
+    void WaitForWindowClose();
 
     // Window handle.
     HWND hWnd;

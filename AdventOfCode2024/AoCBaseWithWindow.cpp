@@ -1,10 +1,54 @@
 #include "AoCBaseWithWindow.h"
 
-LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    return ::DefWindowProc(hwnd, msg, wParam, lParam);
-}
+    AoCBaseWithWindow* aoc;
+    if(msg == WM_CREATE)
+    {
+        LPCREATESTRUCT pCreate = (LPCREATESTRUCT)lParam;
+        aoc = (AoCBaseWithWindow*)pCreate->lpCreateParams;
+        SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)aoc);
+    }
+    else
+    {
+        aoc = (AoCBaseWithWindow*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+    }
 
+    if(aoc)
+    {
+        switch(msg)
+        {
+        case WM_PAINT:
+        {
+            PAINTSTRUCT ps; HDC hdc = BeginPaint(hWnd, &ps);
+            aoc->OnPaint(hdc);
+            EndPaint(hWnd, &ps);
+            return 0;
+        }
+        case WM_DESTROY:
+            aoc->OnWindowDestroyed();
+            return 0;
+        }
+    }
+    return ::DefWindowProc(hWnd, msg, wParam, lParam);
+}
+void AoCBaseWithWindow::RequestWindowRedraw() const
+{
+    InvalidateRect(hWnd, nullptr, TRUE);
+}
+void AoCBaseWithWindow::WaitForWindowClose()
+{
+    MSG msg = {};
+    while(hWnd)
+    {
+        while(PeekMessage(&msg, hWnd, 0, 0, PM_REMOVE))
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+        Sleep(1);
+    }
+}
 void AoCBaseWithWindow::RegisterWindowClass(HINSTANCE hInst, const wchar_t* windowClassName)
 {
     // Register a window class for creating our render window with.
@@ -42,7 +86,7 @@ void AoCBaseWithWindow::CreateWindow(const wchar_t* WindowClassName, HINSTANCE h
     int windowX = std::max<int>(0, (screenWidth - windowWidth) / 2);
     int windowY = std::max<int>(0, (screenHeight - windowHeight) / 2);
 
-    hWnd = ::CreateWindowExW(NULL, WindowClassName, WindowTitle, WS_OVERLAPPEDWINDOW, windowX, windowY, windowWidth, windowHeight, NULL, NULL, hInst, nullptr);
+    hWnd = ::CreateWindowExW(NULL, WindowClassName, WindowTitle, WS_OVERLAPPEDWINDOW, windowX, windowY, windowWidth, windowHeight, NULL, NULL, hInst, this);
     assert(hWnd && "Failed to create window");
 }
 
@@ -50,12 +94,44 @@ void AoCBaseWithWindow::CreateWindow(const wchar_t* WindowClassName, HINSTANCE h
 void AoCBaseWithWindow::OnInitTests()
 {
     RegisterWindowClass(::GetModuleHandle(NULL), TEXT("AoCWindowClass"));
-    CreateWindow(TEXT("AoCWindowClass"), GetModuleHandle(NULL), TEXT("AoC"), 1024, 768);
-    ShowWindow(hWnd, SW_SHOW);
 }
 
 void AoCBaseWithWindow::OnCloseTests()
 {
-    ::CloseWindow(hWnd);
+}
+
+void AoCBaseWithWindow::OnInitStep(const int Step)
+{
+    CreateWindow(TEXT("AoCWindowClass"), GetModuleHandle(NULL), TEXT("AoC"), 1024, 768);
+    ShowWindow(hWnd, SW_SHOW);
+    UpdateWindow(hWnd);
+}
+
+void AoCBaseWithWindow::OnCloseStep(const int Step)
+{
+    ::DestroyWindow(hWnd);
+    while(hWnd)
+    {
+        Sleep(1);
+    }
+}
+
+void AoCBaseWithWindow::OnPaint(HDC hdc)
+{
+}
+
+void AoCBaseWithWindow::OnWindowDestroyed()
+{
+    hWnd = nullptr;
+}
+
+void AoCBaseWithWindow::ProcessWindowMessages()
+{
+    MSG msg = {};
+    while(PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+    {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
 }
 

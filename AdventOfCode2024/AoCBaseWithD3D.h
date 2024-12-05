@@ -38,6 +38,8 @@ protected:
 
     virtual void OnInitTests() override;
     virtual void OnCloseTests() override;
+    virtual void OnInitStep(const int Step) override;
+    virtual void OnCloseStep(const int Step) override;
 
     void EnableDebugLayer();
 
