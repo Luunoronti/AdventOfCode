@@ -113,11 +113,30 @@ protected:
     LongListList ReadVerticalVectorsFromFile(int Step) const;
     string ReadStringFromFile(int Step, int& LinesCount, int& LastLineWidth) const;
     string ReadStringFromFile(int Step) const;
+    vector<string> ReadStringLinesFromFile(int Step) const;
+    stringstream ReadStringStreamFromFile(int Step) const;
 
     void CreateFileIfDoesNotExist(const std::string& FileName) const;
 
     const int GetFileSingleLineWidth(int Step) const;
+    
+    
+    
     static long GetMinimum(const vector<long>& List);
+    
+    template<typename T1>
+    __forceinline static long IndexOf(const vector<T1>& List, T1 Value) 
+    {
+        auto it = std::find(List.begin(), List.end(), Value);
+        if(it != List.end())
+        {
+            return std::distance(List.begin(), it); 
+        }
+        else
+        {
+            return -1;
+        }
+    }
 
 
     const __forceinline bool IsDigit(const char ch) const

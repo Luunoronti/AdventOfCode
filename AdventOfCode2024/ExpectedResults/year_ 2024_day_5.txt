@@ -3,7 +3,7 @@
 #There is no parsing and values are being taken directly from the positioning of lines within.
 
 Expected TEST value for step 1
-0
+143
 
 Expected LIVE value for step 1
 0

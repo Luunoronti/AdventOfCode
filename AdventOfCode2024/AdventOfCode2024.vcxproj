@@ -134,6 +134,7 @@
     <ClCompile Include="AoC_2024_03.cpp" />
     <ClCompile Include="AoC_2024_04.cpp" />
     <ClCompile Include="AoC_2024_05.cpp" />
+    <ClCompile Include="AoC_2024_32.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AoCBase.cpp" />
   </ItemGroup>
@@ -146,6 +147,7 @@
     <ClInclude Include="AoC_2024_03.h" />
     <ClInclude Include="AoC_2024_04.h" />
     <ClInclude Include="AoC_2024_05.h" />
+    <ClInclude Include="AoC_2024_32.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

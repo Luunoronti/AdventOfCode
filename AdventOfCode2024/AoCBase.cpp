@@ -213,6 +213,33 @@ LongListList AoCBase::ReadVerticalVectorsFromFile(int Step) const
     return vectors;
 }
 
+stringstream AoCBase::ReadStringStreamFromFile(int Step) const
+{
+    return stringstream(ReadStringFromFile(Step));
+}
+vector<string> AoCBase::ReadStringLinesFromFile(int Step) const
+{
+    const std::string FileName = GetFileName(Step);
+    CreateFileIfDoesNotExist(FileName);
+
+    std::ifstream file(FileName);
+    vector<string> vector;
+
+    if(!file.is_open())
+    {
+        std::cerr << RED << BLINK << "Error opening file " << GetFileName(Step) << RESET << std::endl;
+        return vector;
+    }
+
+    std::string line;
+    while(std::getline(file, line))
+    {
+        vector.push_back(line);
+    }
+
+    file.close();
+    return vector;
+}
 
 
 LongListList AoCBase::ReadLongVectorsFromFile(int Step) const

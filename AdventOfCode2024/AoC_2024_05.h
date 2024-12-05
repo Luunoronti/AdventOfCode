@@ -1,22 +1,37 @@
 #pragma once
-#include "AoCBaseWithD3D.h"
-class AoC_2024_05 : public AoCBaseWithD3D
+#include "AoCBase.h"
+
+
+class AoC_2024_05 : public AoCBase
 {
+    struct PageRule
+    {
+        int x;
+        int y;
+
+        PageRule() = default;
+
+        PageRule(int x, int y)
+            : x(x), y(y)
+        {
+        }
+    };
+
+    typedef vector<int> PageList;
+
+
     const virtual __forceinline int GetDay() const override { return 5; }
-
-    virtual void OnPaint(HDC hdc) override;
-
-    // Inherited via AoCBaseWithD3D
+    // Inherited via AoCBase
     const long Step1() override;
     const long Step2() override;
-
     friend class AoCBase;
 
+    vector<PageRule> Rules;
+    vector<PageList> PageLists;
 
-    static const int duration = 10000; // Duration of the animation in milliseconds 
-    static const int interval = 30; // Update interval in milliseconds
+    void ReadInput();
+    const bool CheckRule(PageList InList, PageRule InRule) const;
+    const bool CheckAllRules(PageList InList) const;
 
-    RECT rect{ 50, 50, 150, 150 };
-    int speed{ 5 };
 };
 
