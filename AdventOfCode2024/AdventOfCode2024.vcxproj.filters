@@ -33,6 +33,15 @@
     <ClCompile Include="AoC_2024_04.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AoC_2024_05.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AoCBaseWithD3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AoCBaseWithWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AoCBase.h">
@@ -48,6 +57,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AoC_2024_04.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_05.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AoCBaseWithD3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AoCBaseWithWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -127,19 +127,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AoCBaseWithD3D.cpp" />
+    <ClCompile Include="AoCBaseWithWindow.cpp" />
     <ClCompile Include="AoC_2024_01.cpp" />
     <ClCompile Include="AoC_2024_02.cpp" />
     <ClCompile Include="AoC_2024_03.cpp" />
     <ClCompile Include="AoC_2024_04.cpp" />
+    <ClCompile Include="AoC_2024_05.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AoCBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AoCBase.h" />
+    <ClInclude Include="AoCBaseWithD3D.h" />
+    <ClInclude Include="AoCBaseWithWindow.h" />
     <ClInclude Include="AoC_2024_01.h" />
     <ClInclude Include="AoC_2024_02.h" />
     <ClInclude Include="AoC_2024_03.h" />
     <ClInclude Include="AoC_2024_04.h" />
+    <ClInclude Include="AoC_2024_05.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,27 +1,5 @@
 #include "AoC_2024_01.h"
 
-const int AoC_2024_01::GetExpectedResultStep1() const
-{
-    return 2580760;
-}
-
-const int AoC_2024_01::GetExpectedResultStep1Test() const
-{
-    return 11;
-}
-
-const int AoC_2024_01::GetExpectedResultStep2() const
-{
-    // we need this to be in some sort of a cache
-    // so that program can work without typing these here
-    return 25358365;
-}
-
-const int AoC_2024_01::GetExpectedResultStep2Test() const
-{
-    return 31;
-}
-
 const long AoC_2024_01::Step1()
 {
     const auto& Columns = ReadVerticalVectorsFromFile(1);
@@ -49,7 +27,6 @@ const long AoC_2024_01::Step1()
 const long AoC_2024_01::Step2()
 {
     const auto& Columns = ReadVerticalVectorsFromFile(2);
-    return std::accumulate(Columns[0].begin(), Columns[0].end(), 0L, [&](long acc, const long& left) { return acc + left * std::count(Columns[1].begin(), Columns[1].end(), left); });
+    return std::accumulate(Columns[0].begin(), Columns[0].end(), 0L, [&](long acc, const long& left) { return (long)acc + (long)left * (long)std::count(Columns[1].begin(), Columns[1].end(), left); });
 }
-
 

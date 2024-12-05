@@ -1,5 +1,11 @@
 #pragma once
 
+#define _STR(x) #x
+#define STR(x) _STR(x)
+#define TODO(x) __pragma(message(__FILE__"("STR(__LINE__)"): TODO: "_STR(x) ))
+
+#define CompilerMessage(desc) __pragma(message(__FILE__ "(" STR(__LINE__) ") :" #desc))
+
 #include <iostream> 
 #include <fstream> 
 #include <vector> 
@@ -8,6 +14,9 @@
 #include <algorithm>
 #include <cstdlib>
 #include <numeric>
+#include <sys/stat.h>
+#include <cassert>
+
 
 using namespace std;
 
@@ -38,59 +47,74 @@ const string BKMAGENTA = "\033[45m";
 const string BKCYAN = "\033[46m";
 const string BKWHITE = "\033[47m";
 
-
-
 typedef std::vector<std::vector<long>> LongListList;
 
 class AoCBase
 {
 public:
-    template<typename T> 
-    static void ExecuteSteps() 
-    { 
-        static_assert(std::is_base_of<AoCBase, T>::value, "T must derive from AoCBase"); 
+    template<typename T>
+    static void ExecuteSteps()
+    {
+        static_assert(std::is_base_of<AoCBase, T>::value, "T must derive from AoCBase");
         T instance;
 
         cout << DIM << "====================================================================================" << RESET << endl;
+        if(instance.GetDay() == 0)
+        {
+            cout << RED << BLINK << "Error: Class instance has no day defined." << RESET << " Please override GetDay() and return proper day." << endl;
+            return;
+        }
 
+        instance.ReadExpectedStepResults();
+
+        instance.OnInitTests();
         instance.SetTest(true);
+        instance.OnInitStep(1);
         const auto& Step1ResultTest = instance.Step1();
         const auto& Step2ResultTest = instance.Step2();
+        instance.OnCloseStep(1);
         instance.SetTest(false);
+        instance.OnInitStep(2);
         const auto& Step1ResultLive = instance.Step1();
         const auto& Step2ResultLive = instance.Step2();
+        instance.OnCloseStep(2);
+        instance.OnCloseTests();
 
         cout << "" << instance.GetYear() << "/" << std::setw(2) << std::setfill('0') << instance.GetDay() << ":  ";
         instance.PrintStepResult(1, true, Step1ResultTest);
-        instance.PrintStepResult(1, false, Step1ResultLive); 
+        instance.PrintStepResult(1, false, Step1ResultLive);
 
         instance.PrintStepResult(2, true, Step2ResultTest);
-        instance.PrintStepResult(2, false, Step2ResultLive); 
+        instance.PrintStepResult(2, false, Step2ResultLive);
 
-        //cout << endl << DIM << "====================================================================================" << endl;
         cout << endl;
     }
 
 protected:
     void PrintStepResult(const int Step, bool IsTesting, const long& Result);
-   
+
+    void ReadExpectedStepResults();
+    void CreateEmptyExpectedStepResultsFile(const std::string& FileName);
+
     const bool IsTest() const;
     void SetTest(const bool IsTest);
 
-    virtual const int GetYear() const;
-    virtual const int GetDay() const = 0;
+    virtual void OnInitTests();
+    virtual void OnInitStep(const int Step);
 
-    virtual const int GetExpectedResultStep1() const = 0;
-    virtual const int GetExpectedResultStep1Test() const = 0;
+    virtual void OnCloseStep(const int Step);
+    virtual void OnCloseTests();
 
-    virtual const int GetExpectedResultStep2() const = 0;
-    virtual const int GetExpectedResultStep2Test() const = 0;
+    const virtual __forceinline int GetYear() const { return 2024; };
+    const virtual __forceinline int GetDay() const = 0;
 
     LongListList ReadLongVectorsFromFile(int Step) const;
 
     LongListList ReadVerticalVectorsFromFile(int Step) const;
     string ReadStringFromFile(int Step, int& LinesCount, int& LastLineWidth) const;
     string ReadStringFromFile(int Step) const;
+
+    void CreateFileIfDoesNotExist(const std::string& FileName) const;
 
     const int GetFileSingleLineWidth(int Step) const;
     static long GetMinimum(const vector<long>& List);
@@ -105,7 +129,6 @@ protected:
         return (int8_t)ch - '0';
     }
 
-
 public:
     virtual const long Step1() = 0;
     virtual const long Step2() = 0;
@@ -113,6 +136,11 @@ public:
 private:
     const std::string GetFileName(const int Step) const;
     bool IsUnderTest{ false };
+
+    long ExpectedTestResultForStep1{ 0 };
+    long ExpectedLiveResultForStep1{ 0 };
+    long ExpectedTestResultForStep2{ 0 };
+    long ExpectedLiveResultForStep2{ 0 };
 };
 
 

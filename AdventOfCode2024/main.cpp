@@ -1,8 +1,8 @@
-
 #include "AoC_2024_01.h"
 #include "AoC_2024_02.h"
 #include "AoC_2024_03.h"
 #include "AoC_2024_04.h"
+#include "AoC_2024_05.h"
 
 int main()
 {
@@ -10,6 +10,7 @@ int main()
     AoCBase::ExecuteSteps<AoC_2024_02>();
     AoCBase::ExecuteSteps<AoC_2024_03>();
     AoCBase::ExecuteSteps<AoC_2024_04>();
+    AoCBase::ExecuteSteps<AoC_2024_05>();
 
     return 0;
 }

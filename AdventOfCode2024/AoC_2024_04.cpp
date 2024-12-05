@@ -1,10 +1,5 @@
 #include "AoC_2024_04.h"
 
-const int AoC_2024_04::GetDay() const { return 4; }
-const int AoC_2024_04::GetExpectedResultStep1() const { return 2543; }
-const int AoC_2024_04::GetExpectedResultStep1Test() const { return 18; }
-const int AoC_2024_04::GetExpectedResultStep2() const { return 1930; }
-const int AoC_2024_04::GetExpectedResultStep2Test() const { return 9; }
 
 // these are just for added macro readability
 // debugging is out of the window anyway :)
@@ -18,10 +13,10 @@ const int AoC_2024_04::GetExpectedResultStep2Test() const { return 9; }
 #define IS_A(_x, _y) (IS_CHAR(x+(_x), y+(_y), 'A'))
 #define IS_S(_x, _y) (IS_CHAR(x+(_x), y+(_y), 'S'))
 
-#define IS_X_CURRENT (IS_X(0, 0, 'X'))
-#define IS_M_CURRENT (IS_A(0, 0, 'M'))
-#define IS_A_CURRENT (IS_A(0, 0, 'A'))
-#define IS_S_CURRENT (IS_A(0, 0, 'S'))
+#define IS_X_CURRENT (IS_X(0, 0))
+#define IS_M_CURRENT (IS_A(0, 0))
+#define IS_A_CURRENT (IS_A(0, 0))
+#define IS_S_CURRENT (IS_A(0, 0))
 
 #define IS_MAS_EAST      (IS_M(+1, +0) AND IS_A(+2, +0) AND IS_S(+3, +0))
 #define IS_MAS_WEST      (IS_M(-1, +0) AND IS_A(-2, +0) AND IS_S(-3, +0))
@@ -83,8 +78,10 @@ const long AoC_2024_04::Step2()
         for(int x = 0; x < width; ++x)
         {
             if(!IS_A_CURRENT) continue;
+
             if((IS_MxS_45 || IS_SxM_45) && (IS_MxS_135 || IS_SxM_135)) ++sum;
         }
     }
     return sum;
 }
+

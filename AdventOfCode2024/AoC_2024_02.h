@@ -3,13 +3,7 @@
 
 class AoC_2024_02 : public AoCBase
 {
-    // Inherited via AoCBase
-    const int GetDay() const override;
-    const int GetExpectedResultStep1() const override;
-    const int GetExpectedResultStep1Test() const override;
-    const int GetExpectedResultStep2() const override;
-    const int GetExpectedResultStep2Test() const override;
-
+    const virtual __forceinline int GetDay() const override { return 2; }
     const long Step1() override;
     const long Step2() override;
 

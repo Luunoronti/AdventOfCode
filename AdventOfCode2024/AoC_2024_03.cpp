@@ -1,30 +1,5 @@
 #include "AoC_2024_03.h"
 
-const int AoC_2024_03::GetDay() const
-{
-    return 3;
-}
-
-const int AoC_2024_03::GetExpectedResultStep1() const
-{
-    return 163931492;
-}
-
-const int AoC_2024_03::GetExpectedResultStep1Test() const
-{
-    return 161;
-}
-
-const int AoC_2024_03::GetExpectedResultStep2() const
-{
-    return 76911921;
-}
-
-const int AoC_2024_03::GetExpectedResultStep2Test() const
-{
-    return 48;
-}
-
 bool StartsWithStringAtIndex(const string& Input, const int Index, const string& TestString)
 {
     if(Input.size() <= Index + TestString.size())
@@ -47,13 +22,13 @@ bool StartsWithStringAtIndex(const string& Input, const int Index, const string&
 #define AND_THEN_GO_TO_STATE(s) nextState = s;
 #define IF_CHAR(c) if(ch == c) {
 #define ELSE_IF_CHAR(c) } else if(ch == c) {
-#define ELSE_IF_CHAR_AND(c, b) } else if((b) & ch == c) {
+#define ELSE_IF_CHAR_AND(c, b) } else if((b) && ch == c) {
 #define ELSE_IDLE } else { state =  State::Idle; }; break;
 
 #define IF_STRING(s) if(ch == s[0] && StartsWithStringAtIndex(Line, lineIndex, s)) { 
 #define ELSE_IF_STRING(s) } else if(ch == s[0] && StartsWithStringAtIndex(Line, lineIndex, s)) { 
 #define SKIP_CHARS(c) charsToSkip = c; state = State::Skip;
-#define SKIP_STRING(s) charsToSkip = strlen(s) - 2; state = State::Skip;
+#define SKIP_STRING(s) charsToSkip = (int)strlen(s) - 2; state = State::Skip;
 
 #define ADD_MUL_TO_SUM sum += AllowModifiers ? modSwitch ? x * y : 0 : x * y;
 

@@ -1,30 +1,5 @@
 #include "AoC_2024_02.h"
 
-const int AoC_2024_02::GetDay() const
-{
-    return 2;
-}
-
-const int AoC_2024_02::GetExpectedResultStep1() const
-{
-    return 472;
-}
-
-const int AoC_2024_02::GetExpectedResultStep1Test() const
-{
-    return 2;
-}
-
-const int AoC_2024_02::GetExpectedResultStep2() const
-{
-    return 0;
-}
-
-const int AoC_2024_02::GetExpectedResultStep2Test() const
-{
-    return 4;
-}
-
 const bool AoC_2024_02::AnalyzeList(vector<long> List, const int Start, const int End, int& ErrorIndex, int OmitIndex) const
 {
     ErrorIndex = -1;
@@ -78,7 +53,7 @@ const long AoC_2024_02::Step1()
     int IndexA = 0;
     for(const auto& Line : List)
     {
-        if(AnalyzeList(Line, 0, Line.size(), IndexA))
+        if(AnalyzeList(Line, 0, (const int)Line.size(), IndexA))
             safeCount++;
     }
     return safeCount;
@@ -93,7 +68,7 @@ const long AoC_2024_02::Step2()
     int NoUse = 0;
     for(const auto& Line : List)
     {
-        if(AnalyzeList(Line, 0, Line.size(), ErrorIndex))
+        if(AnalyzeList(Line, 0, (const int)Line.size(), ErrorIndex))
         {
             safeCount++;
         }
@@ -102,15 +77,15 @@ const long AoC_2024_02::Step2()
             // we must analyze same list, but without checking at  
             // IndexA, IndexB, or IndexA-1
 
-            if(AnalyzeList(Line, 0, Line.size(), NoUse, ErrorIndex))
+            if(AnalyzeList(Line, 0, (const int)Line.size(), NoUse, ErrorIndex))
             {
                 safeCount++;
             }
-            else if(AnalyzeList(Line, 0, Line.size(), NoUse, ErrorIndex + 1))
+            else if(AnalyzeList(Line, 0, (const int)Line.size(), NoUse, ErrorIndex + 1))
             {
                 safeCount++;
             }
-            else if(ErrorIndex == 1 && AnalyzeList(Line, 1, Line.size(), NoUse))
+            else if(ErrorIndex == 1 && AnalyzeList(Line, 1, (const int)Line.size(), NoUse))
             {
                 safeCount++;
             }
