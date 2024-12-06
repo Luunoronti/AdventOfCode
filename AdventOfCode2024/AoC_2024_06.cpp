@@ -1,7 +1,11 @@
 #include "AoC_2024_06.h"
 
+#define SOBM_NORTH 0x01
+#define SOBM_EAST 0x02
+#define SOBM_SOUTH 0x04
+#define SOBM_WEST 0x08
 
-void AoC_2024_06::ClearState()
+void AoC_2024_06::ClearState() // turned out I am using it once, so this should be a ctor
 {
     Map.clear();
     Marks.clear();
@@ -10,13 +14,25 @@ void AoC_2024_06::ClearState()
     StepX = 0;
     StepY = -1; // starting north
 }
-StepForwardResult AoC_2024_06::StepForward()
+StepForwardResult AoC_2024_06::StepForward(vector<uint8_t>* StepoverBuffer)
 {
     LocationX += StepX;
     LocationY += StepY;
 
     if(LocationX < 0 || LocationY < 0 || LocationX >= Width || LocationY >= Height)
         return OutOfMap;
+
+
+    if(StepoverBuffer)
+    {
+        const int step = (*StepoverBuffer)[BufPos(LocationX, LocationY)];
+        if((StepY < 0 && step & SOBM_NORTH)
+            || (StepX > 0 && step & SOBM_EAST)
+            || (StepY > 0 && step & SOBM_SOUTH)
+            || (StepX < 0 && step & SOBM_WEST)
+            )
+            return Overstep;
+    }
 
     const char& mark = Map[BufPos(LocationX, LocationY)];
 
@@ -79,51 +95,36 @@ bool AoC_2024_06::CheckForCircularPath()
     StepX = 0;
     StepY = -1;
 
-    vector<uint8_t>SteppedOver(Map.size());
-    SteppedOver[BufPos(LocationX, LocationY)] = 1;
+    vector<uint8_t>SteppedOverBuffer(Map.size());
+    SteppedOverBuffer[BufPos(LocationX, LocationY)] = SOBM_NORTH;
 
     while(true)
     {
-        const auto& stepResult = StepForward();
+        const auto& stepResult = StepForward(&SteppedOverBuffer);
 
-        if(stepResult == Obstacle)
+        if(stepResult == Overstep)
+        {
+            return true;
+        }
+        else if(stepResult == Obstacle)
         {
             TurnRight();
-            SteppedOver[BufPos(LocationX, LocationY)] = 0;
         }
         else if(stepResult == OutOfMap)
         {
             return false;
         }
-
-        if(SteppedOver[BufPos(LocationX, LocationY)])
-        {
-            return true;
-        }
         else
         {
-            SteppedOver[BufPos(LocationX, LocationY)] = 1;
+            uint8_t mask = 0;
+            if(StepY < 0) mask = SOBM_NORTH;
+            if(StepX > 0) mask = SOBM_EAST;
+            if(StepY > 0) mask = SOBM_SOUTH;
+            if(StepX < 0) mask = SOBM_WEST;
+
+            SteppedOverBuffer[BufPos(LocationX, LocationY)] |= mask;
         }
     }
-}
-void AoC_2024_06::PrintCurrentMapForStep2(const int awpx, const int awpy)
-{
-    for(int y = 0; y < Height; ++y)
-    {
-        for(int x = 0; x < Width; ++x)
-        {
-            const auto& m = Map[BufPos(x, y)];
-            const auto& s = false;// SteppedOver[BufPos(x, y)];
-            const auto& l = Marks[BufPos(x, y)];
-
-            const bool awp = (x == awpx && y == awpy);
-
-            cout << (l ? GREEN : "") << (awp ? RED : "") << (s ? '*' : (awp ? 'G' : m)) << RESET;
-        }
-        cout << endl;
-    }
-    cout << endl;
-    cout << endl;
 }
 const long AoC_2024_06::Step1()
 {
@@ -136,7 +137,7 @@ const long AoC_2024_06::Step1()
 
     while(true)
     {
-        const auto& stepResult = StepForward();
+        const auto& stepResult = StepForward(nullptr);
         if(stepResult == OutOfMap)
         {
             break;
@@ -150,14 +151,11 @@ const long AoC_2024_06::Step1()
             MarkCurrentLocation();
         }
     }
-
     return CountMarkedLocations();
 }
 
 const long AoC_2024_06::Step2()
 {
-    // we use data from last step, do not clear, do not read
-
     long sum = 0;
 
     for(int y = 0; y < Height; ++y)
@@ -167,20 +165,13 @@ const long AoC_2024_06::Step2()
             if(!Marks[BufPos(x, y)])
                 continue;
 
-
             PutArtificialWallAt(x, y);
-
             if(CheckForCircularPath())
             {
-                if(IsTest())
-                    PrintCurrentMapForStep2(x, y);
-
                 ++sum;
             }
-
             ClearArtificialWall(x, y);
         }
     }
-
     return sum;
 }

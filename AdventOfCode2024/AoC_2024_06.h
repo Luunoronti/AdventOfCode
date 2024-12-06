@@ -5,7 +5,8 @@ enum StepForwardResult
 {
     Ok,
     Obstacle,
-    OutOfMap
+    OutOfMap,
+    Overstep,
 };
 
 
@@ -25,7 +26,7 @@ class AoC_2024_06 : public AoCBase
         return x + y * Width;
     };
 
-    StepForwardResult StepForward();
+    StepForwardResult StepForward(vector<uint8_t>* StepoverBuffer);
     void TurnRight();
     void MarkCurrentLocation();
     long CountMarkedLocations();
@@ -36,8 +37,6 @@ class AoC_2024_06 : public AoCBase
 
     bool CheckForCircularPath();
 
-
-    void PrintCurrentMapForStep2(const int awpx, const int awpy);
 
 private:
     int Width;
@@ -53,5 +52,7 @@ private:
 
     int StepX;
     int StepY;
+public:
+
 };
 
