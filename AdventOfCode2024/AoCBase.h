@@ -104,7 +104,7 @@ public:
         instance.PrintStepResult(1, false, Step1ResultLive);
 
         double elapsedTime = static_cast<double>(end_step1.QuadPart - start_step1.QuadPart) * 1000.0 / frequency.QuadPart;
-        cout << " Time: " << 0;
+        cout << " Time: " << elapsedTime << " ms   ";
 
         instance.PrintStepResult(2, true, Step2ResultTest);
         instance.PrintStepResult(2, false, Step2ResultLive);
