@@ -79,23 +79,26 @@ bool AoC_2024_06::CheckForCircularPath()
     StepX = 0;
     StepY = -1;
 
-    SteppedOver = vector<uint8_t>(Map.size());
+    vector<uint8_t>SteppedOver(Map.size());
     SteppedOver[BufPos(LocationX, LocationY)] = 1;
+
     while(true)
     {
         const auto& stepResult = StepForward();
 
-        if(SteppedOver[BufPos(LocationX, LocationY)])
-            return true;
-
-        if(stepResult == OutOfMap)
-        {
-            return false;
-        }
-        else if(stepResult == Obstacle)
+        if(stepResult == Obstacle)
         {
             TurnRight();
             SteppedOver[BufPos(LocationX, LocationY)] = 0;
+        }
+        else if(stepResult == OutOfMap)
+        {
+            return false;
+        }
+
+        if(SteppedOver[BufPos(LocationX, LocationY)])
+        {
+            return true;
         }
         else
         {
@@ -110,7 +113,7 @@ void AoC_2024_06::PrintCurrentMapForStep2(const int awpx, const int awpy)
         for(int x = 0; x < Width; ++x)
         {
             const auto& m = Map[BufPos(x, y)];
-            const auto& s = SteppedOver[BufPos(x, y)];
+            const auto& s = false;// SteppedOver[BufPos(x, y)];
             const auto& l = Marks[BufPos(x, y)];
 
             const bool awp = (x == awpx && y == awpy);

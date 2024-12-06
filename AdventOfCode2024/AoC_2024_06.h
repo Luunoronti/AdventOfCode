@@ -44,7 +44,6 @@ private:
     int Height;
     string Map;
     vector<uint8_t> Marks;
-    vector<uint8_t> SteppedOver;
 
     int StartLocationX;
     int StartLocationY;
