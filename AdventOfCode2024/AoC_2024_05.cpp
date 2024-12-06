@@ -65,7 +65,7 @@ const long AoC_2024_05::Step2()
 
             sum_combiner.local() += pageList[pageList.size() / 2];
         });
-    return sum_combiner.combine(std::plus<int>());
+    return sum_combiner.combine(std::plus<long>());
 }
 
 

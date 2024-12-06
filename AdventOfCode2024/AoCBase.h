@@ -150,12 +150,12 @@ protected:
     static long GetMinimum(const vector<long>& List);
 
     template<typename T1>
-    __forceinline static long IndexOf(const vector<T1>& List, T1 Value)
+    __forceinline static int IndexOf(const vector<T1>& List, T1 Value)
     {
         auto it = std::find(List.begin(), List.end(), Value);
         if(it != List.end())
         {
-            return std::distance(List.begin(), it);
+            return static_cast<int>(std::distance(List.begin(), it));
         }
         else
         {
