@@ -51,6 +51,9 @@
     <ClCompile Include="AoC_2024_32.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AoC_2024_06.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AoC_2024_01.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files\Base</Filter>
     </ClInclude>
     <ClInclude Include="AoC_2024_32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_06.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

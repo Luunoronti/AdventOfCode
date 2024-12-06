@@ -32,8 +32,8 @@ class AoC_2024_05 : public AoCBase
     vector<PageList> ErrorLists;
 
     void ReadInput();
-    const bool CheckRule(PageList InList, PageRule InRule, int& i1, int& i2) const;
-    const bool CheckAllRules(PageList InList, int& errIndex1, int& errIndex2) const;
+    const bool CheckRule(PageList InList, PageRule InRule, long& i1, long& i2) const;
+    const bool CheckAllRules(PageList InList, long& errIndex1, long& errIndex2) const;
 
 };
 

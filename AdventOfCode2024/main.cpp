@@ -3,14 +3,16 @@
 #include "AoC_2024_03.h"
 #include "AoC_2024_04.h"
 #include "AoC_2024_05.h"
+#include "AoC_2024_06.h"
 
 int main()
 {
-    AoCBase::ExecuteSteps<AoC_2024_01>();
-    AoCBase::ExecuteSteps<AoC_2024_02>();
-    AoCBase::ExecuteSteps<AoC_2024_03>();
-    AoCBase::ExecuteSteps<AoC_2024_04>();
-    AoCBase::ExecuteSteps<AoC_2024_05>();
+    //AoCBase::ExecuteSteps<AoC_2024_01>();
+    //AoCBase::ExecuteSteps<AoC_2024_02>();
+    //AoCBase::ExecuteSteps<AoC_2024_03>();
+    //AoCBase::ExecuteSteps<AoC_2024_04>();
+    //AoCBase::ExecuteSteps<AoC_2024_05>();
+    AoCBase::ExecuteSteps<AoC_2024_06>();
 
     return 0;
 }

@@ -1,12 +1,12 @@
 #include "AoC_2024_05.h"
 
-const bool AoC_2024_05::CheckRule(PageList InList, PageRule InRule, int& i1, int& i2) const
+const bool AoC_2024_05::CheckRule(PageList InList, PageRule InRule, long& i1, long& i2) const
 {
     i1 = IndexOf(InList, InRule.x);
     i2 = IndexOf(InList, InRule.y);
     return (i1 == -1 || i2 == -1 || i1 < i2);
 }
-const bool AoC_2024_05::CheckAllRules(PageList InList, int& errIndex1, int& errIndex2) const
+const bool AoC_2024_05::CheckAllRules(PageList InList, long& errIndex1, long& errIndex2) const
 {
     for(const auto& r : Rules)
     {
@@ -24,7 +24,7 @@ const long AoC_2024_05::Step1()
     ReadInput();
 
     long sum = 0;
-    int i1 = 0, i2 = 0;
+    long i1 = 0, i2 = 0;
     for(PageList& pageList : PageLists)
     {
         if(CheckAllRules(pageList, i1, i2))
@@ -44,7 +44,7 @@ const long AoC_2024_05::Step2()
     long sum = 0;
     for(PageList& pageList : ErrorLists)
     {
-        int tmp, i1, i2;
+        long tmp, i1, i2;
         while(true)
         {
             if(!CheckAllRules(pageList, i1, i2)) // CheckAllRules only checks till first invalid is found, not actual 'all'
