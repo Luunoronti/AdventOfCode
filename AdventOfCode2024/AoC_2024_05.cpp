@@ -43,9 +43,7 @@ const long AoC_2024_05::Step2()
 {
     long sum = 0;
 
-
-    // Use combinable to sum up the results 
-    concurrency::combinable<int> sum_combiner([]() { return 0; });
+    concurrency::combinable<long> sum_combiner([]() { return 0; });
     concurrency::parallel_for(0, static_cast<int>(ErrorLists.size()), [&](int i)
         {
             PageList& pageList = ErrorLists[i];
@@ -67,28 +65,7 @@ const long AoC_2024_05::Step2()
 
             sum_combiner.local() += pageList[pageList.size() / 2];
         });
-
     return sum_combiner.combine(std::plus<int>());
-
-    //for(PageList& pageList : ErrorLists)
-    //{
-    //    long tmp, i1, i2;
-    //    while(true)
-    //    {
-    //        if(!CheckAllRules(pageList, i1, i2)) // CheckAllRules only checks till first invalid is found, not actual 'all'
-    //        {
-    //            tmp = pageList[i1];
-    //            pageList[i1] = pageList[i2];
-    //            pageList[i2] = tmp;
-    //        }
-    //        else
-    //        {
-    //            break;
-    //        }
-    //    };
-    //    sum += pageList[pageList.size() / 2];
-    //}
-    //return sum;
 }
 
 
