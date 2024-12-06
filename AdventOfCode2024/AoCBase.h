@@ -18,6 +18,9 @@
 #include <cassert>
 #include <ppl.h>
 
+#include <Windows.h>
+
+
 using namespace std;
 
 const string RESET = "\033[0m";
@@ -55,6 +58,15 @@ public:
     template<typename T>
     static void ExecuteSteps()
     {
+        LARGE_INTEGER frequency;
+        LARGE_INTEGER start_step1;
+        LARGE_INTEGER start_step2;
+        LARGE_INTEGER end_step1;
+        LARGE_INTEGER end_step2;
+        // Get the frequency of the high-resolution performance counter 
+        QueryPerformanceFrequency(&frequency);
+
+
         static_assert(std::is_base_of<AoCBase, T>::value, "T must derive from AoCBase");
         T instance;
 
@@ -75,8 +87,15 @@ public:
         instance.OnCloseStep(1);
         instance.SetTest(false);
         instance.OnInitStep(2);
+
+        QueryPerformanceCounter(&start_step1);
         const auto& Step1ResultLive = instance.Step1();
+        QueryPerformanceCounter(&end_step1);
+
+        QueryPerformanceCounter(&start_step2);
         const auto& Step2ResultLive = instance.Step2();
+        QueryPerformanceCounter(&end_step2);
+
         instance.OnCloseStep(2);
         instance.OnCloseTests();
 
@@ -84,8 +103,14 @@ public:
         instance.PrintStepResult(1, true, Step1ResultTest);
         instance.PrintStepResult(1, false, Step1ResultLive);
 
+        double elapsedTime = static_cast<double>(end_step1.QuadPart - start_step1.QuadPart) * 1000.0 / frequency.QuadPart;
+        cout << " Time: " << 0;
+
         instance.PrintStepResult(2, true, Step2ResultTest);
         instance.PrintStepResult(2, false, Step2ResultLive);
+
+        elapsedTime = static_cast<double>(end_step2.QuadPart - start_step2.QuadPart) * 1000.0 / frequency.QuadPart;
+        cout << " Time: " << elapsedTime << " ms";
 
         cout << endl;
     }
@@ -119,18 +144,18 @@ protected:
     void CreateFileIfDoesNotExist(const std::string& FileName) const;
 
     const int GetFileSingleLineWidth(int Step) const;
-    
-    
-    
+
+
+
     static long GetMinimum(const vector<long>& List);
-    
+
     template<typename T1>
-    __forceinline static long IndexOf(const vector<T1>& List, T1 Value) 
+    __forceinline static long IndexOf(const vector<T1>& List, T1 Value)
     {
         auto it = std::find(List.begin(), List.end(), Value);
         if(it != List.end())
         {
-            return std::distance(List.begin(), it); 
+            return std::distance(List.begin(), it);
         }
         else
         {
