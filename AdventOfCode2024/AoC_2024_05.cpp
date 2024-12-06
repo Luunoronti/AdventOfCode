@@ -1,39 +1,39 @@
 #include "AoC_2024_05.h"
 
-const bool AoC_2024_05::CheckRule(PageList InList, PageRule InRule) const
+const bool AoC_2024_05::CheckRule(PageList InList, PageRule InRule, int& i1, int& i2) const
 {
-    int i1 = IndexOf(InList, InRule.x);
-    int i2 = IndexOf(InList, InRule.y);
-
-    bool good = (i1 == -1 || i2 == -1 || i1 < i2);
-
-    if(!good)
-    {
-        cout << i1 << "   " << i2 << endl;
-        cout << InRule.x << "   " << InRule.y << endl;
-    }
+    i1 = IndexOf(InList, InRule.x);
+    i2 = IndexOf(InList, InRule.y);
     return (i1 == -1 || i2 == -1 || i1 < i2);
 }
-const bool AoC_2024_05::CheckAllRules(PageList InList) const
+const bool AoC_2024_05::CheckAllRules(PageList InList, int& errIndex1, int& errIndex2) const
 {
     for(const auto& r : Rules)
     {
-        if(!CheckRule(InList, r))
+        if(!CheckRule(InList, r, errIndex1, errIndex2))
             return false;
     }
     return true;
 }
-
 const long AoC_2024_05::Step1()
 {
+    Rules.clear();
+    PageLists.clear();
+    ErrorLists.clear();
+
     ReadInput();
 
     long sum = 0;
+    int i1 = 0, i2 = 0;
     for(PageList& pageList : PageLists)
     {
-        if(CheckAllRules(pageList))
+        if(CheckAllRules(pageList, i1, i2))
         {
             sum += pageList[pageList.size() / 2];
+        }
+        else
+        {
+            ErrorLists.push_back(pageList);
         }
     }
     return sum;
@@ -41,7 +41,26 @@ const long AoC_2024_05::Step1()
 
 const long AoC_2024_05::Step2()
 {
-    return 0;
+    long sum = 0;
+    for(PageList& pageList : ErrorLists)
+    {
+        int tmp, i1, i2;
+        while(true)
+        {
+            if(!CheckAllRules(pageList, i1, i2)) // CheckAllRules only checks till first invalid is found, not actual 'all'
+            {
+                tmp = pageList[i1];
+                pageList[i1] = pageList[i2];
+                pageList[i2] = tmp;
+            }
+            else
+            {
+                break;
+            }
+        };
+        sum += pageList[pageList.size() / 2];
+    }
+    return sum;
 }
 
 
@@ -51,6 +70,7 @@ void AoC_2024_05::ReadInput()
     vector<string> lines = ReadStringLinesFromFile(1);
 
     stringstream s;
+
     for(const auto& l : lines)
     {
         s.clear();
