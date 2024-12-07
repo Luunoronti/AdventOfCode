@@ -68,22 +68,20 @@ const int64_t AoC_2024_07::TestSingleLine(const string& Line, bool AllowThird) c
 {
     int64_t expectedValue = 0;
     vector<int> operands;
-    ParseInputLine(Line, expectedValue, operands);
-
     int operatorsMark = 0;
-    int64_t sumOfValid = 0;
+
+    ParseInputLine(Line, expectedValue, operands);
 
     while(true)
     {
         if(TestForValidResultOnOperators(expectedValue, operands, operatorsMark, AllowThird))
         {
-            return expectedValue;// sumOfValid += expectedValue;
+            return expectedValue;
         }
         ++operatorsMark;
-        int big = (1 << ((operands.size() - 1) * 2));
-        if(operatorsMark > big)
+        if(operatorsMark > (1 << ((operands.size() - 1) * 2)))
         {
-            return sumOfValid;
+            return 0; // no result
         }
         TODO("if there is any bit set above the expected number of operands, skip.we have an error");
     }
