@@ -39,7 +39,20 @@ const int64_t AoC_2024_07::Step2()
 }
 
 
+/*
 
+The Operators variable is a single int that holds operators for all operands in Operands vector.
+Each two bits represent the flag for operation,
+0x00 = ADD
+0x01 = MUL
+0x10 = CONCAT
+0x11 = NO_OP
+
+And now, you can check for every possible combination of operations
+just by incrementing Operators variable, because ++Operators will just move bits around
+and produce unique sets of operators.
+
+* */
 const bool AoC_2024_07::TestForValidResultOnOperators(const int64_t& ExpectedResult, const vector<int> Operands, int Operators, bool AllowThird) const
 {
     uint8_t op;
