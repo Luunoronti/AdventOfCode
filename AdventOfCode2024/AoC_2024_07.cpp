@@ -52,8 +52,9 @@ And now, you can check for every possible combination of operations
 just by incrementing Operators variable, because ++Operators will just move bits around
 and produce unique sets of operators.
 
-For example if Operators = 0x00011000 (ADD, MUL, CON, ADD)
-and you do ++Operators, it becomes 0x00011001 (ADD, MUL, CON, MUL)
+For example if Operators = 00011000(b) (ADD, MUL, CON, ADD)
+and you do ++Operators, it becomes 00011001(b) (ADD, MUL, CON, MUL)
+and then do ++Operators, it becomes 00011010(b) (ADD, MUL, CON, CON)
 and so on.
 
 * */
