@@ -1,25 +1,38 @@
 #include "AoC_2024_07.h"
 
+void AoC_2024_07::ParseInputLine(const string& Line, int64_t& ExpectedResult, vector<int>& Operands) const
+{
+    istringstream s(Line);
+    int operand;
+
+    s >> ExpectedResult;
+    s.ignore(1, ':');
+
+    while(s >> operand)
+    {
+        Operands.push_back(operand);
+    }
+}
+
 const int64_t AoC_2024_07::Step1()
 {
     vector<string> lines = ReadStringLinesFromFile(1);
     concurrency::combinable<int64_t> sum_combiner([]() { return 0; });
     concurrency::parallel_for(0, static_cast<int>(lines.size()), [&](int i)
         {
-            const auto& line = lines[i];
-            sum_combiner.local() += TestSingleLine(line, false);
+            sum_combiner.local() += TestSingleLine(lines[i], false);
         });
 
     return sum_combiner.combine(std::plus<int64_t>());
 }
 const int64_t AoC_2024_07::Step2()
 {
-    vector<string> lines = ReadStringLinesFromFile(1);
+    vector<string> lines = ReadStringLinesFromFile(2);
+    
     concurrency::combinable<int64_t> sum_combiner([]() { return 0; });
     concurrency::parallel_for(0, static_cast<int>(lines.size()), [&](int i)
         {
-            const auto& line = lines[i];
-            sum_combiner.local() += TestSingleLine(line, true);
+            sum_combiner.local() += TestSingleLine(lines[i], true);
         });
 
     return sum_combiner.combine(std::plus<int64_t>());
@@ -34,12 +47,19 @@ const bool AoC_2024_07::TestForValidResultOnOperators(const int64_t& ExpectedRes
     uint8_t size = static_cast<uint8_t>(Operands.size());
     int64_t actualResult = Operands[0];
 
-    // check if any op is 10 or 01, these are not valid
     for(int i = 1; i < Operands.size(); ++i)
     {
         op = (Operators >> ((i - 1) * 2)) & 0x03;
-        if(op == 0x03)
-            return false;
+        if(AllowThird)
+        {
+            if(op == 0x03)
+                return false;
+        }
+        else
+        {
+            if(op == 0x02 || op == 0x03)
+                return false;
+        }
     }
 
     for(int i = 1; i < Operands.size(); ++i)
@@ -83,21 +103,8 @@ const int64_t AoC_2024_07::TestSingleLine(const string& Line, bool AllowThird) c
         {
             return 0; // no result
         }
-        TODO("if there is any bit set above the expected number of operands, skip.we have an error");
+        TODO("We may have an infinite loop in case no solution was found and operatorMark size check fails");
     }
 }
 
 
-void AoC_2024_07::ParseInputLine(const string& Line, int64_t& ExpectedResult, vector<int>& Operands) const
-{
-    istringstream s(Line);
-    int operand;
-
-    s >> ExpectedResult;
-    s.ignore(1, ':');
-
-    while(s >> operand)
-    {
-        Operands.push_back(operand);
-    }
-}
