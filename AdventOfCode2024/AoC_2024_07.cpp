@@ -47,9 +47,9 @@ const bool AoC_2024_07::TestForValidResultOnOperators(const int64_t& ExpectedRes
     uint8_t size = static_cast<uint8_t>(Operands.size());
     int64_t actualResult = Operands[0];
 
-    for(int i = 1; i < Operands.size(); ++i)
+    for(int i = 0; i < 16; ++i)
     {
-        op = (Operators >> ((i - 1) * 2)) & 0x03;
+        op = (Operators >> (i * 2)) & 0x03;
         if(AllowThird)
         {
             if(op == 0x03)
@@ -64,7 +64,6 @@ const bool AoC_2024_07::TestForValidResultOnOperators(const int64_t& ExpectedRes
 
     for(int i = 1; i < Operands.size(); ++i)
     {
-        opPos = 16 - i; // there are 16 possible positions in our mask
         op = (Operators >> ((i - 1) * 2)) & 0x03;
         const auto& o1 = Operands[i];
         switch(op)
