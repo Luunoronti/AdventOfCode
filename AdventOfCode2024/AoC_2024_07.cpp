@@ -52,6 +52,10 @@ And now, you can check for every possible combination of operations
 just by incrementing Operators variable, because ++Operators will just move bits around
 and produce unique sets of operators.
 
+For example if Operators = 0x00011000 (ADD, MUL, CON, ADD)
+and you do ++Operators, it becomes 0x00011001 (ADD, MUL, CON, MUL)
+and so on.
+
 * */
 const bool AoC_2024_07::TestForValidResultOnOperators(const int64_t& ExpectedResult, const vector<int> Operands, int Operators, bool AllowThird) const
 {
