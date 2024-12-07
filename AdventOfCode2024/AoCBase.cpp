@@ -1,4 +1,102 @@
-#include "AoCBase.h"
+﻿#include "AoCBase.h"
+
+vector<AoCBaseExecutionResult> AoCBase::ResultReports;
+
+#define PRINT_RESULT_STATUS \
+        cout << DIM << "| " << RESET; \
+        if(isValid) cout << GREEN << PAD_LEFT(22, ' ') << "OK" << RESET; \
+        else if(isWrong){ wrongStr = "Wrong (Exp: " + std::to_string(expected) + ")"; cout << RED << PAD_LEFT(22, ' ') << wrongStr << RESET; } \
+        else cout << YELLOW + BLINK << PAD_LEFT(22, ' ') << "Not verified" << RESET; \
+        cout << DIM << " | "  << RESET;
+
+void AoCBase::PrintExecutionReport()
+{
+    cout << DIM << "|=============================================================================================================================================================================================================================|" << RESET << endl;
+    cout << DIM << "|         |                                                 " << RESET << CYAN << " Step 1 " << RESET << DIM << "                                                |                                               " << RESET << BLUE << "   Step 2  " << RESET << DIM << "                                               |" << RESET << endl;
+    cout << DIM << "|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|" << RESET << endl;
+    cout << DIM << "|         |                   " << RESET << MAGENTA << "   Test  " << RESET << DIM << "                        |                     " << RESET << GREEN << "     Live  " << RESET << DIM << "                    |                    " << RESET << MAGENTA << "   Test   " << RESET << DIM << "                      |                        " << RESET << GREEN << "    Live   " << RESET << DIM << "                 |" << RESET << endl;
+    cout << DIM << "|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|" << RESET << endl;
+    cout << DIM << "|   Day   |     Value     |       Value status     | Time (ms) |     Value     |       Value status     | Time (ms) |     Value     |       Value status     | Time (ms) |     Value     |       Value status     | Time (ms) |" << RESET << endl;
+    cout << DIM << "|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|" << RESET << endl;
+
+    bool first = true;
+
+    for(const AoCBaseExecutionResult& result : ResultReports)
+    {
+        if(!first)
+        {
+            cout << DIM << "|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|" << RESET << endl;
+        }
+        else
+        {
+            first = false;
+        }
+        cout << DIM << "| "  << RESET << result.Year << "/" << PAD_LEFT(2, '0') << (int)result.Day << " ";
+
+        bool isValid = false;
+        bool isWrong = false;
+
+        // STEP 1 TEST
+        int64_t expected = result.ExpectedStep1ResultTest;
+        isValid = expected && expected == result.Step1ResultTest;
+        isWrong = expected && expected != result.Step1ResultTest;
+        string wrongStr;
+        cout << DIM << "| " << RESET;
+
+        if(isValid) cout << GREEN;
+        else if(isWrong) cout << RED;
+        else cout << YELLOW + BLINK;
+        cout << PAD_LEFT(13, ' ') << result.Step1ResultTest << RESET << " ";
+        PRINT_RESULT_STATUS;
+        cout << PAD_LEFT(9, ' ') << result.Step1TestElapsedTime << DIM << " | " << RESET;
+
+        // STEP 1 LIVE
+        expected = result.ExpectedStep1ResultLive;
+        isValid = expected && expected == result.Step1ResultLive;
+        isWrong = expected && expected != result.Step1ResultLive;
+
+        if(isValid) cout << GREEN;
+        else if(isWrong) cout << RED;
+        else cout << YELLOW + BLINK;
+        cout << PAD_LEFT(13, ' ') << result.Step1ResultLive << RESET << " ";
+        PRINT_RESULT_STATUS;
+        cout << PAD_LEFT(9, ' ') << result.Step1LiveElapsedTime << DIM << " | " << RESET;
+
+
+        // STEP 2 TEST
+        expected = result.ExpectedStep2ResultTest;
+        isValid = expected && expected == result.Step2ResultTest;
+        isWrong = expected && expected != result.Step2ResultTest;
+
+        if(isValid) cout << GREEN;
+        else if(isWrong) cout << RED;
+        else cout << YELLOW + BLINK;
+        cout << PAD_LEFT(13, ' ') << result.Step2ResultTest << RESET << " ";
+        PRINT_RESULT_STATUS;
+        cout << PAD_LEFT(9, ' ') << result.Step2TestElapsedTime << DIM << " | " << RESET;
+
+
+        // STEP 2 LIVE
+        expected = result.ExpectedStep2ResultLive;
+        isValid = expected && expected == result.Step2ResultLive;
+        isWrong = expected && expected != result.Step2ResultLive;
+
+        if(isValid) cout << GREEN;
+        else if(isWrong) cout << RED;
+        else cout << YELLOW + BLINK;
+        cout << PAD_LEFT(13, ' ') << result.Step2ResultLive << RESET << " ";
+        PRINT_RESULT_STATUS;
+        cout << PAD_LEFT(9, ' ') << result.Step2LiveElapsedTime << DIM << " | " << RESET;
+
+        cout << endl;
+
+
+    }
+
+    cout << DIM << "|=============================================================================================================================================================================================================================|" << RESET << endl;
+}
+
+
 
 const bool AoCBase::IsTest() const
 {
@@ -14,7 +112,7 @@ void AoCBase::OnInitStep(const int Step) {}
 void AoCBase::OnCloseStep(const int Step) {}
 void AoCBase::OnCloseTests() {}
 
-void AoCBase::PrintStepResult(const int Step, bool IsTesting, const long& Result)
+void AoCBase::PrintStepResult(const int Step, bool IsTesting, const int64_t& Result)
 {
     bool isValid = false;
     bool isWrong = false;
@@ -85,22 +183,22 @@ void AoCBase::ReadExpectedStepResults()
 
     std::getline(file, line);
     std::getline(file, line);
-    ExpectedTestResultForStep1 = std::stol(line);
+    ExpectedTestResultForStep1 = std::stoll(line);
 
     std::getline(file, line);
     std::getline(file, line);
     std::getline(file, line);
-    ExpectedLiveResultForStep1 = std::stol(line);
+    ExpectedLiveResultForStep1 = std::stoll(line);
 
     std::getline(file, line);
     std::getline(file, line);
     std::getline(file, line);
-    ExpectedTestResultForStep2 = std::stol(line);
+    ExpectedTestResultForStep2 = std::stoll(line);
 
     std::getline(file, line);
     std::getline(file, line);
     std::getline(file, line);
-    ExpectedLiveResultForStep2 = std::stol(line);
+    ExpectedLiveResultForStep2 = std::stoll(line);
 }
 
 string AoCBase::ReadStringFromFile(int Step) const

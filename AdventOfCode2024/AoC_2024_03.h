@@ -37,8 +37,8 @@ class AoC_2024_03 : public AoCBase
 {
     const virtual __forceinline int GetDay() const override { return 3; }
     // Inherited via AoCBase
-    const long Step1() override;
-    const long Step2() override;
+    const int64_t Step1() override;
+    const int64_t Step2() override;
 
     friend class AoCBase;
 

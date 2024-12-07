@@ -9,8 +9,8 @@ class AoC_2024_32 : public AoCBaseWithWindow
     virtual void OnPaint(HDC hdc) override;
 
     // Inherited via AoCBaseWithD3D
-    const long Step1() override;
-    const long Step2() override;
+    const int64_t Step1() override;
+    const int64_t Step2() override;
 
     friend class AoCBase;
 

@@ -15,7 +15,7 @@ void AoC_2024_06::ClearState() // turned out I am using it once, so this should 
     StepY = -1; // starting north
 }
 
-const long AoC_2024_06::Step1()
+const int64_t AoC_2024_06::Step1()
 {
     ClearState();
     Map = ReadStringFromFile(1, Height, Width);
@@ -43,7 +43,7 @@ const long AoC_2024_06::Step1()
     return CountMarkedLocations();
 }
 
-const long AoC_2024_06::Step2()
+const int64_t AoC_2024_06::Step2()
 {
     long sum = 0;
 

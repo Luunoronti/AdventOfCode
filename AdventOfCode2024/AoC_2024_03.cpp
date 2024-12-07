@@ -126,12 +126,12 @@ const long AoC_2024_03::Process(const string& Line, const bool AllowModifiers)
     return sum;
 }
 
-const long AoC_2024_03::Step1()
+const int64_t AoC_2024_03::Step1()
 {
     return Process(ReadStringFromFile(1), false);
 }
 
-const long AoC_2024_03::Step2()
+const int64_t AoC_2024_03::Step2()
 {
     return Process(ReadStringFromFile(2), true);
 }

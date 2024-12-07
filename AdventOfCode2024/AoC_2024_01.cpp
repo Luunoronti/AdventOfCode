@@ -1,6 +1,6 @@
 #include "AoC_2024_01.h"
 
-const long AoC_2024_01::Step1()
+const int64_t AoC_2024_01::Step1()
 {
     const auto& Columns = ReadVerticalVectorsFromFile(1);
 
@@ -24,7 +24,7 @@ const long AoC_2024_01::Step1()
     return sum;
 }
 
-const long AoC_2024_01::Step2()
+const int64_t AoC_2024_01::Step2()
 {
     const auto& Columns = ReadVerticalVectorsFromFile(2);
     return std::accumulate(Columns[0].begin(), Columns[0].end(), 0L, [&](long acc, const long& left) { return (long)acc + (long)left * (long)std::count(Columns[1].begin(), Columns[1].end(), left); });

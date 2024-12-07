@@ -33,7 +33,7 @@
 #define IS_MxS_135 (IS_M(-1, +1) AND IS_S(+1, -1))
 #define IS_SxM_135 (IS_S(-1, +1) AND IS_M(+1, -1))
 
-const long AoC_2024_04::Step1()
+const int64_t AoC_2024_04::Step1()
 {
     long sum = 0;
     int width = 0, height = 0;
@@ -64,7 +64,7 @@ const long AoC_2024_04::Step1()
 
 
 
-const long AoC_2024_04::Step2()
+const int64_t AoC_2024_04::Step2()
 {
     long sum = 0;
     int width = 0, height = 0;

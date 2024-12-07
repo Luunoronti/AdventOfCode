@@ -6,7 +6,7 @@ void AoC_2024_32::OnPaint(HDC hdc)
     FillRect(hdc, &rect, (HBRUSH)(COLOR_WINDOWTEXT + 1));
 }
 
-const long AoC_2024_32::Step1()
+const int64_t AoC_2024_32::Step1()
 {
     //DWORD startTime = ::GetTickCount64();
     //DWORD endTime = startTime + duration;
@@ -31,7 +31,7 @@ const long AoC_2024_32::Step1()
     return 0;
 }
 
-const long AoC_2024_32::Step2()
+const int64_t AoC_2024_32::Step2()
 {
     WaitForWindowClose();
 

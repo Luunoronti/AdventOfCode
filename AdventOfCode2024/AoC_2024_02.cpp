@@ -45,7 +45,7 @@ const bool AoC_2024_02::CheckAtIndices(const vector<long>& List, const int index
 
 
 
-const long AoC_2024_02::Step1()
+const int64_t AoC_2024_02::Step1()
 {
     const auto& List = ReadLongVectorsFromFile(1);
 
@@ -59,7 +59,7 @@ const long AoC_2024_02::Step1()
     return safeCount;
 }
 
-const long AoC_2024_02::Step2()
+const int64_t AoC_2024_02::Step2()
 {
     const auto& List = ReadLongVectorsFromFile(2);
     long safeCount = 0;

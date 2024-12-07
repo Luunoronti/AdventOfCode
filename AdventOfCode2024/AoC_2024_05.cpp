@@ -15,7 +15,7 @@ const bool AoC_2024_05::CheckAllRules(PageList InList, long& errIndex1, long& er
     }
     return true;
 }
-const long AoC_2024_05::Step1()
+const int64_t AoC_2024_05::Step1()
 {
     Rules.clear();
     PageLists.clear();
@@ -39,7 +39,7 @@ const long AoC_2024_05::Step1()
     return sum;
 }
 
-const long AoC_2024_05::Step2()
+const int64_t AoC_2024_05::Step2()
 {
     long sum = 0;
 

@@ -50,56 +50,109 @@ const string BKMAGENTA = "\033[45m";
 const string BKCYAN = "\033[46m";
 const string BKWHITE = "\033[47m";
 
+#define PAD_LEFT(num, ch) std::setw(num) << std::setfill(ch)
+
 typedef std::vector<std::vector<long>> LongListList;
 
+struct AoCBaseExecutionResult
+{
+    int Year{ 0 };
+    int8_t Day{ 0 };
+
+    long Step1ResultTest{ 0 };
+    long Step2ResultTest{ 0 };
+    int64_t Step1ResultLive{ 0 };
+    int64_t Step2ResultLive{ 0 };
+
+    long ExpectedStep1ResultTest{ 0 };
+    long ExpectedStep2ResultTest{ 0 };
+    int64_t ExpectedStep1ResultLive{ 0 };
+    int64_t ExpectedStep2ResultLive{ 0 };
+
+    double Step1TestElapsedTime{ 0 };
+    double Step1LiveElapsedTime{ 0 };
+    double Step2TestElapsedTime{ 0 };
+    double Step2LiveElapsedTime{ 0 };
+
+};
 class AoCBase
 {
 public:
+
+    static vector<AoCBaseExecutionResult> ResultReports;
+    
+    static void PrintExecutionReport();
+
     template<typename T>
     static void ExecuteSteps()
     {
         LARGE_INTEGER frequency;
-        LARGE_INTEGER start_step1;
-        LARGE_INTEGER start_step2;
-        LARGE_INTEGER end_step1;
-        LARGE_INTEGER end_step2;
+        LARGE_INTEGER start_step;
+        LARGE_INTEGER end_step;
+#define TIMING_START  QueryPerformanceCounter(&start_step)
+#define TIMING_END  QueryPerformanceCounter(&end_step)
+#define TIME static_cast<double>(end_step.QuadPart - start_step.QuadPart) * 1000.0 / frequency.QuadPart
+
+        AoCBaseExecutionResult result;
         // Get the frequency of the high-resolution performance counter 
         QueryPerformanceFrequency(&frequency);
-
 
         static_assert(std::is_base_of<AoCBase, T>::value, "T must derive from AoCBase");
         T instance;
 
-        cout << DIM << "====================================================================================" << RESET << endl;
         if(instance.GetDay() == 0)
         {
             cout << RED << BLINK << "Error: Class instance has no day defined." << RESET << " Please override GetDay() and return proper day." << endl;
             return;
         }
 
+        result.Year = instance.GetYear();
+        result.Day = instance.GetDay();
+
         instance.ReadExpectedStepResults();
+
+        result.ExpectedStep1ResultTest = instance.ExpectedTestResultForStep1;
+        result.ExpectedStep2ResultTest = instance.ExpectedTestResultForStep2;
+        result.ExpectedStep1ResultLive = instance.ExpectedLiveResultForStep1;
+        result.ExpectedStep2ResultLive = instance.ExpectedLiveResultForStep2;
 
         instance.OnInitTests();
         instance.SetTest(true);
+
         instance.OnInitStep(1);
-        const auto& Step1ResultTest = instance.Step1();
-        const auto& Step2ResultTest = instance.Step2();
+        TIMING_START;
+        result.Step1ResultTest = instance.Step1();
+        TIMING_END;
+        result.Step1TestElapsedTime = TIME;
+
+        TIMING_START;
+        result.Step2ResultTest = instance.Step2();
+        TIMING_END;
+        result.Step2TestElapsedTime = TIME;
+
         instance.OnCloseStep(1);
+
         instance.SetTest(false);
+
         instance.OnInitStep(2);
+        TIMING_START;
+        result.Step1ResultLive = instance.Step1();
+        TIMING_END;
+        result.Step1LiveElapsedTime = TIME;
 
-        QueryPerformanceCounter(&start_step1);
-        const auto& Step1ResultLive = instance.Step1();
-        QueryPerformanceCounter(&end_step1);
-
-        QueryPerformanceCounter(&start_step2);
-        const auto& Step2ResultLive = instance.Step2();
-        QueryPerformanceCounter(&end_step2);
+        TIMING_START;
+        result.Step2ResultLive = instance.Step2();
+        TIMING_END;
+        result.Step2LiveElapsedTime = TIME;
 
         instance.OnCloseStep(2);
+
         instance.OnCloseTests();
 
-        cout << "" << instance.GetYear() << "/" << std::setw(2) << std::setfill('0') << instance.GetDay() << ":  ";
+        ResultReports.push_back(result);
+
+
+        /*cout << "" << instance.GetYear() << "/" << std::setw(2) << std::setfill('0') << instance.GetDay() << ":  ";
         instance.PrintStepResult(1, true, Step1ResultTest);
         instance.PrintStepResult(1, false, Step1ResultLive);
 
@@ -112,11 +165,11 @@ public:
         elapsedTime = static_cast<double>(end_step2.QuadPart - start_step2.QuadPart) * 1000.0 / frequency.QuadPart;
         cout << " Time: " << elapsedTime << " ms";
 
-        cout << endl;
+        cout << endl;*/
     }
 
 protected:
-    void PrintStepResult(const int Step, bool IsTesting, const long& Result);
+    void PrintStepResult(const int Step, bool IsTesting, const int64_t& Result);
 
     void ReadExpectedStepResults();
     void CreateEmptyExpectedStepResultsFile(const std::string& FileName);
@@ -174,17 +227,17 @@ protected:
     }
 
 public:
-    virtual const long Step1() = 0;
-    virtual const long Step2() = 0;
+    virtual const int64_t Step1() = 0;
+    virtual const int64_t Step2() = 0;
 
 private:
     const std::string GetFileName(const int Step) const;
     bool IsUnderTest{ false };
 
-    long ExpectedTestResultForStep1{ 0 };
-    long ExpectedLiveResultForStep1{ 0 };
-    long ExpectedTestResultForStep2{ 0 };
-    long ExpectedLiveResultForStep2{ 0 };
+    int64_t ExpectedTestResultForStep1{ 0 };
+    int64_t ExpectedLiveResultForStep1{ 0 };
+    int64_t ExpectedTestResultForStep2{ 0 };
+    int64_t ExpectedLiveResultForStep2{ 0 };
 };
 
 

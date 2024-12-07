@@ -23,12 +23,7 @@ internal class Program
 
         Console.WriteLine($"Step 1: {step1}. Time: {Stopwatch.GetElapsedTime(ts1, ts2).TotalMilliseconds} ms");
         Console.WriteLine($"Step 2: {step2}. Time: {Stopwatch.GetElapsedTime(ts2, ts3).TotalMilliseconds} ms");
-
     }
-
-
-
-
 }
 
 class AoC2024_06

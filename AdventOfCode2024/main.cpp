@@ -4,15 +4,22 @@
 #include "AoC_2024_04.h"
 #include "AoC_2024_05.h"
 #include "AoC_2024_06.h"
+#include "AoC_2024_07.h"
 
 int main()
 {
-    AoCBase::ExecuteSteps<AoC_2024_01>();
-    AoCBase::ExecuteSteps<AoC_2024_02>();
-    AoCBase::ExecuteSteps<AoC_2024_03>();
-    AoCBase::ExecuteSteps<AoC_2024_04>();
-    AoCBase::ExecuteSteps<AoC_2024_05>();
-    AoCBase::ExecuteSteps<AoC_2024_06>();
+    // we must set locale
+    std::locale::global(std::locale("pl_PL.UTF-8"));
+
+    //AoCBase::ExecuteSteps<AoC_2024_01>();
+    //AoCBase::ExecuteSteps<AoC_2024_02>();
+    //AoCBase::ExecuteSteps<AoC_2024_03>();
+    //AoCBase::ExecuteSteps<AoC_2024_04>();
+    //AoCBase::ExecuteSteps<AoC_2024_05>();
+    //AoCBase::ExecuteSteps<AoC_2024_06>();
+    AoCBase::ExecuteSteps<AoC_2024_07>();
+
+    AoCBase::PrintExecutionReport();
 
     return 0;
 }
