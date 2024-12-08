@@ -34,6 +34,9 @@ void AoC_2024_08::OnInitLiveTests() { Input = ReadStringFromFile(1, Height, Widt
 typedef unordered_map<char, vector<AntennaLocation>> AntennaMap;
 const int64_t AoC_2024_08::Step1()
 {
+
+    dout << "This is first debug message " << RED+BLINK << " with some blinking" << RESET << endl;
+
     AntennaMap antennaMap;
 
     // scan for all antennas

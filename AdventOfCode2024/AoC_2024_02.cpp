@@ -1,95 +1,71 @@
 #include "AoC_2024_02.h"
 
-const bool AoC_2024_02::AnalyzeList(vector<long> List, const int Start, const int End, int& ErrorIndex, int OmitIndex) const
+void AoC_2024_02::OnInitTestingTests() { Input = ReadLongVectorsFromFile(1); }
+void AoC_2024_02::OnInitLiveTests() { Input = ReadLongVectorsFromFile(1); }
+
+
+const bool AoC_2024_02::AnalyzeList(vector<long> List, const bool Allow2ndCheck) const
 {
-    ErrorIndex = -1;
-
-    if(List.size() <= 1) return false;
-    bool increase = List[Start] < List[Start+1];
-
-    for(int i = Start; i < End - 1; ++i)
+    bool increase = List[0] < List[1];
+    bool badList = false;
+    for(int i = 0; i < List.size() - 1; ++i)
     {
-        int ti1 = i;
-        int ti2 = i + 1;
-
-        if(OmitIndex == i) ti1 = i - 1;
-        if(OmitIndex == i + 1) ti2 = i + 2;
-        if(ti1 < 0) continue;
-        if(ti2 >= List.size()) continue;
-
-        if(!CheckAtIndices(List, ti1, ti2, increase))
+        int64_t a = List[i];
+        int64_t b = List[i + 1];
+        if(a == b || abs(a - b) > 3 || (increase && a > b) || (!increase && a < b))
         {
-            ErrorIndex = ti1;
-            return false;
+            if(!Allow2ndCheck)
+                return false;
+            badList = true;
+            break;
         }
     }
-    return true;
-}
-const bool AoC_2024_02::CheckAtIndices(const vector<long>& List, const int indexA, const int indexB, const bool increase) const
-{
-    if(indexA < 0 || indexB < 0 || indexA >= List.size() || indexB >= List.size())
-        return false;
 
-    if(increase)
-    {
-        if(List[indexA] >= List[indexB] || (List[indexA] < List[indexB] - 3))
-            return false;
-    }
-    else
-    {
-        if(List[indexA] <= List[indexB] || (List[indexA] > List[indexB] + 3))
-            return false;
-    }
-    return true;
-}
+    if(!badList)
+        return true;
 
+    vector<long> _2ndTest;
+    for(int i = 0; i < List.size(); ++i)
+    {
+        _2ndTest.clear();
+        for(int i2 = 0; i2 < List.size(); ++i2)
+        {
+            if(i2 == i) continue;
+            _2ndTest.push_back(List[i2]);
+        }
+        if(AnalyzeList(_2ndTest, false))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 
 const int64_t AoC_2024_02::Step1()
 {
-    const auto& List = ReadLongVectorsFromFile(1);
-
     long safeCount = 0;
-    int IndexA = 0;
-    for(const auto& Line : List)
+    for(const auto& list : Input)
     {
-        if(AnalyzeList(Line, 0, (const int)Line.size(), IndexA))
+        if(AnalyzeList(list, false))
+        {
             safeCount++;
+        }
     }
     return safeCount;
 }
 
 const int64_t AoC_2024_02::Step2()
 {
-    const auto& List = ReadLongVectorsFromFile(2);
     long safeCount = 0;
-
-    int ErrorIndex = 0;
-    int NoUse = 0;
-    for(const auto& Line : List)
+    for(const auto& list : Input)
     {
-        if(AnalyzeList(Line, 0, (const int)Line.size(), ErrorIndex))
+        if(AnalyzeList(list, true))
         {
             safeCount++;
         }
-        else
-        {
-            // we must analyze same list, but without checking at  
-            // IndexA, IndexB, or IndexA-1
-
-            if(AnalyzeList(Line, 0, (const int)Line.size(), NoUse, ErrorIndex))
-            {
-                safeCount++;
-            }
-            else if(AnalyzeList(Line, 0, (const int)Line.size(), NoUse, ErrorIndex + 1))
-            {
-                safeCount++;
-            }
-            else if(ErrorIndex == 1 && AnalyzeList(Line, 1, (const int)Line.size(), NoUse))
-            {
-                safeCount++;
-            }
-        }
     }
     return safeCount;
+
 }

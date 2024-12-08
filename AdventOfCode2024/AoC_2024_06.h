@@ -1,5 +1,5 @@
 #pragma once
-#include "AoCBase.h"
+#include "AoC2024.h"
 
 enum StepForwardResult
 {
@@ -10,15 +10,15 @@ enum StepForwardResult
 };
 
 
-class AoC_2024_06 : public AoCBase
+class AoC_2024_06 : public AoC2024
 {
     // Inherited via AoCBase
+public:
     const int GetDay() const override { return 6; }
     const int64_t Step1() override;
     const int64_t Step2() override;
 
-    friend class AoCBase;
-
+private:
     void ClearState();
 
     __forceinline const int BufPos(const int& x, const int& y) const 

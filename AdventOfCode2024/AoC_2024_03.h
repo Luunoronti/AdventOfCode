@@ -1,5 +1,5 @@
 #pragma once
-#include "AoCBase.h"
+#include "AoC2024.h"
 
 
 
@@ -33,14 +33,15 @@ enum State
 
 
 
-class AoC_2024_03 : public AoCBase
+class AoC_2024_03 : public AoC2024
 {
+public:
     const virtual __forceinline int GetDay() const override { return 3; }
     // Inherited via AoCBase
     const int64_t Step1() override;
     const int64_t Step2() override;
 
-    friend class AoCBase;
+private:
 
     const long Process(const string& Line, const bool AllowModifiers);
     const long Process2(const string& Line, const bool AllowModifiers);

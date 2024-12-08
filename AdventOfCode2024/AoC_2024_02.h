@@ -1,18 +1,20 @@
 #pragma once
-#include "AoCBase.h"
+#include "AoC2024.h"
 
-class AoC_2024_02 : public AoCBase
+class AoC_2024_02 : public AoC2024
 {
+public:
+    virtual void OnInitTestingTests() override;
+    virtual void OnInitLiveTests() override;
+
     const virtual __forceinline int GetDay() const override { return 2; }
     const int64_t Step1() override;
     const int64_t Step2() override;
 
-    friend class AoCBase;
+private:
+    const bool AnalyzeList(vector<long> List, const bool Allow2ndCheck) const;
 
-
-    const bool CheckAtIndices(const vector<long>& List, const int indexA, const int indexB, const bool increase) const;
-    const bool AnalyzeList(vector<long> List, const int Start, const int End, int& ErrorIndex, const int OmmitIndex = -1) const;
-
+    LongListList Input;
 
 };
 

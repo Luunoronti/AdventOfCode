@@ -1,14 +1,17 @@
 ﻿#include "AoCBase.h"
 
 vector<AoCBaseExecutionResult> AoCBase::ResultReports;
+AoCProgramConfiguration AoCBase::ProgramConfiguration;
+bool AoCBase::ProgramConfigurationLoaded{ false };
 
+
+#pragma region Report printing
 #define PRINT_RESULT_STATUS \
         cout << DIM << "| " << RESET; \
         if(isValid) cout << GREEN << PAD_LEFT(22, ' ') << "OK" << RESET; \
         else if(isWrong){ wrongStr = "Wrong (Exp: " + std::to_string(expected) + ")"; cout << RED << PAD_LEFT(22, ' ') << wrongStr << RESET; } \
         else cout << YELLOW + BLINK << PAD_LEFT(22, ' ') << "Not verified" << RESET; \
         cout << DIM << " | "  << RESET;
-
 
 int Max(int i1, int i2)
 {
@@ -45,10 +48,10 @@ void printRightPaddedString(const std::string& s, size_t len, string colorCode, 
     size_t padding = len > s.length() ? len - s.length() : 0;
     std::cout << (noDimming ? "" : DIM) << "|" << RESET << colorCode << s << RESET << std::setw(padding + 1) << std::setfill(' ') << "" << "";
 }
-void printLeftPaddedString(const std::string& s, size_t len, string colorCode, bool noDimming = false)
+void printLeftPaddedString(const std::string& s, size_t len, string colorCode, bool noDimming = false, bool noBar = false)
 {
     size_t padding = len > s.length() ? len - s.length() : 0;
-    std::cout << (noDimming ? "" : DIM) << "|" << RESET << colorCode << std::setw(padding + s.length()) << std::setfill(' ') << s << RESET << "";
+    std::cout << (noDimming ? "" : DIM) << (noBar ? "" : "|") << RESET << colorCode << std::setw(padding + s.length()) << std::setfill(' ') << s << RESET << "";
 }
 void printCenterPaddedString(const std::string& s, size_t len, string colorCode, bool noDimming = false)
 {
@@ -70,6 +73,12 @@ std::string toStringWithPrecision(double value, int precision)
 
 void AoCBase::PrintExecutionReport()
 {
+    // Get the current system time 
+    SYSTEMTIME st;
+    GetLocalTime(&st);
+    // Get the day of the month 
+    int dayOfMonth = st.wDay;
+
 
 #pragma region Macros
 #define EST_WIDTH(SP) \
@@ -89,7 +98,7 @@ printLeftPaddedString(toStringWithPrecision(SP.Time, TIME_PRECISION), requiredWi
 #define PRINT_HORIZONTAL_DIVIDER std::cout << DIM << "+" << PAD_LEFT(totalWidth, '-') << "" << "+" << RESET << endl
 #define PRINT_NOTE(s, c) { printRightPaddedString("             " + s, totalWidth - 1, c); std::cout << DIM << "|" << RESET << endl; }
 
-#define PRINT_SP_UNDEFINED_NOTE(sp) if(sp.IsNotKnown()) { PRINT_NOTE(sp.Name + " is not verified.", YELLOW); }
+#define PRINT_SP_UNDEFINED_NOTE(sp, s) if(sp.IsNotKnown()) if(s.Day <= dayOfMonth) { PRINT_NOTE(sp.Name + " is not verified.", YELLOW); }
 
 #define PRINT_SP_ERROR_IF_PRESENT(sp)  \
 if(sp.IsError()) { if(sp.Result > sp.ExpectedResult)\
@@ -100,8 +109,8 @@ PRINT_NOTE(sp.Name + " result is too small, expected " + to_string(sp.ExpectedRe
 if(std::find(sp.KnownErrorResults.begin(), sp.KnownErrorResults.end(), sp.Result) != sp.KnownErrorResults.end()) \
 {PRINT_NOTE(sp.Name + " result " + to_string(sp.Result) + " is in the list of known bad results.", RED) } 
 
-#define PRINT_ALL_STEP_NOTES(sp) \
-{ PRINT_SP_UNDEFINED_NOTE(sp); } \
+#define PRINT_ALL_STEP_NOTES(sp, s) \
+{ PRINT_SP_UNDEFINED_NOTE(sp, s); } \
 { PRINT_KNOWN_ERROR_VALUES(sp); } \
 { PRINT_SP_ERROR_IF_PRESENT(sp); } 
 
@@ -168,7 +177,11 @@ if(std::find(sp.KnownErrorResults.begin(), sp.KnownErrorResults.end(), sp.Result
     PRINT_HORIZONTAL_DIVIDER;
 #pragma endregion
 
-
+    double TotalTimings[7]; // 0: total, 1: total test, 2: total live
+    for(int i = 0; i < 7; ++i)
+    {
+        TotalTimings[i] = 0;
+    }
     for(int i = 0; i < ResultReports.size(); ++i)
     {
         const AoCBaseExecutionResult& result = ResultReports[i];
@@ -176,7 +189,7 @@ if(std::find(sp.KnownErrorResults.begin(), sp.KnownErrorResults.end(), sp.Result
         {
             // PRINT_HORIZONTAL_DIVIDER;
         }
-        std::stringstream ss; 
+        std::stringstream ss;
         ss << std::setfill('0') << std::setw(2) << (int)result.Day;
 
         printRightPaddedString(to_string(result.Year) + "/" + ss.str() + " " + result.Name, requiredWidth[0] - 1, "");
@@ -200,24 +213,84 @@ if(std::find(sp.KnownErrorResults.begin(), sp.KnownErrorResults.end(), sp.Result
             //PRINT_HORIZONTAL_DIVIDER;
         }
 
-        PRINT_ALL_STEP_NOTES(result.Step1Test);
-        PRINT_ALL_STEP_NOTES(result.Step1Live);
-        PRINT_ALL_STEP_NOTES(result.Step2Test);
-        PRINT_ALL_STEP_NOTES(result.Step2Live);
+        PRINT_ALL_STEP_NOTES(result.Step1Test, result);
+        PRINT_ALL_STEP_NOTES(result.Step1Live, result);
+        PRINT_ALL_STEP_NOTES(result.Step2Test, result);
+        PRINT_ALL_STEP_NOTES(result.Step2Live, result);
+
+
+        TotalTimings[0] += result.Step1Test.Time;
+        TotalTimings[0] += result.Step1Live.Time;
+        TotalTimings[0] += result.Step2Test.Time;
+        TotalTimings[0] += result.Step2Live.Time;
+
+        TotalTimings[1] += result.Step1Test.Time;
+        TotalTimings[1] += result.Step2Test.Time;
+
+        TotalTimings[2] += result.Step1Live.Time;
+        TotalTimings[2] += result.Step2Live.Time;
+
+        TotalTimings[3] += result.Step1Test.Time;
+        TotalTimings[4] += result.Step2Test.Time;
+
+        TotalTimings[5] += result.Step1Live.Time;
+        TotalTimings[6] += result.Step2Live.Time;
 
         if(hasNotes)
         {
             //PRINT_HORIZONTAL_DIVIDER;
         }
     }
+#define GET_TIME_FLAGS(t) ((TotalTimings[3] > 500.0) ? (TotalTimings[3] > 2000 ? RED + DIM : YELLOW + DIM) : "")
+
+    PRINT_HORIZONTAL_DIVIDER;
+    printLeftPaddedString("Time summary: ", requiredWidth[0], "");
+
+    printLeftPaddedString(toStringWithPrecision(TotalTimings[3], TIME_PRECISION), requiredWidth[1] + requiredWidth[2] + 1, GET_TIME_FLAGS(TotalTimings[3]));
+    printLeftPaddedString(toStringWithPrecision(TotalTimings[5], TIME_PRECISION), requiredWidth[3] + requiredWidth[4] + 1, GET_TIME_FLAGS(TotalTimings[5]));
+    printLeftPaddedString(toStringWithPrecision(TotalTimings[4], TIME_PRECISION), requiredWidth[5] + requiredWidth[6] + 1, GET_TIME_FLAGS(TotalTimings[4]));
+    printLeftPaddedString(toStringWithPrecision(TotalTimings[6], TIME_PRECISION), requiredWidth[7] + requiredWidth[8] + 1, GET_TIME_FLAGS(TotalTimings[6]));
+
+    std::cout << RESET << DIM << "|" << RESET << endl;
+    PRINT_HORIZONTAL_DIVIDER;
+
+#if _DEBUG
+    printCenterPaddedString("DEBUG MODE", requiredWidth[0], RED + BLINK);
+#else
+    printCenterPaddedString("", requiredWidth[0], RED + BLINK);
+#endif
+
+    int div4 = (totalWidth - requiredWidth[0] - 1) / 4;
+    printLeftPaddedString("Total times:", div4, "");
+
+    {
+        std::stringstream ss;
+        ss << "Test: " << GET_TIME_FLAGS(TotalTimings[1]) << toStringWithPrecision(TotalTimings[1], TIME_PRECISION) << "ms";
+        printLeftPaddedString(ss.str(), div4, "", false, true);
+    }
+
+    {
+        std::stringstream ss;
+        ss << "Live: " << GET_TIME_FLAGS(TotalTimings[2]) << toStringWithPrecision(TotalTimings[2], TIME_PRECISION) << "ms";
+        printLeftPaddedString(ss.str(), div4, "", false, true);
+    }
+
+    {
+        std::stringstream ss;
+        ss << "Sum: " << GET_TIME_FLAGS(TotalTimings[0]) << toStringWithPrecision(TotalTimings[0], TIME_PRECISION) << "ms";
+        printLeftPaddedString(ss.str(), div4, "", false, true);
+    }
+
+    std::cout << RESET << DIM << " |" << RESET << endl;
+
     std::cout << DIM << "+" << PAD_LEFT(totalWidth, '=') << "" << "+" << RESET << endl;
     std::cout << endl << DIM << "Legend:" << endl;
     //std::cout << "Value colors: " << GREEN << "OK" << RESET << ", " << RED << "Wrong" << RESET << ", " << YELLOW << BLINK << "Not yet verified (not known)" << RESET << endl;
-    std::cout << DIM << "Time colors: " << RESET << "Under 16.6ms" << RESET << DIM << ", " << RED << DIM << "Above 500ms" << RESET << DIM << ", " << YELLOW + DIM << "Above 16.6 but under 500ms" << RESET << endl;
-    std::cout << DIM << "Time is in milliseconds, 1.000 means 1 millisecond while 0.745 means 745 microseconds." << endl;
+    std::cout << DIM << "  Time colors: " << RESET << "Under 16.6ms" << RESET << DIM << ", " << RED << DIM << "Above 500ms" << RESET << DIM << ", " << YELLOW + DIM << "Above 16.6 but under 500ms" << RESET << endl;
+    std::cout << DIM << "  Time is in milliseconds, 1.000 means 1 millisecond while 0.745 means 745 microseconds." << endl;
 }
 
-
+#pragma endregion
 
 
 const bool AoCBase::IsTest() const
@@ -239,6 +312,7 @@ void AoCBase::OnInitLiveTests() {}
 void AoCBase::OnCloseLiveTests() {}
 
 
+#pragma region File IO
 std::vector<int64_t> ParseStringToVector_Helper(const std::string& input)
 {
     std::vector<int64_t> result;
@@ -252,8 +326,6 @@ std::vector<int64_t> ParseStringToVector_Helper(const std::string& input)
     }
     return result;
 }
-
-
 
 
 string AoCBase::ReadStringFromFile(int Step) const
@@ -434,7 +506,7 @@ const std::string AoCBase::GetFileName(const int Step) const
     std::string filename = ".\\" + folder + "\\" + std::to_string(GetYear()) + "_" + std::to_string(GetDay()) + "_" + std::to_string(Step) + ".txt";
     return filename;
 }
-
+#pragma endregion
 
 long AoCBase::GetMinimum(const vector<long>& List)
 {
@@ -453,6 +525,7 @@ void to_json(nlohmann::json& j, const AoCBaseExecutionResultEntry& s)
 {
     j = nlohmann::json{
         {"expectedResult", s.ExpectedResult},
+        {"enableDebugStream", s.EnableDebugOutput},
         {"knownErrors", s.KnownErrorResults} };
 }
 void to_json(nlohmann::json& j, const AoCBaseExecutionResult& s)
@@ -460,26 +533,45 @@ void to_json(nlohmann::json& j, const AoCBaseExecutionResult& s)
     j = nlohmann::json{
         {"year", s.Year},
         {"day", s.Day},
+        {"run", s.OkToRunInRelease},
+        {"debugRun", s.OkToRunInDebug},
+        {"enableDebugStream", s.EnableDebugOutput},
         {"name", s.Name},
         {"testStep1", s.Step1Test},
         {"liveStep1", s.Step1Live},
         {"testStep2", s.Step2Test},
         {"liveStep2", s.Step2Live} };
 }
+void to_json(nlohmann::json& j, const AoCProgramConfiguration& s)
+{
+    j = nlohmann::json{
+        {"runAllInDebug", s.ForceAllRunsInDebug},
+        {"runAllInRelease", s.ForceAllRunsInRelease} };
+}
+
 void from_json(const nlohmann::json& j, AoCBaseExecutionResultEntry& s)
 {
-    j.at("expectedResult").get_to(s.ExpectedResult);
-    j.at("knownErrors").get_to(s.KnownErrorResults);
+    if(j.contains("expectedResult")) j.at("expectedResult").get_to(s.ExpectedResult);
+    if(j.contains("knownErrors")) j.at("knownErrors").get_to(s.KnownErrorResults);
+    if(j.contains("enableDebugStream")) j.at("enableDebugStream").get_to(s.EnableDebugOutput);
 }
 void from_json(const nlohmann::json& j, AoCBaseExecutionResult& s)
 {
-    j.at("day").get_to(s.Day);
-    j.at("testStep1").get_to(s.Step1Test);
-    j.at("liveStep1").get_to(s.Step1Live);
-    j.at("testStep2").get_to(s.Step2Test);
-    j.at("liveStep2").get_to(s.Step2Live);
-    j.at("year").get_to(s.Year);
-    j.at("name").get_to(s.Name);
+    if(j.contains("day")) j.at("day").get_to(s.Day);
+    if(j.contains("run")) j.at("run").get_to(s.OkToRunInRelease);
+    if(j.contains("debugRun")) j.at("debugRun").get_to(s.OkToRunInDebug);
+    if(j.contains("enableDebugStream")) j.at("enableDebugStream").get_to(s.EnableDebugOutput);
+    if(j.contains("testStep1")) j.at("testStep1").get_to(s.Step1Test);
+    if(j.contains("liveStep1")) j.at("liveStep1").get_to(s.Step1Live);
+    if(j.contains("testStep2")) j.at("testStep2").get_to(s.Step2Test);
+    if(j.contains("liveStep2")) j.at("liveStep2").get_to(s.Step2Live);
+    if(j.contains("year")) j.at("year").get_to(s.Year);
+    if(j.contains("name")) j.at("name").get_to(s.Name);
+}
+void from_json(const nlohmann::json& j, AoCProgramConfiguration& s)
+{
+    if(j.contains("runAllInDebug")) j.at("runAllInDebug").get_to(s.ForceAllRunsInDebug);
+    if(j.contains("runAllInRelease")) j.at("runAllInRelease").get_to(s.ForceAllRunsInRelease);
 }
 
 vector<AoCBaseExecutionResult> AoCBase::DaysDatabase;
@@ -498,6 +590,8 @@ void AoCBase::ReadDaysDatabaseIfNotDoneAlready()
         AoCBaseExecutionResult e1;
         e1.Day = 0;
         e1.Year = 2024;
+        e1.OkToRunInDebug = true;
+        e1.OkToRunInRelease = true;
 
         e1.Step1Test.ExpectedResult = 2;
         e1.Step1Test.KnownErrorResults.push_back(-1);
@@ -548,6 +642,47 @@ AoCBaseExecutionResult AoCBase::GetResultJsonEntry(int Year, int Day)
             return day;
     }
     throw std::runtime_error("Unable to find database entry for year " + to_string(Year) + " day " + to_string(Day));
+}
+void AoCBase::LoadProgramConfig()
+{
+    std::string FileName = ".\\Database\\ProgramConfig.json";
+    std::ifstream file(FileName);
+    if(!file.is_open())
+    {
+#pragma region Create new json file
+        AoCProgramConfiguration cfg;
+        cfg.ForceAllRunsInDebug = false;
+        cfg.ForceAllRunsInRelease = false;
+
+        nlohmann::json jsonData = cfg;
+        std::ofstream outFile(FileName);
+        if(outFile.is_open())
+        {
+            outFile << jsonData.dump(4); // Indentation level of 4 for pretty printing 
+            outFile.close();
+        }
+        else
+        {
+            std::cerr << "Unable to open file for writing." << std::endl;
+        }
+#pragma endregion
+
+        file.open(FileName);
+        if(!file.is_open())
+        {
+            std::cerr << RED << BLINK << "Error opening expected results file " << FileName << RESET << std::endl;
+            return;
+        }
+    }
+
+
+    nlohmann::json jsonData;
+    file >> jsonData;
+
+    ProgramConfiguration = jsonData.get<AoCProgramConfiguration>();
+    ProgramConfigurationLoaded = true;
+
+    file.close();
 }
 #pragma endregion
 

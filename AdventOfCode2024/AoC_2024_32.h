@@ -4,6 +4,8 @@ class AoC_2024_32 : public AoCBaseWithWindow
 {
     // this is a test day, not for actual problem solving
 
+public:
+
     const virtual __forceinline int GetDay() const override { return 32; }
 
     virtual void OnPaint(HDC hdc) override;
@@ -12,7 +14,6 @@ class AoC_2024_32 : public AoCBaseWithWindow
     const int64_t Step1() override;
     const int64_t Step2() override;
 
-    friend class AoCBase;
 
 
     static const int duration = 10000; // Duration of the animation in milliseconds 

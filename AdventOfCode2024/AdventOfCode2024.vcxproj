@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AoC2024.cpp" />
     <ClCompile Include="AoCBaseWithD3D.cpp" />
     <ClCompile Include="AoCBaseWithWindow.cpp" />
     <ClCompile Include="AoC_2024_01.cpp" />
@@ -137,11 +138,29 @@
     <ClCompile Include="AoC_2024_06.cpp" />
     <ClCompile Include="AoC_2024_07.cpp" />
     <ClCompile Include="AoC_2024_08.cpp" />
+    <ClCompile Include="AoC_2024_10.cpp" />
+    <ClCompile Include="AoC_2024_11.cpp" />
+    <ClCompile Include="AoC_2024_12.cpp" />
+    <ClCompile Include="AoC_2024_13.cpp" />
+    <ClCompile Include="AoC_2024_14.cpp" />
+    <ClCompile Include="AoC_2024_15.cpp" />
+    <ClCompile Include="AoC_2024_16.cpp" />
+    <ClCompile Include="AoC_2024_17.cpp" />
+    <ClCompile Include="AoC_2024_18.cpp" />
+    <ClCompile Include="AoC_2024_19.cpp" />
+    <ClCompile Include="AoC_2024_20.cpp" />
+    <ClCompile Include="AoC_2024_21.cpp" />
+    <ClCompile Include="AoC_2024_22.cpp" />
+    <ClCompile Include="AoC_2024_23.cpp" />
+    <ClCompile Include="AoC_2024_24.cpp" />
     <ClCompile Include="AoC_2024_32.cpp" />
+    <ClCompile Include="AoC_2024_09.cpp" />
+    <ClCompile Include="DebugBuffer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AoCBase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AoC2024.h" />
     <ClInclude Include="AoCBase.h" />
     <ClInclude Include="AoCBaseWithD3D.h" />
     <ClInclude Include="AoCBaseWithWindow.h" />
@@ -153,7 +172,26 @@
     <ClInclude Include="AoC_2024_06.h" />
     <ClInclude Include="AoC_2024_07.h" />
     <ClInclude Include="AoC_2024_08.h" />
+    <ClInclude Include="AoC_2024_10.h" />
+    <ClInclude Include="AoC_2024_11.h" />
+    <ClInclude Include="AoC_2024_12.h" />
+    <ClInclude Include="AoC_2024_13.h" />
+    <ClInclude Include="AoC_2024_14.h" />
+    <ClInclude Include="AoC_2024_15.h" />
+    <ClInclude Include="AoC_2024_16.h" />
+    <ClInclude Include="AoC_2024_17.h" />
+    <ClInclude Include="AoC_2024_18.h" />
+    <ClInclude Include="AoC_2024_19.h" />
+    <ClInclude Include="AoC_2024_20.h" />
+    <ClInclude Include="AoC_2024_21.h" />
+    <ClInclude Include="AoC_2024_22.h" />
+    <ClInclude Include="AoC_2024_23.h" />
+    <ClInclude Include="AoC_2024_24.h" />
     <ClInclude Include="AoC_2024_32.h" />
+    <ClInclude Include="AoC_2024_09.h" />
+    <ClInclude Include="AoC_2024_Includes.h" />
+    <ClInclude Include="AoC_2024_Run.h" />
+    <ClInclude Include="DebugBuffer.h" />
     <ClInclude Include="json.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

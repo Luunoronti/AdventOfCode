@@ -1,10 +1,10 @@
 #pragma once
-#include "AoCBase.h"
+#include "AoC2024.h"
 
 
 
 
-class AoC_2024_07 : public AoCBase
+class AoC_2024_07 : public AoC2024
 {
     typedef unordered_map<int, int64_t> CacheLine;
     typedef vector<CacheLine> Cache;
@@ -13,6 +13,7 @@ class AoC_2024_07 : public AoCBase
     typedef vector<vector<int64_t>> Cache2;
 
     // Inherited via AoCBase
+public:
     const int GetDay() const override { return 7; };
 
     const int64_t Step1() override;
@@ -20,6 +21,7 @@ class AoC_2024_07 : public AoCBase
     void OnInitTestingTests() override;
     void OnInitLiveTests() override;
 
+private:
     void ParseInputLineAndStoreInputData(const string& Line);
     const int64_t ProcessData(const SingleLineData& Data, bool AllowConcat) const;
     const int64_t ProcessDataReverse(const SingleLineData& Data, bool AllowConcat) const;
@@ -58,8 +60,6 @@ class AoC_2024_07 : public AoCBase
         return std::stoll(strA); 
     }
 
-
-    friend class AoCBase;
 
 private:
     std::vector<SingleLineData> InputData;

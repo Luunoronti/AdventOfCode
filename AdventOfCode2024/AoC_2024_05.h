@@ -1,8 +1,8 @@
 #pragma once
-#include "AoCBase.h"
+#include "AoC2024.h"
 
 
-class AoC_2024_05 : public AoCBase
+class AoC_2024_05 : public AoC2024
 {
     struct PageRule
     {
@@ -20,12 +20,13 @@ class AoC_2024_05 : public AoCBase
     typedef vector<int> PageList;
 
 
+public:
     const virtual __forceinline int GetDay() const override { return 5; }
     // Inherited via AoCBase
     const int64_t Step1() override;
     const int64_t Step2() override;
-    friend class AoCBase;
 
+private:
     vector<PageRule> Rules;
     vector<PageList> PageLists;
 

@@ -23,12 +23,13 @@
 #include <ppl.h>
 
 #include <ppl.h>
-#include <iostream>
 #include <algorithm>
 #include <array>
 #include <set>
 
 #include "json.hpp"
+
+#include "DebugBuffer.h"
 
 using namespace std;
 using namespace concurrency;
@@ -71,11 +72,12 @@ struct AoCBaseExecutionResultEntry
     double Time{ 0 };
     string Name;
     vector<int64_t> KnownErrorResults;
+    bool EnableDebugOutput{ false };
 
     inline bool IsValid() const { return !IsError() && !IsNotKnown() && Result == ExpectedResult; }
     inline bool IsError() const { return !IsNotKnown() && Result != ExpectedResult; }
     inline bool IsNotKnown() const { return 0 == ExpectedResult; }
-    
+
     inline int64_t Delta() const { return std::abs(Result - ExpectedResult); }
 };
 struct AoCBaseExecutionResult
@@ -83,18 +85,34 @@ struct AoCBaseExecutionResult
     int Year{ 0 };
     int8_t Day{ 0 };
     string Name;
+    bool OkToRunInRelease{ false };
+    bool OkToRunInDebug{ false };
+    bool EnableDebugOutput{ false };
 
+    string GetNameWithDate()
+    {
+        return to_string(Year) + "/" + to_string(Day) + " (" + Name + ")";
+    }
     AoCBaseExecutionResultEntry Step1Test;
     AoCBaseExecutionResultEntry Step2Test;
     AoCBaseExecutionResultEntry Step1Live;
     AoCBaseExecutionResultEntry Step2Live;
 };
-                                                                               
+
+struct AoCProgramConfiguration
+{
+    bool ForceAllRunsInDebug;
+    bool ForceAllRunsInRelease;
+};
+
 class AoCBase
 {
 public:
 
     static vector<AoCBaseExecutionResult> ResultReports;
+    static AoCProgramConfiguration ProgramConfiguration;
+    static bool ProgramConfigurationLoaded;
+
 
     static void PrintExecutionReport();
     static void ReadDaysDatabaseIfNotDoneAlready();
@@ -102,6 +120,11 @@ public:
     template<typename T>
     static void ExecuteSteps()
     {
+        if(!ProgramConfigurationLoaded)
+        {
+            LoadProgramConfig();
+        }
+
         LARGE_INTEGER frequency;
         LARGE_INTEGER start_step;
         LARGE_INTEGER end_step;
@@ -123,75 +146,97 @@ public:
 
         AoCBaseExecutionResult result = GetResultJsonEntry(instance.GetYear(), instance.GetDay());
 
+#if _DEBUG 
+        if(!result.OkToRunInDebug) if(!ProgramConfiguration.ForceAllRunsInDebug) return;
+#else
+        if(!result.OkToRunInRelease) if(!ProgramConfiguration.ForceAllRunsInRelease) return;
+#endif
+
+
+
         result.Step1Test.Name = "Part 1 (TEST)";
         result.Step2Test.Name = "Part 2 (TEST)";
         result.Step1Live.Name = "Part 1 (LIVE)";
         result.Step2Live.Name = "Part 2 (LIVE)";
 
+        if(result.EnableDebugOutput)
+        {
+            dout.setEnabled(true);
+        }
+
         instance.OnInitTests();
         instance.SetTest(true);
         instance.OnInitTestingTests();
+        dout.setEnabled(false);
 
+        if(result.EnableDebugOutput || result.Step1Test.EnableDebugOutput)
+        {
+            dout.setEnabled(true);
+            dout << RESET << endl << "=> Running " << result.GetNameWithDate() << " "<< result.Step1Test.Name << endl;
+        }
         instance.OnInitStep(1);
         TIMING_START;
         result.Step1Test.Result = instance.Step1();
         TIMING_END;
         result.Step1Test.Time = TIME;
         instance.OnCloseStep(1);
+        dout.setEnabled(false);
 
+        if(result.EnableDebugOutput || result.Step2Test.EnableDebugOutput)
+        {
+            dout.setEnabled(true);
+            dout << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step1Test.Name << endl;
+        }
         instance.OnInitStep(2);
         TIMING_START;
         result.Step2Test.Result = instance.Step2();
         TIMING_END;
         result.Step2Test.Time = TIME;
         instance.OnCloseStep(2);
+        dout.setEnabled(false);
 
         instance.OnCloseTestingTests();
         instance.SetTest(false);
 
+        if(result.EnableDebugOutput) dout.setEnabled(true);
         instance.OnInitLiveTests();
+        dout.setEnabled(false);
 
+        if(result.EnableDebugOutput || result.Step1Live.EnableDebugOutput)
+        {
+            dout.setEnabled(true);
+            dout << endl << "=> Running " << result.GetNameWithDate() << " "<< result.Step1Test.Name << endl;
+        }
         instance.OnInitStep(1);
         TIMING_START;
         result.Step1Live.Result = instance.Step1();
         TIMING_END;
         result.Step1Live.Time = TIME;
         instance.OnCloseStep(1);
+        dout.setEnabled(false);
 
+        if(result.EnableDebugOutput || result.Step2Live.EnableDebugOutput)
+        {
+            dout.setEnabled(true);
+            dout << endl << "=> Running " << result.GetNameWithDate() << " "<< result.Step1Test.Name << endl;
+        }
         instance.OnInitStep(2);
         TIMING_START;
         result.Step2Live.Result = instance.Step2();
         TIMING_END;
         result.Step2Live.Time = TIME;
         instance.OnCloseStep(2);
+        dout.setEnabled(false);
 
+        if(result.EnableDebugOutput) dout.setEnabled(true);
         instance.OnCloseLiveTests();
         instance.OnCloseTests();
+        dout.setEnabled(false);
 
         ResultReports.push_back(result);
     }
 
 protected:
-    static AoCBaseExecutionResult GetResultJsonEntry(int Year, int Day);
-
-    const bool IsTest() const;
-    void SetTest(const bool IsTest);
-
-    virtual void OnInitTests();
-    virtual void OnInitTestingTests();
-    virtual void OnCloseTestingTests();
-
-    virtual void OnInitLiveTests();
-    virtual void OnCloseLiveTests();
-
-    virtual void OnInitStep(const int Step);
-
-    virtual void OnCloseStep(const int Step);
-    virtual void OnCloseTests();
-
-    const virtual __forceinline int GetYear() const { return 2024; };
-    const virtual __forceinline int GetDay() const = 0;
-
     LongListList ReadLongVectorsFromFile(int Step) const;
 
     LongListList ReadVerticalVectorsFromFile(int Step) const;
@@ -201,10 +246,7 @@ protected:
     stringstream ReadStringStreamFromFile(int Step) const;
 
     void CreateFileIfDoesNotExist(const std::string& FileName) const;
-
     const int GetFileSingleLineWidth(int Step) const;
-
-
 
     static long GetMinimum(const vector<long>& List);
 
@@ -235,6 +277,24 @@ protected:
 public:
     virtual const int64_t Step1() = 0;
     virtual const int64_t Step2() = 0;
+    const virtual __forceinline int GetYear() const { return 0; };
+    const virtual __forceinline int GetDay() const = 0;
+    const bool IsTest() const;
+    void SetTest(const bool IsTest);
+    static AoCBaseExecutionResult GetResultJsonEntry(int Year, int Day);
+    static void LoadProgramConfig();
+    virtual void OnInitTests();
+    virtual void OnInitTestingTests();
+    virtual void OnCloseTestingTests();
+
+    virtual void OnInitLiveTests();
+    virtual void OnCloseLiveTests();
+
+    virtual void OnInitStep(const int Step);
+
+    virtual void OnCloseStep(const int Step);
+    virtual void OnCloseTests();
+
 
 private:
     const std::string GetFileName(const int Step) const;

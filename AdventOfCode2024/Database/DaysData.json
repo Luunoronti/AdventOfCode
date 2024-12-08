@@ -1,176 +1,555 @@
 [
-    {
-        "name": "Historian Hysteria",
-        "day": 1,
-        "liveStep1": {
-            "expectedResult": 2580760,
-            "knownErrors": [-1, -2]
-        },
-        "liveStep2": {
-            "expectedResult": 25358365,
-            "knownErrors": []
-        },
-        "testStep1": {
-            "expectedResult": 11,
-            "knownErrors": []
-        },
-        "testStep2": {
-            "expectedResult": 31,
-            "knownErrors": []
-        },
-        "year": 2024
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "Historian Hysteria",
+    "day": 1,
+    "liveStep1": {
+      "expectedResult": 2580760,
+      "knownErrors": [ -1, -2 ]
     },
-    {
-        "name": "Red-Nosed Reports",
-        "day": 2,
-        "liveStep1": {
-            "expectedResult": 472,
-            "knownErrors": []
-        },
-        "liveStep2": {
-            "expectedResult": 0,
-            "knownErrors": []
-        },
-        "testStep1": {
-            "expectedResult": 2,
-            "knownErrors": []
-        },
-        "testStep2": {
-            "expectedResult": 4,
-            "knownErrors": []
-        },
-        "year": 2024
-    }
-    ,
-    {
-        "name": "Mull It Over",
-        "day": 3,
-        "liveStep1": {
-            "expectedResult": 163931492,
-            "knownErrors": []
-        },
-        "liveStep2": {
-            "expectedResult": 76911921,
-            "knownErrors": []
-        },
-        "testStep1": {
-            "expectedResult": 161,
-            "knownErrors": []
-        },
-        "testStep2": {
-            "expectedResult": 48,
-            "knownErrors": []
-        },
-        "year": 2024
-    }
-    ,
-    {
-        "name": "Ceres Search",
-        "day": 4,
-        "liveStep1": {
-            "expectedResult": 2543,
-            "knownErrors": []
-        },
-        "liveStep2": {
-            "expectedResult": 1930,
-            "knownErrors": []
-        },
-        "testStep1": {
-            "expectedResult": 18,
-            "knownErrors": []
-        },
-        "testStep2": {
-            "expectedResult": 9,
-            "knownErrors": []
-        },
-        "year": 2024
-    }
-    ,
-    {
-        "name": "Print Queue",
-        "day": 5,
-        "liveStep1": {
-            "expectedResult": 5991,
-            "knownErrors": []
-        },
-        "liveStep2": {
-            "expectedResult": 5479,
-            "knownErrors": []
-        },
-        "testStep1": {
-            "expectedResult": 143,
-            "knownErrors": []
-        },
-        "testStep2": {
-            "expectedResult": 123,
-            "knownErrors": []
-        },
-        "year": 2024
-    }
-    ,
-    {
-        "name": "Guard Gallivant",
-        "day": 6,
-        "liveStep1": {
-            "expectedResult": 4903,
-            "knownErrors": []
-        },
-        "liveStep2": {
-            "expectedResult": 1911,
-            "knownErrors": []
-        },
-        "testStep1": {
-            "expectedResult": 41,
-            "knownErrors": []
-        },
-        "testStep2": {
-            "expectedResult": 6,
-            "knownErrors": []
-        },
-        "year": 2024
-    }
-    ,
-    {
-        "name": "Bridge Repair",
-        "day": 7,
-        "liveStep1": {
-            "expectedResult": 5512534574980,
-            "knownErrors": []
-        },
-        "liveStep2": {
-            "expectedResult": 328790210468594,
-            "knownErrors": []
-        },
-        "testStep1": {
-            "expectedResult": 3749,
-            "knownErrors": []
-        },
-        "testStep2": {
-            "expectedResult": 11387,
-            "knownErrors": []
-        },
-        "year": 2024
-    }
-    ,
-    {
-        "name": "Resonant Collinearity",
-        "day": 8,
-        "liveStep1": {
-            "expectedResult": 398,
-            "knownErrors": []
-        },
-        "liveStep2": {
-            "expectedResult": 1333,
-            "knownErrors": []
-        },
-        "testStep1": {
-            "expectedResult": 14,
-            "knownErrors": []
-        },
-        "testStep2": {
-            "expectedResult": 34,
-            "knownErrors": []
-        },
-        "year": 2024
-    }
+    "liveStep2": {
+      "expectedResult": 25358365,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 11,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 31,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "Red-Nosed Reports",
+    "day": 2,
+    "liveStep1": {
+      "expectedResult": 472,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 520,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 2,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 4,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "Mull It Over",
+    "day": 3,
+    "liveStep1": {
+      "expectedResult": 163931492,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 76911921,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 161,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 48,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "Ceres Search",
+    "day": 4,
+    "liveStep1": {
+      "expectedResult": 2543,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 1930,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 18,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 9,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "Print Queue",
+    "day": 5,
+    "liveStep1": {
+      "expectedResult": 5991,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 5479,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 143,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 123,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "Guard Gallivant",
+    "day": 6,
+    "liveStep1": {
+      "expectedResult": 4903,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 1911,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 41,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 6,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "Bridge Repair",
+    "day": 7,
+    "liveStep1": {
+      "expectedResult": 5512534574980,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 328790210468594,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 3749,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 11387,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": true,
+    "debugRun": true,
+    "name": "Resonant Collinearity",
+    "day": 8,
+    "liveStep1": {
+      "enableDebugStream": true,
+      "expectedResult": 398,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 1333,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 14,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 34,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 9,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 10,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 11,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 12,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 13,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 14,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 15,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 16,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 17,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 18,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 19,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 20,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 21,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 22,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 23,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  },
+  {
+    "run": false,
+    "debugRun": false,
+    "name": "____",
+    "day": 24,
+    "liveStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
+  }
 ]
