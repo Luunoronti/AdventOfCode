@@ -123,10 +123,10 @@ public:
 
         AoCBaseExecutionResult result = GetResultJsonEntry(instance.GetYear(), instance.GetDay());
 
-        result.Step1Test.Name = "Step 1 (TEST)";
-        result.Step2Test.Name = "Step 2 (LIVE)";
-        result.Step1Live.Name = "Step 1 (TEST)";
-        result.Step2Live.Name = "Step 2 (LIVE)";
+        result.Step1Test.Name = "Part 1 (TEST)";
+        result.Step2Test.Name = "Part 2 (TEST)";
+        result.Step1Live.Name = "Part 1 (LIVE)";
+        result.Step2Live.Name = "Part 2 (LIVE)";
 
         instance.OnInitTests();
         instance.SetTest(true);

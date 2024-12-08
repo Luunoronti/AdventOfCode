@@ -1,6 +1,6 @@
 [
     {
-        "name": "Test name here",
+        "name": "Historian Hysteria",
         "day": 1,
         "liveStep1": {
             "expectedResult": 2580760,
@@ -21,7 +21,7 @@
         "year": 2024
     },
     {
-        "name": "",
+        "name": "Red-Nosed Reports",
         "day": 2,
         "liveStep1": {
             "expectedResult": 472,
@@ -43,7 +43,7 @@
     }
     ,
     {
-        "name": "",
+        "name": "Mull It Over",
         "day": 3,
         "liveStep1": {
             "expectedResult": 163931492,
@@ -65,7 +65,7 @@
     }
     ,
     {
-        "name": "",
+        "name": "Ceres Search",
         "day": 4,
         "liveStep1": {
             "expectedResult": 2543,
@@ -87,7 +87,7 @@
     }
     ,
     {
-        "name": "",
+        "name": "Print Queue",
         "day": 5,
         "liveStep1": {
             "expectedResult": 5991,
@@ -109,7 +109,7 @@
     }
     ,
     {
-        "name": "",
+        "name": "Guard Gallivant",
         "day": 6,
         "liveStep1": {
             "expectedResult": 4903,
@@ -131,7 +131,7 @@
     }
     ,
     {
-        "name": "",
+        "name": "Bridge Repair",
         "day": 7,
         "liveStep1": {
             "expectedResult": 5512534574980,

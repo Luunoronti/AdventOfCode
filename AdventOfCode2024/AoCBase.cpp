@@ -87,7 +87,7 @@ printLeftPaddedString(to_string(SP.Result), requiredWidth[i1], GetValueColor(SP)
 printLeftPaddedString(toStringWithPrecision(SP.Time, TIME_PRECISION), requiredWidth[i2], (SP.Time > 16.6) ? (SP.Time > 500 ? RED+DIM : YELLOW+DIM) : "");
 
 #define PRINT_HORIZONTAL_DIVIDER std::cout << DIM << "+" << PAD_LEFT(totalWidth, '-') << "" << "+" << RESET << endl
-#define PRINT_NOTE(s, c) { printRightPaddedString(" " + s, totalWidth - 1, c); std::cout << DIM << "|" << RESET << endl; }
+#define PRINT_NOTE(s, c) { printRightPaddedString("             " + s, totalWidth - 1, c); std::cout << DIM << "|" << RESET << endl; }
 
 #define PRINT_SP_UNDEFINED_NOTE(sp) if(sp.IsNotKnown()) { PRINT_NOTE(sp.Name + " is not verified.", YELLOW); }
 
@@ -101,9 +101,9 @@ if(std::find(sp.KnownErrorResults.begin(), sp.KnownErrorResults.end(), sp.Result
 {PRINT_NOTE(sp.Name + " result " + to_string(sp.Result) + " is in the list of known bad results.", RED) } 
 
 #define PRINT_ALL_STEP_NOTES(sp) \
-PRINT_SP_UNDEFINED_NOTE(sp); \
-PRINT_SP_ERROR_IF_PRESENT(sp); \
-PRINT_KNOWN_ERROR_VALUES(sp); 
+{ PRINT_SP_UNDEFINED_NOTE(sp); } \
+{ PRINT_KNOWN_ERROR_VALUES(sp); } \
+{ PRINT_SP_ERROR_IF_PRESENT(sp); } 
 
 
 #pragma endregion
@@ -132,8 +132,8 @@ PRINT_KNOWN_ERROR_VALUES(sp);
     std::cout << DIM << "+" << PAD_LEFT(totalWidth, '=') << "" << "+" << RESET << endl;
 
     std::cout << DIM << "|" << PAD_LEFT(requiredWidth[0], ' ') << "";
-    printCenterPaddedString("Step 1", requiredWidth[1] + requiredWidth[2] + requiredWidth[3] + requiredWidth[4] + 3, CYAN);
-    printCenterPaddedString("Step 2", requiredWidth[5] + requiredWidth[6] + requiredWidth[7] + requiredWidth[8] + 3, BLUE);
+    printCenterPaddedString("Part 1", requiredWidth[1] + requiredWidth[2] + requiredWidth[3] + requiredWidth[4] + 3, CYAN);
+    printCenterPaddedString("Part 2", requiredWidth[5] + requiredWidth[6] + requiredWidth[7] + requiredWidth[8] + 3, BLUE);
     std::cout << DIM << "|" << RESET << endl;
 
     PRINT_HORIZONTAL_DIVIDER;
@@ -176,7 +176,10 @@ PRINT_KNOWN_ERROR_VALUES(sp);
         {
             // PRINT_HORIZONTAL_DIVIDER;
         }
-        printRightPaddedString(to_string(result.Year) + "/" + to_string((int)result.Day) + " " + result.Name, requiredWidth[0] - 1, "");
+        std::stringstream ss; 
+        ss << std::setfill('0') << std::setw(2) << (int)result.Day;
+
+        printRightPaddedString(to_string(result.Year) + "/" + ss.str() + " " + result.Name, requiredWidth[0] - 1, "");
 
         PRINT_STEP(result.Step1Test, 1, 2);
         PRINT_STEP(result.Step1Live, 3, 4);
