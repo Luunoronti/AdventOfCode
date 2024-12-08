@@ -102,9 +102,10 @@ const int64_t AoC_2024_07::ProcessDataReverse(const SingleLineData& Data, bool A
     return 0;
 }
 
+/** BELLOW IS OLD, UNUSED CODE, JUST FOR REFERENCE */
+
 
 /*
-New approach:
  compute all possibilities, keep results in a Hash
  where key is a bit mask of operations performed
  and value is the result

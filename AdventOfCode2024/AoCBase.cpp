@@ -85,7 +85,7 @@ index++;
 
 #define PRINT_STEP(SP, i1, i2) \
 printLeftPaddedString(to_string(SP.Result), requiredWidth[i1], GetValueColor(SP)); \
-printLeftPaddedString(toStringWithPrecision(SP.Time, TIME_PRECISION), requiredWidth[i2], (SP.Time > 50) ? (SP.Time > 500 ? RED+DIM : YELLOW+DIM) : "");
+printLeftPaddedString(toStringWithPrecision(SP.Time, TIME_PRECISION), requiredWidth[i2], (SP.Time > 16.6) ? (SP.Time > 500 ? RED+DIM : YELLOW+DIM) : "");
 
 #define PRINT_HORIZONTAL_DIVIDER std::cout << DIM << "+" << PAD_LEFT(totalWidth, '-') << "" << "+" << RESET << endl
 #define PRINT_NOTE(s, c) { printRightPaddedString(" " + s, totalWidth - 1, c); std::cout << DIM << "|" << RESET << endl; }
@@ -208,10 +208,10 @@ PRINT_KNOWN_ERROR_VALUES(sp);
         }
     }
     std::cout << DIM << "+" << PAD_LEFT(totalWidth, '=') << "" << "+" << RESET << endl;
-    std::cout << endl << "Legend:" << endl;
-    std::cout << "Value colors: " << GREEN << "OK" << RESET << ", " << RED << "Wrong" << RESET << ", " << YELLOW << BLINK << "Not yet verified (not known)" << RESET << endl;
-    std::cout << "Time colors: " << RESET << "Under 50ms" << RESET << ", " << RED << DIM  << "Above 500ms" << RESET << ", " << YELLOW+DIM << "Above 50 but under 500ms" << RESET << endl;
-    std::cout << "Time is in milliseconds, 1.000 means 1 millisecond while 0.745 means 745 microseconds." << endl;
+    std::cout << endl << DIM << "Legend:" << endl;
+    //std::cout << "Value colors: " << GREEN << "OK" << RESET << ", " << RED << "Wrong" << RESET << ", " << YELLOW << BLINK << "Not yet verified (not known)" << RESET << endl;
+    std::cout << DIM << "Time colors: " << RESET << "Under 16.6ms" << RESET << DIM << ", " << RED << DIM << "Above 500ms" << RESET << DIM << ", " << YELLOW + DIM << "Above 16.6 but under 500ms" << RESET << endl;
+    std::cout << DIM << "Time is in milliseconds, 1.000 means 1 millisecond while 0.745 means 745 microseconds." << endl;
 }
 
 
@@ -236,34 +236,6 @@ void AoCBase::OnInitLiveTests() {}
 void AoCBase::OnCloseLiveTests() {}
 
 
-void AoCBase::CreateEmptyExpectedStepResultsFile(const std::string& FileName)
-{
-    std::ofstream file(FileName);
-    if(!file.is_open())
-    {
-        std::cerr << RED << BLINK << "Error creating new expected results file " << FileName << RESET << std::endl;
-        return;
-    }
-    file << "#This is an expected results file for AoC year " << GetYear() << " day " << GetDay() << endl;
-    file << "#Do not alter the format of this file" << endl;
-    file << "#There is no parsing and values are being taken directly from the positioning of lines within." << endl;
-    file << endl;
-    file << "Expected TEST value for step 1" << endl;
-    file << "0" << endl;
-    file << endl;
-    file << "Expected LIVE value for step 1" << endl;
-    file << "0" << endl;
-    file << endl;
-    file << "Expected TEST value for step 2" << endl;
-    file << "0" << endl;
-    file << endl;
-    file << "Expected LIVE value for step 2" << endl;
-    file << "0" << endl;
-
-    file.close();
-    std::cout << YELLOW << BLINK << "Created new expected results file " << FileName << ". Please fill it in. " << RESET << std::endl;
-}
-
 std::vector<int64_t> ParseStringToVector_Helper(const std::string& input)
 {
     std::vector<int64_t> result;
@@ -280,67 +252,6 @@ std::vector<int64_t> ParseStringToVector_Helper(const std::string& input)
 
 
 
-void AoCBase::ReadExpectedStepResults()
-{
-    // read step results from a file
-    // this file is to be created if does not exist, and is to be filled with 0s
-    // format of the file is very simple
-    std::string FileName = ".\\ExpectedResults\\year_ " + std::to_string(GetYear()) + "_day_" + std::to_string(GetDay()) + ".txt";
-    std::ifstream file(FileName);
-    if(!file.is_open())
-    {
-        CreateEmptyExpectedStepResultsFile(FileName);
-
-        file.open(FileName);
-        if(!file.is_open())
-        {
-            std::cerr << RED << BLINK << "Error opening expected results file " << FileName << RESET << std::endl;
-            return;
-        }
-    }
-
-    int64_t knownError;
-
-    // comments
-    std::string line;
-    std::getline(file, line);
-    std::getline(file, line);
-    std::getline(file, line);
-    std::getline(file, line);
-
-    {
-        std::getline(file, line);
-        std::getline(file, line);
-        ExpectedTestResultForStep1 = std::stoll(line);
-
-        std::getline(file, line);
-        Step1_Test_KnownErrors = ParseStringToVector_Helper(line);
-    }
-    {
-        std::getline(file, line);
-        std::getline(file, line);
-        std::getline(file, line);
-        ExpectedLiveResultForStep1 = std::stoll(line);
-        std::getline(file, line);
-        Step1_Live_KnownErrors = ParseStringToVector_Helper(line);
-    }
-    {
-        std::getline(file, line);
-        std::getline(file, line);
-        std::getline(file, line);
-        ExpectedTestResultForStep2 = std::stoll(line);
-        std::getline(file, line);
-        Step2_Test_KnownErrors = ParseStringToVector_Helper(line);
-    }
-    {
-        std::getline(file, line);
-        std::getline(file, line);
-        std::getline(file, line);
-        ExpectedLiveResultForStep2 = std::stoll(line);
-        std::getline(file, line);
-        Step2_Live_KnownErrors = ParseStringToVector_Helper(line);
-    }
-}
 
 string AoCBase::ReadStringFromFile(int Step) const
 {
@@ -529,4 +440,114 @@ long AoCBase::GetMinimum(const vector<long>& List)
     else
         throw std::exception();
 }
+
+
+#pragma region Json database
+// Define to_json and from_json functions for MyStruct 
+void to_json(nlohmann::json& j, const AoCStepJsonEntry& s)
+{
+    j = nlohmann::json{
+        {"expectedResult", s.ExpectedResult},
+        {"knownErrors", s.KnownErrors} };
+}
+void to_json(nlohmann::json& j, const AoCResultJsonEntry& s)
+{
+    j = nlohmann::json{
+        {"year", s.Year},
+        {"day", s.Day},
+        {"testStep1", s.Step1Test},
+        {"liveStep1", s.Step1Live},
+        {"testStep2", s.Step2Test},
+        {"liveStep2", s.Step2Live} };
+}
+void from_json(const nlohmann::json& j, AoCStepJsonEntry& s)
+{
+    j.at("expectedResult").get_to(s.ExpectedResult);
+    j.at("knownErrors").get_to(s.KnownErrors);
+}
+void from_json(const nlohmann::json& j, AoCResultJsonEntry& s)
+{
+    j.at("day").get_to(s.Day);
+    j.at("testStep1").get_to(s.Step1Test);
+    j.at("liveStep1").get_to(s.Step1Live);
+    j.at("testStep2").get_to(s.Step2Test);
+    j.at("liveStep2").get_to(s.Step2Live);
+    j.at("year").get_to(s.Year);
+}
+
+vector<AoCResultJsonEntry> AoCBase::DaysDatabase;
+void AoCBase::ReadDaysDatabaseIfNotDoneAlready()
+{
+    if(DaysDatabase.size() > 0)
+        return;
+
+    // check if file exists
+    std::string FileName = ".\\Database\\DaysData.json";
+    std::ifstream file(FileName);
+    if(!file.is_open())
+    {
+#pragma region Create new json file
+        vector<AoCResultJsonEntry> entries;
+        AoCResultJsonEntry e1;
+        e1.Day = 0;
+
+        e1.Step1Test.ExpectedResult = 2;
+        e1.Step1Test.KnownErrors.push_back(-1);
+        e1.Step1Test.KnownErrors.push_back(-2);
+
+        e1.Step1Live.ExpectedResult = 3;
+        e1.Step1Live.KnownErrors.push_back(-1);
+        e1.Step1Live.KnownErrors.push_back(-2);
+
+        e1.Step2Test.ExpectedResult = 4;
+        e1.Step2Test.KnownErrors.push_back(-1);
+        e1.Step2Test.KnownErrors.push_back(-2);
+
+        e1.Step2Live.ExpectedResult = 5;
+        e1.Step2Live.KnownErrors.push_back(-1);
+        e1.Step2Live.KnownErrors.push_back(-2);
+
+        entries.push_back(e1);
+
+        nlohmann::json jsonData = entries;
+
+        std::ofstream outFile(FileName);
+        if(outFile.is_open())
+        {
+            outFile << jsonData.dump(4); // Indentation level of 4 for pretty printing 
+            outFile.close();
+        }
+        else
+        {
+            std::cerr << "Unable to open file for writing." << std::endl;
+        }
+#pragma endregion
+
+        file.open(FileName);
+        if(!file.is_open())
+        {
+            std::cerr << RED << BLINK << "Error opening expected results file " << FileName << RESET << std::endl;
+            return;
+        }
+    }
+
+
+   nlohmann::json jsonData; 
+   file >> jsonData;
+
+   DaysDatabase = jsonData.get<vector<AoCResultJsonEntry>>();
+
+   file.close();
+}
+const AoCResultJsonEntry& AoCBase::GetResultJsonEntry(int Year, int Day)
+{
+    ReadDaysDatabaseIfNotDoneAlready();
+    for(const auto& day : DaysDatabase)
+    {
+        if(day.Year == Year && day.Day == Day)
+            return day;
+    }
+    throw std::runtime_error("Unable to find database entry for year " + to_string(Year) + " day " + to_string(Day));
+}
+#pragma endregion
 

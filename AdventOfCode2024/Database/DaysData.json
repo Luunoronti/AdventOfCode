@@ -1,0 +1,168 @@
+[
+    {
+        "day": 1,
+        "liveStep1": {
+            "expectedResult": 2580760,
+            "knownErrors": [-1, -2]
+        },
+        "liveStep2": {
+            "expectedResult": 25358365,
+            "knownErrors": []
+        },
+        "testStep1": {
+            "expectedResult": 11,
+            "knownErrors": []
+        },
+        "testStep2": {
+            "expectedResult": 31,
+            "knownErrors": []
+        },
+        "year": 2024
+    },
+    {
+        "day": 2,
+        "liveStep1": {
+            "expectedResult": 472,
+            "knownErrors": []
+        },
+        "liveStep2": {
+            "expectedResult": 0,
+            "knownErrors": []
+        },
+        "testStep1": {
+            "expectedResult": 2,
+            "knownErrors": []
+        },
+        "testStep2": {
+            "expectedResult": 4,
+            "knownErrors": []
+        },
+        "year": 2024
+    }
+    ,
+    {
+        "day": 3,
+        "liveStep1": {
+            "expectedResult": 163931492,
+            "knownErrors": []
+        },
+        "liveStep2": {
+            "expectedResult": 76911921,
+            "knownErrors": []
+        },
+        "testStep1": {
+            "expectedResult": 161,
+            "knownErrors": []
+        },
+        "testStep2": {
+            "expectedResult": 48,
+            "knownErrors": []
+        },
+        "year": 2024
+    }
+    ,
+    {
+        "day": 4,
+        "liveStep1": {
+            "expectedResult": 2543,
+            "knownErrors": []
+        },
+        "liveStep2": {
+            "expectedResult": 1930,
+            "knownErrors": []
+        },
+        "testStep1": {
+            "expectedResult": 18,
+            "knownErrors": []
+        },
+        "testStep2": {
+            "expectedResult": 9,
+            "knownErrors": []
+        },
+        "year": 2024
+    }
+    ,
+    {
+        "day": 5,
+        "liveStep1": {
+            "expectedResult": 5991,
+            "knownErrors": []
+        },
+        "liveStep2": {
+            "expectedResult": 5479,
+            "knownErrors": []
+        },
+        "testStep1": {
+            "expectedResult": 143,
+            "knownErrors": []
+        },
+        "testStep2": {
+            "expectedResult": 123,
+            "knownErrors": []
+        },
+        "year": 2024
+    }
+    ,
+    {
+        "day": 6,
+        "liveStep1": {
+            "expectedResult": 4903,
+            "knownErrors": []
+        },
+        "liveStep2": {
+            "expectedResult": 1911,
+            "knownErrors": []
+        },
+        "testStep1": {
+            "expectedResult": 41,
+            "knownErrors": []
+        },
+        "testStep2": {
+            "expectedResult": 6,
+            "knownErrors": []
+        },
+        "year": 2024
+    }
+    ,
+    {
+        "day": 7,
+        "liveStep1": {
+            "expectedResult": 5512534574980,
+            "knownErrors": []
+        },
+        "liveStep2": {
+            "expectedResult": 328790210468594,
+            "knownErrors": []
+        },
+        "testStep1": {
+            "expectedResult": 3749,
+            "knownErrors": []
+        },
+        "testStep2": {
+            "expectedResult": 11387,
+            "knownErrors": []
+        },
+        "year": 2024
+    }
+    ,
+    {
+        "day": 8,
+        "liveStep1": {
+            "expectedResult": 3,
+            "knownErrors": []
+        },
+        "liveStep2": {
+            "expectedResult": 5,
+            "knownErrors": []
+        },
+        "testStep1": {
+            "expectedResult": 2,
+            "knownErrors": []
+        },
+        "testStep2": {
+            "expectedResult": 4,
+            "knownErrors": []
+        },
+        "year": 2024
+    }
+]

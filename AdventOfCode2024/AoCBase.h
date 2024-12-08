@@ -27,6 +27,7 @@
 #include <algorithm>
 #include <array>
 
+#include "json.hpp"
 
 using namespace std;
 using namespace concurrency;
@@ -86,6 +87,23 @@ struct AoCBaseExecutionResult
     AoCBaseExecutionResultEntry Step1Live;
     AoCBaseExecutionResultEntry Step2Live;
 };
+                                                                               
+struct AoCStepJsonEntry
+{
+    int64_t ExpectedResult;
+    vector<int64_t> KnownErrors;
+};
+struct AoCResultJsonEntry
+{
+    int Year;
+    int8_t Day;
+    AoCStepJsonEntry Step1Test;
+    AoCStepJsonEntry Step1Live;
+    AoCStepJsonEntry Step2Test;
+    AoCStepJsonEntry Step2Live;
+};
+
+
 class AoCBase
 {
 public:
@@ -93,6 +111,7 @@ public:
     static vector<AoCBaseExecutionResult> ResultReports;
 
     static void PrintExecutionReport();
+    static void ReadDaysDatabaseIfNotDoneAlready();
 
     template<typename T>
     static void ExecuteSteps()
@@ -120,22 +139,23 @@ public:
         result.Year = instance.GetYear();
         result.Day = instance.GetDay();
 
-        instance.ReadExpectedStepResults();
-
         result.Step1Test.Name = "Step 1 (TEST)";
         result.Step2Test.Name = "Step 2 (LIVE)";
         result.Step1Live.Name = "Step 1 (TEST)";
         result.Step2Live.Name = "Step 2 (LIVE)";
 
-        result.Step1Test.ExpectedResult = instance.ExpectedTestResultForStep1;
-        result.Step2Test.ExpectedResult = instance.ExpectedTestResultForStep2;
-        result.Step1Live.ExpectedResult = instance.ExpectedLiveResultForStep1;
-        result.Step2Live.ExpectedResult = instance.ExpectedLiveResultForStep2;
 
-        result.Step1Test.KnownErrorResults = instance.Step1_Test_KnownErrors;
-        result.Step2Test.KnownErrorResults = instance.Step2_Test_KnownErrors;
-        result.Step1Live.KnownErrorResults = instance.Step1_Live_KnownErrors;
-        result.Step2Live.KnownErrorResults = instance.Step2_Live_KnownErrors;
+        const auto& entry = GetResultJsonEntry(instance.GetYear(), instance.GetDay());
+
+        result.Step1Test.ExpectedResult = entry.Step1Test.ExpectedResult;
+        result.Step2Test.ExpectedResult = entry.Step2Test.ExpectedResult;
+        result.Step1Live.ExpectedResult = entry.Step1Live.ExpectedResult;
+        result.Step2Live.ExpectedResult = entry.Step2Live.ExpectedResult;
+
+        result.Step1Test.KnownErrorResults = entry.Step1Test.KnownErrors;
+        result.Step2Test.KnownErrorResults = entry.Step2Test.KnownErrors;
+        result.Step1Live.KnownErrorResults = entry.Step1Live.KnownErrors;
+        result.Step2Live.KnownErrorResults = entry.Step2Live.KnownErrors;
 
         instance.OnInitTests();
         instance.SetTest(true);
@@ -181,8 +201,7 @@ public:
     }
 
 protected:
-    void ReadExpectedStepResults();
-    void CreateEmptyExpectedStepResultsFile(const std::string& FileName);
+    static const AoCResultJsonEntry& GetResultJsonEntry(int Year, int Day);
 
     const bool IsTest() const;
     void SetTest(const bool IsTest);
@@ -250,15 +269,7 @@ private:
     const std::string GetFileName(const int Step) const;
     bool IsUnderTest{ false };
 
-    int64_t ExpectedTestResultForStep1{ 0 };
-    int64_t ExpectedLiveResultForStep1{ 0 };
-    int64_t ExpectedTestResultForStep2{ 0 };
-    int64_t ExpectedLiveResultForStep2{ 0 };
-
-    vector<int64_t> Step1_Test_KnownErrors;
-    vector<int64_t> Step1_Live_KnownErrors;
-    vector<int64_t> Step2_Test_KnownErrors;
-    vector<int64_t> Step2_Live_KnownErrors;
+    static vector<AoCResultJsonEntry> DaysDatabase;
 };
 
 
