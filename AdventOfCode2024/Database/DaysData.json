@@ -1,5 +1,6 @@
 [
     {
+        "name": "Test name here",
         "day": 1,
         "liveStep1": {
             "expectedResult": 2580760,
@@ -20,6 +21,7 @@
         "year": 2024
     },
     {
+        "name": "",
         "day": 2,
         "liveStep1": {
             "expectedResult": 472,
@@ -41,6 +43,7 @@
     }
     ,
     {
+        "name": "",
         "day": 3,
         "liveStep1": {
             "expectedResult": 163931492,
@@ -62,6 +65,7 @@
     }
     ,
     {
+        "name": "",
         "day": 4,
         "liveStep1": {
             "expectedResult": 2543,
@@ -83,6 +87,7 @@
     }
     ,
     {
+        "name": "",
         "day": 5,
         "liveStep1": {
             "expectedResult": 5991,
@@ -104,6 +109,7 @@
     }
     ,
     {
+        "name": "",
         "day": 6,
         "liveStep1": {
             "expectedResult": 4903,
@@ -125,6 +131,7 @@
     }
     ,
     {
+        "name": "",
         "day": 7,
         "liveStep1": {
             "expectedResult": 5512534574980,
@@ -146,6 +153,7 @@
     }
     ,
     {
+        "name": "",
         "day": 8,
         "liveStep1": {
             "expectedResult": 3,

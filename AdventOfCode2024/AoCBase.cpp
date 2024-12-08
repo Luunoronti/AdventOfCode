@@ -70,7 +70,6 @@ std::string toStringWithPrecision(double value, int precision)
 
 void AoCBase::PrintExecutionReport()
 {
-    TODO("Add a list of wrong answers for each part, so that when such answer is detected, the notification will be printed.");
 
 #pragma region Macros
 #define EST_WIDTH(SP) \
@@ -111,10 +110,11 @@ PRINT_KNOWN_ERROR_VALUES(sp);
 
     int requiredWidth[9];
     {
-        int index = 0;
-        requiredWidth[index] = 9; // this is date, fixed
-        index++;
+        requiredWidth[0] = (int)std::strlen("Name");
+        for(const AoCBaseExecutionResult& result : ResultReports) { requiredWidth[0] = Max(requiredWidth[0], 7 + (int)result.Name.size()); }
+        requiredWidth[0] += 2;
 
+        int index = 1;
         EST_WIDTH(result.Step1Test);
         EST_WIDTH(result.Step1Live);
         EST_WIDTH(result.Step2Test);
@@ -176,8 +176,8 @@ PRINT_KNOWN_ERROR_VALUES(sp);
         {
             // PRINT_HORIZONTAL_DIVIDER;
         }
+        printRightPaddedString(to_string(result.Year) + "/" + to_string((int)result.Day) + " " + result.Name, requiredWidth[0] - 1, "");
 
-        std::cout << DIM << "| " << RESET << result.Year << "/" << PAD_LEFT(2, '0') << (int)result.Day << " ";
         PRINT_STEP(result.Step1Test, 1, 2);
         PRINT_STEP(result.Step1Live, 3, 4);
         PRINT_STEP(result.Step2Test, 5, 6);
@@ -444,28 +444,29 @@ long AoCBase::GetMinimum(const vector<long>& List)
 
 #pragma region Json database
 // Define to_json and from_json functions for MyStruct 
-void to_json(nlohmann::json& j, const AoCStepJsonEntry& s)
+void to_json(nlohmann::json& j, const AoCBaseExecutionResultEntry& s)
 {
     j = nlohmann::json{
         {"expectedResult", s.ExpectedResult},
-        {"knownErrors", s.KnownErrors} };
+        {"knownErrors", s.KnownErrorResults} };
 }
-void to_json(nlohmann::json& j, const AoCResultJsonEntry& s)
+void to_json(nlohmann::json& j, const AoCBaseExecutionResult& s)
 {
     j = nlohmann::json{
         {"year", s.Year},
         {"day", s.Day},
+        {"name", s.Name},
         {"testStep1", s.Step1Test},
         {"liveStep1", s.Step1Live},
         {"testStep2", s.Step2Test},
         {"liveStep2", s.Step2Live} };
 }
-void from_json(const nlohmann::json& j, AoCStepJsonEntry& s)
+void from_json(const nlohmann::json& j, AoCBaseExecutionResultEntry& s)
 {
     j.at("expectedResult").get_to(s.ExpectedResult);
-    j.at("knownErrors").get_to(s.KnownErrors);
+    j.at("knownErrors").get_to(s.KnownErrorResults);
 }
-void from_json(const nlohmann::json& j, AoCResultJsonEntry& s)
+void from_json(const nlohmann::json& j, AoCBaseExecutionResult& s)
 {
     j.at("day").get_to(s.Day);
     j.at("testStep1").get_to(s.Step1Test);
@@ -473,9 +474,10 @@ void from_json(const nlohmann::json& j, AoCResultJsonEntry& s)
     j.at("testStep2").get_to(s.Step2Test);
     j.at("liveStep2").get_to(s.Step2Live);
     j.at("year").get_to(s.Year);
+    j.at("name").get_to(s.Name);
 }
 
-vector<AoCResultJsonEntry> AoCBase::DaysDatabase;
+vector<AoCBaseExecutionResult> AoCBase::DaysDatabase;
 void AoCBase::ReadDaysDatabaseIfNotDoneAlready()
 {
     if(DaysDatabase.size() > 0)
@@ -487,25 +489,18 @@ void AoCBase::ReadDaysDatabaseIfNotDoneAlready()
     if(!file.is_open())
     {
 #pragma region Create new json file
-        vector<AoCResultJsonEntry> entries;
-        AoCResultJsonEntry e1;
+        vector<AoCBaseExecutionResult> entries;
+        AoCBaseExecutionResult e1;
         e1.Day = 0;
+        e1.Year = 2024;
 
         e1.Step1Test.ExpectedResult = 2;
-        e1.Step1Test.KnownErrors.push_back(-1);
-        e1.Step1Test.KnownErrors.push_back(-2);
+        e1.Step1Test.KnownErrorResults.push_back(-1);
+        e1.Step1Test.KnownErrorResults.push_back(-2);
 
         e1.Step1Live.ExpectedResult = 3;
-        e1.Step1Live.KnownErrors.push_back(-1);
-        e1.Step1Live.KnownErrors.push_back(-2);
-
         e1.Step2Test.ExpectedResult = 4;
-        e1.Step2Test.KnownErrors.push_back(-1);
-        e1.Step2Test.KnownErrors.push_back(-2);
-
         e1.Step2Live.ExpectedResult = 5;
-        e1.Step2Live.KnownErrors.push_back(-1);
-        e1.Step2Live.KnownErrors.push_back(-2);
 
         entries.push_back(e1);
 
@@ -532,14 +527,14 @@ void AoCBase::ReadDaysDatabaseIfNotDoneAlready()
     }
 
 
-   nlohmann::json jsonData; 
-   file >> jsonData;
+    nlohmann::json jsonData;
+    file >> jsonData;
 
-   DaysDatabase = jsonData.get<vector<AoCResultJsonEntry>>();
+    DaysDatabase = jsonData.get<vector<AoCBaseExecutionResult>>();
 
-   file.close();
+    file.close();
 }
-const AoCResultJsonEntry& AoCBase::GetResultJsonEntry(int Year, int Day)
+AoCBaseExecutionResult AoCBase::GetResultJsonEntry(int Year, int Day)
 {
     ReadDaysDatabaseIfNotDoneAlready();
     for(const auto& day : DaysDatabase)

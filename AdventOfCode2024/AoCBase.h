@@ -81,6 +81,7 @@ struct AoCBaseExecutionResult
 {
     int Year{ 0 };
     int8_t Day{ 0 };
+    string Name;
 
     AoCBaseExecutionResultEntry Step1Test;
     AoCBaseExecutionResultEntry Step2Test;
@@ -88,22 +89,6 @@ struct AoCBaseExecutionResult
     AoCBaseExecutionResultEntry Step2Live;
 };
                                                                                
-struct AoCStepJsonEntry
-{
-    int64_t ExpectedResult;
-    vector<int64_t> KnownErrors;
-};
-struct AoCResultJsonEntry
-{
-    int Year;
-    int8_t Day;
-    AoCStepJsonEntry Step1Test;
-    AoCStepJsonEntry Step1Live;
-    AoCStepJsonEntry Step2Test;
-    AoCStepJsonEntry Step2Live;
-};
-
-
 class AoCBase
 {
 public:
@@ -123,7 +108,6 @@ public:
 #define TIMING_END  QueryPerformanceCounter(&end_step)
 #define TIME static_cast<double>(end_step.QuadPart - start_step.QuadPart) * 1000.0 / frequency.QuadPart
 
-        AoCBaseExecutionResult result;
         // Get the frequency of the high-resolution performance counter 
         QueryPerformanceFrequency(&frequency);
 
@@ -136,26 +120,12 @@ public:
             return;
         }
 
-        result.Year = instance.GetYear();
-        result.Day = instance.GetDay();
+        AoCBaseExecutionResult result = GetResultJsonEntry(instance.GetYear(), instance.GetDay());
 
         result.Step1Test.Name = "Step 1 (TEST)";
         result.Step2Test.Name = "Step 2 (LIVE)";
         result.Step1Live.Name = "Step 1 (TEST)";
         result.Step2Live.Name = "Step 2 (LIVE)";
-
-
-        const auto& entry = GetResultJsonEntry(instance.GetYear(), instance.GetDay());
-
-        result.Step1Test.ExpectedResult = entry.Step1Test.ExpectedResult;
-        result.Step2Test.ExpectedResult = entry.Step2Test.ExpectedResult;
-        result.Step1Live.ExpectedResult = entry.Step1Live.ExpectedResult;
-        result.Step2Live.ExpectedResult = entry.Step2Live.ExpectedResult;
-
-        result.Step1Test.KnownErrorResults = entry.Step1Test.KnownErrors;
-        result.Step2Test.KnownErrorResults = entry.Step2Test.KnownErrors;
-        result.Step1Live.KnownErrorResults = entry.Step1Live.KnownErrors;
-        result.Step2Live.KnownErrorResults = entry.Step2Live.KnownErrors;
 
         instance.OnInitTests();
         instance.SetTest(true);
@@ -201,7 +171,7 @@ public:
     }
 
 protected:
-    static const AoCResultJsonEntry& GetResultJsonEntry(int Year, int Day);
+    static AoCBaseExecutionResult GetResultJsonEntry(int Year, int Day);
 
     const bool IsTest() const;
     void SetTest(const bool IsTest);
@@ -269,7 +239,7 @@ private:
     const std::string GetFileName(const int Step) const;
     bool IsUnderTest{ false };
 
-    static vector<AoCResultJsonEntry> DaysDatabase;
+    static vector<AoCBaseExecutionResult> DaysDatabase;
 };
 
 
