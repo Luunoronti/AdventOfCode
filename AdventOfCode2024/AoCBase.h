@@ -6,9 +6,13 @@
 
 #define CompilerMessage(desc) __pragma(message(__FILE__ "(" STR(__LINE__) ") :" #desc))
 
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+
 #include <iostream> 
 #include <fstream> 
 #include <vector> 
+#include <unordered_map> 
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
@@ -18,10 +22,14 @@
 #include <cassert>
 #include <ppl.h>
 
-#include <Windows.h>
+#include <ppl.h>
+#include <iostream>
+#include <algorithm>
+#include <array>
 
 
 using namespace std;
+using namespace concurrency;
 
 const string RESET = "\033[0m";
 const string BOLD = "\033[1m";
@@ -54,33 +62,36 @@ const string BKWHITE = "\033[47m";
 
 typedef std::vector<std::vector<long>> LongListList;
 
+struct AoCBaseExecutionResultEntry
+{
+    int64_t Result{ 0 };
+    int64_t ExpectedResult{ 0 };
+    double Time{ 0 };
+    string Name;
+    vector<int64_t> KnownErrorResults;
+
+    inline bool IsValid() const { return !IsError() && !IsNotKnown() && Result == ExpectedResult; }
+    inline bool IsError() const { return !IsNotKnown() && Result != ExpectedResult; }
+    inline bool IsNotKnown() const { return 0 == ExpectedResult; }
+    
+    inline int64_t Delta() const { return std::abs(Result - ExpectedResult); }
+};
 struct AoCBaseExecutionResult
 {
     int Year{ 0 };
     int8_t Day{ 0 };
 
-    long Step1ResultTest{ 0 };
-    long Step2ResultTest{ 0 };
-    int64_t Step1ResultLive{ 0 };
-    int64_t Step2ResultLive{ 0 };
-
-    long ExpectedStep1ResultTest{ 0 };
-    long ExpectedStep2ResultTest{ 0 };
-    int64_t ExpectedStep1ResultLive{ 0 };
-    int64_t ExpectedStep2ResultLive{ 0 };
-
-    double Step1TestElapsedTime{ 0 };
-    double Step1LiveElapsedTime{ 0 };
-    double Step2TestElapsedTime{ 0 };
-    double Step2LiveElapsedTime{ 0 };
-
+    AoCBaseExecutionResultEntry Step1Test;
+    AoCBaseExecutionResultEntry Step2Test;
+    AoCBaseExecutionResultEntry Step1Live;
+    AoCBaseExecutionResultEntry Step2Live;
 };
 class AoCBase
 {
 public:
 
     static vector<AoCBaseExecutionResult> ResultReports;
-    
+
     static void PrintExecutionReport();
 
     template<typename T>
@@ -111,66 +122,65 @@ public:
 
         instance.ReadExpectedStepResults();
 
-        result.ExpectedStep1ResultTest = instance.ExpectedTestResultForStep1;
-        result.ExpectedStep2ResultTest = instance.ExpectedTestResultForStep2;
-        result.ExpectedStep1ResultLive = instance.ExpectedLiveResultForStep1;
-        result.ExpectedStep2ResultLive = instance.ExpectedLiveResultForStep2;
+        result.Step1Test.Name = "Step 1 (TEST)";
+        result.Step2Test.Name = "Step 2 (LIVE)";
+        result.Step1Live.Name = "Step 1 (TEST)";
+        result.Step2Live.Name = "Step 2 (LIVE)";
+
+        result.Step1Test.ExpectedResult = instance.ExpectedTestResultForStep1;
+        result.Step2Test.ExpectedResult = instance.ExpectedTestResultForStep2;
+        result.Step1Live.ExpectedResult = instance.ExpectedLiveResultForStep1;
+        result.Step2Live.ExpectedResult = instance.ExpectedLiveResultForStep2;
+
+        result.Step1Test.KnownErrorResults = instance.Step1_Test_KnownErrors;
+        result.Step2Test.KnownErrorResults = instance.Step2_Test_KnownErrors;
+        result.Step1Live.KnownErrorResults = instance.Step1_Live_KnownErrors;
+        result.Step2Live.KnownErrorResults = instance.Step2_Live_KnownErrors;
 
         instance.OnInitTests();
         instance.SetTest(true);
+        instance.OnInitTestingTests();
 
         instance.OnInitStep(1);
         TIMING_START;
-        result.Step1ResultTest = instance.Step1();
+        result.Step1Test.Result = instance.Step1();
         TIMING_END;
-        result.Step1TestElapsedTime = TIME;
-
-        TIMING_START;
-        result.Step2ResultTest = instance.Step2();
-        TIMING_END;
-        result.Step2TestElapsedTime = TIME;
-
+        result.Step1Test.Time = TIME;
         instance.OnCloseStep(1);
-
-        instance.SetTest(false);
 
         instance.OnInitStep(2);
         TIMING_START;
-        result.Step1ResultLive = instance.Step1();
+        result.Step2Test.Result = instance.Step2();
         TIMING_END;
-        result.Step1LiveElapsedTime = TIME;
-
-        TIMING_START;
-        result.Step2ResultLive = instance.Step2();
-        TIMING_END;
-        result.Step2LiveElapsedTime = TIME;
-
+        result.Step2Test.Time = TIME;
         instance.OnCloseStep(2);
 
+        instance.OnCloseTestingTests();
+        instance.SetTest(false);
+
+        instance.OnInitLiveTests();
+
+        instance.OnInitStep(1);
+        TIMING_START;
+        result.Step1Live.Result = instance.Step1();
+        TIMING_END;
+        result.Step1Live.Time = TIME;
+        instance.OnCloseStep(1);
+
+        instance.OnInitStep(2);
+        TIMING_START;
+        result.Step2Live.Result = instance.Step2();
+        TIMING_END;
+        result.Step2Live.Time = TIME;
+        instance.OnCloseStep(2);
+
+        instance.OnCloseLiveTests();
         instance.OnCloseTests();
 
         ResultReports.push_back(result);
-
-
-        /*cout << "" << instance.GetYear() << "/" << std::setw(2) << std::setfill('0') << instance.GetDay() << ":  ";
-        instance.PrintStepResult(1, true, Step1ResultTest);
-        instance.PrintStepResult(1, false, Step1ResultLive);
-
-        double elapsedTime = static_cast<double>(end_step1.QuadPart - start_step1.QuadPart) * 1000.0 / frequency.QuadPart;
-        cout << " Time: " << elapsedTime << " ms   ";
-
-        instance.PrintStepResult(2, true, Step2ResultTest);
-        instance.PrintStepResult(2, false, Step2ResultLive);
-
-        elapsedTime = static_cast<double>(end_step2.QuadPart - start_step2.QuadPart) * 1000.0 / frequency.QuadPart;
-        cout << " Time: " << elapsedTime << " ms";
-
-        cout << endl;*/
     }
 
 protected:
-    void PrintStepResult(const int Step, bool IsTesting, const int64_t& Result);
-
     void ReadExpectedStepResults();
     void CreateEmptyExpectedStepResultsFile(const std::string& FileName);
 
@@ -178,6 +188,12 @@ protected:
     void SetTest(const bool IsTest);
 
     virtual void OnInitTests();
+    virtual void OnInitTestingTests();
+    virtual void OnCloseTestingTests();
+
+    virtual void OnInitLiveTests();
+    virtual void OnCloseLiveTests();
+
     virtual void OnInitStep(const int Step);
 
     virtual void OnCloseStep(const int Step);
@@ -238,6 +254,11 @@ private:
     int64_t ExpectedLiveResultForStep1{ 0 };
     int64_t ExpectedTestResultForStep2{ 0 };
     int64_t ExpectedLiveResultForStep2{ 0 };
+
+    vector<int64_t> Step1_Test_KnownErrors;
+    vector<int64_t> Step1_Live_KnownErrors;
+    vector<int64_t> Step2_Test_KnownErrors;
+    vector<int64_t> Step2_Live_KnownErrors;
 };
 
 

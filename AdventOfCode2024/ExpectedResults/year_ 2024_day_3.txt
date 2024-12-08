@@ -4,12 +4,16 @@
 
 Expected TEST value for step 1
 161
+-1,
 
 Expected LIVE value for step 1
 163931492
+-1,
 
 Expected TEST value for step 2
 48
+-1,
 
 Expected LIVE value for step 2
 76911921
+-1,
