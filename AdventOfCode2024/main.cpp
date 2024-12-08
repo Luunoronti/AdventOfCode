@@ -5,6 +5,7 @@
 #include "AoC_2024_05.h"
 #include "AoC_2024_06.h"
 #include "AoC_2024_07.h"
+#include "AoC_2024_08.h"
 
 int main()
 {
@@ -18,8 +19,9 @@ int main()
     AoCBase::ExecuteSteps<AoC_2024_04>();
     AoCBase::ExecuteSteps<AoC_2024_05>();
     AoCBase::ExecuteSteps<AoC_2024_06>();
-#endif
     AoCBase::ExecuteSteps<AoC_2024_07>();
+#endif
+    AoCBase::ExecuteSteps<AoC_2024_08>();
 
     AoCBase::PrintExecutionReport();
 

@@ -136,6 +136,7 @@
     <ClCompile Include="AoC_2024_05.cpp" />
     <ClCompile Include="AoC_2024_06.cpp" />
     <ClCompile Include="AoC_2024_07.cpp" />
+    <ClCompile Include="AoC_2024_08.cpp" />
     <ClCompile Include="AoC_2024_32.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AoCBase.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="AoC_2024_05.h" />
     <ClInclude Include="AoC_2024_06.h" />
     <ClInclude Include="AoC_2024_07.h" />
+    <ClInclude Include="AoC_2024_08.h" />
     <ClInclude Include="AoC_2024_32.h" />
     <ClInclude Include="json.hpp" />
   </ItemGroup>

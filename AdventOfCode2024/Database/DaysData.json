@@ -153,22 +153,22 @@
     }
     ,
     {
-        "name": "",
+        "name": "Resonant Collinearity",
         "day": 8,
         "liveStep1": {
-            "expectedResult": 3,
+            "expectedResult": 398,
             "knownErrors": []
         },
         "liveStep2": {
-            "expectedResult": 5,
+            "expectedResult": 1333,
             "knownErrors": []
         },
         "testStep1": {
-            "expectedResult": 2,
+            "expectedResult": 14,
             "knownErrors": []
         },
         "testStep2": {
-            "expectedResult": 4,
+            "expectedResult": 34,
             "knownErrors": []
         },
         "year": 2024
