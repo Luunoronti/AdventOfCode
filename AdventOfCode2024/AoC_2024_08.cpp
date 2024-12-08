@@ -28,27 +28,27 @@ struct AntennaLocation
     }
 };
 
+void AoC_2024_08::OnInitTestingTests() { Input = ReadStringFromFile(1, Height, Width); }
+void AoC_2024_08::OnInitLiveTests() { Input = ReadStringFromFile(1, Height, Width); }
+
 typedef unordered_map<char, vector<AntennaLocation>> AntennaMap;
 const int64_t AoC_2024_08::Step1()
 {
-    int width = 0, height = 0;
-
-    auto string = ReadStringFromFile(1, height, width);
     AntennaMap antennaMap;
 
     // scan for all antennas
-    for(int y = 0; y < height; ++y)
+    for(int y = 0; y < Height; ++y)
     {
-        for(int x = 0; x < width; ++x)
+        for(int x = 0; x < Width; ++x)
         {
-            auto currentChar = GetAt(x, y, width, height, string);
+            auto currentChar = GetAt(x, y, Width, Height, Input);
             if(currentChar == '.') continue;
             antennaMap[currentChar].push_back(AntennaLocation(x, y));
         }
     }
 
     // the simplest way to hold antinodes is bitmap
-    auto AntinodeMap = vector<uint8_t>(string.size());
+    auto AntinodeMap = vector<uint8_t>(Input.size());
 
     for(const auto& antennaType : antennaMap)
     {
@@ -65,10 +65,10 @@ const int64_t AoC_2024_08::Step1()
                 int dy = _2ndAntennaPos.y - _1stAntennaPos.y;
 
                 // extend
-                SetAt(_1stAntennaPos.x + (dx * 2), _1stAntennaPos.y + (dy * 2), width, height, AntinodeMap);
+                SetAt(_1stAntennaPos.x + (dx * 2), _1stAntennaPos.y + (dy * 2), Width, Height, AntinodeMap);
 
                 // reverse
-                SetAt(_1stAntennaPos.x - dx, _1stAntennaPos.y - dy, width, height, AntinodeMap);
+                SetAt(_1stAntennaPos.x - dx, _1stAntennaPos.y - dy, Width, Height, AntinodeMap);
             }
         }
     }
@@ -79,38 +79,35 @@ const int64_t AoC_2024_08::Step1()
 
 const int64_t AoC_2024_08::Step2()
 {
-    int width = 0, height = 0;
-
-    auto string = ReadStringFromFile(2, height, width);
     AntennaMap antennaMap;
-
     // scan for all antennas
-    for(int y = 0; y < height; ++y)
+    for(int y = 0; y < Height; ++y)
     {
-        for(int x = 0; x < width; ++x)
+        for(int x = 0; x < Width; ++x)
         {
-            auto currentChar = GetAt(x, y, width, height, string);
+            auto currentChar = GetAt(x, y, Width, Height, Input);
             if(currentChar == '.') continue;
             antennaMap[currentChar].push_back(AntennaLocation(x, y));
         }
     }
 
     // the simplest way to hold antinodes is bitmap
-    auto AntinodeMap = vector<uint8_t>(string.size());
+    auto AntinodeMap = vector<uint8_t>(Input.size());
 
     for(const auto& antennaType : antennaMap)
     {
         auto locations = antennaType.second;
+
         for(int i = 0; i < locations.size(); ++i)
         {
             auto _1stAntennaPos = locations[i];
+
+            // we put antinode on antenna location itself
+            SetAt(_1stAntennaPos.x, _1stAntennaPos.y, Width, Height, AntinodeMap);
+
             for(int i2 = i + 1; i2 < antennaType.second.size(); ++i2)
             {
                 auto _2ndAntennaPos = locations[i2];
-
-                // we put antinodes on both antenna locations (second will override itself later, but ok)
-                SetAt(_1stAntennaPos.x, _1stAntennaPos.y, width, height, AntinodeMap);
-                SetAt(_2ndAntennaPos.x, _2ndAntennaPos.y, width, height, AntinodeMap);
 
                 // get distance
                 int dx = _2ndAntennaPos.x - _1stAntennaPos.x;
@@ -119,21 +116,21 @@ const int64_t AoC_2024_08::Step2()
                 // extend from first antenna as long as both coordinates are within bounds
                 int ex = _1stAntennaPos.x + dx;
                 int ey = _1stAntennaPos.y + dy;
-                while(WithinBounds(ex, ey, width, height))
+                while(WithinBounds(ex, ey, Width, Height))
                 {
-                   SetAt(ex, ey, width, height, AntinodeMap);
-                   ex += dx;
-                   ey += dy;
+                    SetAt(ex, ey, Width, Height, AntinodeMap);
+                    ex += dx;
+                    ey += dy;
                 }
 
                 // reverse as long as both coordinates are within bounds
                 ex = _1stAntennaPos.x - dx;
                 ey = _1stAntennaPos.y - dy;
-                while(WithinBounds(ex, ey, width, height))
+                while(WithinBounds(ex, ey, Width, Height))
                 {
-                   SetAt(ex, ey, width, height, AntinodeMap);
-                   ex -= dx;
-                   ey -= dy;
+                    SetAt(ex, ey, Width, Height, AntinodeMap);
+                    ex -= dx;
+                    ey -= dy;
                 }
             }
         }

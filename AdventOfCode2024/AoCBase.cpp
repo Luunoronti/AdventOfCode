@@ -282,6 +282,8 @@ string AoCBase::ReadStringFromFile(int Step, int& LinesCount, int& LastLineWidth
 {
     const std::string FileName = GetFileName(Step);
     CreateFileIfDoesNotExist(FileName);
+    LinesCount = 0;
+    LastLineWidth = 0;
 
     std::ifstream file(FileName);
     std::string output;
