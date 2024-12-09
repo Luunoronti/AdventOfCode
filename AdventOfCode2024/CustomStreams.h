@@ -102,7 +102,28 @@ namespace aoc
             while(std::getline(file, line)) strings.push_back(line);
             return *this;
         }
+        AoCStream& operator>>(aoc::numeric::single_digit_list& ints)
+        {
+            aoc::numeric::single_digit_list list;
 
+            CreateFileIfDoesNotExist(FileName);
+            std::ifstream file(FileName);
+            if(!file.is_open())
+            {
+                throw std::runtime_error("Error opening file " + FileName);
+            }
+
+            std::string line;
+            while(std::getline(file, line))
+            {
+                for(const char& c : line)
+                {
+                    list.push_back(c - '0');
+                }
+            }
+            ints = list;
+            return *this;
+        }
 
         AoCStream& operator>>(aoc::numeric::columns<long>& map)
         {
@@ -153,7 +174,7 @@ namespace aoc
             }
             map.Height = lines;
 
-            aoc::dout << "Map2d() >> "<< FileName << " " << map.Width << " " << map.Height << " " << map.Map.size() << std::endl;
+            aoc::dout << "Map2d() >> " << FileName << " " << map.Width << " " << map.Height << " " << map.Map.size() << std::endl;
 
             file.close();
             return *this;
@@ -170,6 +191,34 @@ namespace aoc
             file.close();
             return *this;
         }
+
+
+        template <class _Ty>
+        std::vector<_Ty> readList()
+        {
+            std::vector<_Ty> list;
+
+            CreateFileIfDoesNotExist(FileName);
+            std::ifstream file(FileName);
+            if(!file.is_open())
+            {
+                throw std::runtime_error("Error opening file " + FileName);
+            }
+
+            std::string line;
+            while(std::getline(file, line))
+            {
+                std::stringstream ss(line);
+                _Ty _value;
+                while(ss >> _value)
+                {
+                    list.push_back(_value);
+                }
+            }
+            file.close();
+            return list;
+        }
+
         template <class _Ty>
         std::vector<std::vector<_Ty>> readLists()
         {

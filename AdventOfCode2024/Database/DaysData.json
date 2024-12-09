@@ -116,7 +116,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "name": "Guard Gallivant",
     "day": 6,
     "enableDebugStream": false,
@@ -163,7 +163,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "name": "Resonant Collinearity",
     "day": 8,
     "enableDebugStream": false,
@@ -187,9 +187,9 @@
     "year": 2024
   },
   {
-    "run": false,
-    "debugRun": false,
-    "name": "____",
+    "run": true,
+    "debugRun": true,
+    "name": "Disk Fragmenter",
     "day": 9,
     "liveStep1": {
       "expectedResult": 0,

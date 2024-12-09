@@ -136,5 +136,8 @@ namespace aoc
             std::vector<std::vector<T>> Map;
         };
 
+        class single_digit_list : public std::vector<int8_t>
+        {
+        };
     }
 }
