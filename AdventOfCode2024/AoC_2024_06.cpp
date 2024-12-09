@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "AoC_2024_06.h"
 
 #define SOBM_NORTH 0x01
@@ -21,6 +22,7 @@ const int64_t AoC_2024_06::Step1()
     Map = ReadStringFromFile(1, Height, Width);
     Marks = vector<uint8_t>(Map.size());
 
+    TIME_PART;
     FindStartLocation();
     MarkCurrentLocation();
 
@@ -45,6 +47,7 @@ const int64_t AoC_2024_06::Step1()
 
 const int64_t AoC_2024_06::Step2()
 {
+    TIME_PART;
     long sum = 0;
 
     for(int y = 0; y < Height; ++y)

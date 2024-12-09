@@ -1,65 +1,8 @@
 #pragma once
+#include "pch.h"
 
-#define _STR(x) #x
-#define STR(x) _STR(x)
-#define TODO(x) __pragma(message(__FILE__"("STR(__LINE__)"): TODO: "_STR(x) ))
 
-#define CompilerMessage(desc) __pragma(message(__FILE__ "(" STR(__LINE__) ") :" #desc))
 
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-
-#include <iostream> 
-#include <fstream> 
-#include <vector> 
-#include <unordered_map> 
-#include <sstream>
-#include <iomanip>
-#include <algorithm>
-#include <cstdlib>
-#include <numeric>
-#include <sys/stat.h>
-#include <cassert>
-#include <ppl.h>
-
-#include <ppl.h>
-#include <algorithm>
-#include <array>
-#include <set>
-
-#include "json.hpp"
-
-#include "DebugBuffer.h"
-
-using namespace std;
-using namespace concurrency;
-
-const string RESET = "\033[0m";
-const string BOLD = "\033[1m";
-const string CLEAR_SCREEN = "\033[2J\033[1;1H";
-const string LINESTART = "\033[0G";
-
-const string DIM = "\033[2m";
-const string UNDERLINE = "\033[4m";
-const string BLINK = "\033[5m";
-
-const string BLACK = "\033[30m";
-const string RED = "\033[31m";
-const string GREEN = "\033[32m";
-const string YELLOW = "\033[33m";
-const string BLUE = "\033[34m";
-const string MAGENTA = "\033[35m";
-const string CYAN = "\033[36m";
-const string WHITE = "\033[37m";
-
-const string BKBLACK = "\033[40m";
-const string BKRED = "\033[41m";
-const string BKGREEN = "\033[42m";
-const string BKYELLOW = "\033[43m";
-const string BKBLUE = "\033[44m";
-const string BKMAGENTA = "\033[45m";
-const string BKCYAN = "\033[46m";
-const string BKWHITE = "\033[47m";
 
 #define PAD_LEFT(num, ch) std::setw(num) << std::setfill(ch)
 
@@ -120,121 +63,14 @@ public:
     template<typename T>
     static void ExecuteSteps()
     {
-        if(!ProgramConfigurationLoaded)
-        {
-            LoadProgramConfig();
-        }
-
-        LARGE_INTEGER frequency;
-        LARGE_INTEGER start_step;
-        LARGE_INTEGER end_step;
-#define TIMING_START  QueryPerformanceCounter(&start_step)
-#define TIMING_END  QueryPerformanceCounter(&end_step)
-#define TIME static_cast<double>(end_step.QuadPart - start_step.QuadPart) * 1000.0 / frequency.QuadPart
-
-        // Get the frequency of the high-resolution performance counter 
-        QueryPerformanceFrequency(&frequency);
-
         static_assert(std::is_base_of<AoCBase, T>::value, "T must derive from AoCBase");
         T instance;
-
-        if(instance.GetDay() == 0)
-        {
-            cout << RED << BLINK << "Error: Class instance has no day defined." << RESET << " Please override GetDay() and return proper day." << endl;
-            return;
-        }
-
-        AoCBaseExecutionResult result = GetResultJsonEntry(instance.GetYear(), instance.GetDay());
-
-#if _DEBUG 
-        if(!result.OkToRunInDebug) if(!ProgramConfiguration.ForceAllRunsInDebug) return;
-#else
-        if(!result.OkToRunInRelease) if(!ProgramConfiguration.ForceAllRunsInRelease) return;
-#endif
+        ExecuteStep(instance);
 
 
-
-        result.Step1Test.Name = "Part 1 (TEST)";
-        result.Step2Test.Name = "Part 2 (TEST)";
-        result.Step1Live.Name = "Part 1 (LIVE)";
-        result.Step2Live.Name = "Part 2 (LIVE)";
-
-        if(result.EnableDebugOutput)
-        {
-            dout.setEnabled(true);
-        }
-
-        instance.OnInitTests();
-        instance.SetTest(true);
-        instance.OnInitTestingTests();
-        dout.setEnabled(false);
-
-        if(result.EnableDebugOutput || result.Step1Test.EnableDebugOutput)
-        {
-            dout.setEnabled(true);
-            dout << RESET << endl << "=> Running " << result.GetNameWithDate() << " "<< result.Step1Test.Name << endl;
-        }
-        instance.OnInitStep(1);
-        TIMING_START;
-        result.Step1Test.Result = instance.Step1();
-        TIMING_END;
-        result.Step1Test.Time = TIME;
-        instance.OnCloseStep(1);
-        dout.setEnabled(false);
-
-        if(result.EnableDebugOutput || result.Step2Test.EnableDebugOutput)
-        {
-            dout.setEnabled(true);
-            dout << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step1Test.Name << endl;
-        }
-        instance.OnInitStep(2);
-        TIMING_START;
-        result.Step2Test.Result = instance.Step2();
-        TIMING_END;
-        result.Step2Test.Time = TIME;
-        instance.OnCloseStep(2);
-        dout.setEnabled(false);
-
-        instance.OnCloseTestingTests();
-        instance.SetTest(false);
-
-        if(result.EnableDebugOutput) dout.setEnabled(true);
-        instance.OnInitLiveTests();
-        dout.setEnabled(false);
-
-        if(result.EnableDebugOutput || result.Step1Live.EnableDebugOutput)
-        {
-            dout.setEnabled(true);
-            dout << endl << "=> Running " << result.GetNameWithDate() << " "<< result.Step1Test.Name << endl;
-        }
-        instance.OnInitStep(1);
-        TIMING_START;
-        result.Step1Live.Result = instance.Step1();
-        TIMING_END;
-        result.Step1Live.Time = TIME;
-        instance.OnCloseStep(1);
-        dout.setEnabled(false);
-
-        if(result.EnableDebugOutput || result.Step2Live.EnableDebugOutput)
-        {
-            dout.setEnabled(true);
-            dout << endl << "=> Running " << result.GetNameWithDate() << " "<< result.Step1Test.Name << endl;
-        }
-        instance.OnInitStep(2);
-        TIMING_START;
-        result.Step2Live.Result = instance.Step2();
-        TIMING_END;
-        result.Step2Live.Time = TIME;
-        instance.OnCloseStep(2);
-        dout.setEnabled(false);
-
-        if(result.EnableDebugOutput) dout.setEnabled(true);
-        instance.OnCloseLiveTests();
-        instance.OnCloseTests();
-        dout.setEnabled(false);
-
-        ResultReports.push_back(result);
     }
+
+    static void ExecuteStep(AoCBase& instance);
 
 protected:
     LongListList ReadLongVectorsFromFile(int Step) const;
@@ -245,7 +81,6 @@ protected:
     vector<string> ReadStringLinesFromFile(int Step) const;
     stringstream ReadStringStreamFromFile(int Step) const;
 
-    void CreateFileIfDoesNotExist(const std::string& FileName) const;
     const int GetFileSingleLineWidth(int Step) const;
 
     static long GetMinimum(const vector<long>& List);
@@ -274,6 +109,8 @@ protected:
         return (int8_t)ch - '0';
     }
 
+    const std::string GetFileName() const;
+
 public:
     virtual const int64_t Step1() = 0;
     virtual const int64_t Step2() = 0;
@@ -295,13 +132,61 @@ public:
     virtual void OnCloseStep(const int Step);
     virtual void OnCloseTests();
 
+private:
+    bool IsUnderTest{ false };
+    int Step{ 0 };
+    double LastGlobalTime{ 0 };
+    static vector<AoCBaseExecutionResult> DaysDatabase;
+
+    friend class _Time;
+};
+
+
+class _Time
+{
+    friend class AoCBase;
+public:
+    _Time(string Name)
+    {
+        name = name;
+        QueryPerformanceCounter(&start_step);
+    }
+    _Time()
+    {
+        QueryPerformanceCounter(&start_step);
+    }
+    _Time(AoCBase* _instance)
+    {
+        aocp = _instance;
+        QueryPerformanceCounter(&start_step);
+    }
+    ~_Time()
+    {
+        LARGE_INTEGER end_step;
+        LARGE_INTEGER frequency;
+        QueryPerformanceCounter(&end_step);
+        QueryPerformanceFrequency(&frequency);
+        double time = static_cast<double>(end_step.QuadPart - start_step.QuadPart) * 1000.0 / frequency.QuadPart;
+        if(aocp)
+        {
+            aocp->LastGlobalTime = time;
+        }
+        else
+        {
+            aoc::dout << "Timer " << name << " ended. Time: " << toStringWithPrecision(time, 3) << "ms" << endl;
+        }
+    }
 
 private:
-    const std::string GetFileName(const int Step) const;
-    bool IsUnderTest{ false };
-
-    static vector<AoCBaseExecutionResult> DaysDatabase;
+    LARGE_INTEGER start_step{ 0 };
+    AoCBase* aocp{ nullptr };
+    string name;
 };
+#define TOKEN_CONCAT(a, b) a##b
+#define UNIQUE_VAR(prefix) TOKEN_CONCAT(prefix, __LINE__)
+
+#define TIME_PART _Time __part_timer__(this) 
+#define TIME(n) _Time UNIQUE_VAR(__local_timer__)(n)
 
 
 

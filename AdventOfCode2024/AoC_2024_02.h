@@ -12,9 +12,6 @@ public:
     const int64_t Step2() override;
 
 private:
-    const bool AnalyzeList(vector<long> List, const bool Allow2ndCheck) const;
-
-    LongListList Input;
-
+    const bool AnalyzeList(vector<int> List, const bool Allow2ndCheck) const;
 };
 

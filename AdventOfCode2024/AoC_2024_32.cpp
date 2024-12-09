@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "AoC_2024_32.h"
 
 // this is a test day, not for actual problem solving

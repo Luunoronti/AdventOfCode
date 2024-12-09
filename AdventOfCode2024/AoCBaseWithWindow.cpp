@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "AoCBaseWithWindow.h"
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

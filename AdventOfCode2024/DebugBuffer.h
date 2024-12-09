@@ -3,36 +3,39 @@
 #include <iostream> 
 #include <sstream>
 
-// Custom stream buffer 
-class DebugBuffer : public std::stringbuf
+namespace aoc
 {
-public: DebugBuffer(bool enabled = true) : enabled(enabled) {}
-      int sync() override
-      {
-          if(enabled)
+    // Custom stream buffer 
+    class DebugBuffer : public std::stringbuf
+    {
+    public: DebugBuffer(bool enabled = true) : enabled(enabled) {}
+          int sync() override
           {
-              std::cout << str();
+              if(enabled)
+              {
+                  std::cout << str();
+              }
+              str("");
+              return 0;
           }
-          str("");
-          return 0;
-      }
-      void setEnabled(bool enabled)
-      {
-          this->enabled = enabled;
-      }
-private: bool enabled;
-};
+          void setEnabled(bool enabled)
+          {
+              this->enabled = enabled;
+          }
+    private: bool enabled;
+    };
 
-// Custom stream 
-class DebugStream : public std::ostream
-{
-public: DebugStream() : std::ostream(&buf), buf() {}
-      void setEnabled(bool enabled)
-      {
-          buf.setEnabled(enabled);
-      }
-private: DebugBuffer buf;
-};
+    // Custom stream 
+    class DebugStream : public std::ostream
+    {
+    public: DebugStream() : std::ostream(&buf), buf() {}
+          void setEnabled(bool enabled)
+          {
+              buf.setEnabled(enabled);
+          }
+    private: DebugBuffer buf;
+    };
 
-// Create a global instance of the custom stream 
-extern DebugStream dout;
+    // Create a global instance of the custom stream 
+    extern DebugStream dout;
+}

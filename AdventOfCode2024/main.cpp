@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "AoC_2024_Includes.h"
 
 int main()

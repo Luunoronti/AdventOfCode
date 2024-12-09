@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "AoCBaseWithD3D.h"
 
 void AoCBaseWithD3D::OnInitTests()

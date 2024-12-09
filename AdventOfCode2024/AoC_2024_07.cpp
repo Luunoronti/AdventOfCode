@@ -1,13 +1,9 @@
+#include "pch.h"
 #include "AoC_2024_07.h"
 
 void AoC_2024_07::OnInitTestingTests()
 {
-    InputData.clear();
-    auto inputLines = ReadStringLinesFromFile(1);
-    for(const string& line : inputLines)
-    {
-        ParseInputLineAndStoreInputData(line);
-    }
+    
 }
 void AoC_2024_07::OnInitLiveTests()
 {
@@ -30,6 +26,14 @@ void AoC_2024_07::ParseInputLineAndStoreInputData(const string& Line)
 }
 const int64_t AoC_2024_07::Step1()
 {
+    InputData.clear();
+    auto inputLines = ReadStringLinesFromFile(1);
+    TIME_PART;
+    for(const string& line : inputLines)
+    {
+        ParseInputLineAndStoreInputData(line);
+    }
+
     int64_t sum = 0;
     parallel_for_each(InputData.begin(), InputData.end(), [&](SingleLineData& Data)
         {
@@ -39,6 +43,14 @@ const int64_t AoC_2024_07::Step1()
 }
 const int64_t AoC_2024_07::Step2()
 {
+    InputData.clear();
+    auto inputLines = ReadStringLinesFromFile(1);
+    TIME_PART;
+    for(const string& line : inputLines)
+    {
+        ParseInputLineAndStoreInputData(line);
+    }
+
     int64_t sum = 0;
     parallel_for_each(InputData.begin(), InputData.end(), [&](SingleLineData& Data)
           {

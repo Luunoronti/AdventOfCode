@@ -1,4 +1,7 @@
+#include "pch.h"
 #include "DebugBuffer.h"
 
-
-DebugStream dout;
+namespace aoc 
+{
+    DebugStream dout;
+}

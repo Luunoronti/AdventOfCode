@@ -1,9 +1,117 @@
-﻿#include "AoCBase.h"
+﻿#include "pch.h"
+#include "AoCBase.h"
+
+using namespace aoc;
 
 vector<AoCBaseExecutionResult> AoCBase::ResultReports;
 AoCProgramConfiguration AoCBase::ProgramConfiguration;
 bool AoCBase::ProgramConfigurationLoaded{ false };
 
+#pragma region Execution
+void AoCBase::ExecuteStep(AoCBase& instance)
+{
+    if(!ProgramConfigurationLoaded)
+    {
+        LoadProgramConfig();
+    }
+    if(instance.GetDay() == 0)
+    {
+        cout << RED << BLINK << "Error: Class instance has no day defined." << RESET << " Please override GetDay() and return proper day." << endl;
+        return;
+    }
+
+    AoCBaseExecutionResult result = GetResultJsonEntry(instance.GetYear(), instance.GetDay());
+
+#if _DEBUG 
+    if(!result.OkToRunInDebug) if(!ProgramConfiguration.ForceAllRunsInDebug) return;
+#else
+    if(!result.OkToRunInRelease) if(!ProgramConfiguration.ForceAllRunsInRelease) return;
+#endif
+
+    result.Step1Test.Name = "Part 1 (TEST)";
+    result.Step2Test.Name = "Part 2 (TEST)";
+    result.Step1Live.Name = "Part 1 (LIVE)";
+    result.Step2Live.Name = "Part 2 (LIVE)";
+
+    if(result.EnableDebugOutput)
+    {
+        dout.setEnabled(true);
+    }
+
+    instance.OnInitTests();
+    instance.SetTest(true);
+    instance.OnInitTestingTests();
+    dout.setEnabled(false);
+
+    if(result.EnableDebugOutput || result.Step1Test.EnableDebugOutput)
+    {
+        dout.setEnabled(true);
+        dout << RESET << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step1Test.Name << endl;
+    }
+    instance.Step = 1;
+    instance.OnInitStep(1);
+    
+    instance.LastGlobalTime = 0;
+    result.Step1Test.Result = instance.Step1();
+    result.Step1Test.Time = instance.LastGlobalTime;
+    instance.OnCloseStep(1);
+    dout.setEnabled(false);
+
+    if(result.EnableDebugOutput || result.Step2Test.EnableDebugOutput)
+    {
+        dout.setEnabled(true);
+        dout << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step2Test.Name << endl;
+    }
+    instance.Step = 2;
+    instance.OnInitStep(2);
+    instance.LastGlobalTime = 0;
+    result.Step2Test.Result = instance.Step2();
+    result.Step2Test.Time = instance.LastGlobalTime;
+    instance.OnCloseStep(2);
+    dout.setEnabled(false);
+
+    instance.OnCloseTestingTests();
+    instance.SetTest(false);
+
+    if(result.EnableDebugOutput) dout.setEnabled(true);
+    instance.OnInitLiveTests();
+    dout.setEnabled(false);
+
+    if(result.EnableDebugOutput || result.Step1Live.EnableDebugOutput)
+    {
+        dout.setEnabled(true);
+        dout << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step1Live.Name << endl;
+    }
+    instance.Step = 1;
+    instance.OnInitStep(1);
+    instance.LastGlobalTime = 0;
+    result.Step1Live.Result = instance.Step1();
+    result.Step1Live.Time = instance.LastGlobalTime;
+    instance.OnCloseStep(1);
+    dout.setEnabled(false);
+
+    if(result.EnableDebugOutput || result.Step2Live.EnableDebugOutput)
+    {
+        dout.setEnabled(true);
+        dout << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step2Live.Name << endl;
+    }
+
+    instance.Step = 2;
+    instance.OnInitStep(2);
+    instance.LastGlobalTime = 0;
+    result.Step2Live.Result = instance.Step2();
+    result.Step2Live.Time = instance.LastGlobalTime;
+    instance.OnCloseStep(2);
+    dout.setEnabled(false);
+
+    if(result.EnableDebugOutput) dout.setEnabled(true);
+    instance.OnCloseLiveTests();
+    instance.OnCloseTests();
+    dout.setEnabled(false);
+
+    ResultReports.push_back(result);
+}
+#pragma endregion
 
 #pragma region Report printing
 #define PRINT_RESULT_STATUS \
@@ -61,13 +169,7 @@ void printCenterPaddedString(const std::string& s, size_t len, string colorCode,
     std::cout << (noDimming ? "" : DIM) << "|" << RESET << colorCode << std::setw(leftPadding + s.length()) << std::setfill(' ') << s << RESET << std::setw(rightPadding) << std::setfill(' ') << "" << "";
 }
 
-std::string toStringWithPrecision(double value, int precision)
-{
-    std::stringstream stream;
-    stream.imbue(std::locale::classic()); // Use the classic locale to avoid thousands separators
-    stream << std::fixed << std::setprecision(precision) << value;
-    return stream.str();
-}
+
 
 #define TIME_PRECISION 3
 
@@ -333,29 +435,9 @@ string AoCBase::ReadStringFromFile(int Step) const
     int w, h;
     return ReadStringFromFile(Step, w, h);
 }
-void AoCBase::CreateFileIfDoesNotExist(const std::string& FileName) const
-{
-    struct stat buffer;
-    if(stat(FileName.c_str(), &buffer) == 0)
-    {
-        return;
-    }
-
-    std::string command = "notepad \"" + FileName + "\"";
-
-    int result = system(command.c_str());
-    if(result == 0)
-    {
-        std::cout << "Notepad closed successfully." << std::endl;
-    }
-    else
-    {
-        std::cerr << "Failed to open Notepad." << std::endl;
-    }
-}
 string AoCBase::ReadStringFromFile(int Step, int& LinesCount, int& LastLineWidth) const
 {
-    const std::string FileName = GetFileName(Step);
+    const std::string FileName = GetFileName();
     CreateFileIfDoesNotExist(FileName);
     LinesCount = 0;
     LastLineWidth = 0;
@@ -365,7 +447,7 @@ string AoCBase::ReadStringFromFile(int Step, int& LinesCount, int& LastLineWidth
     std::string line;
     if(!file.is_open())
     {
-        std::cerr << RED << BLINK << "Error opening file " << GetFileName(Step) << RESET << std::endl;
+        std::cerr << RED << BLINK << "Error opening file " << GetFileName() << RESET << std::endl;
         return line;
     }
     while(std::getline(file, line))
@@ -380,14 +462,14 @@ string AoCBase::ReadStringFromFile(int Step, int& LinesCount, int& LastLineWidth
 
 const int AoCBase::GetFileSingleLineWidth(int Step) const
 {
-    const std::string FileName = GetFileName(Step);
+    const std::string FileName = GetFileName();
     CreateFileIfDoesNotExist(FileName);
 
     std::ifstream file(FileName);
     std::string line;
     if(!file.is_open())
     {
-        std::cerr << RED << BLINK << "Error opening file " << GetFileName(Step) << RESET << std::endl;
+        std::cerr << RED << BLINK << "Error opening file " << GetFileName() << RESET << std::endl;
         return -1;
     }
     if(!std::getline(file, line))
@@ -397,7 +479,7 @@ const int AoCBase::GetFileSingleLineWidth(int Step) const
 }
 LongListList AoCBase::ReadVerticalVectorsFromFile(int Step) const
 {
-    const std::string FileName = GetFileName(Step);
+    const std::string FileName = GetFileName();
     CreateFileIfDoesNotExist(FileName);
 
     std::ifstream file(FileName);
@@ -405,7 +487,7 @@ LongListList AoCBase::ReadVerticalVectorsFromFile(int Step) const
 
     if(!file.is_open())
     {
-        std::cerr << RED << BLINK << "Error opening file " << GetFileName(Step) << RESET << std::endl;
+        std::cerr << RED << BLINK << "Error opening file " << GetFileName() << RESET << std::endl;
         return vectors;
     }
 
@@ -446,7 +528,7 @@ stringstream AoCBase::ReadStringStreamFromFile(int Step) const
 }
 vector<string> AoCBase::ReadStringLinesFromFile(int Step) const
 {
-    const std::string FileName = GetFileName(Step);
+    const std::string FileName = GetFileName();
     CreateFileIfDoesNotExist(FileName);
 
     std::ifstream file(FileName);
@@ -454,7 +536,7 @@ vector<string> AoCBase::ReadStringLinesFromFile(int Step) const
 
     if(!file.is_open())
     {
-        std::cerr << RED << BLINK << "Error opening file " << GetFileName(Step) << RESET << std::endl;
+        std::cerr << RED << BLINK << "Error opening file " << GetFileName() << RESET << std::endl;
         return vector;
     }
 
@@ -471,7 +553,7 @@ vector<string> AoCBase::ReadStringLinesFromFile(int Step) const
 
 LongListList AoCBase::ReadLongVectorsFromFile(int Step) const
 {
-    const std::string FileName = GetFileName(Step);
+    const std::string FileName = GetFileName();
     CreateFileIfDoesNotExist(FileName);
 
     std::ifstream file(FileName);
@@ -479,7 +561,7 @@ LongListList AoCBase::ReadLongVectorsFromFile(int Step) const
 
     if(!file.is_open())
     {
-        std::cerr << RED << BLINK << "Error opening file " << GetFileName(Step) << RESET << std::endl;
+        std::cerr << RED << BLINK << "Error opening file " << GetFileName() << RESET << std::endl;
         return vectors;
     }
 
@@ -500,7 +582,7 @@ LongListList AoCBase::ReadLongVectorsFromFile(int Step) const
     return vectors;
 }
 
-const std::string AoCBase::GetFileName(const int Step) const
+const std::string AoCBase::GetFileName() const
 {
     std::string folder = IsTest() ? "test" : "live";
     std::string filename = ".\\" + folder + "\\" + std::to_string(GetYear()) + "_" + std::to_string(GetDay()) + "_" + std::to_string(Step) + ".txt";
@@ -685,4 +767,8 @@ void AoCBase::LoadProgramConfig()
     file.close();
 }
 #pragma endregion
+
+
+
+
 

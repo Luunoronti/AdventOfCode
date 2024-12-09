@@ -1,10 +1,11 @@
+#include "pch.h"
 #include "AoC_2024_02.h"
 
-void AoC_2024_02::OnInitTestingTests() { Input = ReadLongVectorsFromFile(1); }
-void AoC_2024_02::OnInitLiveTests() { Input = ReadLongVectorsFromFile(1); }
+void AoC_2024_02::OnInitTestingTests() {  }
+void AoC_2024_02::OnInitLiveTests() {  }
 
 
-const bool AoC_2024_02::AnalyzeList(vector<long> List, const bool Allow2ndCheck) const
+const bool AoC_2024_02::AnalyzeList(vector<int> List, const bool Allow2ndCheck) const
 {
     bool increase = List[0] < List[1];
     bool badList = false;
@@ -24,7 +25,7 @@ const bool AoC_2024_02::AnalyzeList(vector<long> List, const bool Allow2ndCheck)
     if(!badList)
         return true;
 
-    vector<long> _2ndTest;
+    vector<int> _2ndTest;
     for(int i = 0; i < List.size(); ++i)
     {
         _2ndTest.clear();
@@ -45,6 +46,11 @@ const bool AoC_2024_02::AnalyzeList(vector<long> List, const bool Allow2ndCheck)
 
 const int64_t AoC_2024_02::Step1()
 {
+    vector<vector<int>> Input;
+    aoc::AoCStream(GetFileName()) >> Input;
+    
+    TIME_PART;
+
     long safeCount = 0;
     for(const auto& list : Input)
     {
@@ -58,6 +64,11 @@ const int64_t AoC_2024_02::Step1()
 
 const int64_t AoC_2024_02::Step2()
 {
+    vector<vector<int>> Input;
+    aoc::AoCStream(GetFileName()) >> Input;
+
+    TIME_PART;
+
     long safeCount = 0;
     for(const auto& list : Input)
     {

@@ -116,9 +116,10 @@
   },
   {
     "run": true,
-    "debugRun": false,
+    "debugRun": true,
     "name": "Guard Gallivant",
     "day": 6,
+    "enableDebugStream": false,
     "liveStep1": {
       "expectedResult": 4903,
       "knownErrors": []
@@ -139,7 +140,7 @@
   },
   {
     "run": true,
-    "debugRun": false,
+    "debugRun": true,
     "name": "Bridge Repair",
     "day": 7,
     "liveStep1": {
@@ -165,8 +166,9 @@
     "debugRun": true,
     "name": "Resonant Collinearity",
     "day": 8,
+    "enableDebugStream": false,
     "liveStep1": {
-      "enableDebugStream": true,
+      "enableDebugStream": false,
       "expectedResult": 398,
       "knownErrors": []
     },

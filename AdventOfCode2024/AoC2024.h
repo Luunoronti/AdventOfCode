@@ -1,3 +1,4 @@
+#include "AoCBase.h"
 #pragma once
 #include "AoCBase.h"
 class AoC2024 : public AoCBase

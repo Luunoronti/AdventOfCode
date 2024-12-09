@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "AoC_2024_04.h"
 
 
@@ -6,7 +7,7 @@
 #define AND &&
 #define OR ||
 
-#define IS_CHAR(_x, _y, c)  ((_x)>=0 && (_y) >= 0 && (_x) < width && (_y) < height && buffer[((_x) + width*(_y))] == c)
+#define IS_CHAR(_x, _y, c)  (Map.Get(_x, _y, '\0') == c)
 
 #define IS_X(_x, _y) (IS_CHAR(x+(_x), y+(_y), 'X'))
 #define IS_M(_x, _y) (IS_CHAR(x+(_x), y+(_y), 'M'))
@@ -36,15 +37,15 @@
 const int64_t AoC_2024_04::Step1()
 {
     long sum = 0;
-    int width = 0, height = 0;
-    const string buffer = ReadStringFromFile(1, height, width);
-    const int size = height * width;
+    aoc::maps::Map2d<char> Map;
+    aoc::AoCStream(GetFileName()) >> Map;
 
+    TIME_PART;
     // for each position in buffer, we check 4 cardinal and 4 diagonal directions
     // but ONLY if current char == 'X'
-    for(int y = 0; y < height; ++y)
+    for(int y = 0; y < Map.Height; ++y)
     {
-        for(int x = 0; x < width; ++x)
+        for(int x = 0; x < Map.Width; ++x)
         {
             if(!IS_X_CURRENT) continue;
 
@@ -67,15 +68,16 @@ const int64_t AoC_2024_04::Step1()
 const int64_t AoC_2024_04::Step2()
 {
     long sum = 0;
-    int width = 0, height = 0;
-    const string buffer = ReadStringFromFile(2, height, width);
-    const int size = height * width;
 
+    aoc::maps::Map2d<char> Map;
+    aoc::AoCStream(GetFileName()) >> Map;
+
+    TIME_PART;
     // the position of interest must be an 'A'
     // then we check two possibilities for each diagonal
-    for(int y = 0; y < height; ++y)
+    for(int y = 0; y < Map.Height; ++y)
     {
-        for(int x = 0; x < width; ++x)
+        for(int x = 0; x < Map.Width; ++x)
         {
             if(!IS_A_CURRENT) continue;
 

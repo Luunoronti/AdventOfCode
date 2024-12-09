@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "AoC_2024_05.h"
 
 const bool AoC_2024_05::CheckRule(PageList InList, PageRule InRule, long& i1, long& i2) const
@@ -22,6 +23,7 @@ const int64_t AoC_2024_05::Step1()
     ErrorLists.clear();
 
     ReadInput();
+    TIME_PART;
 
     long sum = 0;
     long i1 = 0, i2 = 0;
@@ -41,6 +43,7 @@ const int64_t AoC_2024_05::Step1()
 
 const int64_t AoC_2024_05::Step2()
 {
+    TIME_PART;
     long sum = 0;
 
     concurrency::combinable<long> sum_combiner([]() { return 0; });
@@ -72,10 +75,10 @@ const int64_t AoC_2024_05::Step2()
 
 void AoC_2024_05::ReadInput()
 {
-    vector<string> lines = ReadStringLinesFromFile(1);
+    vector<string> lines;
+    aoc::AoCStream(GetFileName()) >> lines;
 
     stringstream s;
-
     for(const auto& l : lines)
     {
         s.clear();

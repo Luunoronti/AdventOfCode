@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "AoC_2024_03.h"
 
 bool StartsWithStringAtIndex(const string& Input, const int Index, const string& TestString)
@@ -128,12 +129,18 @@ const long AoC_2024_03::Process(const string& Line, const bool AllowModifiers)
 
 const int64_t AoC_2024_03::Step1()
 {
-    return Process(ReadStringFromFile(1), false);
+    string input;
+    aoc::AoCStream(GetFileName()) >> input;
+    TIME_PART;
+    return Process(input, false);
 }
 
 const int64_t AoC_2024_03::Step2()
 {
-    return Process(ReadStringFromFile(2), true);
+    string input;
+    aoc::AoCStream(GetFileName()) >> input;
+    TIME_PART;
+    return Process(input, true);
 }
 
 
