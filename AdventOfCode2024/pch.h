@@ -26,6 +26,7 @@
 #include <algorithm>
 #include <array>
 #include <set>
+#include <deque>
 
 #include "json.hpp"
 

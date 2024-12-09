@@ -188,6 +188,7 @@
   },
   {
     "run": true,
+    "enableDebugStream": true,
     "debugRun": true,
     "name": "Disk Fragmenter",
     "day": 9,

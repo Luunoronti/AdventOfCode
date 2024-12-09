@@ -6,21 +6,35 @@ void CreateFileIfDoesNotExist(const std::string& FileName)
 {
     struct stat buffer;
     if(stat(FileName.c_str(), &buffer) == 0)
-    {
         return;
-    }
 
-    std::string command = "notepad \"" + FileName + "\"";
-
+    std::string command = "code \"" + FileName + "\"";
     int result = system(command.c_str());
     if(result == 0)
     {
-        std::cout << "Notepad closed successfully." << std::endl;
+        std::cout << "VS Code opened successfully on file " << FileName << std::endl;
+
+        // wait for file to actually exist
+        while(stat(FileName.c_str(), &buffer) != 0)
+        {
+            ::Sleep(1);
+        }
+        return;
     }
     else
+        std::cerr << "Failed to open VS Code. Attempting to revert to Notepad" << std::endl;
+
+    command = "notepad \"" + FileName + "\"";
+    result = system(command.c_str());
+    if(result == 0)
     {
-        std::cerr << "Failed to open Notepad." << std::endl;
+        std::cout << "Notepad opened successfully on file " << FileName << std::endl;
+        return;
     }
+    else
+        std::cerr << "Failed to open VS Code. Attempting to revert to Notepad" << std::endl;
+
+
 }
 
 std::string toStringWithPrecision(double value, int precision)
