@@ -1,18 +1,33 @@
 #include "pch.h"
 #include "AoC_2024_09.h"
 
+using namespace aoc;
 
-// define a file descriptor that we will hold
+// define a file descriptor
+// this will also hold free space blocks
+// which are just files with id == -1
 struct FileDescriptor
 {
+    int location{ 0 };
     uint8_t size;
     int id; // if -1, this is an empty space descriptor
+    int checksum{ 0 };
+
+    // implement this as two way linked list
+    FileDescriptor* prev{ nullptr };
+    FileDescriptor* next{ nullptr };
 
     FileDescriptor(const uint8_t& size, int id)
         : size(size), id(id)
     {
     }
 
+    void ComputeChecksum() 
+    {
+        checksum = 0;
+        for(int i = 0; i < size; i++)
+            checksum += ((location+i) * id);
+    }
     bool operator==(const FileDescriptor& other) const
     {
         return size == other.size && id == other.id;
@@ -41,84 +56,149 @@ struct FileDescriptor
         return FileDescriptor(newSize, second.id);
     }
 
+    static void* operator new(size_t size)
+    {
+        return memoryPool.allocate();
+    }
+    static void operator delete(void* ptr)
+    {
+        memoryPool.deallocate(ptr);
+    }
+private:
+    static MemoryPool memoryPool;
 };
 
-void print_fs(const vector<FileDescriptor>& fs)
-{
-    for(const auto& fd : fs)
-    {
-        for(int i = 0; i < fd.size; ++i)
-            aoc::dout << fd.id;
-    }
+// Define the static memory pool 
 
+// MemoryPool does not support automatic growth yet
+// so allocate as much as we think is more than enough
+// it's just a couple of MBs, so that's ok, we can go 100x more and still be fine
+TODO("Change initial size once MemoryPool implements auto-growth");
+MemoryPool FileDescriptor::memoryPool(sizeof(FileDescriptor), 1024 * 1024);
+
+void print_fs(FileDescriptor* fs)
+{
+    while(fs)
+    {
+        for(int i = 0; i < fs->size; ++i)
+            (fs->id == -1) ? (aoc::dout << '.') : (aoc::dout << fs->id);
+        fs = fs->next;
+    }
     aoc::dout << endl;
+}
+
+void ConstructFileSystem(const aoc::numeric::single_digit_list& input, FileDescriptor** fileSystem, FileDescriptor** lastDescriptor)
+{
+    FileDescriptor* first{ nullptr };
+    FileDescriptor* next{ nullptr };
+    FileDescriptor* _new{ nullptr };
+
+    int fileIndex{ 0 };
+    uint8_t size;
+    int actualIndex;
+
+    for(int i = 0; i < input.size(); ++i)
+    {
+        size = input[i];
+        actualIndex = (i == 0 || !(i % 2)) ? fileIndex++ : -1; // compute this before continuing due to size == 0 so that fileIndex is actual
+        if(size == 0) continue;
+
+        _new = new FileDescriptor(size, actualIndex);
+        first == nullptr ? next = first = _new : (_new->prev = next, next = next->next = _new); // easiest to read line ever ;)
+    }
+    *fileSystem = first;
+    *lastDescriptor = next;
+}
+FileDescriptor* GetFirstFreeSpaceDescriptor(FileDescriptor* firstFreeSpace)
+{
+    FileDescriptor* next = firstFreeSpace;
+    while(next != nullptr && next->id != -1)
+        next = next->next;
+    return next;
 }
 
 const int64_t AoC_2024_09::Step1()
 {
-    if(!IsTest()) return 0;
-
-    TIME_PART;
     aoc::numeric::single_digit_list input;
     aoc::AoCStream(GetFileName()) >> input;
 
-    // must be careful here, we may exceed the stack
-    std::deque<FileDescriptor> fileSystem;
+    TIME_PART;
+    FileDescriptor* fileSystem{ nullptr };
+    FileDescriptor* lastDescriptor{ nullptr };
+    ConstructFileSystem(input, &fileSystem, &lastDescriptor);
 
-    std::vector<FileDescriptor> newFileSystem; // for now, debug only
+    FileDescriptor* firstFreeSpace = fileSystem;
+    firstFreeSpace = GetFirstFreeSpaceDescriptor(firstFreeSpace);
 
-    for(int i = 0; i < input.size(); i += 2)
+    while(firstFreeSpace != nullptr && lastDescriptor != nullptr && (firstFreeSpace = GetFirstFreeSpaceDescriptor(firstFreeSpace))/* && lastDescriptor > firstFreeSpace*/)
     {
-        fileSystem.push_back(FileDescriptor(input[i], i / 2));
-        if((i + 1) < input.size())
-            fileSystem.push_back(FileDescriptor(input[i + 1], -1));
+        //print_fs(fileSystem);
+
+        if(lastDescriptor->id == -1)
+        {
+            // it's a free space at the back. unlink, delete
+            lastDescriptor = lastDescriptor->prev;
+            delete lastDescriptor->next;
+            lastDescriptor->next = nullptr;
+            continue;
+        }
+
+        // if size is the same, copy file id and then unlink lastDescriptor
+        if(firstFreeSpace->size == lastDescriptor->size)
+        {
+            firstFreeSpace->id = lastDescriptor->id;
+            firstFreeSpace->location = firstFreeSpace->prev ? firstFreeSpace->prev->location + firstFreeSpace->prev->size : 0;
+            // unlink, delete
+            lastDescriptor = lastDescriptor->prev;
+            delete lastDescriptor->next;
+            lastDescriptor->next = nullptr;
+            continue;
+        }
+        // if size of the lastDescriptor is larger, just copy id, and change the size of last desc
+        // DO NOT unlink last descriptor
+        if(firstFreeSpace->size < lastDescriptor->size)
+        {
+            firstFreeSpace->id = lastDescriptor->id;
+            firstFreeSpace->location = firstFreeSpace->prev ? firstFreeSpace->prev->location + firstFreeSpace->prev->size : 0;
+            lastDescriptor->size -= firstFreeSpace->size;
+            continue;
+        }
+
+        // if size of lastDescriptor is smaller, do as above, but make lastDescriptor new empty space
+        if(firstFreeSpace->size > lastDescriptor->size)
+        {
+            uint8_t s = lastDescriptor->size;
+
+            lastDescriptor->size = firstFreeSpace->size - lastDescriptor->size;
+            firstFreeSpace->id = lastDescriptor->id;
+            lastDescriptor->id = -1;
+            firstFreeSpace->size = s;
+
+            // this relink is pretty scary, but it makes sense, trust me :)
+            FileDescriptor* ldp = lastDescriptor->prev;
+            firstFreeSpace->next->prev = lastDescriptor;
+            lastDescriptor->prev = firstFreeSpace;
+            lastDescriptor->next = firstFreeSpace->next;
+            firstFreeSpace->next = lastDescriptor;
+            lastDescriptor = ldp;
+            lastDescriptor->next = nullptr;
+            continue;
+        }
     }
 
-
-    while(fileSystem.size() > 0)
+    // we will now establish location of each descriptor and count checksum
+    FileDescriptor* next = fileSystem;
+    int64_t checksum{ 0 };
+    while(next)
     {
-        auto& first = fileSystem.front();
-        auto& last = fileSystem.back();
-
-        print_fs(newFileSystem);
-
-        if(first.size == 0)
-        {
-            fileSystem.pop_front();
-            continue;
-        }
-        if(last.size == 0)
-        {
-            fileSystem.pop_back();
-            continue;
-        }
-
-        if(first == last)
-        {
-            newFileSystem.push_back(first);
-            fileSystem.pop_front();
-            continue;
-        }
-
-
-        const auto& newFs = FileDescriptor::CompactDescriptors(first, last);
-        if(newFs.size>0)
-        {
-           newFileSystem.push_back(newFs);
-        }
-        if(first.size == 0)
-        {
-            fileSystem.pop_front();
-        }
-        if(last.size == 0)
-        {
-            fileSystem.pop_back();
-        }
+        next->location = next->prev ? next->prev->location + next->prev->size : 0;
+        next->ComputeChecksum();
+        checksum += next->checksum;
+        next = next->next;
     }
+    //print_fs(fileSystem);
 
-
-
-    return 0;
+    return checksum;
 };
 const int64_t AoC_2024_09::Step2()
 {

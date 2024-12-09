@@ -188,7 +188,7 @@
   },
   {
     "run": true,
-    "enableDebugStream": true,
+    "enableDebugStream": false,
     "debugRun": true,
     "name": "Disk Fragmenter",
     "day": 9,
@@ -201,7 +201,7 @@
       "knownErrors": []
     },
     "testStep1": {
-      "expectedResult": 0,
+      "expectedResult": 1928,
       "knownErrors": []
     },
     "testStep2": {

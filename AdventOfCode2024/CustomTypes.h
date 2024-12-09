@@ -74,7 +74,7 @@ namespace aoc
                 return std::accumulate(Map.begin(), Map.end(), _Val);
             }
 
-            __forceinline void find(const T& _value, int& x, int &y) const
+            __forceinline void find(const T& _value, int& x, int& y) const
             {
                 for(int _y = 0; _y < Height; ++_y)
                 {
@@ -137,7 +137,62 @@ namespace aoc
         };
 
         class single_digit_list : public std::vector<int8_t>
-        {
-        };
+        {};
     }
+
+
+    class MemoryPool
+    {
+    public:
+        MemoryPool(size_t blockSize, size_t blockCount)
+            : blockSize(blockSize), blockCount(blockCount), pool(nullptr), freeList(nullptr)
+        {
+            initializePool();
+        }
+
+        ~MemoryPool()
+        {
+            delete[] pool;
+        }
+
+        void* allocate()
+        {
+            if(!freeList)
+            {
+                std::cerr << "Memory pool exhausted" << std::endl;
+                return nullptr;
+            }
+            void* freeBlock = freeList;
+            freeList = freeList->next;
+            return freeBlock;
+        }
+        void deallocate(void* ptr)
+        {
+            FreeBlock* block = static_cast<FreeBlock*>(ptr);
+            block->next = freeList;
+            freeList = block;
+        }
+
+    private:
+        struct FreeBlock
+        {
+            FreeBlock* next;
+        };
+        void initializePool()
+        {
+            pool = new char[blockSize * blockCount];
+            freeList = reinterpret_cast<FreeBlock*>(pool);
+            FreeBlock* current = freeList;
+            for(size_t i = 1; i < blockCount; ++i)
+            {
+                current->next = reinterpret_cast<FreeBlock*>(pool + i * blockSize);
+                current = current->next;
+            }
+            current->next = nullptr;
+        }
+        size_t blockSize;
+        size_t blockCount;
+        char* pool;
+        FreeBlock* freeList;
+    };
 }
