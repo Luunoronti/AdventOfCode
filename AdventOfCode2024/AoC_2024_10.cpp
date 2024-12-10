@@ -5,7 +5,7 @@ using namespace std;
 using namespace aoc;
 using namespace aoc::maps;
 
-int ProcessPath(const single_digit_map& map, const Location2di& location, int locIndex, unordered_map<int, set<Location2di>>& trailheads)
+int64_t ProcessPath(const single_digit_map& map, const Location2di& location, int locIndex, unordered_map<int, set<Location2di>>& trailheads)
 {
     if(map.Get(location) == 9)
     {
@@ -53,15 +53,12 @@ const int64_t AoC_2024_10::Step2()
     TIME_PART;
 
     vector<Location2di> startingLocations;
+    Map.select_value(0) >> startingLocations;
     unordered_map<int, set<Location2di>> trailheads;
 
-    Map.select_value(0) >> startingLocations;
-
     int locIndex = 0;
-    int64_t sum = 0;
-    for(const auto& loc : startingLocations)
-    {
-        sum += ProcessPath(Map, loc, locIndex++, trailheads);
-    }
-    return sum;
+    return std::accumulate(startingLocations.begin(), startingLocations.end(), int64_t(0), [&locIndex,Map,&trailheads](int64_t acc, const Location2di& location) 
+        { 
+            return acc + ProcessPath(Map, location, locIndex++, trailheads); 
+        });
 };
