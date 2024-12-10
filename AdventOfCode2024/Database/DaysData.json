@@ -188,25 +188,26 @@
   },
   {
     "run": true,
-    "enableDebugStream": false,
     "debugRun": true,
     "name": "Disk Fragmenter",
     "day": 9,
     "liveStep1": {
-      "expectedResult": 0,
-      "knownErrors": []
+      "expectedResult": 6340197768906,
+      "knownErrors": [6219938684618]
     },
     "liveStep2": {
-      "expectedResult": 0,
+      "expectedResult": 6363913128533,
       "knownErrors": []
     },
     "testStep1": {
       "expectedResult": 1928,
-      "knownErrors": []
+    "enableDebugStream": false,
+    "knownErrors": []
     },
     "testStep2": {
-      "expectedResult": 0,
-      "knownErrors": []
+      "expectedResult": 2858,
+    "enableDebugStream": true,
+    "knownErrors": []
     },
     "year": 2024
   },

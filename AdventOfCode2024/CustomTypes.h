@@ -172,7 +172,10 @@ namespace aoc
             block->next = freeList;
             freeList = block;
         }
-
+        void reset()
+        {
+            freeList = reinterpret_cast<FreeBlock*>(pool);
+        }
     private:
         struct FreeBlock
         {

@@ -8,54 +8,19 @@ using namespace aoc;
 // which are just files with id == -1
 struct FileDescriptor
 {
-    int location{ 0 };
+    uint32_t location : 24;
     uint8_t size;
-    int id; // if -1, this is an empty space descriptor
-    int checksum{ 0 };
+    int32_t id; // if -1, this is an empty space descriptor
 
-    // implement this as two way linked list
+    // implement this as two way linked list (without using std)
     FileDescriptor* prev{ nullptr };
     FileDescriptor* next{ nullptr };
 
     FileDescriptor(const uint8_t& size, int id)
-        : size(size), id(id)
+        : size(size), id(id), location(0)
     {
     }
-
-    void ComputeChecksum() 
-    {
-        checksum = 0;
-        for(int i = 0; i < size; i++)
-            checksum += ((location+i) * id);
-    }
-    bool operator==(const FileDescriptor& other) const
-    {
-        return size == other.size && id == other.id;
-    }
-
-    // this method will alter size of both descriptors passed
-    // and create new one to add to new filesystem
-
-    __forceinline static FileDescriptor CompactDescriptors(FileDescriptor& first, FileDescriptor& second)
-    {
-        if(first.id >= 0)
-        {
-            FileDescriptor d(first.size, second.id);
-            first.size = 0;
-            return d;
-        }
-        if(second.id < 0)
-        {
-            second.size = 0;
-            return FileDescriptor(0, -1);
-        }
-
-        const int newSize = min(first.size, second.size);
-        first.size -= newSize;
-        second.size -= newSize;
-        return FileDescriptor(newSize, second.id);
-    }
-
+ 
     static void* operator new(size_t size)
     {
         return memoryPool.allocate();
@@ -64,28 +29,16 @@ struct FileDescriptor
     {
         memoryPool.deallocate(ptr);
     }
-private:
+public:
     static MemoryPool memoryPool;
 };
 
 // Define the static memory pool 
-
 // MemoryPool does not support automatic growth yet
 // so allocate as much as we think is more than enough
-// it's just a couple of MBs, so that's ok, we can go 100x more and still be fine
+// it's just a couple of MBs (512 * 512 * (8+16) = 6,291,456 bytes, to be exact), so that's ok, we can go 100x more and still be fine
 TODO("Change initial size once MemoryPool implements auto-growth");
-MemoryPool FileDescriptor::memoryPool(sizeof(FileDescriptor), 1024 * 1024);
-
-void print_fs(FileDescriptor* fs)
-{
-    while(fs)
-    {
-        for(int i = 0; i < fs->size; ++i)
-            (fs->id == -1) ? (aoc::dout << '.') : (aoc::dout << fs->id);
-        fs = fs->next;
-    }
-    aoc::dout << endl;
-}
+MemoryPool FileDescriptor::memoryPool(sizeof(FileDescriptor), 512 * 512);
 
 void ConstructFileSystem(const aoc::numeric::single_digit_list& input, FileDescriptor** fileSystem, FileDescriptor** lastDescriptor)
 {
@@ -100,11 +53,11 @@ void ConstructFileSystem(const aoc::numeric::single_digit_list& input, FileDescr
     for(int i = 0; i < input.size(); ++i)
     {
         size = input[i];
-        actualIndex = (i == 0 || !(i % 2)) ? fileIndex++ : -1; // compute this before continuing due to size == 0 so that fileIndex is actual
+        actualIndex = (i == 0 || !(i % 2)) ? fileIndex++ : -1; // compute this before continuing the loop due to size == 0 so that fileIndex is actual
         if(size == 0) continue;
 
         _new = new FileDescriptor(size, actualIndex);
-        first == nullptr ? next = first = _new : (_new->prev = next, next = next->next = _new); // easiest to read line ever ;)
+        first == nullptr ? next = first = _new : (_new->prev = next, next = next->next = _new); // easiest expression ever ;)
     }
     *fileSystem = first;
     *lastDescriptor = next;
@@ -116,6 +69,16 @@ FileDescriptor* GetFirstFreeSpaceDescriptor(FileDescriptor* firstFreeSpace)
         next = next->next;
     return next;
 }
+void PrintFS(FileDescriptor* fs)
+{
+     /*while(fs)
+     {
+         for(int i = 0; i < fs->size; ++i)
+             (fs->id == -1) ? (aoc::dout << '.') : (aoc::dout << fs->id);
+         fs = fs->next;
+     }
+     aoc::dout << endl;*/
+}
 
 const int64_t AoC_2024_09::Step1()
 {
@@ -123,6 +86,7 @@ const int64_t AoC_2024_09::Step1()
     aoc::AoCStream(GetFileName()) >> input;
 
     TIME_PART;
+
     FileDescriptor* fileSystem{ nullptr };
     FileDescriptor* lastDescriptor{ nullptr };
     ConstructFileSystem(input, &fileSystem, &lastDescriptor);
@@ -130,10 +94,8 @@ const int64_t AoC_2024_09::Step1()
     FileDescriptor* firstFreeSpace = fileSystem;
     firstFreeSpace = GetFirstFreeSpaceDescriptor(firstFreeSpace);
 
-    while(firstFreeSpace != nullptr && lastDescriptor != nullptr && (firstFreeSpace = GetFirstFreeSpaceDescriptor(firstFreeSpace))/* && lastDescriptor > firstFreeSpace*/)
+    while(firstFreeSpace != nullptr && lastDescriptor != nullptr && (firstFreeSpace = GetFirstFreeSpaceDescriptor(firstFreeSpace)))
     {
-        //print_fs(fileSystem);
-
         if(lastDescriptor->id == -1)
         {
             // it's a free space at the back. unlink, delete
@@ -147,7 +109,6 @@ const int64_t AoC_2024_09::Step1()
         if(firstFreeSpace->size == lastDescriptor->size)
         {
             firstFreeSpace->id = lastDescriptor->id;
-            firstFreeSpace->location = firstFreeSpace->prev ? firstFreeSpace->prev->location + firstFreeSpace->prev->size : 0;
             // unlink, delete
             lastDescriptor = lastDescriptor->prev;
             delete lastDescriptor->next;
@@ -159,7 +120,6 @@ const int64_t AoC_2024_09::Step1()
         if(firstFreeSpace->size < lastDescriptor->size)
         {
             firstFreeSpace->id = lastDescriptor->id;
-            firstFreeSpace->location = firstFreeSpace->prev ? firstFreeSpace->prev->location + firstFreeSpace->prev->size : 0;
             lastDescriptor->size -= firstFreeSpace->size;
             continue;
         }
@@ -189,24 +149,129 @@ const int64_t AoC_2024_09::Step1()
     // we will now establish location of each descriptor and count checksum
     FileDescriptor* next = fileSystem;
     int64_t checksum{ 0 };
+    int location{ 0 };
     while(next)
     {
-        next->location = next->prev ? next->prev->location + next->prev->size : 0;
-        next->ComputeChecksum();
-        checksum += next->checksum;
+        for(int i = location; i < location + next->size; ++i) checksum += i * next->id;
+        location += next->size;
         next = next->next;
     }
-    //print_fs(fileSystem);
 
     return checksum;
 };
+
+
+
 const int64_t AoC_2024_09::Step2()
 {
+    //if(!IsTest())return 0;
     TIME_PART;
 
     aoc::numeric::single_digit_list input;
     aoc::AoCStream(GetFileName()) >> input;
 
+    FileDescriptor* fileSystem{ nullptr };
+    FileDescriptor* lastDescriptor{ nullptr };
+    ConstructFileSystem(input, &fileSystem, &lastDescriptor);
 
-    return 0;
+    FileDescriptor* next = fileSystem;
+    unordered_map<int8_t, std::map<int, FileDescriptor*>> freeSpace;
+    int loc = 0;
+    while(next)
+    {
+        next->location = loc;
+        if(next->id == -1)
+            freeSpace[next->size][next->location] = next;
+        loc += next->size;
+        next = next->next;
+    }
+    PrintFS(fileSystem);
+    while(lastDescriptor)
+    {
+        if(lastDescriptor->id >= 0)
+        {
+            // find first fitting space
+            // this does not seem to work for live input (works in test ofc)
+            // fallback loop bellow finds proper empty space
+            next = nullptr;
+            {
+                // TIME("Map organized empty space descriptors");
+                for(int i = lastDescriptor->size; i < 10; ++i)
+                {
+                    auto& sizedSpace = freeSpace[i];
+                    if(!sizedSpace.empty())
+                    {
+                        const auto& b = sizedSpace.begin();
+                        next = b->second;
+                        sizedSpace.erase(b);
+                        break;
+                    }
+                }
+            }
+            // fallback start << this causes around 230ms of Part2 time
+            next = fileSystem;
+            while(next != nullptr)
+            {
+                if(next == lastDescriptor)
+                {
+                    next = nullptr; // cannot go beyond last descriptor
+                    break;
+                }
+                if(next->id == -1 && next->size >= lastDescriptor->size)
+                {
+                    // found
+                    break;
+                }
+                next = next->next;
+            }
+            // fallback end
+
+            if(next != nullptr)
+            {
+                next->id = lastDescriptor->id;
+                lastDescriptor->id = -1;
+
+                if(next->size == lastDescriptor->size)
+                {
+                    continue;
+                }
+
+                // if size of lastDescriptor is smaller, do as above, but make lastDescriptor new empty space
+                if(next->size > lastDescriptor->size)
+                {
+                    // create new empty space descriptor
+                    // and link it in
+                    FileDescriptor* _new = new FileDescriptor(next->size - lastDescriptor->size, -1);
+                    _new->location = next->location + lastDescriptor->size;
+
+                    _new->prev = next;
+                    if(next->next) _new->next = next->next;
+                    if(next->next) next->next->prev = _new;
+                    next->next = _new;
+
+                    freeSpace[_new->size][_new->location] = _new;
+                }
+                next->size = lastDescriptor->size;
+            }
+        }
+        else
+        {
+            freeSpace[lastDescriptor->size].erase(lastDescriptor->location);
+        }
+        PrintFS(fileSystem);
+        lastDescriptor = lastDescriptor->prev;
+    }
+
+    PrintFS(fileSystem);
+    next = fileSystem;
+    int64_t checksum{ 0 };
+    int location{ 0 };
+    while(next)
+    {
+        if(next->id >= 0) for(int i = location; i < location + next->size; ++i) checksum += i * next->id;
+        location += next->size;
+        next = next->next;
+    }
+
+    return checksum;
 };
