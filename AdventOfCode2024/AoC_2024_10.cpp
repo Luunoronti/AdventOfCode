@@ -53,7 +53,14 @@ const int64_t AoC_2024_10::Step1()
         ProcessPath(Map, loc, locIndex++, trailheads);
     }
 
-    return std::accumulate(trailheads.begin(), trailheads.end(), int64_t(0), [](int64_t acc, const auto& pair) { return acc + pair.second.size(); });
+    int sum = 0;
+    for(const auto& pair : trailheads)
+    {
+        sum += pair.second.size();
+    }
+    return sum;
+
+    // return std::accumulate(trailheads.begin(), trailheads.end(), int64_t(0), [](int64_t acc, const auto& pair) { return acc + pair.second.size(); });
 };
 const int64_t AoC_2024_10::Step2()
 {
