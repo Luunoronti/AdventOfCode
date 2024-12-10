@@ -5,51 +5,66 @@
 namespace aoc
 {
     template<typename T>
-    struct Location
+    struct _Location2d
     {
         T x;
         T y;
-        Location(T x, T y)
+        _Location2d(T x, T y)
             : x(x), y(y)
         {
         }
 
-        Location<T> left()
+        _Location2d<T> left()
         {
-            return Location<T>(x - 1, y);
+            return _Location2d<T>(x - 1, y);
         }
-        Location<T> right()
+        _Location2d<T> right()
         {
-            return Location<T>(x + 1, y);
+            return _Location2d<T>(x + 1, y);
         }
-        Location<T> up()
+        _Location2d<T> up()
         {
-            return Location<T>(x, y - 1);
+            return _Location2d<T>(x, y - 1);
         }
-        Location<T> down()
+        _Location2d<T> down()
         {
-            return Location<T>(x, y + 1);
+            return _Location2d<T>(x, y + 1);
         }
 
 
-        Location<T> upleft()
+        _Location2d<T> upleft()
         {
-            return Location<T>(x - 1, y - 1);
+            return _Location2d<T>(x - 1, y - 1);
         }
-        Location<T> upright()
+        _Location2d<T> upright()
         {
-            return Location<T>(x + 1, y - 1);
+            return _Location2d<T>(x + 1, y - 1);
         }
-        Location<T> downleft()
+        _Location2d<T> downleft()
         {
-            return Location<T>(x - 1, y + 1);
+            return _Location2d<T>(x - 1, y + 1);
         }
-        Location<T> downright()
+        _Location2d<T> downright()
         {
-            return Location<T>(x + 1, y + 1);
+            return _Location2d<T>(x + 1, y + 1);
         }
 
     };
+
+    typedef _Location2d<uint8_t> Location2du8;
+    typedef _Location2d<int8_t> Location2d8;
+
+    typedef _Location2d<uint16_t> Location2du16;
+    typedef _Location2d<int16_t> Location2d16;
+
+    typedef _Location2d<uint32_t> Location2du32;
+    typedef _Location2d<int32_t> Location2d32;
+
+    typedef _Location2d<uint64_t> Location2du64;
+    typedef _Location2d<int64_t> Location2d64;
+
+    typedef _Location2d<float> Location2df32;
+    typedef _Location2d<double> Location2df64;
 
     namespace stream
     {
@@ -116,7 +131,7 @@ namespace aoc
                 friend class Map2d;
             public:
                 template <class _Ty>
-                __selected_value_stream& operator>>(std::vector<Location<_Ty>>& locations)
+                __selected_value_stream& operator>>(std::vector<_Location2d<_Ty>>& locations)
                 {
                     locations.clear();
                     if(map)
@@ -126,7 +141,7 @@ namespace aoc
                             for(_Ty x = 0; x < map->Height; ++x)
                             {
                                 if(map->Get(x, y) == __value)
-                                    locations.push_back(Location<_Ty>(x, y));
+                                    locations.push_back(_Location2d<_Ty>(x, y));
                             }
                         }
                     }
@@ -144,7 +159,7 @@ namespace aoc
             {
                 friend class Map2d;
             public:
-                __find_close_neighbor& operator>>(std::vector<Location<_Ty>>& locations)
+                __find_close_neighbor& operator>>(std::vector<_Location2d<_Ty>>& locations)
                 {
                     locations.clear();
                     if(map)
@@ -168,7 +183,7 @@ namespace aoc
             private:
                 //__selected_value_stream() {}
                 T __value_to_find{};
-                Location<_Ty> _loc{Location<_Ty>(0,0)};
+                _Location2d<_Ty> _loc{_Location2d<_Ty>(0,0)};
                 Directions __directions{Directions::None};
                 Map2d* map{ nullptr };
             };
@@ -213,26 +228,26 @@ namespace aoc
             }
 
             template <class _Ty>
-            __forceinline void Set(const Location<_Ty>& _loc, const T& value)
+            __forceinline void Set(const _Location2d<_Ty>& _loc, const T& value)
             {
                 if(!WithinBounds(_loc))
                     return;
                 Map[_loc.x + _loc.y * Width] = value;
             }
             template <class _Ty>
-            __forceinline bool WithinBounds(const Location<_Ty>& _loc) const
+            __forceinline bool WithinBounds(const _Location2d<_Ty>& _loc) const
             {
                 return !(_loc.x < 0 || _loc.y < 0 || _loc.x >= Width || _loc.y >= Height);
             }
             template <class _Ty>
-            __forceinline const T Get(const Location<_Ty>& _loc) const
+            __forceinline const T Get(const _Location2d<_Ty>& _loc) const
             {
                 if(!WithinBounds(_loc))
                     throw std::runtime_error("Coordinates are not within bounds.");
                 return Map[_loc.x + _loc.y * Width];
             }
             template <class _Ty>
-            __forceinline const T Get(const Location<_Ty>& _loc, const T& _default) const
+            __forceinline const T Get(const _Location2d<_Ty>& _loc, const T& _default) const
             {
                 if(!WithinBounds(_loc))
                     return _default;
@@ -281,7 +296,7 @@ namespace aoc
             }
 
             template <class _Ty>
-            __find_close_neighbor<T, _Ty> higher_by_one_neighbors(const Location<_Ty>& _loc, Directions _directions)
+            __find_close_neighbor<T, _Ty> higher_by_one_neighbors(const _Location2d<_Ty>& _loc, Directions _directions)
             {
                 __find_close_neighbor<T, _Ty> str;
                 str.map = this;

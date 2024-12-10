@@ -3,7 +3,7 @@
 using namespace aoc;
 using namespace aoc::maps;
 
-typedef aoc::maps::sparse_map<char, Location<int>> AntennaMap;
+typedef aoc::maps::sparse_map<char, _Location2d<int>> AntennaMap;
 const int64_t AoC_2024_08::Step1()
 {
     AntennaMap antennaMap;

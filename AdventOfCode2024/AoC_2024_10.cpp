@@ -5,14 +5,14 @@ const int64_t AoC_2024_10::Step1()
 {
     long sum = 0;
     aoc::maps::single_digit_map Map;
-    std::vector<aoc::Location<uint8_t>> Locations;
+    std::vector<aoc::_Location2d<uint8_t>> Locations;
     aoc::AoCStream(GetFileName()) >> Map;
 
     Map.select_value(0) >> Locations;
 
 
-    std::vector<aoc::Location<uint8_t>> SndLocations;
-    Map.higher_by_one_neighbors(aoc::Location<uint8_t>(4, 0), aoc::maps::Directions::Cardinal) >> SndLocations;
+    std::vector<aoc::Location2du8> SndLocations;
+    Map.higher_by_one_neighbors(aoc::Location2du8(4, 0), aoc::maps::Directions::Cardinal) >> SndLocations;
 
 
 

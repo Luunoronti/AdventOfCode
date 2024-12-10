@@ -140,7 +140,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "name": "Bridge Repair",
     "day": 7,
     "liveStep1": {
