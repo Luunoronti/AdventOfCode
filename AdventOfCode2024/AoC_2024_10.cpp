@@ -5,7 +5,7 @@ using namespace std;
 using namespace aoc;
 using namespace aoc::maps;
 
-int EndOfPathFound(const single_digit_map& map, const Location2di& location, int locIndex, unordered_map<int, set<Location2di>>& trailheads)
+int ProcessPath(const single_digit_map& map, const Location2di& location, int locIndex, unordered_map<int, set<Location2di>>& trailheads)
 {
     if(map.Get(location) == 9)
     {
@@ -20,7 +20,7 @@ int EndOfPathFound(const single_digit_map& map, const Location2di& location, int
     int64_t sum = 0;
     for(const auto& loc : neighborLocations)
     {
-        sum += EndOfPathFound(map, loc, locIndex, trailheads);
+        sum += ProcessPath(map, loc, locIndex, trailheads);
     }
     return sum;
 }
@@ -40,7 +40,7 @@ const int64_t AoC_2024_10::Step1()
     int locIndex = 0;
     for(const auto& loc : startingLocations)
     {
-        EndOfPathFound(Map, loc, locIndex++, trailheads);
+        ProcessPath(Map, loc, locIndex++, trailheads);
     }
 
     return std::accumulate(trailheads.begin(), trailheads.end(), int64_t(0), [](int64_t acc, const auto& pair) { return acc + pair.second.size(); });
@@ -61,7 +61,7 @@ const int64_t AoC_2024_10::Step2()
     int64_t sum = 0;
     for(const auto& loc : startingLocations)
     {
-        sum += EndOfPathFound(Map, loc, locIndex++, trailheads);
+        sum += ProcessPath(Map, loc, locIndex++, trailheads);
     }
     return sum;
 };
