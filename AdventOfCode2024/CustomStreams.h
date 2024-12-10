@@ -117,8 +117,7 @@ namespace aoc
             {
                 for(const char& c : line)
                 {
-                    if(c == '.') list.push_back(-1);
-                    else list.push_back(c - '0');
+                    list.push_back(c - '0');
                 }
             }
             ints = list;
