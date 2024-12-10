@@ -88,9 +88,9 @@ namespace aoc
             None=0x00,
             Left = 0x01,
             Right = 0x02,
-            Top = 0x10,
-            Bottom = 0x20,
-            Cardinal = 0x03,
+            Top = 0x04,
+            Bottom = 0x08,
+            Cardinal = 0x0F,
             Diagonal = 0x30,
             All = 0xFF,
         };
@@ -187,7 +187,7 @@ namespace aoc
                 Directions __directions{Directions::None};
                 int distance{ 0 };
                 std::function<bool(const Location2di&, const Location2di&,T,T,Directions)> _function;
-                Map2d* map{ nullptr };
+                const Map2d* map{ nullptr };
             };
         public:
             int Width{ 0 };
@@ -292,7 +292,7 @@ namespace aoc
                 return __selected_value_stream;
             }
 
-            __find_close_neighbor<T> get_neighbors(const Location2di& _loc, Directions _directions, int distance, std::function<bool(const Location2di&, const Location2di&,T,T,Directions)> function)
+            __find_close_neighbor<T> get_neighbors(const Location2di& _loc, Directions _directions, int distance, std::function<bool(const Location2di&, const Location2di&,T,T,Directions)> function) const
             {
                 __find_close_neighbor<T> str;
                 str.map = this;

@@ -225,7 +225,8 @@
       "knownErrors": []
     },
     "testStep1": {
-      "expectedResult": 0,
+      "expectedResult": 36,
+      "enableDebugStream": true,
       "knownErrors": []
     },
     "testStep2": {
