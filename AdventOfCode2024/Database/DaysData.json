@@ -217,7 +217,7 @@
     "name": "Hoof It",
     "day": 10,
     "liveStep1": {
-      "expectedResult": 0,
+      "expectedResult": 566,
       "knownErrors": []
     },
     "liveStep2": {
@@ -230,7 +230,7 @@
       "knownErrors": []
     },
     "testStep2": {
-      "expectedResult": 0,
+      "expectedResult": 81,
       "knownErrors": []
     },
     "year": 2024

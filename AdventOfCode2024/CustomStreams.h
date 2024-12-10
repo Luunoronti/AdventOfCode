@@ -13,7 +13,7 @@
 
 namespace aoc
 {
-    
+
     // Define the manipulator for omit_char 
     inline stream::AoCStreamOmitCharacter omit_char(char c)
     {
@@ -24,7 +24,7 @@ namespace aoc
     {
         return stream::AoCStreamOmitCharacters(characters);
     }
-    
+
     template <class _Ty>
     inline stream::AoCStreamSelectedValue<_Ty> select_value(_Ty value)
     {
@@ -117,7 +117,8 @@ namespace aoc
             {
                 for(const char& c : line)
                 {
-                    list.push_back(c - '0');
+                    if(c == '.') list.push_back(-1);
+                    else list.push_back(c - '0');
                 }
             }
             ints = list;
@@ -354,5 +355,5 @@ namespace aoc
     };
 
 
-    
+
 }

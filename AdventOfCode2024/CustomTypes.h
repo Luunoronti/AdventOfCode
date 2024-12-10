@@ -45,7 +45,24 @@ namespace aoc
         {
             return Location2di(x + 1, y + 1);
         }
+
+        bool operator<(const Location2di& other) const 
+        { 
+            return (x < other.x) || (x == other.x && y < other.y); 
+        } 
+        bool operator==(const Location2di& other) const 
+        { 
+            return (x == other.x) && (y == other.y); 
+        }
+
     };
+    // Overload the operator<< to print Location2di 
+    inline std::ostream& operator<<(std::ostream& os, const Location2di& loc) 
+    { 
+        os << "(" << loc.x << ", " << loc.y << ")"; 
+        return os; 
+    }
+
 
     namespace stream
     {
@@ -146,6 +163,10 @@ namespace aoc
                     T _nVal{};
                     if(map)
                     {
+                        if(_loc.x == 3 && _loc.y == 4)
+                        {
+                            int aaqa = 0;
+                        }
                         Location2di _nloc = _loc.left();
                         if((__directions & Left) && map->WithinBounds(_nloc))
                         {

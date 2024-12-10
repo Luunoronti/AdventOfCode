@@ -5,48 +5,45 @@ using namespace std;
 using namespace aoc;
 using namespace aoc::maps;
 
-
-int64_t EndOfPathFound(const single_digit_map& map, const Location2di& location)
+int EndOfPathFound(const single_digit_map& map, const Location2di& location, int locIndex, unordered_map<int, set<Location2di>>& trailheads)
 {
-    int8_t val = map.Get(location);
-    cout << (int)val << " ";
-    if(val == 9) 
+    if(map.Get(location) == 9)
+    {
+        trailheads[locIndex].emplace(location);
         return 1;
-
-    std::vector<Location2di> nLocs;
-    map.get_neighbors(location, Cardinal, 1, [](const Location2di& loc, const Location2di& nloc, int8_t _val, int8_t _n_val, Directions _dir)
+    }
+    std::vector<Location2di> neighborLocations;
+    map.get_neighbors(location, Cardinal, 1, [](const Location2di& loc, const Location2di& n_loc, int8_t _val, int8_t _n_val, Directions _dir)
         {
             return _val + 1 == _n_val;
-        }) >> nLocs;
-
+        }) >> neighborLocations;
     int64_t sum = 0;
-    for(const auto& loc : nLocs)
+    for(const auto& loc : neighborLocations)
     {
-        sum += EndOfPathFound(map, loc);
+        sum += EndOfPathFound(map, loc, locIndex, trailheads);
     }
     return sum;
 }
 
-
 const int64_t AoC_2024_10::Step1()
 {
     single_digit_map Map;
-    vector<Location2di> Locations;
     AoCStream(GetFileName()) >> Map;
 
     TIME_PART;
 
-    Map.select_value(0) >> Locations;
-    
-    // let's use recursion to look for all possible paths
-    // will think of non recursive method later
-    int64_t sum = 0;
-    for(const auto& loc : Locations)
-    {
-        sum += EndOfPathFound(Map, loc);
-    }
-    return sum;
+    vector<Location2di> startingLocations;
+    unordered_map<int, set<Location2di>> trailheads;
 
+    Map.select_value(0) >> startingLocations;
+
+    int locIndex = 0;
+    for(const auto& loc : startingLocations)
+    {
+        EndOfPathFound(Map, loc, locIndex++, trailheads);
+    }
+
+    return std::accumulate(trailheads.begin(), trailheads.end(), int64_t(0), [](int64_t acc, const auto& pair) { return acc + pair.second.size(); });
 };
 const int64_t AoC_2024_10::Step2()
 {
@@ -54,5 +51,17 @@ const int64_t AoC_2024_10::Step2()
     AoCStream(GetFileName()) >> Map;
 
     TIME_PART;
-    return 0;
+
+    vector<Location2di> startingLocations;
+    unordered_map<int, set<Location2di>> trailheads;
+
+    Map.select_value(0) >> startingLocations;
+
+    int locIndex = 0;
+    int64_t sum = 0;
+    for(const auto& loc : startingLocations)
+    {
+        sum += EndOfPathFound(Map, loc, locIndex++, trailheads);
+    }
+    return sum;
 };

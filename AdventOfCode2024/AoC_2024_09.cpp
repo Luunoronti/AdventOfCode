@@ -3,6 +3,16 @@
 
 using namespace aoc;
 
+/*
+
+IMPORTANT NOTE:
+I wanted to learn how to create own memory allocators
+and to remind myself of double-linked lists. So, i've done all that
+by hand, which makes this code somewhat big and dirty.
+    
+*/
+
+
 // define a file descriptor
 // this will also hold free space blocks
 // which are just files with id == -1
@@ -57,7 +67,7 @@ void ConstructFileSystem(const aoc::numeric::single_digit_list& input, FileDescr
         if(size == 0) continue;
 
         _new = new FileDescriptor(size, actualIndex);
-        first == nullptr ? next = first = _new : (_new->prev = next, next = next->next = _new); // easiest expression ever ;)
+        first == nullptr ? next = first = _new : (_new->prev = next, next = next->next = _new);
     }
     *fileSystem = first;
     *lastDescriptor = next;
