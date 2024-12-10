@@ -212,9 +212,9 @@
     "year": 2024
   },
   {
-    "run": false,
-    "debugRun": false,
-    "name": "____",
+    "run": true,
+    "debugRun": true,
+    "name": "Hoof It",
     "day": 10,
     "liveStep1": {
       "expectedResult": 0,

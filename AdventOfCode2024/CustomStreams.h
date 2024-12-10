@@ -13,27 +13,26 @@
 
 namespace aoc
 {
-    namespace stream
+    
+    // Define the manipulator for omit_char 
+    inline stream::AoCStreamOmitCharacter omit_char(char c)
     {
-        struct AoCStreamOmitCharacter
-        {
-            char characterToOmit;
-
-            AoCStreamOmitCharacter(char characterToOmit)
-                : characterToOmit(characterToOmit)
-            {
-            }
-        };
-        struct AoCStreamOmitCharacters
-        {
-            std::string charactersToOmit;
-
-            AoCStreamOmitCharacters(std::string charactersToOmit)
-                : charactersToOmit(charactersToOmit)
-            {
-            }
-        };
+        return stream::AoCStreamOmitCharacter(c);
     }
+
+    inline stream::AoCStreamOmitCharacters omit_char(std::string characters)
+    {
+        return stream::AoCStreamOmitCharacters(characters);
+    }
+    
+    template <class _Ty>
+    inline stream::AoCStreamSelectedValue<_Ty> select_value(_Ty value)
+    {
+        return stream::AoCStreamSelectedValue(value);
+    }
+
+
+
     class AoCStream
     {
     public:
@@ -179,8 +178,31 @@ namespace aoc
             file.close();
             return *this;
         }
+        AoCStream& operator>>(maps::single_digit_map& map)
+        {
+            map.Map.clear();
 
+            CreateFileIfDoesNotExist(FileName);
+            std::ifstream file(FileName);
+            if(!file.is_open()) throw std::runtime_error("Error opening file " + FileName);
 
+            std::string line;
+            int lines = 0;
+            while(std::getline(file, line))
+            {
+                map.Width = static_cast<int>(line.size());
+                for(const char& c : line) map.Map.push_back(c - '0');
+                lines++;
+            }
+            map.Height = lines;
+
+            aoc::dout << "Map2d() >> " << FileName << " " << map.Width << " " << map.Height << " " << map.Map.size() << std::endl;
+
+            file.close();
+            return *this;
+        }
+
+        // uint8_t
         AoCStream& operator>>(std::string& str)
         {
             CreateFileIfDoesNotExist(FileName);
@@ -191,6 +213,40 @@ namespace aoc
             file.close();
             return *this;
         }
+
+
+        template <class _Ty>
+        maps::Map2d<_Ty> readMap()
+        {
+            maps::Map2d<_Ty> map;
+
+            CreateFileIfDoesNotExist(FileName);
+            std::ifstream file(FileName);
+            if(!file.is_open()) throw std::runtime_error("Error opening file " + FileName);
+
+            std::string line;
+            int lines = 0;
+            while(std::getline(file, line))
+            {
+                map.Width = static_cast<int>(line.size());
+
+                std::stringstream ss(line);
+                _Ty _value;
+                while(ss >> _value)
+                {
+                    map.Map.push_back(_value);
+                }
+
+                lines++;
+            }
+            map.Height = lines;
+
+            aoc::dout << "Map2d() >> " << FileName << " " << map.Width << " " << map.Height << " " << map.Map.size() << std::endl;
+
+            file.close();
+            return map;
+        }
+
 
 
         template <class _Ty>
@@ -298,15 +354,5 @@ namespace aoc
     };
 
 
-    // Define the manipulator for omit_char 
-    inline stream::AoCStreamOmitCharacter omit_char(char c)
-    {
-        return stream::AoCStreamOmitCharacter(c);
-    }
-
-    inline stream::AoCStreamOmitCharacters omit_char(std::string characters)
-    {
-        return stream::AoCStreamOmitCharacters(characters);
-    }
-
+    
 }
