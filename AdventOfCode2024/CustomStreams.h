@@ -46,7 +46,7 @@ namespace aoc
         {
         }
 
-        AoCStream& operator>>(aoc::maps::sparse_map<char, _Location2d<int>>& map)
+        AoCStream& operator>>(aoc::maps::sparse_map<char, Location2di>& map)
         {
             ReadStringFromFileWithWH();
             map.Map.clear();

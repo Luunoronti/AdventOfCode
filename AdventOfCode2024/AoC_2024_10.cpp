@@ -1,23 +1,28 @@
 #include "pch.h"
 #include "AoC_2024_10.h"
 
+using namespace aoc;
+
 const int64_t AoC_2024_10::Step1()
 {
     long sum = 0;
-    aoc::maps::single_digit_map Map;
-    std::vector<aoc::_Location2d<uint8_t>> Locations;
-    aoc::AoCStream(GetFileName()) >> Map;
+    maps::single_digit_map Map;
+    std::vector<Location2di> Locations;
+    AoCStream(GetFileName()) >> Map;
+
+    TIME_PART;
 
     Map.select_value(0) >> Locations;
 
 
-    std::vector<aoc::Location2du8> SndLocations;
-    Map.higher_by_one_neighbors(aoc::Location2du8(4, 0), aoc::maps::Directions::Cardinal) >> SndLocations;
+    std::vector<Location2di> SndLocations;
+    Map.get_neighbors(Location2di(4, 0), maps::Directions::Cardinal, 1, [](const Location2di& loc, const Location2di& nloc, int8_t _val, int8_t _n_val, maps::Directions _dir)
+        {
+            return _val + 1 == _n_val;
+        }) >> SndLocations;
 
 
 
-
-    TIME_PART;
     return 0;
 };
 const int64_t AoC_2024_10::Step2()
