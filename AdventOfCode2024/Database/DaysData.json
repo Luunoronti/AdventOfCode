@@ -236,9 +236,9 @@
     "year": 2024
   },
   {
-    "run": false,
-    "debugRun": false,
-    "name": "____",
+    "run": true,
+    "debugRun": true,
+    "name": "Plutonian Pebbles",
     "day": 11,
     "liveStep1": {
       "expectedResult": 0,
@@ -249,7 +249,7 @@
       "knownErrors": []
     },
     "testStep1": {
-      "expectedResult": 0,
+      "expectedResult": 55312,
       "knownErrors": []
     },
     "testStep2": {

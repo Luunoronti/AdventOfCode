@@ -155,7 +155,21 @@ namespace aoc
             map = readLists<int64_t>();
             return *this;
         }
-
+        AoCStream& operator>>(std::vector<int>& map)
+        {
+            map = readList<int>();
+            return *this;
+        }
+        AoCStream& operator>>(std::vector<long>& map)
+        {
+            map = readList<long>();
+            return *this;
+        }
+        AoCStream& operator>>(std::vector<int64_t>& map)
+        {
+            map = readList<int64_t>();
+            return *this;
+        }
 
         AoCStream& operator>>(maps::Map2d<char>& map)
         {
