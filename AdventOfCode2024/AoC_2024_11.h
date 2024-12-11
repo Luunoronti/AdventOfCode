@@ -4,8 +4,12 @@
 
 class AoC_2024_11 : public AoC2024
 {
+public:
     typedef std::unordered_map<int64_t, int64_t> Map;
     typedef std::pair<int64_t, int64_t> MapPair;
+    typedef std::unordered_map<int64_t, std::pair<int64_t, int64_t>> DoubleNumberCache;
+    typedef std::unordered_map<int64_t, int64_t> SingleNumberCache;
+
 
 public:
     const virtual __forceinline int GetDay() const override { return 11; }
@@ -14,8 +18,6 @@ public:
 
     void CountAll(const vector<int64_t>& list, int steps, int stepsForPart1, Map& map, Map& map2);
     int64_t AdvanceOneStep(Map* map, Map* target);
-
-    // static __forceinline const int64_t CountSum(Map* map);
 
     int64_t secondPart_Test{ 0 };
     int64_t secondPart_Live{ 0 };

@@ -3,16 +3,14 @@
 
 using namespace aoc;
 
+AoC_2024_11::DoubleNumberCache doubleNumberCache;
+AoC_2024_11::SingleNumberCache singleNumberCache;
 
-std::unordered_map<int64_t, std::pair<int64_t, int64_t>> doubleDigitCache;
-
-int64_t totalLogs = 0;
-int64_t totalPows = 0;
-int64_t maxLogsPerRun = 0;
+int cacheHits = 0;
+int cacheMisses = 0;
 int64_t AoC_2024_11::AdvanceOneStep(Map* map, Map* target)
 {
     int64_t sum = 0;
-    int64_t logsThisRun = 0;
     for(const auto& pair : *map)
     {
         const auto& number = pair.first;
@@ -24,38 +22,44 @@ int64_t AoC_2024_11::AdvanceOneStep(Map* map, Map* target)
             continue;
         }
 
-        auto it = doubleDigitCache.find(number);
-        if(it != doubleDigitCache.end())
+        auto it = doubleNumberCache.find(number);
+        if(it != doubleNumberCache.end())
         {
             (*target)[it->second.first] += count;
             (*target)[it->second.second] += count;
             sum += count * 2;
+            cacheHits++;
             continue;
         }
 
-        // add this number to an array for avx2 parallel processing
-        // we will have as many vecotrs as ve have cores
-        // and each vector will be processed 
-        totalLogs++;
-        logsThisRun++;
+        auto it2 = singleNumberCache.find(number);
+        if(it2 != singleNumberCache.end())
+        {
+            (*target)[it2->second] += count;
+            sum += count;
+            cacheHits++;
+            continue;
+        }
+
+        cacheMisses++;
+
         int64_t numDigits = static_cast<int64_t>(log10(number)) + 1;
         if(!(numDigits % 2))
         {
-            totalPows++;
             int64_t divisor = static_cast<int64_t>(std::pow(10, numDigits / 2));
             const auto p = std::pair<int64_t, int64_t>(number / divisor, number % divisor);
             (*target)[p.first] += count;
             (*target)[p.second] += count;
-            doubleDigitCache[number] = p;
+            doubleNumberCache[number] = p;
             sum += count * 2;
-            
+
             continue;
         }
-
-        (*target)[number * 2024] += count;
+        int64_t num2024 = number * 2024;
+        (*target)[num2024] += count;
+        singleNumberCache[number] = num2024;
         sum += count;
     }
-    maxLogsPerRun = max(maxLogsPerRun, logsThisRun);
     return sum;
 }
 void AoC_2024_11::CountAll(const vector<int64_t>& list, int steps, int stepsForPart1, Map& map, Map& map2)
@@ -79,7 +83,10 @@ void AoC_2024_11::CountAll(const vector<int64_t>& list, int steps, int stepsForP
     }
     if(IsTest()) secondPart_Test = stepSum;
     else secondPart_Live = stepSum;
+
+    // cout << "Cache hits: "<< cacheHits << ", misses: "<< cacheMisses <<  endl;
 }
+
 const int64_t AoC_2024_11::Step1()
 {
     TIME_PART;
@@ -87,8 +94,6 @@ const int64_t AoC_2024_11::Step1()
     AoCStream(GetFileName()) >> list;
     Map map, map2;
     CountAll(list, 75, 25, map, map2);
-
-    cout << "Total logs: " << totalLogs << ", total pows: " << totalPows << ", max logs per run: " << maxLogsPerRun << endl;
     return IsTest() ? firstPart_Test : firstPart_Live;
 };
 const int64_t AoC_2024_11::Step2()
