@@ -213,7 +213,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "name": "Hoof It",
     "day": 10,
       "enableDebugStream": false,
@@ -241,19 +241,19 @@
     "name": "Plutonian Pebbles",
     "day": 11,
     "liveStep1": {
-      "expectedResult": 0,
+      "expectedResult": 184927,
       "knownErrors": []
     },
     "liveStep2": {
-      "expectedResult": 0,
-      "knownErrors": []
+      "expectedResult": 220357186726677,
+      "knownErrors": [8184572693]
     },
     "testStep1": {
       "expectedResult": 55312,
       "knownErrors": []
     },
     "testStep2": {
-      "expectedResult": 0,
+      "expectedResult": 65601038650482,
       "knownErrors": []
     },
     "year": 2024
