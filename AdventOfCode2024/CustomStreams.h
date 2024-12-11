@@ -36,11 +36,9 @@ namespace aoc
     class AoCStream
     {
     public:
-        AoCStream(const std::string& fileName)
-            : FileName(fileName), Width(0), Height(0)
+        AoCStream()
         {
         }
-
         AoCStream(const std::string& input, int width, int height)
             : Input(input), Width(width), Height(height)
         {
@@ -90,7 +88,7 @@ namespace aoc
 
         AoCStream& operator>>(std::vector<std::string>& strings)
         {
-            CreateFileIfDoesNotExist(FileName);
+            CreateFileIfDoesNotExist(FileName, Day, Year, IsSourceLive);
             strings.clear();
             std::ifstream file(FileName);
             if(!file.is_open())
@@ -105,7 +103,7 @@ namespace aoc
         {
             aoc::numeric::single_digit_list list;
 
-            CreateFileIfDoesNotExist(FileName);
+            CreateFileIfDoesNotExist(FileName, Day, Year, IsSourceLive);
             std::ifstream file(FileName);
             if(!file.is_open())
             {
@@ -173,7 +171,7 @@ namespace aoc
 
         AoCStream& operator>>(maps::Map2d<char>& map)
         {
-            CreateFileIfDoesNotExist(FileName);
+            CreateFileIfDoesNotExist(FileName, Day, Year, IsSourceLive);
             std::ifstream file(FileName);
             if(!file.is_open()) throw std::runtime_error("Error opening file " + FileName);
 
@@ -196,7 +194,7 @@ namespace aoc
         {
             map.Map.clear();
 
-            CreateFileIfDoesNotExist(FileName);
+            CreateFileIfDoesNotExist(FileName, Day, Year, IsSourceLive);
             std::ifstream file(FileName);
             if(!file.is_open()) throw std::runtime_error("Error opening file " + FileName);
 
@@ -219,7 +217,7 @@ namespace aoc
         // uint8_t
         AoCStream& operator>>(std::string& str)
         {
-            CreateFileIfDoesNotExist(FileName);
+            CreateFileIfDoesNotExist(FileName, Day, Year, IsSourceLive);
             std::ifstream file(FileName);
             if(!file.is_open()) throw std::runtime_error("Error opening file " + FileName);
             std::string line;
@@ -234,7 +232,7 @@ namespace aoc
         {
             maps::Map2d<_Ty> map;
 
-            CreateFileIfDoesNotExist(FileName);
+            CreateFileIfDoesNotExist(FileName, Day, Year, IsSourceLive);
             std::ifstream file(FileName);
             if(!file.is_open()) throw std::runtime_error("Error opening file " + FileName);
 
@@ -268,7 +266,7 @@ namespace aoc
         {
             std::vector<_Ty> list;
 
-            CreateFileIfDoesNotExist(FileName);
+            CreateFileIfDoesNotExist(FileName, Day, Year, IsSourceLive);
             std::ifstream file(FileName);
             if(!file.is_open())
             {
@@ -294,7 +292,7 @@ namespace aoc
         {
             std::vector<std::vector<_Ty>> lists;
 
-            CreateFileIfDoesNotExist(FileName);
+            CreateFileIfDoesNotExist(FileName, Day, Year, IsSourceLive);
             std::ifstream file(FileName);
             if(!file.is_open())
             {
@@ -322,7 +320,7 @@ namespace aoc
         {
             aoc::numeric::columns<_Ty> map;
 
-            CreateFileIfDoesNotExist(FileName);
+            CreateFileIfDoesNotExist(FileName, Day, Year, IsSourceLive);
             std::ifstream file(FileName);
             if(!file.is_open())
             {
@@ -352,6 +350,16 @@ namespace aoc
             file.close();
             return map;
         }
+
+
+        static inline void SetFileData(const std::string& InFileName, const int InYear, const int InDay, const bool InIsSourceLive)
+        {
+            FileName = InFileName;
+            Year = InYear;
+            Day = InDay;
+            IsSourceLive = InIsSourceLive;
+        }
+
     private:
 
 
@@ -359,14 +367,19 @@ namespace aoc
         void ReadStringFromFileWithWH();
     private:
 
-        std::string FileName;
+        static std::string FileName;
+        static int Year;
+        static int Day;
+        static bool IsSourceLive;
+
+        
 
         std::string Input;
-        int Width;
-        int Height;
+        int Width{ 0 };
+        int Height{ 0 };
         std::set<char> CharsToOmmit;
     };
 
-
+    extern aoc::AoCStream aocs;
 
 }

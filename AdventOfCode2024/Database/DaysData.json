@@ -238,6 +238,7 @@
   {
     "run": true,
     "debugRun": true,
+    "enableDebugStream": false,
     "name": "Plutonian Pebbles",
     "day": 11,
     "liveStep1": {

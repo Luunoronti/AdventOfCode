@@ -130,7 +130,7 @@ const long AoC_2024_03::Process(const string& Line, const bool AllowModifiers)
 const int64_t AoC_2024_03::Step1()
 {
     string input;
-    aoc::AoCStream(GetFileName()) >> input;
+    aoc::aocs >> input;
     TIME_PART;
     return Process(input, false);
 }
@@ -138,7 +138,7 @@ const int64_t AoC_2024_03::Step1()
 const int64_t AoC_2024_03::Step2()
 {
     string input;
-    aoc::AoCStream(GetFileName()) >> input;
+    aoc::aocs >> input;
     TIME_PART;
     return Process(input, true);
 }

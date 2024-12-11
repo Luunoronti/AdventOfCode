@@ -121,7 +121,7 @@ const int64_t AoC_2024_10::Step1_Internal()
     string fileName_wu = GetFileName();
 
     single_digit_map Map_wu;
-    AoCStream(fileName_wu) >> Map_wu;
+    aocs >> Map_wu;
 
     int locIndex_wu = 0;
     int64_t sum2_wu = 0;
@@ -217,7 +217,7 @@ int64_t ProcessPath(const single_digit_map& map, const Location2di& location, in
 const int64_t AoC_2024_10::Step1()
 {
     single_digit_map Map;
-    AoCStream(GetFileName()) >> Map;
+    aocs >> Map;
 
     TIME_PART;
 
@@ -243,7 +243,7 @@ const int64_t AoC_2024_10::Step1()
 const int64_t AoC_2024_10::Step2()
 {
     single_digit_map Map;
-    AoCStream(GetFileName()) >> Map;
+    aocs >> Map;
 
     TIME_PART;
 

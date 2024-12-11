@@ -38,7 +38,7 @@ const int64_t AoC_2024_04::Step1()
 {
     long sum = 0;
     aoc::maps::Map2d<char> Map;
-    aoc::AoCStream(GetFileName()) >> Map;
+    aoc::aocs >> Map;
 
     TIME_PART;
     // for each position in buffer, we check 4 cardinal and 4 diagonal directions
@@ -70,7 +70,7 @@ const int64_t AoC_2024_04::Step2()
     long sum = 0;
 
     aoc::maps::Map2d<char> Map;
-    aoc::AoCStream(GetFileName()) >> Map;
+    aoc::aocs >> Map;
 
     TIME_PART;
     // the position of interest must be an 'A'

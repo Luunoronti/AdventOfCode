@@ -1,40 +1,59 @@
 #include "pch.h"
 #include "CustomFunctions.h"
 
+#include <windows.h>
+#include <wininet.h>
+#include <iostream>
+#include <fstream>
 
-void CreateFileIfDoesNotExist(const std::string& FileName)
+#pragma comment(lib, "wininet.lib")
+
+
+void CreateFileIfDoesNotExist(const std::string& FileName, int day, int year, bool isLocal)
 {
     struct stat buffer;
-    if(stat(FileName.c_str(), &buffer) == 0)
-        return;
+    if(stat(FileName.c_str(), &buffer) == 0) return;
 
-    std::string command = "code \"" + FileName + "\"";
-    int result = system(command.c_str());
-    if(result == 0)
+    if(isLocal)
     {
-        std::cout << "VS Code opened successfully on file " << FileName << std::endl;
-
-        // wait for file to actually exist
-        while(stat(FileName.c_str(), &buffer) != 0)
+        std::string command = "code \"" + FileName + "\"";
+        int result = system(command.c_str());
+        if(result == 0)
         {
-            ::Sleep(1);
+            std::cout << "VS Code opened successfully on file " << FileName << std::endl;
+            while(stat(FileName.c_str(), &buffer) != 0)
+            {
+                ::Sleep(1);
+            }
+            return;
         }
-        return;
+        else std::cerr << "Failed to open VS Code. Attempting to revert to Notepad" << std::endl;
+
+        command = "notepad \"" + FileName + "\"";
+        result = system(command.c_str());
+        if(result == 0)
+        {
+            std::cout << "Notepad opened successfully on file " << FileName << std::endl;
+            return;
+        }
+        else std::cerr << "Failed to open Notepad." << std::endl;
     }
     else
-        std::cerr << "Failed to open VS Code. Attempting to revert to Notepad" << std::endl;
-
-    command = "notepad \"" + FileName + "\"";
-    result = system(command.c_str());
-    if(result == 0)
     {
-        std::cout << "Notepad opened successfully on file " << FileName << std::endl;
-        return;
+        std::string command = "aocnetagent download-input " + to_string(year) + " " + to_string(day) + " \"" + FileName + "\"";
+        int result = system(command.c_str());
+        if(result == 0)
+        {
+            std::cout << "aocnetagent opened successfully on file " << FileName << std::endl;
+            while(stat(FileName.c_str(), &buffer) != 0)
+            {
+                ::Sleep(1);
+            }
+            return;
+        }
+        else std::cerr << "Failed to open aocnetagent." << std::endl;
+
     }
-    else
-        std::cerr << "Failed to open VS Code. Attempting to revert to Notepad" << std::endl;
-
-
 }
 
 std::string toStringWithPrecision(double value, int precision)
@@ -44,5 +63,8 @@ std::string toStringWithPrecision(double value, int precision)
     stream << std::fixed << std::setprecision(precision) << value;
     return stream.str();
 }
+
+
+
 
 

@@ -7,7 +7,7 @@ typedef aoc::maps::sparse_map<char, Location2di> AntennaMap;
 const int64_t AoC_2024_08::Step1()
 {
     AntennaMap antennaMap;
-    AoCStream(GetFileName()) >> omit_char('.') >> antennaMap;
+    aocs >> omit_char('.') >> antennaMap;
     
     TIME_PART;
 
@@ -42,7 +42,7 @@ const int64_t AoC_2024_08::Step1()
 const int64_t AoC_2024_08::Step2()
 {
     AntennaMap antennaMap;
-    AoCStream(GetFileName()) >> omit_char('.') >> antennaMap;
+    aocs >> omit_char('.') >> antennaMap;
 
     TIME_PART;
 

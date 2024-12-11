@@ -76,7 +76,7 @@ const int64_t AoC_2024_05::Step2()
 void AoC_2024_05::ReadInput()
 {
     vector<string> lines;
-    aoc::AoCStream(GetFileName()) >> lines;
+    aoc::aocs >> lines;
 
     stringstream s;
     for(const auto& l : lines)

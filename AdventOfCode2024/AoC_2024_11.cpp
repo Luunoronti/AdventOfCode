@@ -5,24 +5,23 @@ using namespace aoc;
 
 /*
 
-caches shave around 3ms of runtime
+caches save around 3ms of runtime
 
 these are the stats:
 
 TEST ITERATION
-hits: 3445, misses: 75 (2.18%)
-dbl num hits: 2515, misses: 55 (2.19%)
-sng num hits: 930, misses: 20 (2.15%)
-pow hits: 50, misses: 5 (10.00%)
+hits: 3445, misses: 75 (2.18%), cache size: 75
+dbl num hits: 2515, misses: 55 (2.19%), cache size: 55
+sng num hits: 930, misses: 20 (2.15%), cache size: 20
+pow hits: 50, misses: 5 (10.00%), cache size: 5
 
 LIVE ITERATION
-hits: 130312, misses: 3918 (3.01%)
-dbl num hits: 76168, misses: 2306 (3.03%)
-sng num hits: 54144, misses: 1612 (2.98%)
-pow hits: 2299, misses: 7 (0.30%)
-
-
+hits: 130312, misses: 3918 (3.01%), cache size: 3918
+dbl num hits: 76168, misses: 2306 (3.03%), cache size: 2306
+sng num hits: 54144, misses: 1612 (2.98%), cache size: 1612
+pow hits: 2299, misses: 7 (0.30%), cache size: 7
 */
+
 AoC_2024_11::DoubleNumberCache doubleNumberCache;
 AoC_2024_11::SingleNumberCache singleNumberCache;
 AoC_2024_11::SingleNumberCache pow2Cache;
@@ -31,34 +30,35 @@ AoC_2024_11::SingleNumberCache pow2Cache;
 
 float percentage(int a, int b)
 {
-    return 100. * ((float)b / a);
+    return (float)(100. * ((float)b / a));
 }
-void printValues(int hits, int misses, string nameA, string nameB)
+void printValues(int hits, int misses, string nameA, string nameB, size_t cacheSize)
 {
     dout << nameA << ": " << hits << ", "
         << nameB << ": " << misses
-        << " (" << toStringWithPrecision(percentage(hits, misses), 2) << "%)" << endl;
+        << " (" << toStringWithPrecision(percentage(hits, misses), 2) << "%)" 
+        << ", cache size: " << cacheSize
+        << endl;
 }
 const int64_t AoC_2024_11::Step1()
 {
     TIME_PART;
     vector<int64_t> list;
-    AoCStream(GetFileName()) >> list;
+    aocs >> list;
     Map map, map2;
     CountAll(list, 75, 25, map, map2);
-
-
-    dout << endl<< (IsTest() ? "TEST ITERATION" : "LIVE ITERATION") << endl;
-    printValues(cacheHits, cacheMisses, "hits", "misses");
-    printValues(dblNumCacheHits, dblNumCacheMisses, "dbl num hits", "misses");
-    printValues(sngNumCacheHits, sngNumCacheMisses, "sng num hits", "misses");
-    printValues(powCacheHits, powCacheMisses, "pow hits", "misses");
 
 
     return IsTest() ? firstPart_Test : firstPart_Live;
 };
 const int64_t AoC_2024_11::Step2()
 {
+    dout << endl << (IsTest() ? "TEST ITERATION" : "LIVE ITERATION") << endl;
+    printValues(cacheHits, cacheMisses, "hits", "misses", doubleNumberCache.size() + singleNumberCache.size());
+    printValues(dblNumCacheHits, dblNumCacheMisses, "dbl num hits", "misses", doubleNumberCache.size());
+    printValues(sngNumCacheHits, sngNumCacheMisses, "sng num hits", "misses", singleNumberCache.size());
+    printValues(powCacheHits, powCacheMisses, "pow hits", "misses", pow2Cache.size());
+
     TIME_PART;
     return IsTest() ? secondPart_Test : secondPart_Live;
 };
@@ -84,8 +84,6 @@ void AoC_2024_11::CountAll(const vector<int64_t>& list, int steps, int stepsForP
     }
     if(IsTest()) secondPart_Test = stepSum;
     else secondPart_Live = stepSum;
-
-    // cout << "Cache hits: "<< cacheHits << ", misses: "<< cacheMisses <<  endl;
 }
 
 int64_t AoC_2024_11::AdvanceOneStep(Map* map, Map* target)

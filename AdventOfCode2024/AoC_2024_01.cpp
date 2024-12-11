@@ -4,7 +4,7 @@
 const int64_t AoC_2024_01::Step1()
 {
     aoc::numeric::columns<long> Columns;
-    aoc::AoCStream(GetFileName()) >> Columns;
+    aoc::aocs >> Columns;
     
     TIME_PART;
 

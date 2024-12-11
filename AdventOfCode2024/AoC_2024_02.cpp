@@ -47,7 +47,7 @@ const bool AoC_2024_02::AnalyzeList(vector<int> List, const bool Allow2ndCheck) 
 const int64_t AoC_2024_02::Step1()
 {
     vector<vector<int>> Input;
-    aoc::AoCStream(GetFileName()) >> Input;
+    aoc::aocs >> Input;
     
     TIME_PART;
 
@@ -65,7 +65,7 @@ const int64_t AoC_2024_02::Step1()
 const int64_t AoC_2024_02::Step2()
 {
     vector<vector<int>> Input;
-    aoc::AoCStream(GetFileName()) >> Input;
+    aoc::aocs >> Input;
 
     TIME_PART;
 

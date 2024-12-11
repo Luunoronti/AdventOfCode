@@ -2,9 +2,16 @@
 
 namespace aoc
 {
+    std::string AoCStream::FileName;
+    int AoCStream::Year{ 0 };
+    int AoCStream::Day{ 0 };
+    bool AoCStream::IsSourceLive{ false };
+
+    aoc::AoCStream aocs;
+
     void AoCStream::ReadStringFromFileWithWH()
     {
-        CreateFileIfDoesNotExist(FileName);
+        CreateFileIfDoesNotExist(FileName, Day, Year, IsSourceLive);
         Height = 0;
         Width = 0;
 

@@ -93,7 +93,7 @@ void PrintFS(FileDescriptor* fs)
 const int64_t AoC_2024_09::Step1()
 {
     aoc::numeric::single_digit_list input;
-    aoc::AoCStream(GetFileName()) >> input;
+    aoc::aocs >> input;
 
     TIME_PART;
 
@@ -178,7 +178,7 @@ const int64_t AoC_2024_09::Step2()
     TIME_PART;
 
     aoc::numeric::single_digit_list input;
-    aoc::AoCStream(GetFileName()) >> input;
+    aoc::aocs >> input;
 
     FileDescriptor* fileSystem{ nullptr };
     FileDescriptor* lastDescriptor{ nullptr };

@@ -38,6 +38,7 @@ void AoCBase::ExecuteStep(AoCBase& instance)
         dout.setEnabled(true);
     }
 
+    AoCStream::SetFileData(instance.GetFileName(), result.Year, result.Day, instance.IsTest());
     instance.OnInitTests();
     instance.SetTest(true);
     instance.OnInitTestingTests();
@@ -49,6 +50,7 @@ void AoCBase::ExecuteStep(AoCBase& instance)
         dout << RESET << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step1Test.Name << endl;
     }
     instance.Step = 1;
+    AoCStream::SetFileData(instance.GetFileName(), result.Year, result.Day, instance.IsTest());
     instance.OnInitStep(1);
     
     instance.LastGlobalTime = 0;
@@ -63,6 +65,7 @@ void AoCBase::ExecuteStep(AoCBase& instance)
         dout << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step2Test.Name << endl;
     }
     instance.Step = 2;
+    AoCStream::SetFileData(instance.GetFileName(), result.Year, result.Day, instance.IsTest());
     instance.OnInitStep(2);
     instance.LastGlobalTime = 0;
     result.Step2Test.Result = instance.Step2();
@@ -83,6 +86,7 @@ void AoCBase::ExecuteStep(AoCBase& instance)
         dout << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step1Live.Name << endl;
     }
     instance.Step = 1;
+    AoCStream::SetFileData(instance.GetFileName(), result.Year, result.Day, instance.IsTest());
     instance.OnInitStep(1);
     instance.LastGlobalTime = 0;
     result.Step1Live.Result = instance.Step1();
@@ -97,6 +101,7 @@ void AoCBase::ExecuteStep(AoCBase& instance)
     }
 
     instance.Step = 2;
+    AoCStream::SetFileData(instance.GetFileName(), result.Year, result.Day, instance.IsTest());
     instance.OnInitStep(2);
     instance.LastGlobalTime = 0;
     result.Step2Live.Result = instance.Step2();
@@ -438,7 +443,7 @@ string AoCBase::ReadStringFromFile(int Step) const
 string AoCBase::ReadStringFromFile(int Step, int& LinesCount, int& LastLineWidth) const
 {
     const std::string FileName = GetFileName();
-    CreateFileIfDoesNotExist(FileName);
+    CreateFileIfDoesNotExist(FileName, GetDay(), GetYear(), IsTest());
     LinesCount = 0;
     LastLineWidth = 0;
 
@@ -463,7 +468,7 @@ string AoCBase::ReadStringFromFile(int Step, int& LinesCount, int& LastLineWidth
 const int AoCBase::GetFileSingleLineWidth(int Step) const
 {
     const std::string FileName = GetFileName();
-    CreateFileIfDoesNotExist(FileName);
+    CreateFileIfDoesNotExist(FileName, GetDay(), GetYear(), IsTest());
 
     std::ifstream file(FileName);
     std::string line;
@@ -480,7 +485,7 @@ const int AoCBase::GetFileSingleLineWidth(int Step) const
 LongListList AoCBase::ReadVerticalVectorsFromFile(int Step) const
 {
     const std::string FileName = GetFileName();
-    CreateFileIfDoesNotExist(FileName);
+    CreateFileIfDoesNotExist(FileName, GetDay(), GetYear(), IsTest());
 
     std::ifstream file(FileName);
     LongListList vectors;
@@ -529,7 +534,7 @@ stringstream AoCBase::ReadStringStreamFromFile(int Step) const
 vector<string> AoCBase::ReadStringLinesFromFile(int Step) const
 {
     const std::string FileName = GetFileName();
-    CreateFileIfDoesNotExist(FileName);
+    CreateFileIfDoesNotExist(FileName, GetDay(), GetYear(), IsTest());
 
     std::ifstream file(FileName);
     vector<string> vector;
@@ -554,7 +559,7 @@ vector<string> AoCBase::ReadStringLinesFromFile(int Step) const
 LongListList AoCBase::ReadLongVectorsFromFile(int Step) const
 {
     const std::string FileName = GetFileName();
-    CreateFileIfDoesNotExist(FileName);
+    CreateFileIfDoesNotExist(FileName, GetDay(), GetYear(), IsTest());
 
     std::ifstream file(FileName);
     LongListList vectors;
