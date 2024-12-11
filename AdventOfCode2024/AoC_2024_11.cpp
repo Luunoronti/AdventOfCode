@@ -5,6 +5,7 @@ using namespace aoc;
 
 AoC_2024_11::DoubleNumberCache doubleNumberCache;
 AoC_2024_11::SingleNumberCache singleNumberCache;
+AoC_2024_11::SingleNumberCache pow2Cache;
 
 int cacheHits = 0;
 int cacheMisses = 0;
@@ -46,7 +47,18 @@ int64_t AoC_2024_11::AdvanceOneStep(Map* map, Map* target)
         int64_t numDigits = static_cast<int64_t>(log10(number)) + 1;
         if(!(numDigits & 1))
         {
-            int64_t divisor = static_cast<int64_t>(std::pow(10, numDigits / 2));
+            int64_t divisor = 0;
+            auto it2 = pow2Cache.find(numDigits);
+            if(it2 != pow2Cache.end())
+            {
+                divisor = it2->second;
+            }
+            else
+            {
+                divisor = static_cast<int64_t>(std::pow(10, numDigits / 2));
+                pow2Cache[numDigits] = divisor;
+            }
+                
             const auto p = std::pair<int64_t, int64_t>(number / divisor, number % divisor);
             (*target)[p.first] += count;
             (*target)[p.second] += count;
