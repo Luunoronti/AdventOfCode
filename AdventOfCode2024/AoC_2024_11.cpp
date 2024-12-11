@@ -2,25 +2,21 @@
 #include "AoC_2024_11.h"
 
 using namespace aoc;
-typedef std::unordered_map<int64_t, int64_t> Map;
-typedef std::pair<int64_t, int64_t> MapPair;
 
 
-int64_t largestValue = 0;
-int64_t loops_total = 0;
 std::unordered_map<int64_t, std::pair<int64_t, int64_t>> doubleDigitCache;
 
-void AdvanceOneStep(Map* map, Map* target)
+int64_t AoC_2024_11::AdvanceOneStep(Map* map, Map* target)
 {
+    int64_t sum = 0;
     for(const auto& pair : *map)
     {
         const auto& number = pair.first;
         const auto& count = pair.second;
-        largestValue = max(largestValue, number);
-
         if(number == 0)
         {
             (*target)[1] += count;
+            sum += count;
             continue;
         }
 
@@ -29,32 +25,33 @@ void AdvanceOneStep(Map* map, Map* target)
         {
             (*target)[it->second.first] += count;
             (*target)[it->second.second] += count;
+            sum += count * 2;
             continue;
         }
 
         int64_t numDigits = static_cast<int64_t>(log10(number)) + 1;
         if(!(numDigits % 2))
         {
-            int divisor = static_cast<int64_t>(std::pow(10, numDigits / 2));
+            int64_t divisor = static_cast<int64_t>(std::pow(10, numDigits / 2));
             const auto p = std::pair<int64_t, int64_t>(number / divisor, number % divisor);
             (*target)[p.first] += count;
             (*target)[p.second] += count;
             doubleDigitCache[number] = p;
+            sum += count * 2;
         }
         else
         {
             (*target)[number * 2024] += count;
+            sum += count;
         }
-
-        loops_total++;
     }
+    return sum;
 }
-int64_t CountAll(const vector<int64_t>& list, int steps, Map& map, Map& map2)
+void AoC_2024_11::CountAll(const vector<int64_t>& list, int steps, int stepsForPart1, Map& map, Map& map2)
 {
-    //doubleDigitCache.clear();
-
     Map* mapSrc{ nullptr };
     Map* mapcTrg{ nullptr };
+    int64_t stepSum = 0;
 
     for(size_t i = 0; i < list.size(); ++i) map[list[i]] = 1;
     for(int step = 0; step < steps; ++step)
@@ -62,13 +59,15 @@ int64_t CountAll(const vector<int64_t>& list, int steps, Map& map, Map& map2)
         mapSrc = step & 0x01 ? &map2 : &map;
         mapcTrg = step & 0x01 ? &map : &map2;
         mapcTrg->clear();
-        AdvanceOneStep(mapSrc, mapcTrg);
+        stepSum = AdvanceOneStep(mapSrc, mapcTrg);
+        if(step + 1 == stepsForPart1)
+        {
+            if(IsTest()) firstPart_Test = stepSum;
+            else firstPart_Live = stepSum;
+        }
     }
-    int64_t sum = 0;
-    if(mapcTrg)
-        for(const auto& pair : *mapcTrg)
-            sum += pair.second;
-    return sum;
+    if(IsTest()) secondPart_Test = stepSum;
+    else secondPart_Live = stepSum;
 }
 const int64_t AoC_2024_11::Step1()
 {
@@ -76,16 +75,12 @@ const int64_t AoC_2024_11::Step1()
     vector<int64_t> list;
     AoCStream(GetFileName()) >> list;
     Map map, map2;
-    return CountAll(list, 25, map, map2);
+    CountAll(list, 75, 25, map, map2);
+
+    return IsTest() ? firstPart_Test : firstPart_Live;
 };
 const int64_t AoC_2024_11::Step2()
 {
     TIME_PART;
-    vector<int64_t> list;
-    AoCStream(GetFileName()) >> list;
-    Map map, map2;
-    auto sum = CountAll(list, 75, map, map2);
-    //cout << loops_total << endl
-    //    ;
-    return sum;
+    return IsTest() ? secondPart_Test : secondPart_Live;
 };
