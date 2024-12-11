@@ -26,3 +26,11 @@ public:
     int64_t firstPart_Live{ 0 };
 };
 
+extern int cacheHits;
+extern int cacheMisses;
+extern int dblNumCacheHits;
+extern int sngNumCacheHits;
+extern int powCacheHits;
+extern int dblNumCacheMisses;
+extern int sngNumCacheMisses;
+extern int powCacheMisses;
