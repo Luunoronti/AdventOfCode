@@ -216,7 +216,8 @@
     "debugRun": true,
     "name": "Hoof It",
     "day": 10,
-    "liveStep1": {
+      "enableDebugStream": false,
+      "liveStep1": {
       "expectedResult": 566,
       "knownErrors": []
     },
@@ -226,7 +227,6 @@
     },
     "testStep1": {
       "expectedResult": 36,
-      "enableDebugStream": false,
       "knownErrors": []
     },
     "testStep2": {
