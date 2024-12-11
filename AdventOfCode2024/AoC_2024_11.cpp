@@ -44,7 +44,7 @@ int64_t AoC_2024_11::AdvanceOneStep(Map* map, Map* target)
         cacheMisses++;
 
         int64_t numDigits = static_cast<int64_t>(log10(number)) + 1;
-        if(!(numDigits % 2))
+        if(!(numDigits & 1))
         {
             int64_t divisor = static_cast<int64_t>(std::pow(10, numDigits / 2));
             const auto p = std::pair<int64_t, int64_t>(number / divisor, number % divisor);
