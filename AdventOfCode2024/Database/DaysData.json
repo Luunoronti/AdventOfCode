@@ -193,7 +193,7 @@
     "day": 9,
     "liveStep1": {
       "expectedResult": 6340197768906,
-      "knownErrors": [6219938684618]
+      "knownErrors": [ 6219938684618 ]
     },
     "liveStep2": {
       "expectedResult": 6363913128533,
@@ -201,13 +201,13 @@
     },
     "testStep1": {
       "expectedResult": 1928,
-    "enableDebugStream": false,
-    "knownErrors": []
+      "enableDebugStream": false,
+      "knownErrors": []
     },
     "testStep2": {
       "expectedResult": 2858,
-    "enableDebugStream": false,
-    "knownErrors": []
+      "enableDebugStream": false,
+      "knownErrors": []
     },
     "year": 2024
   },
@@ -216,8 +216,8 @@
     "debugRun": false,
     "name": "Hoof It",
     "day": 10,
-      "enableDebugStream": false,
-      "liveStep1": {
+    "enableDebugStream": false,
+    "liveStep1": {
       "expectedResult": 566,
       "knownErrors": []
     },
@@ -247,7 +247,7 @@
     },
     "liveStep2": {
       "expectedResult": 220357186726677,
-      "knownErrors": [8184572693]
+      "knownErrors": [ 8184572693 ]
     },
     "testStep1": {
       "expectedResult": 55312,
@@ -260,24 +260,24 @@
     "year": 2024
   },
   {
-    "run": false,
-    "debugRun": false,
-    "name": "____",
+    "run": true,
+    "debugRun": true,
+    "name": "Garden Groups",
     "day": 12,
     "liveStep1": {
-      "expectedResult": 0,
-      "knownErrors": []
+      "expectedResult": 1461806,
+      "knownErrors": [ 1485954 ]
     },
     "liveStep2": {
-      "expectedResult": 0,
+      "expectedResult": 887932,
       "knownErrors": []
     },
     "testStep1": {
-      "expectedResult": 0,
+      "expectedResult": 1930,
       "knownErrors": []
     },
     "testStep2": {
-      "expectedResult": 0,
+      "expectedResult": 1206,
       "knownErrors": []
     },
     "year": 2024

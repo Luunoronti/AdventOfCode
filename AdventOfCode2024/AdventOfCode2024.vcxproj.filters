@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Tests">
       <UniqueIdentifier>{a1881c99-e192-4f15-b06f-414a17d50781}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Database">
+      <UniqueIdentifier>{587d7b4b-a706-49b1-9b69-94ef7127dada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestInputs">
+      <UniqueIdentifier>{316bbd13-37a1-4f89-8937-82c68c616160}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -248,5 +254,87 @@
     <ClInclude Include="CustomFunctions.h">
       <Filter>Header Files\Base</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Database\DaysData.json">
+      <Filter>Database</Filter>
+    </None>
+    <None Include="Database\ProgramConfig.json">
+      <Filter>Database</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Test\2024_1_1.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_1_2.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_2_1.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_2_2.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_3_1.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_3_2.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_4_1.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_4_2.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_5_1.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_5_2.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_6_1.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_6_2.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_7_1.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_7_2.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_8_1.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_8_2.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_9_1.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_9_2.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_10_1.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_10_2.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_11_1.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="Test\2024_11_2.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="2024_12_1.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
+    <Text Include="2024_12_2.txt">
+      <Filter>TestInputs</Filter>
+    </Text>
   </ItemGroup>
 </Project>

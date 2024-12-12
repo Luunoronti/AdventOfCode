@@ -220,11 +220,17 @@ namespace aoc
             {
             }
 
-            Map2d(int Width, int Height)
+            Map2d(int Width, int Height, bool zeroMemory = false)
                 : Width(Width), Height(Height)
             {
                 if(Width > 0 && Height > 0)
+                {
                     Map.resize(Width * Height);
+                    if(zeroMemory)
+                    {
+                        ZeroMemory(&Map[0], sizeof(T) * Width * Height);
+                    }
+                }
             }
 
             __forceinline void Set(const int x, const int y, const T& value)
