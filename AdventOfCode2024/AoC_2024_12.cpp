@@ -8,7 +8,10 @@ using namespace aoc::maps;
 
 typedef std::unordered_map<int, int64_t> RegionInfo;
 typedef std::unordered_map<int, std::pair<int, int>> RegionLocations;
+typedef std::unordered_map<int, std::unordered_map<int, vector<int>>> RegionFenceLocations;
 
+RegionFenceLocations HorizontalFencesLocations;
+RegionFenceLocations VerticalFencesLocations;
 
 
 void floodFill(const aoc::maps::Map2d<char>& input, aoc::maps::Map2d<int>& filledMap, const char regionChar, int x, int y, int id, RegionInfo& RegionsAreas);
@@ -127,7 +130,10 @@ void countFencesWithRayMarch(aoc::maps::Map2d<int>& filledMap, RegionInfo& Regio
 {
     for(int y = 0; y < filledMap.Height; ++y)
     {
-        RegionsFenceCount[filledMap.Get(0, y)]++;
+        const auto firstId = filledMap.Get(0, y);
+        RegionsFenceCount[firstId]++;
+        VerticalFencesLocations[firstId][y].push_back(0);
+
         for(int x = 0; x < filledMap.Width - 1; ++x)
         {
             const int id1 = filledMap.Get(x, y);
@@ -137,13 +143,22 @@ void countFencesWithRayMarch(aoc::maps::Map2d<int>& filledMap, RegionInfo& Regio
             {
                 RegionsFenceCount[id1]++;
                 RegionsFenceCount[id2]++;
+
+                VerticalFencesLocations[id1][y].push_back(x);
+                VerticalFencesLocations[id2][y].push_back(x);
             }
         }
-        RegionsFenceCount[filledMap.Get(filledMap.Width - 1, y)]++;
+
+        const auto lastId = filledMap.Get(filledMap.Width - 1, y);
+        RegionsFenceCount[lastId]++;
+        VerticalFencesLocations[lastId][y].push_back(filledMap.Width - 1);
     }
     for(int x = 0; x < filledMap.Width; ++x)
     {
-        RegionsFenceCount[filledMap.Get(x, 0)]++;
+        const auto firstId = filledMap.Get(x, 0);
+        RegionsFenceCount[firstId]++;
+        HorizontalFencesLocations[firstId][x].push_back(0);
+
         for(int y = 0; y < filledMap.Height - 1; ++y)
         {
             const int id1 = filledMap.Get(x, y);
@@ -153,9 +168,14 @@ void countFencesWithRayMarch(aoc::maps::Map2d<int>& filledMap, RegionInfo& Regio
             {
                 RegionsFenceCount[id1]++;
                 RegionsFenceCount[id2]++;
+
+                HorizontalFencesLocations[id1][x].push_back(y);
+                HorizontalFencesLocations[id2][x].push_back(y);
             }
         }
-        RegionsFenceCount[filledMap.Get(x, filledMap.Height - 1)]++;
+        const auto lastId = filledMap.Get(x, filledMap.Height - 1);
+        RegionsFenceCount[lastId]++;
+        HorizontalFencesLocations[lastId][filledMap.Height - 1].push_back(filledMap.Width - 1);
     }
 
 }
