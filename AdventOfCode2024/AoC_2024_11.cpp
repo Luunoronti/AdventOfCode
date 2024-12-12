@@ -49,7 +49,7 @@ void AoC_2024_11::CountAll(const vector<int64_t>& list, int steps, int stepsForP
     Map* mapcTrg{ nullptr };
     int64_t stepSum = 0;
 
-    for(size_t i = 0; i < list.size(); ++i) map[list[i]] = 1;
+    for(size_t i = 0; i < list.size(); ++i) map[list[i]]++;
     for(int step = 0; step < steps; ++step)
     {
         mapSrc = step & 0x01 ? &map2 : &map;
