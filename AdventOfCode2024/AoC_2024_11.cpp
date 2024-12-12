@@ -3,29 +3,9 @@
 
 using namespace aoc;
 
-/*
-
-caches save around 3ms of runtime
-
-these are the stats:
-
-TEST ITERATION
-hits: 3445, misses: 75 (2.18%), cache size: 75
-dbl num hits: 2515, misses: 55 (2.19%), cache size: 55
-sng num hits: 930, misses: 20 (2.15%), cache size: 20
-pow hits: 50, misses: 5 (10.00%), cache size: 5
-
-LIVE ITERATION
-hits: 130312, misses: 3918 (3.01%), cache size: 3918
-dbl num hits: 76168, misses: 2306 (3.03%), cache size: 2306
-sng num hits: 54144, misses: 1612 (2.98%), cache size: 1612
-pow hits: 2299, misses: 7 (0.30%), cache size: 7
-*/
-
 AoC_2024_11::DoubleNumberCache doubleNumberCache;
 AoC_2024_11::SingleNumberCache singleNumberCache;
 AoC_2024_11::SingleNumberCache pow2Cache;
-
 
 
 float percentage(int a, int b)
