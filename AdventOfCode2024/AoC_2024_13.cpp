@@ -74,7 +74,6 @@ void AoC_2024_13::ParseGames(const char* fileName)
 const int64_t AoC_2024_13::Step1()
 {
     TIME_PART;
-
     Games.clear();
     ParseGames(GetFileName().c_str());
 
