@@ -17,6 +17,14 @@ public:
         {
         }
 
+        /*
+        P(A) * ax + P(B) * bx = pX
+        P(A) * ay + P(b) * by = pY
+         
+         
+        a = (pX * by - pY * bx) / (ax * by - ay * bx);
+        b = (pY * ax - pX * ay) / (ax * by - ay * bx);
+        */
         __forceinline const int64_t Solve64(int64_t prizeAdd = 0) const
         {
             int64_t pX = px + prizeAdd;
@@ -47,10 +55,14 @@ public:
     const int64_t Step1() override;
     const int64_t Step2() override;
 
+    const int64_t Step1_NoVector();
+
     int ParseLine(const char* line, AoC_2024_13::SingleGame* pGame);
     void ParseGames(const char* fileName);
 
 private:
     std::deque<SingleGame> Games;
+
+    int64_t Part2Answer{ 0 };
 };
 

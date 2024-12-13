@@ -74,6 +74,9 @@ void AoC_2024_13::ParseGames(const char* fileName)
 const int64_t AoC_2024_13::Step1()
 {
     TIME_PART;
+
+    return Step1_NoVector();
+
     Games.clear();
     ParseGames(GetFileName().c_str());
 
@@ -84,6 +87,8 @@ const int64_t AoC_2024_13::Step1()
 };
 const int64_t AoC_2024_13::Step2()
 {
+    if(Part2Answer) return Part2Answer;
+
     TIME_PART;
     int64_t sum = 0;
     for(const auto& game : Games)
@@ -91,7 +96,43 @@ const int64_t AoC_2024_13::Step2()
     return sum;
 };
 
+const int64_t AoC_2024_13::Step1_NoVector()
+{
+    Part2Answer = 0;
 
+    FILE* file;
+    fopen_s(&file, GetFileName().c_str(), "r");
+    if(file == NULL)
+    {
+        perror("Failed to open file");
+        return 0;
+    }
+
+    AoC_2024_13::SingleGame game;
+    char line[128];
+
+    int64_t sum1 = 0;
+    int64_t sum2 = 0;
+    while(fgets(line, sizeof(line), file))
+    {
+        ParseLine(line, &game);
+        if(strcmp(line, "\n") == 0)
+        {
+            sum1 += game.Solve32();
+            sum2 += game.Solve64(10000000000000);
+            game = SingleGame();
+        }
+    }
+    if(game.ax != 0 || game.ay != 0 || game.bx != 0 || game.by != 0 || game.px != 0 || game.py != 0)
+    {
+        sum1 += game.Solve32();
+        sum2 += game.Solve64(10000000000000);
+    }
+    fclose(file);
+
+    Part2Answer = sum2;
+    return sum1;
+}
 
 
 // this takes over 1.2ms to parse live input
