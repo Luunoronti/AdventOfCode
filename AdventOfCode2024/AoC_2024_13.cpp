@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "AoC_2024_13.h"
 
+#define PART2MUL 10000000000000
+
 // at the end of the file, you'll find other ways of parsing, that were iterations 
 // over parsing of the input. all slower than this
 
@@ -100,7 +102,7 @@ const int64_t AoC_2024_13::Step2()
     TIME_PART;
     int64_t sum = 0;
     for(const auto& game : Games)
-        sum += game.Solve64(10000000000000);
+        sum += game.Solve64(PART2MUL);
     return sum;
 };
 
@@ -127,14 +129,14 @@ const int64_t AoC_2024_13::Step1_NoVector()
         if(strcmp(line, "\n") == 0)
         {
             sum1 += game.Solve32();
-            sum2 += game.Solve64(10000000000000);
+            sum2 += game.Solve64(PART2MUL);
             game = SingleGame();
         }
     }
     if(game.ax != 0 || game.ay != 0 || game.bx != 0 || game.by != 0 || game.px != 0 || game.py != 0)
     {
         sum1 += game.Solve32();
-        sum2 += game.Solve64(10000000000000);
+        sum2 += game.Solve64(PART2MUL);
     }
     fclose(file);
 
