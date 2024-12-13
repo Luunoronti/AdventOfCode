@@ -283,12 +283,12 @@
     "year": 2024
   },
   {
-    "run": false,
-    "debugRun": false,
-    "name": "____",
+    "run": true,
+    "debugRun": true,
+    "name": "Claw Contraption",
     "day": 13,
     "liveStep1": {
-      "expectedResult": 0,
+      "expectedResult": 36870,
       "knownErrors": []
     },
     "liveStep2": {
@@ -296,11 +296,11 @@
       "knownErrors": []
     },
     "testStep1": {
-      "expectedResult": 0,
+      "expectedResult": 480,
       "knownErrors": []
     },
     "testStep2": {
-      "expectedResult": 0,
+      "expectedResult": 100,
       "knownErrors": []
     },
     "year": 2024
