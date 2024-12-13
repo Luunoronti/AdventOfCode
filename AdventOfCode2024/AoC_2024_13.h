@@ -7,29 +7,38 @@ class AoC_2024_13 : public AoC2024
 
     struct SingleGame
     {
-        int64_t ax, ay;
-        int64_t bx, by;
-        int64_t px, py;
+        int ax, ay;
+        int bx, by;
+        int px, py;
 
         SingleGame()
             : ax(0), ay(0), bx(0), by(0), px(0), py(0)
         {
         }
 
-        __forceinline const int64_t Solve(int64_t prizeAdd = 0) const
+        __forceinline const int64_t Solve64(int64_t prizeAdd = 0) const
         {
             int64_t pX = px + prizeAdd;
             int64_t pY = py + prizeAdd;
-            double a = ((double)pX * by - pY * bx) / ((double)ax * by - ay * bx);
-            double b = ((double)pY * ax - pX * ay) / ((double)ax * by - ay * bx);
+            long double div = ((long double)ax * by - ay * bx);
+            long double a = ((long double)pX * by - pY * bx) / div;
+            long double b = ((long double)pY * ax - pX * ay) / div;
 
             if(std::fmod(a, 1.0) == 0 && std::fmod(b, 1.0) == 0)
                 return (3 * (int64_t)a) + (int64_t)b;
-
             return 0;
         }
 
+        __forceinline const int Solve32() const
+        {
+            float div = ((float)ax * by - ay * bx);
+            float a = ((float)px * by - py * bx) / div;
+            float b = ((float)py * ax - px * ay) / div;
 
+            if(std::fmod(a, 1.0) == 0 && std::fmod(b, 1.0) == 0)
+                return (3 * (int)a) + (int)b;
+            return 0;
+        }
     };
 
 public:
@@ -38,6 +47,7 @@ public:
     const int64_t Step2() override;
 
     int ParseLine(const char* line, AoC_2024_13::SingleGame* pGame);
+    int ParseLineStream(const char* line, AoC_2024_13::SingleGame* pGame);
     void ParseGames(const char* fileName);
 
 private:

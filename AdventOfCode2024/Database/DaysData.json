@@ -292,7 +292,7 @@
       "knownErrors": []
     },
     "liveStep2": {
-      "expectedResult": 0,
+      "expectedResult": 78101482023732,
       "knownErrors": []
     },
     "testStep1": {
@@ -300,7 +300,7 @@
       "knownErrors": []
     },
     "testStep2": {
-      "expectedResult": 100,
+      "expectedResult": 875318608908,
       "knownErrors": []
     },
     "year": 2024
