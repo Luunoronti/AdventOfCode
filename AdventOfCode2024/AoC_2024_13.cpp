@@ -71,6 +71,14 @@ void AoC_2024_13::ParseGames(const char* fileName)
     }
     fclose(file);
 }
+
+/*
+ Small speed improvement, using Step1_NoVector()
+ to skip buffering and just solve games as we parse them.
+ So Part2 takes 0 from 9 microseconds, and Part1 is still faster,
+ from 212 to 190 microseconds.
+ That's a total save of 30 microseconds there, which is about 10% or so.
+ */
 const int64_t AoC_2024_13::Step1()
 {
     TIME_PART;
