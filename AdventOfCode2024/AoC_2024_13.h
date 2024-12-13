@@ -5,6 +5,7 @@
 class AoC_2024_13 : public AoC2024
 {
 
+public:
     struct SingleGame
     {
         int ax, ay;
@@ -47,7 +48,6 @@ public:
     const int64_t Step2() override;
 
     int ParseLine(const char* line, AoC_2024_13::SingleGame* pGame);
-    int ParseLineStream(const char* line, AoC_2024_13::SingleGame* pGame);
     void ParseGames(const char* fileName);
 
 private:
