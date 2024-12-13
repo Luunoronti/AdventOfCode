@@ -7,74 +7,63 @@ using namespace aoc::maps;
 #define USE_RECURSION
 
 typedef std::unordered_map<int, int64_t> RegionInfo;
-typedef std::unordered_map<int, std::pair<int, int>> RegionLocations;
-typedef std::unordered_map<int, std::unordered_map<int, vector<int>>> RegionFenceLocations;
+typedef std::unordered_map<int, std::unordered_map<int, std::vector<std::pair<int, int>>>> Segments;
 
-struct FLine
-{
-    int x1, y1, x2, y2, used;
-
-    FLine(int x1, int y1, int x2, int y2)
-        : x1(x1), y1(y1), x2(x2), y2(y2), used(0)
-    {
-    }
-};
-
-
-RegionFenceLocations HorizontalFencesLocations;
-RegionFenceLocations VerticalFencesLocations;
-std::unordered_map<int, char> idToChar;
-std::unordered_map<int, vector<FLine>> regionRawLines;
-
-
-void floodFill(const aoc::maps::Map2d<char>& input, const char regionChar, int x, int y, int id, RegionInfo& RegionsAreas);
-void floodFillRecurse(const aoc::maps::Map2d<char>& input, const char regionChar, int x, int y, int id, RegionInfo& RegionsAreas);
-void idRegions(const aoc::maps::Map2d<char>& input, RegionInfo& RegionsAreas, RegionLocations& RegionStartingLocations);
-void countFencesWithRayMarch(RegionInfo& RegionsFenceCount);
-
-void buildShapeAndCountCorners();
 
 aoc::maps::Map2d<int> filledMap;
+Segments regionVerticalForwardSegments;
+Segments regionVerticalBackSegments;
+Segments regionHorizontalForwardSegments;
+Segments regionHorizontalBackSegments;
+std::unordered_map<int, int> regionSidesCount;
+std::unordered_map<int, char> idToChar;
+RegionInfo RegionsAreas;
+RegionInfo RegionsFenceCount;
+
+void floodFill(const aoc::maps::Map2d<char>& input, const char regionChar, int x, int y, int id);
+void floodFillRecurse(const aoc::maps::Map2d<char>& input, const char regionChar, int x, int y, int id);
+void idRegions(const aoc::maps::Map2d<char>& input);
+void raymarch();
+std::pair<int64_t, int64_t> countCosts();
 
 const int64_t AoC_2024_12::Step1()
 {
     TIME_PART;
 
+    regionVerticalForwardSegments.clear();
+    regionVerticalBackSegments.clear();
+    regionHorizontalForwardSegments.clear();
+    regionHorizontalBackSegments.clear();
+    regionSidesCount.clear();
+    RegionsFenceCount.clear();
+    RegionsAreas.clear();
+
     // load input
     aoc::maps::Map2d<char> input;
     aoc::aocs >> input;
 
-    // flood fill (and store region starting locations)
+    // flood fill. it will also save region areas.
     filledMap = aoc::maps::Map2d<int>(input.Width, input.Height, true);
-    RegionInfo RegionsAreas;
-    RegionLocations RegionStartLocations;
-    idRegions(input, RegionsAreas, RegionStartLocations);
+    idRegions(input);
 
     // raymarch to find fences
-    RegionInfo RegionsFenceCount;
-    countFencesWithRayMarch(RegionsFenceCount);
+    raymarch();
 
     // count all regions
-    int64_t sum = 0;
-    for(const auto& p1 : RegionsFenceCount)
-    {
-        auto id = p1.first;
-        sum += RegionsAreas[id] * p1.second;
-    }
-    // profit :)
-    return sum;
-}
+    const auto& result = countCosts();
 
-std::unordered_map<int, int> cornersFound;
+    // profit :)
+    part2Sum = result.second;
+    return result.first;
+}
 
 const int64_t AoC_2024_12::Step2()
 {
     TIME_PART;
-    buildShapeAndCountCorners();
-    return 0;
+    return part2Sum;
 };
 
-void floodFill(const aoc::maps::Map2d<char>& input, const char regionChar, int x, int y, int id, RegionInfo& RegionsAreas)
+void floodFill(const aoc::maps::Map2d<char>& input, const char regionChar, int x, int y, int id)
 {
     std::deque<std::pair<int, int>> queue;
     queue.push_back({ x, y });
@@ -99,8 +88,7 @@ void floodFill(const aoc::maps::Map2d<char>& input, const char regionChar, int x
     }
     RegionsAreas[id] = area;
 }
-
-void floodFillRecurse(const aoc::maps::Map2d<char>& input, const char regionChar, int x, int y, int id, RegionInfo& RegionsAreas)
+void floodFillRecurse(const aoc::maps::Map2d<char>& input, const char regionChar, int x, int y, int id)
 {
     if(!input.WithinBounds(x, y)) return;
     if(filledMap.Get(x, y) != 0) return;
@@ -109,17 +97,14 @@ void floodFillRecurse(const aoc::maps::Map2d<char>& input, const char regionChar
     filledMap.Set(x, y, id);
     ++RegionsAreas[id];
 
-    floodFillRecurse(input, regionChar, x + 1, y, id, RegionsAreas);
-    floodFillRecurse(input, regionChar, x - 1, y, id, RegionsAreas);
-    floodFillRecurse(input, regionChar, x, y + 1, id, RegionsAreas);
-    floodFillRecurse(input, regionChar, x, y - 1, id, RegionsAreas);
+    floodFillRecurse(input, regionChar, x + 1, y, id);
+    floodFillRecurse(input, regionChar, x - 1, y, id);
+    floodFillRecurse(input, regionChar, x, y + 1, id);
+    floodFillRecurse(input, regionChar, x, y - 1, id);
 }
-
-void idRegions(const aoc::maps::Map2d<char>& input, RegionInfo& RegionsAreas, RegionLocations& RegionStartingLocations)
+void idRegions(const aoc::maps::Map2d<char>& input)
 {
     int id = 0;
-    RegionStartingLocations.clear();
-
     for(int y = 0; y < input.Height; ++y)
     {
         for(int x = 0; x < input.Width; ++x)
@@ -128,24 +113,55 @@ void idRegions(const aoc::maps::Map2d<char>& input, RegionInfo& RegionsAreas, Re
             {
                 ++id;
                 idToChar[id] = input.Get(x, y);
-                RegionStartingLocations[id] = { x, y };
 #ifdef USE_RECURSION
-                floodFillRecurse(input, input.Get(x, y), x, y, id, RegionsAreas);
+                floodFillRecurse(input, input.Get(x, y), x, y, id);
 #else
-                floodFill(input, filledMap, input.Get(x, y), x, y, id, RegionsAreas);
+                floodFill(input, filledMap, input.Get(x, y), x, y, id);
 #endif
             }
         }
     }
 }
 
-void countFencesWithRayMarch(RegionInfo& RegionsFenceCount)
+void connectOrCreateVerticalSegment(int id, int x, int y1, int y2, bool forward)
+{
+    auto& segments = (forward ? regionVerticalForwardSegments : regionVerticalBackSegments)[id];
+    auto& forX = segments[x];
+    for(int i = 0; i < forX.size(); ++i)
+    {
+        auto& l = forX[i];
+        if(l.second == y1)
+        {
+            forX[i] = { l.first, y2 };
+            return;
+        }
+    }
+    forX.push_back({ y1, y2 });
+    regionSidesCount[id]++;
+}
+void connectOrCreateHorizontalSegment(int id, int x1, int x2, int y, bool forward)
+{
+    auto& segments = (forward ? regionHorizontalForwardSegments : regionHorizontalBackSegments)[id];
+    auto& forY = segments[y];
+    for(int i = 0; i < forY.size(); ++i)
+    {
+        auto& l = forY[i];
+        if(l.second == x1)
+        {
+            forY[i] = { l.first, x2 };
+            return;
+        }
+    }
+    forY.push_back({ x1, x2 });
+    regionSidesCount[id]++;
+}
+void raymarch()
 {
     for(int y = 0; y < filledMap.Height; ++y)
     {
         const auto firstId = filledMap.Get(0, y);
         RegionsFenceCount[firstId]++;
-        regionRawLines[firstId].push_back(FLine(0, y, 0, y + 1));
+        connectOrCreateVerticalSegment(firstId, -1, y, y + 1, true);
 
         for(int x = 0; x < filledMap.Width - 1; ++x)
         {
@@ -156,22 +172,20 @@ void countFencesWithRayMarch(RegionInfo& RegionsFenceCount)
             {
                 RegionsFenceCount[id1]++;
                 RegionsFenceCount[id2]++;
-
-                regionRawLines[id1].push_back(FLine(x, y, x, y + 1));
-                regionRawLines[id2].push_back(FLine(x, y, x, y + 1));
+                connectOrCreateVerticalSegment(id1, x, y, y + 1, false);
+                connectOrCreateVerticalSegment(id2, x, y, y + 1, true);
             }
         }
 
         const auto lastId = filledMap.Get(filledMap.Width - 1, y);
         RegionsFenceCount[lastId]++;
-        regionRawLines[lastId].push_back(FLine(filledMap.Width - 1, y, filledMap.Width - 1, y + 1));
+        connectOrCreateVerticalSegment(lastId, filledMap.Width - 1, y, y + 1, false);
     }
     for(int x = 0; x < filledMap.Width; ++x)
     {
         const auto firstId = filledMap.Get(x, 0);
         RegionsFenceCount[firstId]++;
-        regionRawLines[firstId].push_back(FLine(x, 0, x + 1, 0));
-
+        connectOrCreateHorizontalSegment(firstId, x, x + 1, -1, true);
 
         for(int y = 0; y < filledMap.Height - 1; ++y)
         {
@@ -183,67 +197,33 @@ void countFencesWithRayMarch(RegionInfo& RegionsFenceCount)
                 RegionsFenceCount[id1]++;
                 RegionsFenceCount[id2]++;
 
-                regionRawLines[id1].push_back(FLine(x, y, x + 1, y));
-                regionRawLines[id2].push_back(FLine(x, y, x + 1, y));
+                connectOrCreateHorizontalSegment(id1, x, x + 1, y, false);
+                connectOrCreateHorizontalSegment(id2, x, x + 1, y, true);
             }
         }
         const auto lastId = filledMap.Get(x, filledMap.Height - 1);
         RegionsFenceCount[lastId]++;
-        regionRawLines[lastId].push_back(FLine(x, filledMap.Height - 1, x + 1, filledMap.Height - 1));
+        connectOrCreateHorizontalSegment(lastId, x, x + 1, filledMap.Height - 1, false);
     }
 
 }
 
-
-bool linesShareAPoint(const FLine& line1, const FLine& l2)
+std::pair<int64_t, int64_t> countCosts()
 {
-    return false;
-}
-bool detectDirectionChange(const FLine& line1, const FLine& l2)
-{
-    return false;
-}
-FLine findAnyUnusedLine(const vector<FLine>& lines)
-{
-    for(const auto& line : lines)
+    int64_t sum = 0;
+    for(const auto& p1 : RegionsFenceCount)
     {
-        if(!line.used)return line;
+        auto id = p1.first;
+        sum += RegionsAreas[id] * p1.second;
     }
-    return FLine(0, 0, 0, 0);
-}
-FLine findNextLine(const vector<FLine>& lines, FLine lastLine)
-{
-    for(const auto& line : lines)
+
+    // also count for part 2
+    int64_t sum2 = 0;
+    for(const auto& p1 : RegionsFenceCount)
     {
-        if(!line.used)return line;
+        auto id = p1.first;
+        auto sc = regionSidesCount[id];
+        sum2 += RegionsAreas[id] * sc;
     }
-    return FLine(0, 0, 0, 0);
+    return { sum, sum2 };
 }
-bool hasAnyUnusedLine(const vector<FLine>& lines)
-{
-    for(const auto& line : lines)
-    {
-        if(!line.used) return true;
-    }
-    return false;
-}
-void buildShapeAndCountCorners()
-{
-    auto lines = regionRawLines[9];
-    return;
-
-    int dirChanges = 0;
-    while(hasAnyUnusedLine(lines))
-    {
-        auto l1 = findAnyUnusedLine(lines);
-
-        while(true)
-        {
-            auto l2 = findNextLine(lines, l1);
-            if(detectDirectionChange(l1, l2))
-                dirChanges++;
-        }
-    }
-
-}
-

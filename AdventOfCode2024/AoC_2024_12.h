@@ -7,6 +7,6 @@ public:
     const int64_t Step1() override;
     const int64_t Step2() override;
 
-
+    int64_t part2Sum{ 0 };
 };
 
