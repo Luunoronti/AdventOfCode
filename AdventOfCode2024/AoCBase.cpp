@@ -3,7 +3,7 @@
 
 using namespace aoc;
 
-vector<AoCBaseExecutionResult> AoCBase::ResultReports;
+vector<AoCBaseExecutionConfigurationAndResult> AoCBase::ResultReports;
 AoCProgramConfiguration AoCBase::ProgramConfiguration;
 bool AoCBase::ProgramConfigurationLoaded{ false };
 
@@ -20,18 +20,30 @@ void AoCBase::ExecuteStep(AoCBase& instance)
         return;
     }
 
-    AoCBaseExecutionResult result = GetResultJsonEntry(instance.GetYear(), instance.GetDay());
+    instance.CurrentDayConfiguration = GetResultJsonEntry(instance.GetYear(), instance.GetDay());
 
 #if _DEBUG 
-    if(!result.OkToRunInDebug) if(!ProgramConfiguration.ForceAllRunsInDebug) return;
+    if(!instance.CurrentDayConfiguration.OkToRunInDebug) if(!ProgramConfiguration.ForceAllRunsInDebug) return;
 #else
-    if(!result.OkToRunInRelease) if(!ProgramConfiguration.ForceAllRunsInRelease) return;
+    if(!instance.CurrentDayConfiguration.OkToRunInRelease) if(!ProgramConfiguration.ForceAllRunsInRelease) return;
 #endif
+
+    auto& result = instance.CurrentDayConfiguration;
 
     result.Step1Test.Name = "Part 1 (TEST)";
     result.Step2Test.Name = "Part 2 (TEST)";
     result.Step1Live.Name = "Part 1 (LIVE)";
     result.Step2Live.Name = "Part 2 (LIVE)";
+
+    if(result.EnableVisualization) 
+    {
+        result.Step1Live.EnableVisualization
+            = result.Step2Test.EnableVisualization
+            = result.Step2Live.EnableVisualization
+            = result.Step1Test.EnableVisualization
+            = true;
+
+    }
 
     if(result.EnableDebugOutput)
     {
@@ -50,9 +62,9 @@ void AoCBase::ExecuteStep(AoCBase& instance)
         dout << RESET << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step1Test.Name << endl;
     }
     instance.Step = 1;
+    instance.CurrentStepConfiguration = result.Step1Test;
     AoCStream::SetFileData(instance.GetFileName(), result.Year, result.Day, instance.IsTest());
     instance.OnInitStep(1);
-    
     instance.LastGlobalTime = 0;
     result.Step1Test.Result = instance.Step1();
     result.Step1Test.Time = instance.LastGlobalTime;
@@ -65,6 +77,7 @@ void AoCBase::ExecuteStep(AoCBase& instance)
         dout << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step2Test.Name << endl;
     }
     instance.Step = 2;
+    instance.CurrentStepConfiguration = result.Step2Test;
     AoCStream::SetFileData(instance.GetFileName(), result.Year, result.Day, instance.IsTest());
     instance.OnInitStep(2);
     instance.LastGlobalTime = 0;
@@ -86,6 +99,7 @@ void AoCBase::ExecuteStep(AoCBase& instance)
         dout << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step1Live.Name << endl;
     }
     instance.Step = 1;
+    instance.CurrentStepConfiguration = result.Step1Live;
     AoCStream::SetFileData(instance.GetFileName(), result.Year, result.Day, instance.IsTest());
     instance.OnInitStep(1);
     instance.LastGlobalTime = 0;
@@ -101,6 +115,7 @@ void AoCBase::ExecuteStep(AoCBase& instance)
     }
 
     instance.Step = 2;
+    instance.CurrentStepConfiguration = result.Step2Live;
     AoCStream::SetFileData(instance.GetFileName(), result.Year, result.Day, instance.IsTest());
     instance.OnInitStep(2);
     instance.LastGlobalTime = 0;
@@ -145,7 +160,7 @@ string GetResultStatusNoColors(int64_t expected, int64_t actual)
     return "Too big, expected " + to_string(expected) + "(delta:" + to_string((actual - expected)) + ")";*/
     return "Wrong";
 }
-string GetValueColor(const AoCBaseExecutionResultEntry& Entry)
+string GetValueColor(const AoCBaseExecutionConfigurationResultEntry& Entry)
 {
     if(Entry.IsNotKnown())
         return YELLOW + BLINK;
@@ -190,11 +205,11 @@ void AoCBase::PrintExecutionReport()
 #pragma region Macros
 #define EST_WIDTH(SP) \
 requiredWidth[index] = (int)std::strlen("Value");\
-for(const AoCBaseExecutionResult& result : ResultReports) { requiredWidth[index] = Max(requiredWidth[index], (int)std::to_string(SP.Result).size()); }\
+for(const AoCBaseExecutionConfigurationAndResult& result : ResultReports) { requiredWidth[index] = Max(requiredWidth[index], (int)std::to_string(SP.Result).size()); }\
 requiredWidth[index] += 2;\
 index++;\
 requiredWidth[index] = (int)std::strlen("Time (ms)");\
-for(const AoCBaseExecutionResult& result : ResultReports) { requiredWidth[index] = Max(requiredWidth[index], (int)(toStringWithPrecision(SP.Time, TIME_PRECISION).size())); }\
+for(const AoCBaseExecutionConfigurationAndResult& result : ResultReports) { requiredWidth[index] = Max(requiredWidth[index], (int)(toStringWithPrecision(SP.Time, TIME_PRECISION).size())); }\
 requiredWidth[index] += 2;\
 index++;
 
@@ -227,7 +242,7 @@ if(std::find(sp.KnownErrorResults.begin(), sp.KnownErrorResults.end(), sp.Result
     int requiredWidth[9];
     {
         requiredWidth[0] = (int)std::strlen("Name");
-        for(const AoCBaseExecutionResult& result : ResultReports) { requiredWidth[0] = Max(requiredWidth[0], 7 + (int)result.Name.size()); }
+        for(const AoCBaseExecutionConfigurationAndResult& result : ResultReports) { requiredWidth[0] = Max(requiredWidth[0], 7 + (int)result.Name.size()); }
         requiredWidth[0] += 2;
 
         int index = 1;
@@ -291,7 +306,7 @@ if(std::find(sp.KnownErrorResults.begin(), sp.KnownErrorResults.end(), sp.Result
     }
     for(int i = 0; i < ResultReports.size(); ++i)
     {
-        const AoCBaseExecutionResult& result = ResultReports[i];
+        const AoCBaseExecutionConfigurationAndResult& result = ResultReports[i];
         if(i > 0)
         {
             // PRINT_HORIZONTAL_DIVIDER;
@@ -608,14 +623,14 @@ long AoCBase::GetMinimum(const vector<long>& List)
 
 #pragma region Json database
 // Define to_json and from_json functions for MyStruct 
-void to_json(nlohmann::json& j, const AoCBaseExecutionResultEntry& s)
+void to_json(nlohmann::json& j, const AoCBaseExecutionConfigurationResultEntry& s)
 {
     j = nlohmann::json{
         {"expectedResult", s.ExpectedResult},
         {"enableDebugStream", s.EnableDebugOutput},
         {"knownErrors", s.KnownErrorResults} };
 }
-void to_json(nlohmann::json& j, const AoCBaseExecutionResult& s)
+void to_json(nlohmann::json& j, const AoCBaseExecutionConfigurationAndResult& s)
 {
     j = nlohmann::json{
         {"year", s.Year},
@@ -636,13 +651,14 @@ void to_json(nlohmann::json& j, const AoCProgramConfiguration& s)
         {"runAllInRelease", s.ForceAllRunsInRelease} };
 }
 
-void from_json(const nlohmann::json& j, AoCBaseExecutionResultEntry& s)
+void from_json(const nlohmann::json& j, AoCBaseExecutionConfigurationResultEntry& s)
 {
     if(j.contains("expectedResult")) j.at("expectedResult").get_to(s.ExpectedResult);
     if(j.contains("knownErrors")) j.at("knownErrors").get_to(s.KnownErrorResults);
     if(j.contains("enableDebugStream")) j.at("enableDebugStream").get_to(s.EnableDebugOutput);
+    if(j.contains("enableVisualization")) j.at("enableVisualization").get_to(s.EnableVisualization);
 }
-void from_json(const nlohmann::json& j, AoCBaseExecutionResult& s)
+void from_json(const nlohmann::json& j, AoCBaseExecutionConfigurationAndResult& s)
 {
     if(j.contains("day")) j.at("day").get_to(s.Day);
     if(j.contains("run")) j.at("run").get_to(s.OkToRunInRelease);
@@ -654,6 +670,7 @@ void from_json(const nlohmann::json& j, AoCBaseExecutionResult& s)
     if(j.contains("liveStep2")) j.at("liveStep2").get_to(s.Step2Live);
     if(j.contains("year")) j.at("year").get_to(s.Year);
     if(j.contains("name")) j.at("name").get_to(s.Name);
+    if(j.contains("enableVisualization")) j.at("enableVisualization").get_to(s.EnableVisualization);
 }
 void from_json(const nlohmann::json& j, AoCProgramConfiguration& s)
 {
@@ -661,7 +678,7 @@ void from_json(const nlohmann::json& j, AoCProgramConfiguration& s)
     if(j.contains("runAllInRelease")) j.at("runAllInRelease").get_to(s.ForceAllRunsInRelease);
 }
 
-vector<AoCBaseExecutionResult> AoCBase::DaysDatabase;
+vector<AoCBaseExecutionConfigurationAndResult> AoCBase::DaysDatabase;
 void AoCBase::ReadDaysDatabaseIfNotDoneAlready()
 {
     if(DaysDatabase.size() > 0)
@@ -673,8 +690,8 @@ void AoCBase::ReadDaysDatabaseIfNotDoneAlready()
     if(!file.is_open())
     {
 #pragma region Create new json file
-        vector<AoCBaseExecutionResult> entries;
-        AoCBaseExecutionResult e1;
+        vector<AoCBaseExecutionConfigurationAndResult> entries;
+        AoCBaseExecutionConfigurationAndResult e1;
         e1.Day = 0;
         e1.Year = 2024;
         e1.OkToRunInDebug = true;
@@ -716,11 +733,11 @@ void AoCBase::ReadDaysDatabaseIfNotDoneAlready()
     nlohmann::json jsonData;
     file >> jsonData;
 
-    DaysDatabase = jsonData.get<vector<AoCBaseExecutionResult>>();
+    DaysDatabase = jsonData.get<vector<AoCBaseExecutionConfigurationAndResult>>();
 
     file.close();
 }
-AoCBaseExecutionResult AoCBase::GetResultJsonEntry(int Year, int Day)
+AoCBaseExecutionConfigurationAndResult AoCBase::GetResultJsonEntry(int Year, int Day)
 {
     ReadDaysDatabaseIfNotDoneAlready();
     for(const auto& day : DaysDatabase)

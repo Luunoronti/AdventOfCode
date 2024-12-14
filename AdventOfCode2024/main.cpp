@@ -16,35 +16,6 @@ int main()
 #include <windows.h>
 #include <iostream>
 
-void writeToConsoleBuffer(const CHAR_INFO* buffer, COORD bufferSize, COORD bufferCoord, SMALL_RECT writeRegion)
-{
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    if(hConsole == INVALID_HANDLE_VALUE)
-    {
-        std::cerr << "Failed to get console handle" << std::endl;
-        return;
-    }
-
-    if(!WriteConsoleOutput(hConsole, buffer, bufferSize, bufferCoord, &writeRegion))
-    {
-        std::cerr << "Failed to write to console buffer" << std::endl;
-    }
-}
-
-void readFromConsoleBuffer(CHAR_INFO* buffer, COORD bufferSize, COORD bufferCoord, SMALL_RECT readRegion)
-{
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    if(hConsole == INVALID_HANDLE_VALUE)
-    {
-        std::cerr << "Failed to get console handle" << std::endl;
-        return;
-    }
-
-    if(!ReadConsoleOutput(hConsole, buffer, bufferSize, bufferCoord, &readRegion))
-    {
-        std::cerr << "Failed to read from console buffer" << std::endl;
-    }
-}
 
 void print(char c, int frame)
 {
@@ -71,7 +42,7 @@ void print(char c, int frame)
     CHAR_INFO buffer[1024]; // 5x5 buffer
 
     // Read the console buffer
-    readFromConsoleBuffer(buffer, bufferSize, bufferCoord, region);
+    ReadFromConsoleBuffer(buffer, bufferSize, bufferCoord, region);
 
     // Modify the buffer (for example, change all characters to 'X')
     for(int i = 0; i < 1024; ++i)
@@ -87,7 +58,7 @@ void print(char c, int frame)
     }
 
     // Write the modified buffer back to the console
-    writeToConsoleBuffer(buffer, bufferSize, bufferCoord, region);
+    WriteToConsoleBuffer(buffer, bufferSize, bufferCoord, region);
 }
 
 //int main() {

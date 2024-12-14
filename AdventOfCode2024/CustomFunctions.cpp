@@ -66,5 +66,35 @@ std::string toStringWithPrecision(double value, int precision)
 
 
 
+void WriteToConsoleBuffer(const CHAR_INFO* buffer, COORD bufferSize, COORD bufferCoord, SMALL_RECT writeRegion)
+{
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    if(hConsole == INVALID_HANDLE_VALUE)
+    {
+        std::cerr << "Failed to get console handle" << std::endl;
+        return;
+    }
+
+    if(!WriteConsoleOutput(hConsole, buffer, bufferSize, bufferCoord, &writeRegion))
+    {
+        std::cerr << "Failed to write to console buffer" << std::endl;
+    }
+}
+
+void ReadFromConsoleBuffer(CHAR_INFO* buffer, COORD bufferSize, COORD bufferCoord, SMALL_RECT readRegion)
+{
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    if(hConsole == INVALID_HANDLE_VALUE)
+    {
+        std::cerr << "Failed to get console handle" << std::endl;
+        return;
+    }
+
+    if(!ReadConsoleOutput(hConsole, buffer, bufferSize, bufferCoord, &readRegion))
+    {
+        std::cerr << "Failed to read from console buffer" << std::endl;
+    }
+}
+
 
 

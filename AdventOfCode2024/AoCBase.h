@@ -8,7 +8,7 @@
 
 typedef std::vector<std::vector<long>> LongListList;
 
-struct AoCBaseExecutionResultEntry
+struct AoCBaseExecutionConfigurationResultEntry
 {
     int64_t Result{ 0 };
     int64_t ExpectedResult{ 0 };
@@ -17,13 +17,15 @@ struct AoCBaseExecutionResultEntry
     vector<int64_t> KnownErrorResults;
     bool EnableDebugOutput{ false };
 
+    bool EnableVisualization{ false };
+
     inline bool IsValid() const { return !IsError() && !IsNotKnown() && Result == ExpectedResult; }
     inline bool IsError() const { return !IsNotKnown() && Result != ExpectedResult; }
     inline bool IsNotKnown() const { return 0 == ExpectedResult; }
 
     inline int64_t Delta() const { return std::abs(Result - ExpectedResult); }
 };
-struct AoCBaseExecutionResult
+struct AoCBaseExecutionConfigurationAndResult
 {
     int Year{ 0 };
     int8_t Day{ 0 };
@@ -31,15 +33,18 @@ struct AoCBaseExecutionResult
     bool OkToRunInRelease{ false };
     bool OkToRunInDebug{ false };
     bool EnableDebugOutput{ false };
+    bool EnableVisualization{ false };
+
+
 
     string GetNameWithDate()
     {
         return to_string(Year) + "/" + to_string(Day) + " (" + Name + ")";
     }
-    AoCBaseExecutionResultEntry Step1Test;
-    AoCBaseExecutionResultEntry Step2Test;
-    AoCBaseExecutionResultEntry Step1Live;
-    AoCBaseExecutionResultEntry Step2Live;
+    AoCBaseExecutionConfigurationResultEntry Step1Test;
+    AoCBaseExecutionConfigurationResultEntry Step2Test;
+    AoCBaseExecutionConfigurationResultEntry Step1Live;
+    AoCBaseExecutionConfigurationResultEntry Step2Live;
 };
 
 struct AoCProgramConfiguration
@@ -52,7 +57,7 @@ class AoCBase
 {
 public:
 
-    static vector<AoCBaseExecutionResult> ResultReports;
+    static vector<AoCBaseExecutionConfigurationAndResult> ResultReports;
     static AoCProgramConfiguration ProgramConfiguration;
     static bool ProgramConfigurationLoaded;
 
@@ -118,7 +123,7 @@ public:
     const virtual __forceinline int GetDay() const = 0;
     const bool IsTest() const;
     void SetTest(const bool IsTest);
-    static AoCBaseExecutionResult GetResultJsonEntry(int Year, int Day);
+    static AoCBaseExecutionConfigurationAndResult GetResultJsonEntry(int Year, int Day);
     static void LoadProgramConfig();
     virtual void OnInitTests();
     virtual void OnInitTestingTests();
@@ -132,11 +137,13 @@ public:
     virtual void OnCloseStep(const int Step);
     virtual void OnCloseTests();
 
+    AoCBaseExecutionConfigurationAndResult CurrentDayConfiguration;
+    AoCBaseExecutionConfigurationResultEntry CurrentStepConfiguration;
 private:
     bool IsUnderTest{ false };
     int Step{ 0 };
     double LastGlobalTime{ 0 };
-    static vector<AoCBaseExecutionResult> DaysDatabase;
+    static vector<AoCBaseExecutionConfigurationAndResult> DaysDatabase;
 
     friend class _Time;
 };
