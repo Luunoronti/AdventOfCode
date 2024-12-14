@@ -306,20 +306,20 @@
     "year": 2024
   },
   {
-    "run": false,
-    "debugRun": false,
-    "name": "____",
+    "run": true,
+    "debugRun": true,
+    "name": "Restroom Redoubt",
     "day": 14,
     "liveStep1": {
-      "expectedResult": 0,
-      "knownErrors": []
+      "expectedResult": 210587128,
+      "knownErrors": [ 218681250 ]
     },
     "liveStep2": {
       "expectedResult": 0,
       "knownErrors": []
     },
     "testStep1": {
-      "expectedResult": 0,
+      "expectedResult": 12,
       "knownErrors": []
     },
     "testStep2": {

@@ -145,6 +145,7 @@ namespace aoc
 
                     return *this;
                 }
+
             private:
                 __selected_value_stream() {}
                 T __value{};
@@ -336,6 +337,10 @@ namespace aoc
                 return __selected_value_stream;
             }
 
+            __forceinline void clear()
+            {
+                ZeroMemory(&Map[0], sizeof(T) * Width * Height);
+            }
         private:
             __selected_value_stream<T> __selected_value_stream;
             // __find_close_neighbor<T> __find_close_neighbor;
