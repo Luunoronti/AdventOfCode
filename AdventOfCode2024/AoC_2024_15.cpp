@@ -93,6 +93,20 @@ void AoC_2024_15::DrawMap()
     // actual print
     WriteToConsoleBuffer(ConBuffer, ConBufferSize, ConBufferCoord, ConWriteRegion);
 }
+void AoC_2024_15::ClearConsole()
+{
+    if(!World)
+        return;
+
+    for(int i = 0; i < ConBufferSize.Y * ConBufferSize.X; ++i)
+    {
+        ConBuffer[i].Char.UnicodeChar = ' ';
+        ConBuffer[i].Attributes = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE; // White text
+    }
+
+    // actual print
+    WriteToConsoleBuffer(ConBuffer, ConBufferSize, ConBufferCoord, ConWriteRegion);
+}
 void AoC_2024_15::ReadInput(int& mapDimX, int& mapDimY)
 {
     int x = 0, y = 0;
@@ -262,6 +276,9 @@ void AoC_2024_15::BeginPlay()
 }
 void AoC_2024_15::EndPlay()
 {
+    if(this->Context->PartConfig->EnableVisualization)
+        ClearConsole();
+
     // clear up
     if(World)
     {
@@ -281,25 +298,25 @@ void AoC_2024_15::EndPlay()
     RobotController = nullptr;
     Robot = nullptr;
 
-    //delete[] ConBuffer;
-    //ConBuffer = nullptr;
+    delete[] ConBuffer;
+    ConBuffer = nullptr;
 
-    //ConBufferSize.X = 0;
-    //ConBufferSize.Y = 0;
+    ConBufferSize.X = 0;
+    ConBufferSize.Y = 0;
 
-    //ConBufferCoord.X = 0;
-    //ConBufferCoord.Y = 0;
+    ConBufferCoord.X = 0;
+    ConBufferCoord.Y = 0;
 
-    //ConWriteRegion.Left = 0;
-    //ConWriteRegion.Top = 0;
-    //ConWriteRegion.Right = 0;
-    //ConWriteRegion.Bottom = 0;
+    ConWriteRegion.Left = 0;
+    ConWriteRegion.Top = 0;
+    ConWriteRegion.Right = 0;
+    ConWriteRegion.Bottom = 0;
 }
 
 void AoC_2024_15::Tick(double timeDelta)
 {
     //if(IsTest())return;
-    
+
     // if we have visualization disabled, just simulate everything
     // at once
     if(!this->Context->PartConfig->EnableVisualization)
@@ -331,30 +348,27 @@ void AoC_2024_15::Tick(double timeDelta)
                 return;
             }
 
-            // move and draw
-            for(int i = 0; i < (IsTest() ? 2 : 20); i++)
+            if(!this->MovementCommands.empty())
             {
-                if(!this->MovementCommands.empty())
+                const MoveCommand command = this->MovementCommands.front();
+                this->MovementCommands.pop_front();
+                RobotController->Move(command);
+
+                // if command buffer is empty, compute the last thing they want us to
+                // also set timer to some higher value so that we will see
+                // the result for a bit before it is being discarded
+
+                if(this->MovementCommands.empty())
                 {
-                    const MoveCommand command = this->MovementCommands.front();
-                    this->MovementCommands.pop_front();
-                    RobotController->Move(command);
-
-                    // if command buffer is empty, compute the last thing they want us to
-                    // also set timer to some higher value so that we will see
-                    // the result for a bit before it is being discarded
-
-                        if(this->MovementCommands.empty())
-                        {
-                            this->Context->PartConfig->Result = ComputeAnswerForCurrentWorld();
-                            tickDelayTime = 2;
-                            taskCompleted = true;
-                        }
+                    this->Context->PartConfig->Result = ComputeAnswerForCurrentWorld();
+                    tickDelayTime = 2;
+                    taskCompleted = true;
                 }
             }
+
             DrawMap(); // this would be normally done by the engine in rendering thread
             if(!taskCompleted)
-                tickDelayTime = 0;// IsTest() ? (GetStep() == 1 ? 0.01 : .51) : 0.0;
+                tickDelayTime = IsTest() ? (GetStep() == 1 ? 0.01 : .001) : 0.0001;
         }
         this->RepeatTick();
     }
@@ -438,10 +452,10 @@ void AoC_2024_15::AActor::Move(int dirX, int dirY, bool MoveJoined)
                 LeftJoinedActor->Move(dirX, dirY, true);
         }
 
-        // first, clear our location (and location of our joined actor, if any)
+        // first, clear our location
         World->Set(posX, posY, nullptr);
 
-        // then, move us and joined actor
+        // then, move us
         posX += dirX;
         posY += dirY;
 

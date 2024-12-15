@@ -168,6 +168,7 @@ private:
     AActor* CreateActor(const ActorSymbol ActorSymbol, int LocX, int LocY);
     int64_t ComputeAnswerForCurrentWorld();
     void DrawMap();
+    void ClearConsole();
 private:
     // this is a temporary list of all Actors.
     // it is being filled in while reading input

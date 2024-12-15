@@ -58,32 +58,44 @@ void AoCBase::ExecutePart(AoCBase& instance, bool test, int step, AoCBaseExecuti
     instance.LastGlobalTime = 0;
     partConfiguration.Result = step == 1 ? instance.Step1() : instance.Step2();
 
-    
+
     // new approach involves Tick() function.
     // normally, it's a void. If you want to keep 
     // it running, you set a flag indicating so.
     // so new steps would execute that and forget about Step1() and Step2() as those are being deprecated
-    instance.RepeatTickRequest = 0;
-    LONGLONG startTicks = AoCVisualizer::GetQPCTicks();
-    //LONGLONG endTicks = AoCVisualizer::GetQPCTicks();
-    instance.BeginPlay();
-    do
+    if(Context.Visualizer)
     {
         instance.RepeatTickRequest = 0;
-        if(Context.Visualizer)
-            Context.Visualizer->ProcessInputEvents();
-        
-        double timeDelta = AoCVisualizer::GetQPCTimeDelta(startTicks) * 0.001;
-        instance.Tick(timeDelta);
-        
-        if(Context.Visualizer)
+        LONGLONG startTicks = AoCVisualizer::GetQPCTicks();
+        //LONGLONG endTicks = AoCVisualizer::GetQPCTicks();
+        instance.BeginPlay();
+        do
         {
-            Context.Visualizer->Present();
+            instance.RepeatTickRequest = 0;
+            if(Context.Visualizer)
+                Context.Visualizer->ProcessInputEvents();
 
-            Sleep(1); // this need to be better
-        }
-    } while(instance.RepeatTickRequest);
+            double timeDelta = AoCVisualizer::GetQPCTimeDelta(startTicks) * 0.001;
+            instance.Tick(timeDelta);
+
+            if(Context.Visualizer)
+            {
+                Context.Visualizer->Present();
+
+                //Sleep(0); // this need to be better
+            }
+        } while(instance.RepeatTickRequest);
+        instance.EndPlay();
+    }
+
+    // repeast for time measurement
+    Context.PartConfig->EnableVisualization = false;
+    instance.RepeatTickRequest = 0;
+    instance.BeginPlay();
+    instance.Tick(0);
     instance.EndPlay();
+
+
     partConfiguration.Time = instance.LastGlobalTime;
     instance.OnCloseStep(1);
     dout.setEnabled(false);
@@ -104,7 +116,7 @@ void AoCBase::ExecuteStep(AoCBase& instance)
     if(!ProgramConfigurationLoaded)
     {
         LoadProgramConfig();
-    }
+}
     if(instance.GetDay() == 0)
     {
         cout << RED << BLINK << "Error: Class instance has no day defined." << RESET << " Please override GetDay() and return proper day." << endl;
