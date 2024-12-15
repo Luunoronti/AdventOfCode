@@ -334,7 +334,7 @@
     "debugRun": true,
     "name": "Warehouse Woes",
     "day": 15,
-    "enableVisualization": false,
+    "enableVisualization": true,
     "liveStep1": {
       "expectedResult": 1526673,
       "knownErrors": [1504676]

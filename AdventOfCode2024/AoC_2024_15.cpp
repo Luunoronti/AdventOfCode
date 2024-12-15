@@ -243,7 +243,7 @@ void AoC_2024_15::BeginPlay()
 
     // allocate console
     ConBufferSize.X = mapWidth;
-    ConBufferSize.Y = mapHeight + 1;
+    ConBufferSize.Y = mapHeight + 2;
 
     ConBufferCoord.X = 0;
     ConBufferCoord.Y = 0;
@@ -254,7 +254,7 @@ void AoC_2024_15::BeginPlay()
     ConWriteRegion.Bottom = mapHeight + 1;
 
     // Allocate a buffer to hold the CHAR_INFO data
-    ConBuffer = new CHAR_INFO[mapWidth * mapHeight + 1];
+    ConBuffer = new CHAR_INFO[2 + mapWidth * (mapHeight + 3)];
 
     if(this->Context->PartConfig->EnableVisualization)
         DrawMap();
@@ -281,19 +281,19 @@ void AoC_2024_15::EndPlay()
     RobotController = nullptr;
     Robot = nullptr;
 
-    delete[] ConBuffer;
-    ConBuffer = nullptr;
+    //delete[] ConBuffer;
+    //ConBuffer = nullptr;
 
-    ConBufferSize.X = 0;
-    ConBufferSize.Y = 0;
+    //ConBufferSize.X = 0;
+    //ConBufferSize.Y = 0;
 
-    ConBufferCoord.X = 0;
-    ConBufferCoord.Y = 0;
+    //ConBufferCoord.X = 0;
+    //ConBufferCoord.Y = 0;
 
-    ConWriteRegion.Left = 0;
-    ConWriteRegion.Top = 0;
-    ConWriteRegion.Right = 0;
-    ConWriteRegion.Bottom = 0;
+    //ConWriteRegion.Left = 0;
+    //ConWriteRegion.Top = 0;
+    //ConWriteRegion.Right = 0;
+    //ConWriteRegion.Bottom = 0;
 }
 
 void AoC_2024_15::Tick(double timeDelta)
@@ -332,21 +332,24 @@ void AoC_2024_15::Tick(double timeDelta)
             }
 
             // move and draw
-            if(!this->MovementCommands.empty())
+            for(int i = 0; i < (IsTest() ? 2 : 20); i++)
             {
-                const MoveCommand command = this->MovementCommands.front();
-                this->MovementCommands.pop_front();
-                RobotController->Move(command);
-
-                // if command buffer is empty, compute the last thing they want us to
-                // also set timer to some higher value so that we will see
-                // the result for a bit before it is being discarded
-
-                if(this->MovementCommands.empty())
+                if(!this->MovementCommands.empty())
                 {
-                    this->Context->PartConfig->Result = ComputeAnswerForCurrentWorld();
-                    tickDelayTime = 2;
-                    taskCompleted = true;
+                    const MoveCommand command = this->MovementCommands.front();
+                    this->MovementCommands.pop_front();
+                    RobotController->Move(command);
+
+                    // if command buffer is empty, compute the last thing they want us to
+                    // also set timer to some higher value so that we will see
+                    // the result for a bit before it is being discarded
+
+                        if(this->MovementCommands.empty())
+                        {
+                            this->Context->PartConfig->Result = ComputeAnswerForCurrentWorld();
+                            tickDelayTime = 2;
+                            taskCompleted = true;
+                        }
                 }
             }
             DrawMap(); // this would be normally done by the engine in rendering thread
