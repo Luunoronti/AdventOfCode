@@ -51,7 +51,9 @@ int64_t AoC_2024_15::ComputeAnswerForCurrentWorld()
     for(const AActor* actor : World->Map)
     {
         if(actor)
+        {
             sum += actor->GetGPSCoordinate();
+        }
     }
     return sum;
 }
@@ -193,6 +195,7 @@ void AoC_2024_15::BeginPlay()
 {
     taskCompleted = false;
     MovementCommandsinitialSize = 0;
+    MovementCommands.clear();
 
     // if these are not empty here, we may have a memory leak
     if(!ActorsToAddToScene.empty())
@@ -296,11 +299,12 @@ void AoC_2024_15::EndPlay()
 void AoC_2024_15::Tick(double timeDelta)
 {
     //if(IsTest())return;
-
+    
     // if we have visualization disabled, just simulate everything
     // at once
     if(!this->Context->PartConfig->EnableVisualization)
     {
+        TIME_PART;
         for(const MoveCommand command : this->MovementCommands)
         {
             RobotController->Move(command);
@@ -452,7 +456,8 @@ int64_t AoC_2024_15::AActor::GetGPSCoordinate() const
 
 int64_t AoC_2024_15::AGood::GetGPSCoordinate() const
 {
-    return 100 * posY + posX;
+    if(LeftJoinedActor != nullptr)return 0;
+    return (100 * posY) + posX;
 }
 
 void AoC_2024_15::AGood::SetIcon(const char InIcon)
