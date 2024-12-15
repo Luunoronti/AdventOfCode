@@ -45,12 +45,6 @@
     <ClCompile Include="AoCBase.cpp">
       <Filter>Source Files\Base</Filter>
     </ClCompile>
-    <ClCompile Include="AoCBaseWithD3D.cpp">
-      <Filter>Source Files\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="AoCBaseWithWindow.cpp">
-      <Filter>Source Files\Base</Filter>
-    </ClCompile>
     <ClCompile Include="AoC_2024_01.cpp">
       <Filter>Source Files\2024</Filter>
     </ClCompile>
@@ -141,15 +135,18 @@
     <ClCompile Include="CustomFunctions.cpp">
       <Filter>Source Files\Base</Filter>
     </ClCompile>
+    <ClCompile Include="AoCVisualizer.cpp">
+      <Filter>Source Files\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AoCBaseWithWindow.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="AoCBaseWithD3D.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AoCBase.h">
-      <Filter>Header Files\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="AoCBaseWithD3D.h">
-      <Filter>Header Files\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="AoCBaseWithWindow.h">
       <Filter>Header Files\Base</Filter>
     </ClInclude>
     <ClInclude Include="json.hpp">
@@ -253,6 +250,15 @@
     </ClInclude>
     <ClInclude Include="CustomFunctions.h">
       <Filter>Header Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AoCVisualizer.h">
+      <Filter>Header Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AoCBaseWithWindow.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="AoCBaseWithD3D.h">
+      <Filter>Header Files\Tests</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

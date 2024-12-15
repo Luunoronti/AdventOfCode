@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-
+#include "AoCVisualizer.h"
 
 
 
@@ -35,8 +35,6 @@ struct AoCBaseExecutionConfigurationAndResult
     bool EnableDebugOutput{ false };
     bool EnableVisualization{ false };
 
-
-
     string GetNameWithDate()
     {
         return to_string(Year) + "/" + to_string(Day) + " (" + Name + ")";
@@ -45,6 +43,13 @@ struct AoCBaseExecutionConfigurationAndResult
     AoCBaseExecutionConfigurationResultEntry Step2Test;
     AoCBaseExecutionConfigurationResultEntry Step1Live;
     AoCBaseExecutionConfigurationResultEntry Step2Live;
+};
+
+struct AoCExecutionContext
+{
+    AoCBaseExecutionConfigurationAndResult* DayConfig;
+    AoCBaseExecutionConfigurationResultEntry* PartConfig;
+    AoCVisualizer* Visualizer;
 };
 
 struct AoCProgramConfiguration
@@ -76,6 +81,8 @@ public:
     }
 
     static void ExecuteStep(AoCBase& instance);
+
+    static void ExecutePart(AoCBase& instance, bool test, int step, AoCBaseExecutionConfigurationAndResult& dayConfiguration, AoCBaseExecutionConfigurationResultEntry& partConfiguration);
 
 protected:
     LongListList ReadLongVectorsFromFile(int Step) const;
@@ -117,10 +124,11 @@ protected:
     const std::string GetFileName() const;
 
 public:
-    virtual const int64_t Step1() = 0;
-    virtual const int64_t Step2() = 0;
+    virtual const int64_t Step1() { return 0; };
+    virtual const int64_t Step2() { return 0; };
     const virtual __forceinline int GetYear() const { return 0; };
     const virtual __forceinline int GetDay() const = 0;
+    const __forceinline int GetStep() const { return Step; };
     const bool IsTest() const;
     void SetTest(const bool IsTest);
     static AoCBaseExecutionConfigurationAndResult GetResultJsonEntry(int Year, int Day);
@@ -139,10 +147,21 @@ public:
 
     AoCBaseExecutionConfigurationAndResult CurrentDayConfiguration;
     AoCBaseExecutionConfigurationResultEntry CurrentStepConfiguration;
+
+    AoCExecutionContext* Context;
+
+    virtual void BeginPlay();
+    virtual void EndPlay();
+    virtual void Tick(double timeDelta);
+    
+    /** if this method is called, next tick is to be invoked again*/
+    void RepeatTick(); 
+
 private:
     bool IsUnderTest{ false };
     int Step{ 0 };
     double LastGlobalTime{ 0 };
+    int8_t RepeatTickRequest : 1;
     static vector<AoCBaseExecutionConfigurationAndResult> DaysDatabase;
 
     friend class _Time;

@@ -190,7 +190,8 @@ const int64_t AoC_2024_14::Step2()
             {
                 WCHAR c = consoleBuffer[r.x + r.y * areaX].Char.UnicodeChar;
                 consoleBuffer[r.x + r.y * areaX].Attributes = c == ' ' ? FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE : FOREGROUND_RED | FOREGROUND_INTENSITY;
-                consoleBuffer[r.x + r.y * areaX].Char.UnicodeChar = c == ' ' ? '1' : c + 1;
+                consoleBuffer[r.x + r.y * areaX].Char.UnicodeChar = L'\u2588';
+                //consoleBuffer[r.x + r.y * areaX].Char.UnicodeChar = c == ' ' ? '1' : c + 1;
             }
 #pragma endregion
 
@@ -213,7 +214,10 @@ const int64_t AoC_2024_14::Step2()
             for(int i = 0; i < 32; ++i)
             {
                 if(numBuff[i] != 0)
-                    consoleBuffer[areaY * (areaY - 2) + i].Char.AsciiChar = numBuff[i];
+                {
+                    //consoleBuffer[areaY * (areaY - 2) + i].Char.AsciiChar = numBuff[i];
+                }
+                
             }
 
             WriteToConsoleBuffer(consoleBuffer, bufferSize, bufferCoord, writeRegion);

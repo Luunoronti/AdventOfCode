@@ -8,6 +8,97 @@ AoCProgramConfiguration AoCBase::ProgramConfiguration;
 bool AoCBase::ProgramConfigurationLoaded{ false };
 
 #pragma region Execution
+
+void AoCBase::Tick(double timeDelta)
+{
+}
+void AoCBase::BeginPlay() {}
+void AoCBase::EndPlay() {}
+
+void AoCBase::RepeatTick()
+{
+    RepeatTickRequest = 1;
+}
+
+
+
+void AoCBase::ExecutePart(AoCBase& instance, bool test, int step, AoCBaseExecutionConfigurationAndResult& dayConfiguration, AoCBaseExecutionConfigurationResultEntry& partConfiguration)
+{
+    AoCVisualizer::GetQPCFrequency();
+
+    instance.Step = step;
+    if(partConfiguration.EnableVisualization)
+    {
+    }
+
+    AoCExecutionContext Context;
+    Context.DayConfig = &dayConfiguration;
+    Context.PartConfig = &partConfiguration;
+    Context.Visualizer = nullptr;
+    instance.Context = &Context;
+
+    if(partConfiguration.EnableVisualization)
+    {
+        Context.Visualizer = AoCVisualizer::PrepareDefaultVisualizer();
+        //Context.Visualizer->Init();
+    }
+
+    AoCStream::SetFileData(instance.GetFileName(), instance.GetYear(), instance.GetDay(), test);
+    instance.SetTest(test);
+    instance.OnInitTestingTests();
+    if(!partConfiguration.EnableVisualization && (dayConfiguration.EnableDebugOutput || partConfiguration.EnableDebugOutput))
+    {
+        dout.setEnabled(true);
+        dout << RESET << endl << "=> Running " << dayConfiguration.GetNameWithDate() << " " << partConfiguration.Name << endl;
+    }
+
+    instance.CurrentStepConfiguration = partConfiguration;
+    instance.OnInitStep(step);
+
+    instance.LastGlobalTime = 0;
+    partConfiguration.Result = step == 1 ? instance.Step1() : instance.Step2();
+
+    
+    // new approach involves Tick() function.
+    // normally, it's a void. If you want to keep 
+    // it running, you set a flag indicating so.
+    // so new steps would execute that and forget about Step1() and Step2() as those are being deprecated
+    instance.RepeatTickRequest = 0;
+    LONGLONG startTicks = AoCVisualizer::GetQPCTicks();
+    //LONGLONG endTicks = AoCVisualizer::GetQPCTicks();
+    instance.BeginPlay();
+    do
+    {
+        instance.RepeatTickRequest = 0;
+        if(Context.Visualizer)
+            Context.Visualizer->ProcessInputEvents();
+        
+        double timeDelta = AoCVisualizer::GetQPCTimeDelta(startTicks) * 0.001;
+        instance.Tick(timeDelta);
+        
+        if(Context.Visualizer)
+        {
+            Context.Visualizer->Present();
+
+            Sleep(1); // this need to be better
+        }
+    } while(instance.RepeatTickRequest);
+    instance.EndPlay();
+    partConfiguration.Time = instance.LastGlobalTime;
+    instance.OnCloseStep(1);
+    dout.setEnabled(false);
+
+    if(Context.Visualizer)
+    {
+        Context.Visualizer->Close();
+        Context.Visualizer->Dispose();
+        Context.Visualizer = nullptr;
+    }
+
+    instance.Context = nullptr;
+}
+
+
 void AoCBase::ExecuteStep(AoCBase& instance)
 {
     if(!ProgramConfigurationLoaded)
@@ -29,20 +120,18 @@ void AoCBase::ExecuteStep(AoCBase& instance)
 #endif
 
     auto& result = instance.CurrentDayConfiguration;
-
     result.Step1Test.Name = "Part 1 (TEST)";
     result.Step2Test.Name = "Part 2 (TEST)";
     result.Step1Live.Name = "Part 1 (LIVE)";
     result.Step2Live.Name = "Part 2 (LIVE)";
 
-    if(result.EnableVisualization) 
+    if(result.EnableVisualization)
     {
         result.Step1Live.EnableVisualization
             = result.Step2Test.EnableVisualization
             = result.Step2Live.EnableVisualization
             = result.Step1Test.EnableVisualization
             = true;
-
     }
 
     if(result.EnableDebugOutput)
@@ -54,37 +143,9 @@ void AoCBase::ExecuteStep(AoCBase& instance)
     instance.OnInitTests();
     instance.SetTest(true);
     instance.OnInitTestingTests();
-    dout.setEnabled(false);
 
-    if(result.EnableDebugOutput || result.Step1Test.EnableDebugOutput)
-    {
-        dout.setEnabled(true);
-        dout << RESET << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step1Test.Name << endl;
-    }
-    instance.Step = 1;
-    instance.CurrentStepConfiguration = result.Step1Test;
-    AoCStream::SetFileData(instance.GetFileName(), result.Year, result.Day, instance.IsTest());
-    instance.OnInitStep(1);
-    instance.LastGlobalTime = 0;
-    result.Step1Test.Result = instance.Step1();
-    result.Step1Test.Time = instance.LastGlobalTime;
-    instance.OnCloseStep(1);
-    dout.setEnabled(false);
-
-    if(result.EnableDebugOutput || result.Step2Test.EnableDebugOutput)
-    {
-        dout.setEnabled(true);
-        dout << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step2Test.Name << endl;
-    }
-    instance.Step = 2;
-    instance.CurrentStepConfiguration = result.Step2Test;
-    AoCStream::SetFileData(instance.GetFileName(), result.Year, result.Day, instance.IsTest());
-    instance.OnInitStep(2);
-    instance.LastGlobalTime = 0;
-    result.Step2Test.Result = instance.Step2();
-    result.Step2Test.Time = instance.LastGlobalTime;
-    instance.OnCloseStep(2);
-    dout.setEnabled(false);
+    ExecutePart(instance, true, 1, result, result.Step1Test);
+    ExecutePart(instance, true, 2, result, result.Step2Test);
 
     instance.OnCloseTestingTests();
     instance.SetTest(false);
@@ -93,36 +154,8 @@ void AoCBase::ExecuteStep(AoCBase& instance)
     instance.OnInitLiveTests();
     dout.setEnabled(false);
 
-    if(result.EnableDebugOutput || result.Step1Live.EnableDebugOutput)
-    {
-        dout.setEnabled(true);
-        dout << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step1Live.Name << endl;
-    }
-    instance.Step = 1;
-    instance.CurrentStepConfiguration = result.Step1Live;
-    AoCStream::SetFileData(instance.GetFileName(), result.Year, result.Day, instance.IsTest());
-    instance.OnInitStep(1);
-    instance.LastGlobalTime = 0;
-    result.Step1Live.Result = instance.Step1();
-    result.Step1Live.Time = instance.LastGlobalTime;
-    instance.OnCloseStep(1);
-    dout.setEnabled(false);
-
-    if(result.EnableDebugOutput || result.Step2Live.EnableDebugOutput)
-    {
-        dout.setEnabled(true);
-        dout << endl << "=> Running " << result.GetNameWithDate() << " " << result.Step2Live.Name << endl;
-    }
-
-    instance.Step = 2;
-    instance.CurrentStepConfiguration = result.Step2Live;
-    AoCStream::SetFileData(instance.GetFileName(), result.Year, result.Day, instance.IsTest());
-    instance.OnInitStep(2);
-    instance.LastGlobalTime = 0;
-    result.Step2Live.Result = instance.Step2();
-    result.Step2Live.Time = instance.LastGlobalTime;
-    instance.OnCloseStep(2);
-    dout.setEnabled(false);
+    ExecutePart(instance, false, 1, result, result.Step1Live);
+    ExecutePart(instance, false, 2, result, result.Step2Live);
 
     if(result.EnableDebugOutput) dout.setEnabled(true);
     instance.OnCloseLiveTests();

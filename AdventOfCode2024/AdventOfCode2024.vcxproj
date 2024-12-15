@@ -147,6 +147,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="AoCVisualizer.cpp" />
     <ClCompile Include="AoC_2024_01.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
@@ -308,6 +309,7 @@
     <ClInclude Include="AoCBase.h" />
     <ClInclude Include="AoCBaseWithD3D.h" />
     <ClInclude Include="AoCBaseWithWindow.h" />
+    <ClInclude Include="AoCVisualizer.h" />
     <ClInclude Include="AoC_2024_01.h" />
     <ClInclude Include="AoC_2024_02.h" />
     <ClInclude Include="AoC_2024_03.h" />
