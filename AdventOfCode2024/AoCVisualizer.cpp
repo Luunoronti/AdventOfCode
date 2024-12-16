@@ -23,14 +23,16 @@ DWORD WINAPI threadFunction(LPVOID lpParam)
 #pragma endregion
 
 #pragma region Lifetime    
-AoCVisualizer* AoCVisualizer::PrepareDefaultVisualizer()
+AoCVisualizer* AoCVisualizer::PrepareDefaultVisualizer(AoCVisualizerConfig& Config)
 {
     auto vis = new AoCVisualizer();
-
+    vis->Config = Config;
     return vis;
 }
 void AoCVisualizer::Init()
 {
+    InitializeCriticalSection(&MainCS);
+
     ConsoleInput = GetStdHandle(STD_INPUT_HANDLE);
     if(ConsoleInput == INVALID_HANDLE_VALUE)
         throw std::runtime_error("Failed to get console input handle");
@@ -55,7 +57,8 @@ void AoCVisualizer::Init()
 
     // we need mouse support for camera and other stuff.
     TODO("Have this controlled by setting");
-    // EnableMouseInput();
+    if(Config.AllowMouseCapture)
+        EnableMouseInput();
 
     //? Disable stream sync
     cin.sync_with_stdio(false);
@@ -65,15 +68,18 @@ void AoCVisualizer::Init()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    CONSOLE_CURSOR_INFO cursorInfo;
-    GetConsoleCursorInfo(ConsoleOutput, &cursorInfo);
-    cursorInfo.bVisible = false;
-    SetConsoleCursorInfo(ConsoleOutput, &cursorInfo);
-
     // Enter the alternate buffer
-    printf(CSI "?1049h");
+    if(Config.AlternateBuffer)
+        printf(CSI "?1049h");
 
+    // hide the cursor
+    if(Config.HideCursor)
+        printf(CSI "?25l");
 
+    // initialize scene with default camera and one default light
+    InitializeDefaultScene();
+
+    FPS = FPSCounter(GetQPCFrequency());
     // we will start a separated thread
     // that will process events, camera and draw 
 
@@ -81,7 +87,6 @@ void AoCVisualizer::Init()
     // visualizer and it will start drawing them
 
     // later, we will introduce a concept of shaders
-
     // so, we need to start a drawing thread
     ProcessLambda = [&]()
         {
@@ -105,16 +110,21 @@ void AoCVisualizer::Close()
         ProcessingThread = nullptr;
     }
 
-    printf(CSI "1;1H");
-    printf(CSI "2J"); // Clear screen
-    
-    // Exit the alternate buffer
-    printf(CSI "?1049l");
+    DeleteCriticalSection(&MainCS);
 
-    CONSOLE_CURSOR_INFO cursorInfo;
-    GetConsoleCursorInfo(ConsoleOutput, &cursorInfo);
-    cursorInfo.bVisible = true;
-    SetConsoleCursorInfo(ConsoleOutput, &cursorInfo);
+    if(Config.ClearScreenOnExit)
+    {
+        printf(CSI "1;1H");
+        printf(CSI "2J"); // Clear screen
+    }
+
+    // Exit the alternate buffer
+    if(Config.AlternateBuffer)
+        printf(CSI "?1049l");
+
+    // show the cursor
+    if(Config.HideCursor)
+        printf(CSI "?25h");
 
     SetConsoleMode(ConsoleInput, TerminalInputOriginalMode);
     SetConsoleMode(ConsoleOutput, TerminalOutputOriginalMode);
@@ -125,6 +135,10 @@ void AoCVisualizer::Dispose()
         delete[] CharacterBuffer;
     if(Intermediatebuffer)
         delete[] Intermediatebuffer;
+    Camera.reset();
+    for(auto p : Lights) p.reset();
+    for(auto p : Actors) p.reset();
+
     delete this;
 }
 #pragma endregion
@@ -235,7 +249,7 @@ void AoCVisualizer::Draw()
     // print it on the screen
 
     // for all of that, we may need some 3d vector and matrix stuff
-    
+
 
 
 
@@ -251,9 +265,12 @@ void AoCVisualizer::Draw()
 
     frameNum++;
 
-    wchar_t buff[32]{ 0 };
-    swprintf(buff, 32, L"Frame: %d ", frameNum);
-    for(int i = 0; i < 32; i++)
+    FPS.Frame();
+
+    wchar_t buff[128]{ 0 };
+    swprintf(buff, 128, L"Frame: %d (FPS: %f) (Frame: %f) (%dx%d)", 
+        frameNum, FPS.GetFPS(), FPS.GetFrameTime(), ViewportSize.X, ViewportSize.Y);
+    for(int i = 0; i < 128; i++)
     {
         if(buff[i] != 0)
         {
@@ -261,7 +278,7 @@ void AoCVisualizer::Draw()
             if(CharacterBuffer) CharacterBuffer[i].Wchar = buff[i];
         }
     }
-
+    ::SetConsoleTitleW(buff);
     /*
     // Clear screen, tab stops, set, stop at columns 16, 32
     wprintf(WCSI L"1;1H");
@@ -306,6 +323,50 @@ void AoCVisualizer::Draw()
 
 
 #pragma region Scene and Camera (camera is not an actual object like in proper engines)
+void AoCVisualizer::InitializeDefaultScene()
+{
+    Camera = std::make_shared<AoCDefaultVisCamera>();
+    Lights.push_back(std::make_shared<AoCVisDirectionalLight>());
+}
+
+void AoCVisualizer::AddLight(std::shared_ptr<AoCVisLight> Light)
+{
+    ::EnterCriticalSection(&MainCS);
+    this->Lights.push_back(Light);
+    ::LeaveCriticalSection(&MainCS);
+}
+void AoCVisualizer::RemoveLight(std::shared_ptr<AoCVisLight> Light)
+{
+    ::EnterCriticalSection(&MainCS);
+    this->Lights.erase(std::remove(this->Lights.begin(), this->Lights.end(), Light), this->Lights.end());
+    ::LeaveCriticalSection(&MainCS);
+}
+void AoCVisualizer::AddActor(std::shared_ptr<AoCVisActor> Actor)
+{
+    ::EnterCriticalSection(&MainCS);
+    this->Actors.push_back(Actor);
+    ::LeaveCriticalSection(&MainCS);
+}
+void AoCVisualizer::RemoveActor(std::shared_ptr<AoCVisActor> Actor)
+{
+    ::EnterCriticalSection(&MainCS);
+    this->Actors.erase(std::remove(this->Actors.begin(), this->Actors.end(), Actor), this->Actors.end());
+    ::LeaveCriticalSection(&MainCS);
+}
+void AoCVisualizer::AddActors(std::vector<std::shared_ptr<AoCVisActor>> Actors)
+{
+    ::EnterCriticalSection(&MainCS);
+    for(auto actor : Actors) this->Actors.push_back(actor);
+    ::LeaveCriticalSection(&MainCS);
+}
+void AoCVisualizer::RemoveActors(std::vector<std::shared_ptr<AoCVisActor>> Actors)
+{
+    ::EnterCriticalSection(&MainCS);
+    for(auto actor : Actors)
+        this->Actors.erase(std::remove(this->Actors.begin(), this->Actors.end(), actor), this->Actors.end());
+    ::LeaveCriticalSection(&MainCS);
+}
+
 void AoCVisualizer::UpdateCamera()
 {
 }
@@ -373,10 +434,23 @@ VOID AoCVisualizer::MouseEventProc(MOUSE_EVENT_RECORD mer)
         // call event here? 
         break;
     case MOUSE_WHEELED:
-        break;
+    {
+        COORD newSize = { 80, 25 };
+        if(!SetConsoleScreenBufferSize(ConsoleOutput, newSize))
+        {
+            std::cerr << "Error setting console screen buffer size." << std::endl;
+            return;
+        }
+    }
+    break;
     default:
         break;
     }
+}
+
+void AoCVisualizer::SetConsoleTitle(const std::string& Title)
+{
+    ::SetConsoleTitleA(Title.c_str());
 }
 
 void AoCVisualizer::ProcessSystemEvents()
@@ -409,5 +483,50 @@ void AoCVisualizer::ProcessSystemEvents()
             }
         }
     }
+}
+#pragma endregion
+
+
+void FPSCounter::Frame()
+{
+    frameCount++;
+    LARGE_INTEGER currentTime;
+    QueryPerformanceCounter(&currentTime);
+    double elapsedTime = static_cast<double>(currentTime.QuadPart - startTime.QuadPart) / frequency;
+    frameTime = static_cast<double>(currentTime.QuadPart - frameQPFTime.QuadPart) / frequency;
+    frameTime *= 1000;
+    frameQPFTime = currentTime;
+    if(elapsedTime >= 0.5)
+    {
+        fps = frameCount / elapsedTime;
+        frameCount = 0;
+        startTime = frameQPFTime;
+    }
+}
+
+
+
+
+
+#pragma region Camera
+AoCVisCamera::AoCVisCamera()
+{
+    this->Transform.Location = { 0, 0, 0 };
+    this->Transform.Rotation = mutil::Quaternion::Quaternion();
+    this->Transform.Scale = { 1,1,1 };
+}
+AoCVisCamera::AoCVisCamera(const mutil::Vector3& StartLocation, const mutil::Quaternion& StartRotation)
+{
+    this->Transform.Location = StartLocation;
+    this->Transform.Rotation = StartRotation;
+    this->Transform.Scale = { 1,1,1 };
+}
+
+AoCDefaultVisCamera::AoCDefaultVisCamera()
+{
+}
+AoCDefaultVisCamera::AoCDefaultVisCamera(const mutil::Vector3& StartLocation, const mutil::Quaternion& StartRotation)
+{
+    AoCDefaultVisCamera(StartLocation, StartRotation);
 }
 #pragma endregion

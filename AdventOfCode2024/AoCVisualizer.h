@@ -1,4 +1,38 @@
 #pragma once
+class FPSCounter
+{
+public:
+    FPSCounter() :
+        frameCount(0), fps(0.0), frequency(1)
+    {
+    }
+    FPSCounter(LONGLONG Frequency) :
+        frameCount(0), fps(0.0), frequency(Frequency)
+    {
+        QueryPerformanceCounter(&startTime);
+    }
+    void Frame();
+    double GetFPS() const { return fps; }
+    double GetFrameTime() const { return frameTime; }
+private: 
+    int frameCount; 
+    double fps;
+    double frameTimeAcc{ 0 };
+    double frameTime{ 0 };
+    LONGLONG frequency; 
+    LARGE_INTEGER startTime;
+    LARGE_INTEGER frameQPFTime;
+};
+struct AoCVisualizerConfig
+{
+    bool AllowMouseCapture{ false };
+    bool AlternateBuffer{ false };
+    bool HideCursor{ false };
+    bool ClearScreenOnExit{ true };
+
+    bool EnableVT{ true }; // always true for now
+};
+
 struct AoCCharacterInfo
 {
     AoCCharacterInfo(int fr, int fg, int fb, int br, int bg, int bb, wchar_t wchar)
@@ -18,6 +52,44 @@ struct AoCCharacterInfo
     wchar_t Wchar;
 };
 
+struct AoCVisTransform
+{
+    mutil::Vector3 Location;
+    mutil::Quaternion Rotation;
+    mutil::Vector3 Scale;
+
+    const mutil::Vector3 GetActorForward() const;
+    const mutil::Vector3 GetActorUp() const;
+    const mutil::Vector3 GetActorRight() const;
+};
+
+
+class AoCVisActor
+{
+protected:
+    AoCVisTransform Transform;
+};
+
+class AoCVisLight : public AoCVisActor
+{
+};
+class AoCVisDirectionalLight : public AoCVisLight
+{
+};
+
+class AoCVisCamera : public AoCVisActor
+{
+public:
+    AoCVisCamera();
+    AoCVisCamera(const mutil::Vector3& StartLocation, const mutil::Quaternion& StartRotation);
+ };
+class AoCDefaultVisCamera : public AoCVisCamera
+{
+public:
+    AoCDefaultVisCamera();
+    AoCDefaultVisCamera(const mutil::Vector3& StartLocation, const mutil::Quaternion& StartRotation);
+};
+
 class AoCVisualizer
 {
 private:
@@ -26,12 +98,15 @@ private:
     friend class AoCBase;
 
 public:
-#pragma region Lifetime    
-    static AoCVisualizer* PrepareDefaultVisualizer();
+#pragma region Lifetime   
+    CRITICAL_SECTION MainCS;
+    static AoCVisualizer* PrepareDefaultVisualizer(AoCVisualizerConfig& Config);
     void Init();
     void Close();
     void Dispose();
 #pragma endregion
+
+    AoCVisualizerConfig Config;
 
     DWORD TerminalOutputOriginalMode;
     DWORD TerminalInputOriginalMode;
@@ -39,6 +114,7 @@ public:
     HANDLE ConsoleOutput;
 
 #pragma region Actual drawing
+    FPSCounter FPS;
     CHAR_INFO* ConsoleBuffer{ nullptr };
 
     COORD ViewportSize{ 0 };
@@ -53,14 +129,27 @@ public:
 #pragma endregion
 
 #pragma region Scene and Camera (camera is not an actual object like in proper engines)
-
-    // camera stuff
-
 private:
+    std::vector<std::shared_ptr<AoCVisLight>> Lights;
+    std::vector<std::shared_ptr<AoCVisActor>> Actors;
+    std::shared_ptr<AoCVisCamera> Camera;
+private:
+    void InitializeDefaultScene();
     void UpdateCamera();
 
+    void AddActor(std::shared_ptr<AoCVisActor> Actor);
+    void AddActors(std::vector<std::shared_ptr<AoCVisActor>> Actors);
+    void RemoveActor(std::shared_ptr<AoCVisActor> Actor);
+    void RemoveActors(std::vector<std::shared_ptr<AoCVisActor>> Actors);
+
+    void AddLight(std::shared_ptr<AoCVisLight> Lights);
+    void RemoveLight(std::shared_ptr<AoCVisLight> Lights);
 #pragma endregion
 
+#pragma region Helpers
+public:
+    static void SetConsoleTitle(const std::string& Title);
+#pragma endregion
 
 #pragma region DayPart Input
 public:

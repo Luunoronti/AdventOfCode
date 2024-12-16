@@ -1,4 +1,11 @@
 {
     "runAllInDebug": false,
-    "runAllInRelease": false
+    "runAllInRelease": false,
+    "visualizer":
+    {
+        "allowMouseCapture": false, 
+        "alternateBuffer": false,
+        "hideCursor": false,
+        "clearScreenOnExit" : true
+    }
 }

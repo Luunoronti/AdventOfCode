@@ -56,6 +56,7 @@ struct AoCProgramConfiguration
 {
     bool ForceAllRunsInDebug;
     bool ForceAllRunsInRelease;
+    AoCVisualizerConfig VisualizerConfig{};
 };
 
 class AoCBase

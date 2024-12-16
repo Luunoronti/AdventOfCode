@@ -152,29 +152,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AoCBase.h">
-      <Filter>Header Files\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="json.hpp">
-      <Filter>Header Files\Base</Filter>
-    </ClInclude>
     <ClInclude Include="AoC_2024_32.h">
       <Filter>Header Files\Tests</Filter>
     </ClInclude>
-    <ClInclude Include="DebugBuffer.h">
-      <Filter>Header Files\Base</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomTypes.h">
-      <Filter>Header Files\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomStreams.h">
-      <Filter>Header Files\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomFunctions.h">
-      <Filter>Header Files\Base</Filter>
     </ClInclude>
     <ClInclude Include="AoCBaseWithWindow.h">
       <Filter>Header Files\Tests</Filter>
@@ -266,8 +248,26 @@
     <ClInclude Include="AoCVisualizer.h">
       <Filter>Source Files\Base</Filter>
     </ClInclude>
+    <ClInclude Include="AoCBase.h">
+      <Filter>Source Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomFunctions.h">
+      <Filter>Source Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomStreams.h">
+      <Filter>Source Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomTypes.h">
+      <Filter>Source Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugBuffer.h">
+      <Filter>Source Files\Base</Filter>
+    </ClInclude>
     <ClInclude Include="mutil.h">
-      <Filter>Header Files\Base</Filter>
+      <Filter>Source Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="json.hpp">
+      <Filter>Source Files\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

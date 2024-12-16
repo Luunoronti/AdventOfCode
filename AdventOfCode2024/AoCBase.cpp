@@ -27,9 +27,6 @@ void AoCBase::ExecutePart(AoCBase& instance, bool test, int step, AoCBaseExecuti
     AoCVisualizer::GetQPCFrequency();
 
     instance.Step = step;
-    if(partConfiguration.EnableVisualization)
-    {
-    }
 
     AoCExecutionContext Context;
     Context.DayConfig = &dayConfiguration;
@@ -37,11 +34,15 @@ void AoCBase::ExecutePart(AoCBase& instance, bool test, int step, AoCBaseExecuti
     Context.Visualizer = nullptr;
     instance.Context = &Context;
 
+    AoCVisualizer::SetConsoleTitle("Advent of Code Year " + to_string(instance.GetYear()));
+
     if(partConfiguration.EnableVisualization)
     {
-        Context.Visualizer = AoCVisualizer::PrepareDefaultVisualizer();
+        AoCVisualizer::SetConsoleTitle("Day " + to_string(instance.GetDay()) + " - " + dayConfiguration.Name + " - " + partConfiguration.Name);
+        Context.Visualizer = AoCVisualizer::PrepareDefaultVisualizer(ProgramConfiguration.VisualizerConfig);
         Context.Visualizer->Init();
     }
+
 
     AoCStream::SetFileData(instance.GetFileName(), instance.GetYear(), instance.GetDay(), test);
     instance.SetTest(test);
@@ -103,6 +104,7 @@ void AoCBase::ExecutePart(AoCBase& instance, bool test, int step, AoCBaseExecuti
         Context.Visualizer->Close();
         Context.Visualizer->Dispose();
         Context.Visualizer = nullptr;
+        AoCVisualizer::SetConsoleTitle("Advent of Code Year " + to_string(instance.GetYear()));
     }
 
     instance.Context = nullptr;
@@ -114,7 +116,7 @@ void AoCBase::ExecuteStep(AoCBase& instance)
     if(!ProgramConfigurationLoaded)
     {
         LoadProgramConfig();
-}
+    }
     if(instance.GetDay() == 0)
     {
         cout << RED << BLINK << "Error: Class instance has no day defined." << RESET << " Please override GetDay() and return proper day." << endl;
@@ -687,11 +689,22 @@ void to_json(nlohmann::json& j, const AoCBaseExecutionConfigurationAndResult& s)
         {"testStep2", s.Step2Test},
         {"liveStep2", s.Step2Live} };
 }
+void to_json(nlohmann::json& j, const AoCVisualizerConfig& s)
+{
+    j = nlohmann::json{
+        {"allowMouseCapture", s.AllowMouseCapture},
+        {"alternateBuffer", s.AlternateBuffer},
+        {"hideCursor", s.HideCursor},
+        {"clearScreenOnExit", s.ClearScreenOnExit}
+    };
+}
 void to_json(nlohmann::json& j, const AoCProgramConfiguration& s)
 {
     j = nlohmann::json{
         {"runAllInDebug", s.ForceAllRunsInDebug},
-        {"runAllInRelease", s.ForceAllRunsInRelease} };
+        {"runAllInRelease", s.ForceAllRunsInRelease},
+        {"visualizer", s.VisualizerConfig}
+    };
 }
 
 void from_json(const nlohmann::json& j, AoCBaseExecutionConfigurationResultEntry& s)
@@ -715,11 +728,20 @@ void from_json(const nlohmann::json& j, AoCBaseExecutionConfigurationAndResult& 
     if(j.contains("name")) j.at("name").get_to(s.Name);
     if(j.contains("enableVisualization")) j.at("enableVisualization").get_to(s.EnableVisualization);
 }
+void from_json(const nlohmann::json& j, AoCVisualizerConfig& s)
+{
+    if(j.contains("allowMouseCapture")) j.at("allowMouseCapture").get_to(s.AllowMouseCapture);
+    if(j.contains("alternateBuffer")) j.at("alternateBuffer").get_to(s.AlternateBuffer);
+    if(j.contains("hideCursor")) j.at("hideCursor").get_to(s.HideCursor);
+    if(j.contains("clearScreenOnExit")) j.at("clearScreenOnExit").get_to(s.ClearScreenOnExit);
+}
 void from_json(const nlohmann::json& j, AoCProgramConfiguration& s)
 {
     if(j.contains("runAllInDebug")) j.at("runAllInDebug").get_to(s.ForceAllRunsInDebug);
     if(j.contains("runAllInRelease")) j.at("runAllInRelease").get_to(s.ForceAllRunsInRelease);
+    if(j.contains("visualizer")) j.at("visualizer").get_to(s.VisualizerConfig);
 }
+
 
 vector<AoCBaseExecutionConfigurationAndResult> AoCBase::DaysDatabase;
 void AoCBase::ReadDaysDatabaseIfNotDoneAlready()

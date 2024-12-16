@@ -37,4 +37,11 @@ const int64_t AoC_2024_16::Step2()
     return 0;
 }
 
+void AoC_2024_16::Tick(double timeDelta)
+{
+
+    ::Sleep(100);
+    this->RepeatTick();
+}
+
 

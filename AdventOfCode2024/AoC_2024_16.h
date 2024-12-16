@@ -6,6 +6,6 @@ public:
     const virtual __forceinline int GetDay() const override { return 16; }
     const int64_t Step1() override;
     const int64_t Step2() override;
-
+    void Tick(double timeDelta) override;
 };
 

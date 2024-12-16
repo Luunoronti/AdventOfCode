@@ -357,6 +357,7 @@
     "run": true,
     "debugRun": true,
     "name": "Reindeer Maze",
+    "enableVisualization": true,
     "day": 16,
     "liveStep1": {
       "expectedResult": 0,
