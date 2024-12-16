@@ -285,7 +285,7 @@ namespace aoc
                 return std::accumulate(Map.begin(), Map.end(), _Val);
             }
 
-            __forceinline void find(const T& _value, int& x, int& y) const
+            __forceinline bool find(const T& _value, int& x, int& y) const
             {
                 for(int _y = 0; _y < Height; ++_y)
                 {
@@ -295,10 +295,11 @@ namespace aoc
                         {
                             x = _x;
                             y = _y;
-                            return;
+                            return true;
                         }
                     }
                 }
+                return false;
             }
 
             void print() const

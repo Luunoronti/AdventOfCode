@@ -354,9 +354,9 @@
     "year": 2024
   },
   {
-    "run": false,
-    "debugRun": false,
-    "name": "____",
+    "run": true,
+    "debugRun": true,
+    "name": "Reindeer Maze",
     "day": 16,
     "liveStep1": {
       "expectedResult": 0,
@@ -367,7 +367,7 @@
       "knownErrors": []
     },
     "testStep1": {
-      "expectedResult": 0,
+      "expectedResult": 11048,
       "knownErrors": []
     },
     "testStep2": {

@@ -621,3 +621,40 @@ int __cdecl console_codes_wmain(int argc, WCHAR* argv[])
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+#include <stack>
+#include <tuple>
+
+struct FPoint {
+    int x, y;
+    bool operator==(const FPoint& other) const {
+        return x == other.x && y == other.y;
+    }
+};
+
+struct FState {
+    FPoint point;
+    int direction;
+    int cost;
+    std::vector<FPoint> path;
+};
+
+// Directions for moving in the maze (up, right, down, left)
+std::vector<FPoint> directions = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
+
+// Function to validate movement within maze boundaries
+bool isValid(const std::vector<std::string>& maze, int x, int y) {
+    return x >= 0 && x < maze[0].size() && y >= 0 && y < maze.size() && maze[y][x] != '#';
+}
+
