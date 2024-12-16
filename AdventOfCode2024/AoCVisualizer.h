@@ -1,10 +1,28 @@
 #pragma once
+struct AoCCharacterInfo
+{
+    AoCCharacterInfo(int fr, int fg, int fb, int br, int bg, int bb, wchar_t wchar)
+        : FRgb((fr << 24) | (fg<<16) | fb), BRgb((br << 24) | (bg<<16) | bb), Wchar(wchar)
+    {
+    }
+    AoCCharacterInfo(int frgb, int brgb, wchar_t wchar)
+        : FRgb(frgb), BRgb(brgb), Wchar(wchar)
+    {
+    }
+    AoCCharacterInfo()
+        : FRgb(0), BRgb(0), Wchar(0)
+    {
+    }
+    int FRgb;
+    int BRgb;
+    wchar_t Wchar;
+};
+
 class AoCVisualizer
 {
-
 private:
-    void Present();
-    void ProcessInputEvents();
+    void Process();
+    void ProcessSystemEvents();
     friend class AoCBase;
 
 public:
@@ -20,6 +38,30 @@ public:
     HANDLE ConsoleInput;
     HANDLE ConsoleOutput;
 
+#pragma region Actual drawing
+    CHAR_INFO* ConsoleBuffer{ nullptr };
+
+    COORD ViewportSize{ 0 };
+    AoCCharacterInfo* CharacterBuffer{ nullptr };
+    wchar_t* Intermediatebuffer{ nullptr };
+
+    void Draw();
+    void Present();
+    void CheckBufferSizeChange();
+    void RecreateBuffers(const COORD& NewSize);
+    void FillGradient(int startR, int startG, int startB, int endR, int endG, int endB, float phase);
+#pragma endregion
+
+#pragma region Scene and Camera (camera is not an actual object like in proper engines)
+
+    // camera stuff
+
+private:
+    void UpdateCamera();
+
+#pragma endregion
+
+
 #pragma region DayPart Input
 public:
     __forceinline const COORD GetCurrentMousePosition() const
@@ -32,6 +74,9 @@ private:
 #pragma endregion
 
 #pragma region Input Events
+    std::function<void()> ProcessLambda;
+    bool ProcessIsEnabled{ false };
+    HANDLE ProcessingThread{ 0 };
     DWORD LastMouseButtonsState{ 0 };
     VOID MouseEventProc(MOUSE_EVENT_RECORD mer);
 

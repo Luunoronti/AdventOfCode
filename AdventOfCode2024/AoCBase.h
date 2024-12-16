@@ -150,8 +150,8 @@ public:
 
     AoCExecutionContext* Context;
 
-    virtual void BeginPlay();
-    virtual void EndPlay();
+    virtual void OnBegin();
+    virtual void OnEnd();
     virtual void Tick(double timeDelta);
     
     /** if this method is called, next tick is to be invoked again*/

@@ -2,11 +2,12 @@
 #include "AoC_2024_Includes.h"
 
 int _event_handler_main();
+int __cdecl console_codes_wmain(int argc, WCHAR* argv[]);
 
 int main()
 {
     // we must set locale
-    std::locale::global(std::locale("pl_PL.UTF-8"));
+    //std::locale::global(std::locale("pl_PL.UTF-8"));
 #include "AoC_2024_Run.h"
     AoCBase::PrintExecutionReport();
     return 0;
@@ -274,33 +275,6 @@ int _event_handler_main()
 
     DWORD out_saved_mode;
     DWORD in_saved_mode;
-
-
-    //HANDLE hConsoleInput = GetStdHandle(STD_INPUT_HANDLE);
-    //if(hConsoleInput == INVALID_HANDLE_VALUE)
-    //{
-    //    std::cerr << "Failed to get console input handle" << std::endl;
-    //    return 1;
-    //}
-
-    //if(!GetConsoleMode(hConsoleInput, &fdwSaveOldMode))
-    //{
-    //    std::cerr << "Failed to get console input handle" << std::endl;
-    //    return 1;
-    //}
-
-    //// Enable mouse input 
-    //DWORD consoleMode;
-    //if(!GetConsoleMode(hConsoleInput, &consoleMode))
-    //{
-    //    std::cerr << "Failed to get console mode" << std::endl; return 1;
-    //}
-    //consoleMode = ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT;
-    //if(!SetConsoleMode(hConsoleInput, consoleMode))
-    //{
-    //    std::cerr << "Failed to set console mode" << std::endl; return 1;
-    //}
-
 
 
     HANDLE handleOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -645,4 +619,5 @@ int __cdecl console_codes_wmain(int argc, WCHAR* argv[])
     // Exit the alternate buffer
     printf(CSI "?1049l");
 
+    return 0;
 }

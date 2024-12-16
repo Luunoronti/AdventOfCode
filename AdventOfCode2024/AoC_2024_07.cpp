@@ -1,4 +1,5 @@
 #include "pch.h"
+
 #include "AoC_2024_07.h"
 
 void AoC_2024_07::OnInitTestingTests()

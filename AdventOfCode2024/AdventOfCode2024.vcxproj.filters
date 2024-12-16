@@ -37,6 +37,12 @@
     <Filter Include="TestInputs">
       <UniqueIdentifier>{316bbd13-37a1-4f89-8937-82c68c616160}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Base\AoC Engine">
+      <UniqueIdentifier>{9cc228c4-ab92-45b3-8785-016e4e23a621}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Base\AoC Engine\Core">
+      <UniqueIdentifier>{b535f548-4218-4572-8b3f-e7fbcbccfc91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -44,6 +50,30 @@
     </ClCompile>
     <ClCompile Include="AoCBase.cpp">
       <Filter>Source Files\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AoC_2024_32.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugBuffer.cpp">
+      <Filter>Source Files\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomStreams.cpp">
+      <Filter>Source Files\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomFunctions.cpp">
+      <Filter>Source Files\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AoCVisualizer.cpp">
+      <Filter>Source Files\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AoCBaseWithWindow.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="AoCBaseWithD3D.cpp">
+      <Filter>Source Files\Tests</Filter>
     </ClCompile>
     <ClCompile Include="AoC_2024_01.cpp">
       <Filter>Source Files\2024</Filter>
@@ -117,32 +147,8 @@
     <ClCompile Include="AoC_2024_24.cpp">
       <Filter>Source Files\2024</Filter>
     </ClCompile>
-    <ClCompile Include="AoC_2024_32.cpp">
-      <Filter>Source Files\Tests</Filter>
-    </ClCompile>
     <ClCompile Include="AoC2024.cpp">
       <Filter>Source Files\2024</Filter>
-    </ClCompile>
-    <ClCompile Include="DebugBuffer.cpp">
-      <Filter>Source Files\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomStreams.cpp">
-      <Filter>Source Files\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomFunctions.cpp">
-      <Filter>Source Files\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="AoCVisualizer.cpp">
-      <Filter>Source Files\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="AoCBaseWithWindow.cpp">
-      <Filter>Source Files\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="AoCBaseWithD3D.cpp">
-      <Filter>Source Files\Tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,89 +158,8 @@
     <ClInclude Include="json.hpp">
       <Filter>Header Files\Base</Filter>
     </ClInclude>
-    <ClInclude Include="AoC_2024_01.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_02.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_03.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_04.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_05.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_06.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_07.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_08.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_09.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_10.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_11.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_12.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_13.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_14.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_15.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_16.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_17.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_18.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_19.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_20.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_21.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_22.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_23.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_24.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
     <ClInclude Include="AoC_2024_32.h">
       <Filter>Header Files\Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC2024.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_Includes.h">
-      <Filter>Header Files\2024</Filter>
-    </ClInclude>
-    <ClInclude Include="AoC_2024_Run.h">
-      <Filter>Header Files\2024</Filter>
     </ClInclude>
     <ClInclude Include="DebugBuffer.h">
       <Filter>Header Files\Base</Filter>
@@ -251,14 +176,98 @@
     <ClInclude Include="CustomFunctions.h">
       <Filter>Header Files\Base</Filter>
     </ClInclude>
-    <ClInclude Include="AoCVisualizer.h">
-      <Filter>Header Files\Base</Filter>
-    </ClInclude>
     <ClInclude Include="AoCBaseWithWindow.h">
       <Filter>Header Files\Tests</Filter>
     </ClInclude>
     <ClInclude Include="AoCBaseWithD3D.h">
       <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_01.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_02.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_03.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_04.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_05.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_06.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_07.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_08.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_09.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_10.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_11.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_12.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_13.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_14.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_15.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_16.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_17.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_18.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_19.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_20.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_21.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_22.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_23.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_24.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_Includes.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_Run.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC2024.h">
+      <Filter>Source Files\2024</Filter>
+    </ClInclude>
+    <ClInclude Include="AoCVisualizer.h">
+      <Filter>Source Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="mutil.h">
+      <Filter>Header Files\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

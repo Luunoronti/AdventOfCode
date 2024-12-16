@@ -1,4 +1,5 @@
 #include "pch.h"
+
 #include "AoC_2024_06.h"
 
 #define SOBM_NORTH 0x01

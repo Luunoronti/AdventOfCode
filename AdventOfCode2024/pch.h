@@ -1,10 +1,14 @@
 #pragma once
+#define _WIN32_WINNT 0x0600
 
 #define _STR(x) #x
 #define STR(x) _STR(x)
 #define TODO(x) __pragma(message(__FILE__"("STR(__LINE__)"): TODO: "_STR(x) ))
 
 #define CompilerMessage(desc) __pragma(message(__FILE__ "(" STR(__LINE__) ") :" #desc))
+
+#include "mutil.h"
+
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
@@ -35,6 +39,7 @@
 #include "CustomTypes.h"
 #include "CustomStreams.h"
 #include "CustomFunctions.h"
+
 
 using namespace std;
 using namespace concurrency;

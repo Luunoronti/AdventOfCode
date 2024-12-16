@@ -59,6 +59,8 @@ int64_t AoC_2024_15::ComputeAnswerForCurrentWorld()
 }
 void AoC_2024_15::DrawMap()
 {
+    return;
+
     if(!World)
         return;
 
@@ -95,6 +97,8 @@ void AoC_2024_15::DrawMap()
 }
 void AoC_2024_15::ClearConsole()
 {
+    return;
+
     if(!World)
         return;
 
@@ -205,7 +209,7 @@ void AoC_2024_15::ReadInput(int& mapDimX, int& mapDimY)
     mapDimY = y;
 }
 
-void AoC_2024_15::BeginPlay()
+void AoC_2024_15::OnBegin()
 {
     taskCompleted = false;
     MovementCommandsinitialSize = 0;
@@ -274,7 +278,7 @@ void AoC_2024_15::BeginPlay()
         DrawMap();
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 }
-void AoC_2024_15::EndPlay()
+void AoC_2024_15::OnEnd()
 {
     if(this->Context->PartConfig->EnableVisualization)
         ClearConsole();

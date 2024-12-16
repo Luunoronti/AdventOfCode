@@ -12,8 +12,8 @@ bool AoCBase::ProgramConfigurationLoaded{ false };
 void AoCBase::Tick(double timeDelta)
 {
 }
-void AoCBase::BeginPlay() {}
-void AoCBase::EndPlay() {}
+void AoCBase::OnBegin() {}
+void AoCBase::OnEnd() {}
 
 void AoCBase::RepeatTick()
 {
@@ -40,7 +40,7 @@ void AoCBase::ExecutePart(AoCBase& instance, bool test, int step, AoCBaseExecuti
     if(partConfiguration.EnableVisualization)
     {
         Context.Visualizer = AoCVisualizer::PrepareDefaultVisualizer();
-        //Context.Visualizer->Init();
+        Context.Visualizer->Init();
     }
 
     AoCStream::SetFileData(instance.GetFileName(), instance.GetYear(), instance.GetDay(), test);
@@ -67,33 +67,31 @@ void AoCBase::ExecutePart(AoCBase& instance, bool test, int step, AoCBaseExecuti
     {
         instance.RepeatTickRequest = 0;
         LONGLONG startTicks = AoCVisualizer::GetQPCTicks();
-        //LONGLONG endTicks = AoCVisualizer::GetQPCTicks();
-        instance.BeginPlay();
+        instance.OnBegin();
         do
         {
             instance.RepeatTickRequest = 0;
             if(Context.Visualizer)
-                Context.Visualizer->ProcessInputEvents();
+                Context.Visualizer->ProcessSystemEvents();
 
             double timeDelta = AoCVisualizer::GetQPCTimeDelta(startTicks) * 0.001;
             instance.Tick(timeDelta);
 
             if(Context.Visualizer)
             {
-                Context.Visualizer->Present();
-
+                // Context.Visualizer->Present();
                 //Sleep(0); // this need to be better
             }
         } while(instance.RepeatTickRequest);
-        instance.EndPlay();
+        instance.OnEnd();
     }
 
     // repeast for time measurement
     Context.PartConfig->EnableVisualization = false;
     instance.RepeatTickRequest = 0;
-    instance.BeginPlay();
+    instance.OnBegin();
     instance.Tick(0);
-    instance.EndPlay();
+    instance.OnEnd();
 
 
     partConfiguration.Time = instance.LastGlobalTime;

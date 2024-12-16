@@ -1,4 +1,5 @@
 #include "pch.h"
+
 #include "AoC_2024_05.h"
 
 const bool AoC_2024_05::CheckRule(PageList InList, PageRule InRule, long& i1, long& i2) const
