@@ -357,7 +357,7 @@
     "run": true,
     "debugRun": true,
     "name": "Reindeer Maze",
-    "enableVisualization": true,
+    "enableVisualization": false,
     "day": 16,
     "liveStep1": {
       "expectedResult": 0,
@@ -378,20 +378,20 @@
     "year": 2024
   },
   {
-    "run": false,
-    "debugRun": false,
-    "name": "____",
+    "run": true,
+    "debugRun": true,
+    "name": "Chronospatial Computer",
     "day": 17,
     "liveStep1": {
       "expectedResult": 0,
-      "knownErrors": []
+      "knownErrors": [214760314]
     },
     "liveStep2": {
       "expectedResult": 0,
       "knownErrors": []
     },
     "testStep1": {
-      "expectedResult": 0,
+      "expectedResult": 4635635210,
       "knownErrors": []
     },
     "testStep2": {

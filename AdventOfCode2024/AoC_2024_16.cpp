@@ -31,8 +31,8 @@ const int64_t AoC_2024_16::Step2()
     TIME_PART;
 
     int sx, sy, ex, ey;
-    if(!maze.find('S', sx, sy) || !maze.find('E', ex, ey))
-        throw std::runtime_error("Unable to find start or end point");
+    //if(!maze.find('S', sx, sy) || !maze.find('E', ex, ey))
+    //    throw std::runtime_error("Unable to find start or end point");
 
     return 0;
 }
