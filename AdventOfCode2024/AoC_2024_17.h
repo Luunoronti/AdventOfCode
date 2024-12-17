@@ -27,8 +27,8 @@ private:
     friend class AoCMachineDebugger;
     vector<ProgramWord> Program;
     vector<MachineWord> Registers;
-    vector<MachineWord> OutputPort;
-
+    vector<ProgramWord> OutputPort;
+    MachineWord StepCounter{ 0 };
 private:
     // operations
     __forceinline void adv();
@@ -48,13 +48,19 @@ public:
 
     void LoadProgram(const vector<ProgramWord>& Input);
     void SetRegisters(const vector<MachineWord>& Registers);
+    void SetRegister(const int Register, const MachineWord& Value);
     void Run(std::shared_ptr<AoCMachineDebugger> Debugger);
-    void ReadOutput(vector<MachineWord>& Output);
+    void Reset();
+    void ReadOutput(vector<ProgramWord>& Output);
 };
 
 class AoCMachineDebugger
 {
 public:
+    AoCMachineDebugger();
+    void OnBeforeStep(AoCMachine* machine);
+    void OnAfterStep(AoCMachine* machine);
+    const string GetOpCodeName(int opcode);
 };
 
 

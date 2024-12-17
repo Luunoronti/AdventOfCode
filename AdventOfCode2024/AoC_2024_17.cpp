@@ -1,9 +1,6 @@
 #include "pch.h"
 #include "AoC_2024_17.h"
 
-
-
-
 void ReadProgram(const char* fileName, vector<MachineWord>& Registers, vector<ProgramWord>& Program);
 
 const int64_t AoC_2024_17::Step1()
@@ -17,11 +14,8 @@ const int64_t AoC_2024_17::Step1()
     vector<MachineWord> Registers;
     ReadProgram(GetFileName().c_str(), Registers, Program);
 
-    // add 4th register, PC
-    Registers.push_back(0);
-
     // initialize the machine (and optional debugger)
-    std::shared_ptr<AoCMachineDebugger> Debugger = nullptr;// std::make_shared<AoCMachineDebugger>();
+    std::shared_ptr<AoCMachineDebugger> Debugger = Context->PartConfig->EnableVisualization ? std::make_shared<AoCMachineDebugger>() : nullptr;
     std::shared_ptr<AoCMachine> TheMachine = std::make_shared<AoCMachine>();
 
     // load program to the machine
@@ -32,7 +26,7 @@ const int64_t AoC_2024_17::Step1()
     TheMachine->Run(Debugger);
 
     // read output
-    vector<MachineWord> Output;
+    vector<ProgramWord> Output;
     TheMachine->ReadOutput(Output);
 
     // release the machine (and debugger)
@@ -44,14 +38,85 @@ const int64_t AoC_2024_17::Step1()
     // i'd like to make it nicer at the later stage
     std::stringstream ss;
     for(const auto& num : Output)
-        ss << num;
+    {
+        ss << (int)num;
+        cout << num << ",";
+    }
+    cout << endl;
 
     return std::stoll(ss.str());
 };
 
+#include <queue>
+
+
+bool CompareVectorToLast(vector<ProgramWord>& a, vector<ProgramWord>& b)
+{
+    if(a.size() > b.size()) return false;
+    auto diff = b.size() - a.size();
+    for(int i = 0; i < a.size(); ++i)
+    {
+        if(a[i] != b[i + diff])
+            return false;
+    }
+    return true;
+}
+
 const int64_t AoC_2024_17::Step2()
 {
     TIME_PART;
+    //if(!IsTest())return 0;
+    CreateFileIfDoesNotExist(GetFileName(), GetDay(), GetYear());
+
+    // load initial state and program from file
+    vector<ProgramWord> Program;
+    vector<MachineWord> Registers;
+    ReadProgram(GetFileName().c_str(), Registers, Program);
+
+    // initialize the machine (and optional debugger)
+    std::shared_ptr<AoCMachineDebugger> Debugger = Context->PartConfig->EnableVisualization ? std::make_shared<AoCMachineDebugger>() : nullptr;
+    std::shared_ptr<AoCMachine> TheMachine = std::make_shared<AoCMachine>();
+
+    // load program to the machine
+    TheMachine->LoadProgram(Program);
+    TheMachine->SetRegisters(Registers);
+
+    // work backwards: look for a value between 0 and 7 that will produce last
+    // number in the program
+    // shift that and look for next one and so on
+
+    MachineWord A = 0;
+    vector<ProgramWord> Output;
+
+    typedef std::pair<int, int64_t> OrderLong;
+    std::priority_queue<OrderLong> queue;
+    queue.push(std::make_pair(Program.size() - 1, 0L));
+
+    while(!queue.empty())
+    {
+        auto p = queue.top();
+        queue.pop();
+
+        const auto offset = p.first;
+        const auto aCandidate = p.second;
+        for(int n = 0; n < 8; n++)
+        {
+            auto newA = (aCandidate << 3) | n;
+            TheMachine->Reset();
+            TheMachine->SetRegister(0, newA);
+
+            TheMachine->Run(Debugger);
+            TheMachine->ReadOutput(Output);
+
+            if(Output.size() == (Program.size() - offset) && CompareVectorToLast(Output, Program))
+            {
+                if(offset == 0)
+                    return newA;
+                queue.push(std::make_pair(offset - 1, newA));
+            }
+        }
+    }
+
     return 0;
 };
 
@@ -90,11 +155,16 @@ void ReadProgram(const char* fileName, vector<MachineWord>& Registers, vector<Pr
 }
 
 
+
 void AoCMachine::LoadProgram(const vector<ProgramWord>& Input)
 {
     this->Program.clear();
     for(const auto& i : Input)
         this->Program.push_back(i);
+}
+void AoCMachine::SetRegister(const int Register, const MachineWord& Value)
+{
+    this->Registers[Register] = Value;
 }
 void AoCMachine::SetRegisters(const vector<MachineWord>& Registers)
 {
@@ -123,6 +193,9 @@ void AoCMachine::Run(std::shared_ptr<AoCMachineDebugger> Debugger)
 
     while(Registers[PC] >= 0 && Registers[PC] < static_cast<MachineWord>(Program.size()))
     {
+        if(Debugger)
+            Debugger->OnBeforeStep(this);
+
         switch(Program[Registers[PC]])
         {
         case O_ADV: adv(); break;
@@ -134,13 +207,23 @@ void AoCMachine::Run(std::shared_ptr<AoCMachineDebugger> Debugger)
         case O_BDV: bdv(); break;
         case O_CDV: cdv(); break;
         }
+
+        if(Debugger)
+            Debugger->OnAfterStep(this);
+
+        StepCounter++;
     }
 }
-void AoCMachine::ReadOutput(vector<MachineWord>& Output)
+void AoCMachine::ReadOutput(vector<ProgramWord>& Output)
 {
     Output.clear();
     for(const auto& o : OutputPort)
         Output.push_back(o);
+}
+void AoCMachine::Reset()
+{
+    for(int i = 0; i < Registers.size(); ++i)
+        Registers[i] = 0;
 }
 
 MachineWord AoCMachine::combo()
@@ -175,7 +258,7 @@ integer and then written to the A register.
 void AoCMachine::adv()
 {
     Registers[PC]++;
-    Registers[A] = (MachineWord)(Registers[A] / std::pow(2, combo()));
+    Registers[A] = (MachineWord)(Registers[A] / (MachineWord)std::pow(2, combo()));
     Registers[PC]++;
 }
 
@@ -250,7 +333,7 @@ except that the result is stored in the B register.
 void AoCMachine::bdv()
 {
     Registers[PC]++;
-    Registers[B] = (MachineWord)(Registers[A] / std::pow(2, combo()));
+    Registers[B] = (MachineWord)(Registers[A] / (MachineWord)std::pow(2, combo()));
     Registers[PC]++;
 }
 
@@ -262,7 +345,61 @@ except that the result is stored in the C register.
 void AoCMachine::cdv()
 {
     Registers[PC]++;
-    Registers[C] = (MachineWord)(Registers[A] / std::pow(2, combo()));
+    Registers[C] = (MachineWord)(Registers[A] / (MachineWord)std::pow(2, combo()));
     Registers[PC]++;
 }
 
+
+
+
+/**
+DEBUGGER
+*/
+
+AoCMachineDebugger::AoCMachineDebugger()
+{
+    printf("\n\n================ NEW DEBUGGING SESSION ================\n");
+
+}
+void AoCMachineDebugger::OnAfterStep(AoCMachine* machine)
+{
+    printf("   =>  A: %10lld   B: %10lld   C: %10lld   PC:  %10lld\n",
+        machine->Registers[machine->A],
+        machine->Registers[machine->B],
+        machine->Registers[machine->C],
+        machine->Registers[machine->PC]
+    );
+}
+void AoCMachineDebugger::OnBeforeStep(AoCMachine* machine)
+{
+    // write current state on screen
+    printf("Step %d: \t A: %10lld \t B: %10lld \t C: %10lld \t PC: \t %10lld \t =>  %s ",
+        machine->StepCounter,
+        machine->Registers[machine->A],
+        machine->Registers[machine->B],
+        machine->Registers[machine->C],
+        machine->Registers[machine->PC],
+        GetOpCodeName(machine->Program[machine->Registers[machine->PC]]).c_str()
+    );
+
+    // depending on user request, we stop on every step
+    // or just continue
+
+    // std::getchar();
+}
+
+const string AoCMachineDebugger::GetOpCodeName(int opcode)
+{
+    switch(opcode)
+    {
+    case O_ADV: return "adv";
+    case O_BXL: return "bxl";
+    case O_BST: return "bst";
+    case O_JNZ: return "jnz";
+    case O_BXC: return "bxc";
+    case O_OUT: return "out";
+    case O_BDV: return "bdv";
+    case O_CDV: return "cdv";
+    }
+    return "";
+};
