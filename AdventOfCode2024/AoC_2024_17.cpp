@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "AoC_2024_17.h"
 
-void ReadProgram(const char* fileName, int32_t& A, int32_t& B, int32_t& C, vector<int32_t>& Program)
+void ReadProgram(const char* fileName, int64_t& A, int64_t& B, int64_t& C, vector<int32_t>& Program)
 {
     FILE* file;
     fopen_s(&file, fileName, "r");
@@ -53,9 +53,9 @@ const int64_t AoC_2024_17::Step1()
 {
     CreateFileIfDoesNotExist(GetFileName(), GetDay(), GetYear());
 
-    int32_t A, B, C, PC = 0;
+    int64_t A, B, C, PC = 0;
     vector<int32_t> Program;
-    vector<int32_t> ProgramOutput;
+    vector<int64_t> ProgramOutput;
     ReadProgram(GetFileName().c_str(), A, B, C, Program);
 
     TIME_PART;
@@ -80,7 +80,7 @@ const int64_t AoC_2024_17::Step1()
             // The result of the division operation is truncated to an 
             // integer and then written to the A register.
         case ADV:
-            A = (int32_t)(A / std::pow(2, COMBO));
+            A = (int64_t)(A / std::pow(2, COMBO));
             PC += 2;
             break;
             /////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,7 +131,7 @@ const int64_t AoC_2024_17::Step1()
             // instruction except that the result is stored in the B register. 
             // (The numerator is still read from the A register.)
         case BDV:
-            B = (int32_t)(A / std::pow(2, COMBO));
+            B = (int64_t)(A / std::pow(2, COMBO));
             PC += 2;
             break;
             /////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,7 +139,7 @@ const int64_t AoC_2024_17::Step1()
             // instruction except that the result is stored in the C register. 
             // (The numerator is still read from the A register.)
         case CDV:
-            C = (int32_t)(A / std::pow(2, COMBO));
+            C = (int64_t)(A / std::pow(2, COMBO));
             PC += 2;
             break;
             /////////////////////////////////////////////////////////////////////////////////////////////

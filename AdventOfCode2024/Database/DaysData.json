@@ -188,7 +188,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "name": "Disk Fragmenter",
     "day": 9,
     "liveStep1": {
@@ -237,7 +237,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "enableDebugStream": false,
     "name": "Plutonian Pebbles",
     "day": 11,
@@ -261,7 +261,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "name": "Garden Groups",
     "day": 12,
     "liveStep1": {
@@ -284,7 +284,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "name": "Claw Contraption",
     "day": 13,
     "liveStep1": {
@@ -307,7 +307,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "name": "Restroom Redoubt",
     "day": 14,
     "liveStep1": {
@@ -331,7 +331,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "name": "Warehouse Woes",
     "day": 15,
     "enableVisualization": false,
@@ -355,7 +355,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "name": "Reindeer Maze",
     "enableVisualization": false,
     "day": 16,
