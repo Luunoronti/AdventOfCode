@@ -527,6 +527,6 @@ AoCDefaultVisCamera::AoCDefaultVisCamera()
 }
 AoCDefaultVisCamera::AoCDefaultVisCamera(const mutil::Vector3& StartLocation, const mutil::Quaternion& StartRotation)
 {
-    AoCDefaultVisCamera(StartLocation, StartRotation);
+    //AoCDefaultVisCamera(StartLocation, StartRotation);
 }
 #pragma endregion

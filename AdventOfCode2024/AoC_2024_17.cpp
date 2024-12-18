@@ -65,7 +65,7 @@ bool CompareVectorToLast(vector<ProgramWord>& a, vector<ProgramWord>& b)
 const int64_t AoC_2024_17::Step2()
 {
     TIME_PART;
-    //if(!IsTest())return 0;
+    if(!IsTest())return 0;
     CreateFileIfDoesNotExist(GetFileName(), GetDay(), GetYear());
 
     // load initial state and program from file

@@ -1,6 +1,7 @@
 #pragma once
 #include <unordered_map> 
 #include <vector> 
+#include <queue>
 
 namespace aoc
 {
@@ -46,21 +47,21 @@ namespace aoc
             return Location2di(x + 1, y + 1);
         }
 
-        bool operator<(const Location2di& other) const 
-        { 
-            return (x < other.x) || (x == other.x && y < other.y); 
-        } 
-        bool operator==(const Location2di& other) const 
-        { 
-            return (x == other.x) && (y == other.y); 
+        bool operator<(const Location2di& other) const
+        {
+            return (x < other.x) || (x == other.x && y < other.y);
+        }
+        bool operator==(const Location2di& other) const
+        {
+            return (x == other.x) && (y == other.y);
         }
 
     };
     // Overload the operator<< to print Location2di 
-    inline std::ostream& operator<<(std::ostream& os, const Location2di& loc) 
-    { 
-        os << "(" << loc.x << ", " << loc.y << ")"; 
-        return os; 
+    inline std::ostream& operator<<(std::ostream& os, const Location2di& loc)
+    {
+        os << "(" << loc.x << ", " << loc.y << ")";
+        return os;
     }
 
 
@@ -102,7 +103,7 @@ namespace aoc
     {
         enum Directions
         {
-            None=0x00,
+            None = 0x00,
             Left = 0x01,
             Right = 0x02,
             Top = 0x04,
@@ -205,10 +206,10 @@ namespace aoc
                     return *this;
                 }
             private:
-                Location2di _loc{Location2di(0,0)};
-                Directions __directions{Directions::None};
+                Location2di _loc{ Location2di(0,0) };
+                Directions __directions{ Directions::None };
                 int distance{ 0 };
-                std::function<bool(const Location2di&, const Location2di&,T,T,Directions)> _function;
+                std::function<bool(const Location2di&, const Location2di&, T, T, Directions)> _function;
                 const Map2d* map{ nullptr };
             };
         public:
@@ -244,18 +245,44 @@ namespace aoc
             {
                 return !(x < 0 || y < 0 || x >= Width || y >= Height);
             }
+            __forceinline bool WithinBounds(const mutil::IntVector2& Location) const
+            {
+                return !(Location.x < 0 || Location.y < 0 || Location.x >= Width || Location.y >= Height);
+            }
             __forceinline const T Get(const int x, const int y) const
             {
                 if(!WithinBounds(x, y))
                     throw std::runtime_error("Coordinates are not within bounds.");
                 return Map[x + y * Width];
             }
+
+            __forceinline const T Get(const mutil::IntVector2& Location) const
+            {
+                if(!WithinBounds(Location))
+                    throw std::runtime_error("Coordinates are not within bounds.");
+                return Map[Location.x + Location.y * Width];
+            }
+
+            __forceinline const T Get(const mutil::IntVector2& Location, const T& _default) const
+            {
+                if(!WithinBounds(Location))
+                    return _default;
+                return Map[Location.x + Location.y * Width];
+            }
+
             __forceinline const T Get(const int x, const int y, const T& _default) const
             {
                 if(!WithinBounds(x, y))
                     return _default;
                 return Map[x + y * Width];
             }
+            __forceinline void Set(const mutil::IntVector2& _loc, const T& value)
+            {
+                if(!WithinBounds(_loc))
+                    return;
+                Map[_loc.x + _loc.y * Width] = value;
+            }
+
             __forceinline void Set(const Location2di& _loc, const T& value)
             {
                 if(!WithinBounds(_loc))
@@ -321,7 +348,7 @@ namespace aoc
                 return __selected_value_stream;
             }
 
-            __find_close_neighbor<T> get_neighbors(const Location2di& _loc, Directions _directions, int distance, std::function<bool(const Location2di&, const Location2di&,T,T,Directions)> function) const
+            __find_close_neighbor<T> get_neighbors(const Location2di& _loc, Directions _directions, int distance, std::function<bool(const Location2di&, const Location2di&, T, T, Directions)> function) const
             {
                 __find_close_neighbor<T> str;
                 str.map = this;
@@ -342,6 +369,9 @@ namespace aoc
             {
                 ZeroMemory(&Map[0], sizeof(T) * Width * Height);
             }
+
+       
+
         private:
             __selected_value_stream<T> __selected_value_stream;
             // __find_close_neighbor<T> __find_close_neighbor;
