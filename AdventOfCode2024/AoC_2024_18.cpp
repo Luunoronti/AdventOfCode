@@ -15,11 +15,10 @@ const int64_t AoC_2024_18::Step1()
 
     int width = IsTest() ? 7 : 71;
     int heigth = IsTest() ? 7 : 71;
+    int size = IsTest() ? 12 : 1024;
+    size = min(size, Locations.size());
 
     Map2d<uint8_t> map(width, heigth);
-
-    int size = IsTest() ? 12 : 1024;
-    size = min(size, map.Map.size());
 
     for(int l = 0; l < size; l++)
     {
@@ -37,16 +36,14 @@ const int64_t AoC_2024_18::Step2()
 
     int width = IsTest() ? 7 : 71;
     int heigth = IsTest() ? 7 : 71;
-
-    Map2d<uint8_t> map(width, heigth);
-
     int size = IsTest() ? 12 : 1024;
     size = min(size, Locations.size());
 
+    Map2d<uint8_t> map(width, heigth);
+
     for(int l = 0; l < size; l++)
     {
-        const auto& loc = Locations[l];
-        map.Set(loc.x, loc.y, 1);
+        map.Set(Locations[l], 1);
     }
 
     auto isValid = [](const auto& loc, const auto& v) { return v == 0; };
