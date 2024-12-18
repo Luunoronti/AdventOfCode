@@ -95,7 +95,7 @@ void ReadLocations(const char* fileName, vector<IntVector2>& Locations)
     fclose(file);
 }
 
-// Function to find the shortest path using BFS
+
 int64_t FindShortestPathLen(const aoc::maps::Map2d<uint8_t>& Grid, IntVector2 Start, IntVector2 End)
 {
     if(Grid.Get(Start, 1) == 1 || Grid.Get(End, 1) == 1)
