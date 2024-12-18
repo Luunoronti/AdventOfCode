@@ -65,7 +65,7 @@ const int64_t AoC_2024_18::Step2()
             return 1;
         }
     }
-    return 1;
+    return 0;
 };
 
 
