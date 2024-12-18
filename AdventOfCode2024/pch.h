@@ -32,6 +32,7 @@
 #include <set>
 #include <deque>
 #include <stack>
+#include <queue>
 
 #include "json.hpp"
 

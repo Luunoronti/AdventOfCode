@@ -370,7 +370,44 @@ namespace aoc
                 ZeroMemory(&Map[0], sizeof(T) * Width * Height);
             }
 
-       
+            int64_t GetLengthOfShortestPath(mutil::IntVector2 Start, mutil::IntVector2 End, const std::function<bool(const mutil::IntVector2&, T)> isValid)
+            {
+                if(!WithinBounds(Start) || !isValid(Start, Get(Start)) || !WithinBounds(End) || !isValid(End, Get(End)))
+                    return -1;
+
+                std::vector<mutil::IntVector2> directions = { {0, 1}, {1, 0}, {0, -1}, {-1, 0} }; // Right, Down, Left, Up
+                std::queue<mutil::IntVector2> queue;
+                aoc::maps::Map2d<int8_t> visited(Width, Height, true);
+                queue.push(Start);
+                visited.Set(Start, (T)1);
+                int64_t steps = 0;
+                while(!queue.empty())
+                {
+                    int qSize = queue.size();
+                    for(int i = 0; i < qSize; ++i)
+                    {
+                        mutil::IntVector2 curr = queue.front();
+                        queue.pop();
+
+                        if(curr == End)
+                        {
+                            return steps;
+                        }
+                        for(const auto& dir : directions)
+                        {
+                            mutil::IntVector2 _new = curr + dir;
+                            if(!visited.Get(_new, (T)1) && WithinBounds(_new) && isValid(_new, Get(_new)))
+                            {
+                                queue.push(_new);
+                                visited.Set(_new, (T)1);
+                            }
+                        }
+                    }
+                    ++steps;
+                }
+                return -1;
+            }
+
 
         private:
             __selected_value_stream<T> __selected_value_stream;

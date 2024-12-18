@@ -84,6 +84,32 @@ namespace aoc
             return omit_char(omit_characters.charactersToOmit);
         }
 
+        AoCStream& operator>>(std::vector<mutil::IntVector2>& Locations)
+        {
+            CreateFileIfDoesNotExist(FileName, Day, Year, IsSourceLive);
+            Locations.clear();
+            FILE* file;
+            fopen_s(&file, FileName.c_str(), "r");
+            if(file == NULL)
+            {
+                throw std::runtime_error("Failed to open file");
+            }
+            char line[64];
+
+            while(fgets(line, sizeof(line), file))
+            {
+                const char* p = &line[0];
+                if(*p == '\n')continue;
+
+                int x = strtol(p, (char**)&p, 10);
+                p++;
+                int y = strtol(p, (char**)&p, 10);
+
+                Locations.push_back(mutil::IntVector2(x, y));
+            }
+
+            return *this;
+        }
 
 
         AoCStream& operator>>(std::vector<std::string>& strings)
