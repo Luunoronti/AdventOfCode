@@ -379,7 +379,7 @@ namespace aoc
                 std::queue<mutil::IntVector2> queue;
                 aoc::maps::Map2d<int8_t> visited(Width, Height, true);
                 queue.push(Start);
-                visited.Set(Start, (T)1);
+                visited.Set(Start, 1);
                 int64_t steps = 0;
                 while(!queue.empty())
                 {
@@ -396,10 +396,10 @@ namespace aoc
                         for(const auto& dir : directions)
                         {
                             mutil::IntVector2 _new = curr + dir;
-                            if(!visited.Get(_new, (T)1) && WithinBounds(_new) && isValid(_new, Get(_new)))
+                            if(!visited.Get(_new, 1) && WithinBounds(_new) && isValid(_new, Get(_new)))
                             {
                                 queue.push(_new);
-                                visited.Set(_new, (T)1);
+                                visited.Set(_new, 1);
                             }
                         }
                     }
