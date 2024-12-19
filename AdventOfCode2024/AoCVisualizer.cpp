@@ -182,7 +182,8 @@ void AoCVisualizer::FillGradient(int startR, int startG, int startB, int endR, i
             int br = static_cast<int>((1 - t) * startR + t * endR + (std::sin(phase) * 128));
             int bg = static_cast<int>((1 - t) * startG + t * endG + (std::sin(phase + 2.0f) * 128));
             int bb = static_cast<int>((1 - t) * startB + t * endB + (std::sin(phase + 4.0f) * 128));
-            CharacterBuffer[y * ViewportSize.X + x] = AoCCharacterInfo(0, 0, 0, std::abs(br), std::abs(bg), std::abs(bb), L' ');
+            mutil::Vector3 bk = { (float)std::abs(br) / 255 , (float)std::abs(bg) / 255, (float)std::abs(bb) / 255 };
+            CharacterBuffer[y * ViewportSize.X + x] = AoCCharacterInfo({ 1, 1, 1 }, bk * 1.0f, L' ');
         }
     }
 }
@@ -191,8 +192,8 @@ void AoCVisualizer::Present()
 {
     ZeroMemory(Intermediatebuffer, (ViewportSize.Y * ViewportSize.X * 50) * sizeof(wchar_t));
     size_t pos = 0;
-    int lastFClr = -1;
-    int lastBClr = -1;
+    mutil::Vector3 lastFClr{ -1 };
+    mutil::Vector3 lastBClr{ -1 };
 
     for(int y = 0; y < ViewportSize.Y; ++y)
     {
@@ -200,20 +201,20 @@ void AoCVisualizer::Present()
         {
             int idx = y * ViewportSize.X + x;
             const auto& ci = CharacterBuffer[idx];
+            wchar_t ch = ci.Char;
 
-            wchar_t ch = ci.Wchar;
-
-            if(lastFClr != ci.FRgb || (lastBClr != ci.BRgb))
+            if(lastFClr != ci.Front || (lastBClr != ci.Back))
             {
-                lastFClr = ci.FRgb;
-                int fgR = lastFClr >> 24 & 0xff;
-                int fgG = lastFClr >> 16 & 0xff;
-                int fgB = lastFClr >> 8 & 0xff;
+                lastFClr = ci.Front;
 
-                lastBClr = ci.BRgb;
-                int bgR = lastBClr >> 24 & 0xff;
-                int bgG = lastBClr >> 16 & 0xff;
-                int bgB = lastBClr >> 8 & 0xff;
+                int fgR = mutil::clamp((int)(lastFClr.r * 255), 0, 255);
+                int fgG = mutil::clamp((int)(lastFClr.g * 255), 0, 255);
+                int fgB = mutil::clamp((int)(lastFClr.b * 255), 0, 255);
+
+                lastBClr = ci.Back;
+                int bgR = mutil::clamp((int)(lastBClr.r * 255), 0, 255);
+                int bgG = mutil::clamp((int)(lastBClr.g * 255), 0, 255);
+                int bgB = mutil::clamp((int)(lastBClr.b * 255), 0, 255);
 
                 pos += swprintf(Intermediatebuffer + pos, (ViewportSize.Y * ViewportSize.X * 50) - pos,
                     WCSI L"38;2;%d;%d;%d;48;2;%d;%d;%dm%lc", fgR, fgG, fgB, bgR, bgG, bgB, ch);
@@ -234,6 +235,10 @@ void AoCVisualizer::CheckBufferSizeChange()
     NewVS.X = ScreenBufferInfo.srWindow.Right - ScreenBufferInfo.srWindow.Left + 1;
     NewVS.Y = ScreenBufferInfo.srWindow.Bottom - ScreenBufferInfo.srWindow.Top + 1;
 
+    char buff[128];
+    sprintf_s(buff, "(%dx%d)\n", NewVS.X, NewVS.Y);
+    OutputDebugStringA(buff);
+
     if(ViewportSize.X != NewVS.X || ViewportSize.Y != NewVS.Y)
     {
         RecreateBuffers(NewVS);
@@ -241,83 +246,105 @@ void AoCVisualizer::CheckBufferSizeChange()
         ViewportSize.Y = NewVS.Y;
     }
 }
+
+
+const bool AoCVisualizer::GetHitLocation_WithSphere(const mutil::Vector3& RayOrigin, const mutil::Vector3& RayDirection, const float SphereRadius, mutil::Vector3& HitLocation) const
+{
+    // (bx^2 + by^2)t^2 + (2(ax*bx + ay*by))t + (ax^2 + ay^2 - r^2) = 0
+
+    float a = mutil::dot(RayDirection, RayDirection);
+    float b = 2.0f * mutil::dot(RayOrigin, RayDirection);
+    float c = mutil::dot(RayOrigin, RayOrigin) - (SphereRadius * SphereRadius);
+
+    // b^2 - 4ac
+    float disc = b * b - 4 * a * c;
+
+    if(disc < 0)
+        return false;
+
+    const auto& normRayDir = mutil::normalize(RayDirection);
+    float t1 = (-b - mutil::sqrt(disc)) / (2.0f * a);
+    HitLocation = RayOrigin + normRayDir * t1;
+
+    return true;
+}
+void AoCVisualizer::Pixel(const mutil::Vector2& Coord, AoCCharacterInfo& pixel) const
+{
+    mutil::Vector3 rayDirection(Coord, -1);
+    mutil::Vector3 rayOrigin(0, 0, 2);
+    float radius = 0.5f;
+
+    mutil::Vector3 hitPoint;
+    if(GetHitLocation_WithSphere(rayOrigin, rayDirection, radius, hitPoint))
+    {
+        // we will move this to the shader later
+        // so that we will be able to switch between
+        // what's outputed to the buffer
+
+        pixel.Back = hitPoint;// { 0.5f, 0.2f, 0 };
+        pixel.Front = { 0, 0, 0 };
+        pixel.Char = L' ';
+    }
+}
+void AoCVisualizer::Render()
+{
+    static mutil::Vector2 one{ 1, 1 };
+    for(int y = 0; y < ViewportSize.Y; ++y)
+    {
+        for(int x = 0; x < ViewportSize.X; ++x)
+        {
+            mutil::Vector2 cord = { (float)x / (float)ViewportSize.X, (float)y / (float)ViewportSize.Y };
+            cord = (cord * 2.0f) - one;
+
+            // CharacterBuffer[y * ViewportSize.X + x].Back = mutil::Vector3(cord, 1);
+
+            // cast a ray and perform shading on result
+            Pixel(cord, CharacterBuffer[y * ViewportSize.X + x]);
+
+            // perform shader on result
+
+            // put in buffer
+        }
+    }
+    // as we now have full image, we can do post
+}
+
 void AoCVisualizer::Draw()
 {
-    // ok, we can print stuff on screen
-    // now, we need camera
-    // rays and some object to 
-    // print it on the screen
-
-    // for all of that, we may need some 3d vector and matrix stuff
-
-
-
-
-
-
-
     // Define gradient colors (start and end colors) 
     int startR = 0, startG = 0, startB = 255; // Start color (blue) 
     int endR = 255, endG = 255, endB = 255; // End color (white)
 
     FillGradient(startR, startG, startB, endR, endG, endB, phase);
-    phase += 0.01f;
+    phase += 0.002f;
+
+
+    // render our scene (sync single threaded for now)
+    Render();
+
+    // draw UI on top
+
+    // draw any other things on top of scene and UI
+
+
 
     frameNum++;
 
+
     FPS.Frame();
 
+    // phase = phase + (0.005f * FPS.GetFrameTime());
+
     wchar_t buff[128]{ 0 };
-    swprintf(buff, 128, L"Frame: %d (FPS: %f) (Frame: %f) (%dx%d)", 
-        frameNum, FPS.GetFPS(), FPS.GetFrameTime(), ViewportSize.X, ViewportSize.Y);
+    swprintf(buff, 128, L"Frame: %d (FPS: %f) (Frame: %f) (%dx%d)", frameNum, FPS.GetFPS(), FPS.GetFrameTime(), ViewportSize.X, ViewportSize.Y);
     for(int i = 0; i < 128; i++)
     {
         if(buff[i] != 0)
         {
-            if(ConsoleBuffer) ConsoleBuffer[i].Char.UnicodeChar = buff[i];
-            if(CharacterBuffer) CharacterBuffer[i].Wchar = buff[i];
+            if(CharacterBuffer) CharacterBuffer[i].Char = buff[i];
         }
     }
     ::SetConsoleTitleW(buff);
-    /*
-    // Clear screen, tab stops, set, stop at columns 16, 32
-    wprintf(WCSI L"1;1H");
-    //printf(CSI "2J"); // Clear screen
-
-    int iNumTabStops = 4; // (0, 20, 40, width)
-    wprintf(WCSI L"3g"); // clear all tab stops
-    wprintf(WCSI L"1;20H"); // Move to column 20
-    wprintf(WESC L"H"); // set a tab stop
-
-    wprintf(WCSI L"1;40H"); // Move to column 40
-    wprintf(WESC L"H"); // set a tab stop
-
-    // Set scrolling margins to 3, h-2
-    wprintf(WCSI L"3;%dr", ViewportSize.Y - 2);
-    int iNumLines = ViewportSize.Y - 4;
-
-    frameNum++;
-    frameNum2++;
-    frameNum3++;
-
-    wprintf(WCSI L"1;1H");
-    //printf(CSI "102;30m");
-    int r = frameNum % 250, g = frameNum2 % 250, b = frameNum3 % 250;
-    wprintf(WCSI L"38;2;%d;%d;%dm", r, g, b);
-    wprintf(L"Windows 10 Anniversary Update - VT Example %d", frameNum);
-    wprintf(WCSI L"0m");
-
-    // Print a top border - Yellow
-    wprintf(WCSI L"2;1H");
-    //PrintHorizontalBorder(ViewportSize, true);
-
-    // // Print a bottom border
-    wprintf(WCSI L"%d;1H", ViewportSize.Y - 1);
-    //PrintHorizontalBorder(Size, false);
-
-    // Exit the alternate buffer
-    //printf(CSI "?1049l");
-     */
 }
 #pragma endregion
 

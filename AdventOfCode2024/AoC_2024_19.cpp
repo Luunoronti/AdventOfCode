@@ -71,40 +71,27 @@ int CalculateChecksum(const std::string& str, size_t startIndex, size_t required
 
 unordered_map<int, string> testMap;
 unordered_map<int, unordered_set<int>> AllTowels;
+unordered_set<int> allKnownLengths;
 
+uint64_t tt = 0;
 uint64_t CheckDesign(const std::string& design, int startindex)
 {
-    uint64_t localSum = 0;
-    for(auto towelType : AllTowels)
+    if(startindex == design.size())
     {
-        const int len = towelType.first;
-        const unordered_set<int> towelSums = towelType.second;
+        cout << "Found! " << ++tt << endl;
+        return 1;
+    }
 
-        int cs = CalculateChecksum(design, startindex, len);
-        // there can be one and only one checksum of this length
-        // technically, we should assert if count > 1
+    uint64_t localSum = 0;
+    for(auto towelLen : allKnownLengths)
+    {
+        if(towelLen + startindex > design.size())
+            continue;
+        const unordered_set<int> towelSums = AllTowels[towelLen];
+        int cs = CalculateChecksum(design, startindex, towelLen);
         if(towelSums.count(cs) == 1)
         {
-            // we may also add this to our checksum
-            // to speed up our processing, because if 'aa' and then 'bb' is possible
-            // then 'aabb' is also possible
-            //AllTowels[startindex + len].insert(CalculateChecksum(design, 0, startindex + len));
-            auto test = testMap[cs];
-            // found. if we are at the end of the string
-            // just add 1 found to answer.
-            //  else, keep looking inside
-            if(startindex + len >= design.size())
-            {
-                ++localSum;
-                cout << test << endl;
-            }
-            else
-            {
-                localSum += CheckDesign(design, startindex + len);
-                cout << test << " ";
-            }
-
-
+            localSum += CheckDesign(design, startindex + towelLen);
         }
     }
     return localSum;
@@ -119,13 +106,14 @@ const int64_t AoC_2024_19::Step1()
     vector<string> Designs;
     if(0 != ReadInput(GetFileName(), TowelsStr, Designs))
         return 0;
-    
+
     for(const auto& towel : TowelsStr)
     {
         const int len = towel.length();
         int cs = CalculateChecksum(towel, 0, len);
         AllTowels[len].insert(cs);
         testMap[cs] = towel;
+        allKnownLengths.insert(len);
     }
 
     int64_t sum = 0;
@@ -133,7 +121,6 @@ const int64_t AoC_2024_19::Step1()
     {
         if(CheckDesign(d, 0))
             sum++;
-        cout << endl;
     }
     return sum;
 };

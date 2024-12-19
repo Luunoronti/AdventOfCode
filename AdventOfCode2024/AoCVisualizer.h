@@ -35,21 +35,17 @@ struct AoCVisualizerConfig
 
 struct AoCCharacterInfo
 {
-    AoCCharacterInfo(int fr, int fg, int fb, int br, int bg, int bb, wchar_t wchar)
-        : FRgb((fr << 24) | (fg<<16) | fb), BRgb((br << 24) | (bg<<16) | bb), Wchar(wchar)
-    {
-    }
-    AoCCharacterInfo(int frgb, int brgb, wchar_t wchar)
-        : FRgb(frgb), BRgb(brgb), Wchar(wchar)
+    AoCCharacterInfo(mutil::Vector3 front, mutil::Vector3 back, wchar_t _char)
+        : Front(front), Back(back), Char(_char)
     {
     }
     AoCCharacterInfo()
-        : FRgb(0), BRgb(0), Wchar(0)
+        : Front(0), Back(0), Char(0)
     {
     }
-    int FRgb;
-    int BRgb;
-    wchar_t Wchar;
+    mutil::Vector3 Front;
+    mutil::Vector3 Back;
+    wchar_t Char;
 };
 
 struct AoCVisTransform
@@ -121,6 +117,10 @@ public:
     AoCCharacterInfo* CharacterBuffer{ nullptr };
     wchar_t* Intermediatebuffer{ nullptr };
 
+    __forceinline const bool GetHitLocation_WithSphere(const mutil::Vector3& RayOrigin, const mutil::Vector3& RayDirection, const float SphereRadius, mutil::Vector3& HitLocation) const;
+
+    void Pixel(const mutil::Vector2& Coord, AoCCharacterInfo& pixel) const;
+    void Render();
     void Draw();
     void Present();
     void CheckBufferSizeChange();

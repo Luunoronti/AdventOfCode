@@ -5,7 +5,7 @@
     {
         "allowMouseCapture": false, 
         "alternateBuffer": false,
-        "hideCursor": false,
+        "hideCursor": true,
         "clearScreenOnExit" : true
     }
 }
