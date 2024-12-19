@@ -13,7 +13,6 @@ void rtrim(char* str)
         len--;
     }
 }
-
 int ReadInput(const string& FileName, vector<string>& Towels, vector<string>& Designs)
 {
     FILE* file;
@@ -56,7 +55,6 @@ int ReadInput(const string& FileName, vector<string>& Towels, vector<string>& De
     std::fclose(file);
     return 0;
 }
-
 int CalculateChecksum(const std::string& str, size_t startIndex, size_t requiredLength)
 {
     if(startIndex + requiredLength > str.length())
@@ -72,90 +70,71 @@ int CalculateChecksum(const std::string& str, size_t startIndex, size_t required
 }
 
 unordered_map<int, string> testMap;
-int CountMatchesInDesign(const string& Design, int startIndex, const unordered_set<int> Towels, const int maxTowelLen)
+unordered_map<int, unordered_set<int>> AllTowels;
+
+uint64_t CheckDesign(const std::string& design, int startindex)
 {
-    int total = 0;
-    for(size_t len = 1; len <= maxTowelLen; ++len)
+    uint64_t localSum = 0;
+    for(auto towelType : AllTowels)
     {
-        int checksum = CalculateChecksum(Design, startIndex, len);
-        if(checksum != 0)
+        const int len = towelType.first;
+        const unordered_set<int> towelSums = towelType.second;
+
+        int cs = CalculateChecksum(design, startindex, len);
+        // there can be one and only one checksum of this length
+        // technically, we should assert if count > 1
+        if(towelSums.count(cs) == 1)
         {
-            if(Towels.count(checksum))
+            // we may also add this to our checksum
+            // to speed up our processing, because if 'aa' and then 'bb' is possible
+            // then 'aabb' is also possible
+            //AllTowels[startindex + len].insert(CalculateChecksum(design, 0, startindex + len));
+            auto test = testMap[cs];
+            // found. if we are at the end of the string
+            // just add 1 found to answer.
+            //  else, keep looking inside
+            if(startindex + len >= design.size())
             {
-                string test = testMap[checksum];
-                if(startIndex + len == Design.length())
-                {
-                    return total + 1;
-                }
-                else
-                {
-                    total += CountMatchesInDesign(Design, startIndex + len, Towels, maxTowelLen);
-                }
+                ++localSum;
+                cout << test << endl;
             }
-        }
-    }
-    return total;
-}
-
-bool containsAtLocation(const std::string& mainStr, const std::string& subStr, size_t location)
-{
-    if(location + subStr.length() > mainStr.length()) { return false; }
-    for(size_t i = 0; i < subStr.length(); ++i)
-    {
-        if(mainStr[location + i] != subStr[i])
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-int CountMatchesInDesign2(const string& Design, const vector<string> Towels)
-{
-    int total = 0;
-    for(const auto& towel : Towels)
-    {
-        if(containsAtLocation(Design, towel, 0))
-        {
-            if(Design.length() == towel.length())
-                total += 1;
             else
-                total += CountMatchesInDesign2(Design.substr(0, towel.length()), Towels);
+            {
+                localSum += CheckDesign(design, startindex + len);
+                cout << test << " ";
+            }
+
+
         }
     }
-    return total;
+    return localSum;
 }
-
 const int64_t AoC_2024_19::Step1()
 {
     //if(!IsTest())return 0;
     TIME_PART;
+    AllTowels.clear();
+    testMap.clear();
     vector<string> TowelsStr;
     vector<string> Designs;
     if(0 != ReadInput(GetFileName(), TowelsStr, Designs))
-    {
         return 0;
-    }
-
-    unordered_set<int> Towels;
-    int maxTowelLen = 0;
+    
     for(const auto& towel : TowelsStr)
     {
-        int cs = CalculateChecksum(towel, 0, towel.length());
-        Towels.insert(cs);
+        const int len = towel.length();
+        int cs = CalculateChecksum(towel, 0, len);
+        AllTowels[len].insert(cs);
         testMap[cs] = towel;
-        maxTowelLen = max(maxTowelLen, towel.length());
     }
 
-
-    int sum = 0;
-
+    int64_t sum = 0;
     for(const auto& d : Designs)
     {
-        if(CountMatchesInDesign2(d, TowelsStr))
+        if(CheckDesign(d, 0))
             sum++;
+        cout << endl;
     }
-
     return sum;
 };
 const int64_t AoC_2024_19::Step2()
@@ -163,11 +142,3 @@ const int64_t AoC_2024_19::Step2()
     TIME_PART;
     return 0;
 };
-
-
-#include <iostream>
-#include <cstdio>
-#include <vector>
-#include <string>
-#include <cstring>
-
