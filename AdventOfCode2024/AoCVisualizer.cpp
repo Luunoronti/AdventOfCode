@@ -271,7 +271,7 @@ const bool AoCVisualizer::GetHitLocation_WithSphere(const mutil::Vector3& RayOri
 void AoCVisualizer::Pixel(const mutil::Vector2& Coord, AoCCharacterInfo& pixel) const
 {
     mutil::Vector3 rayDirection(Coord, -1);
-    mutil::Vector3 rayOrigin(0, 0, 2);
+    mutil::Vector3 rayOrigin(0, 0, 1);
     float radius = 0.5f;
 
     mutil::Vector3 hitPoint;
@@ -282,8 +282,8 @@ void AoCVisualizer::Pixel(const mutil::Vector2& Coord, AoCCharacterInfo& pixel) 
         // what's outputed to the buffer
 
         pixel.Back = hitPoint;// { 0.5f, 0.2f, 0 };
-        pixel.Front = { 0, 0, 0 };
-        pixel.Char = L' ';
+        pixel.Front = { 0, 128, 128 };
+        pixel.Char = L'#';
     }
 }
 void AoCVisualizer::Render()
