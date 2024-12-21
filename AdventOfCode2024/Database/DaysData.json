@@ -450,7 +450,7 @@
   {
     "run": true,
     "debugRun": true,
-    "enableVisualization": true,
+    "enableVisualization": false,
     "name": "____",
     "day": 20,
     "liveStep1": {
@@ -472,12 +472,12 @@
     "year": 2024
   },
   {
-    "run": false,
-    "debugRun": false,
-    "name": "____",
+    "run": true,
+    "debugRun": true,
+    "name": "Keypad Conundrum",
     "day": 21,
     "liveStep1": {
-      "expectedResult": 0,
+      "expectedResult": 184716,
       "knownErrors": []
     },
     "liveStep2": {
@@ -485,7 +485,7 @@
       "knownErrors": []
     },
     "testStep1": {
-      "expectedResult": 0,
+      "expectedResult": 126384,
       "knownErrors": []
     },
     "testStep2": {
