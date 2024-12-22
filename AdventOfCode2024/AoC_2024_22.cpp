@@ -80,7 +80,8 @@ const int64_t AoC_2024_22::Step1()
     TIME_PART;
     int64_t sum = 0;
 
-    for(const auto& secret : input) monkeys.push_back(Monkey(secret));
+    for(const auto& secret : input) 
+        monkeys.push_back(Monkey(secret));
 
     concurrency::parallel_for_each(monkeys.begin(), monkeys.end(), [&sum](Monkey& monkey)
         {
@@ -93,13 +94,15 @@ const int64_t AoC_2024_22::Step2()
 {
     TIME_PART;
 
+    // test input does change from P1 to P2, but live input does not
     if(IsTest())
     {
         monkeys.clear();
         vector<int> input;
         aoc::AoCStream() >> input;
 
-        for(const auto& secret : input) monkeys.push_back(Monkey(secret));
+        for(const auto& secret : input) 
+            monkeys.push_back(Monkey(secret));
         concurrency::parallel_for_each(monkeys.begin(), monkeys.end(), [](Monkey& monkey)
             {
                 monkey.CountSecretAndPrices(2000);
