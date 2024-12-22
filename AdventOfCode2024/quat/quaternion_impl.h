@@ -206,6 +206,13 @@ namespace mutil
 		return acosf(2.0f * d2 - 1.0f);
 	}
 
+	inline Quaternion angleAxis(const float& angle, mutil::Vector3 const& v)
+	{
+		float const a(angle);
+		float const s = mutil::sin(a * 0.5f);
+        return mutil::Quaternion(mutil::cos(a * 0.5f), v * s);
+	}
+
 	inline float Quaternion::length() const
 	{
 		return mutil::length(*this);
@@ -245,4 +252,14 @@ namespace mutil
 	{
 		return mutil::toeuler(*this);
 	}
+
+	inline Quaternion cross(Quaternion const& q1, Quaternion const& q2)
+	{
+		return Quaternion(
+			q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z,
+			q1.w * q2.x + q1.x * q2.w + q1.y * q2.z - q1.z * q2.y,
+			q1.w * q2.y + q1.y * q2.w + q1.z * q2.x - q1.x * q2.z,
+			q1.w * q2.z + q1.z * q2.w + q1.x * q2.y - q1.y * q2.x);
+	}
+
 }

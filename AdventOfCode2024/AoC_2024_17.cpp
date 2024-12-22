@@ -90,7 +90,7 @@ const int64_t AoC_2024_17::Step2()
 
     typedef std::pair<int, int64_t> OrderLong;
     std::priority_queue<OrderLong> queue;
-    queue.push(std::make_pair(Program.size() - 1, 0L));
+    queue.push(std::make_pair((int)Program.size() - 1, 0L));
 
     while(!queue.empty())
     {

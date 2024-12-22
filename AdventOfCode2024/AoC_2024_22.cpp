@@ -71,6 +71,7 @@ const int64_t AoC_2024_22::Compute() const
 }
 const int64_t AoC_2024_22::Step1()
 {
+    Sleep(1000000);
     TIME_PART;
     return Compute();
 };

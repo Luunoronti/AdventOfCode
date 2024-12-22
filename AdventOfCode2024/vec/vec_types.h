@@ -41,6 +41,9 @@ namespace mutil
 	template <size_t N>
 	using IntVector = BasicVector<int32_t, N>;
 
+	template <size_t N>
+	using Int64Vector = BasicVector<int64_t, N>;
+
 	using Vector2 = Vector<2>;
 	using Vector3 = Vector<3>;
 	using Vector4 = Vector<4>;
@@ -48,6 +51,10 @@ namespace mutil
 	using IntVector2 = IntVector<2>;
 	using IntVector3 = IntVector<3>;
 	using IntVector4 = IntVector<4>;
+
+	using Int64Vector2 = Int64Vector<2>;
+	using Int64Vector3 = Int64Vector<3>;
+	using Int64Vector4 = Int64Vector<4>;
 
 	template <typename T, size_t N>
 	constexpr BasicVector<T, N> operator+(const BasicVector<T, N> &a, const BasicVector<T, N> &b);

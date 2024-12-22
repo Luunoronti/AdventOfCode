@@ -127,5 +127,10 @@ namespace mutil
 	inline Quaternion exp(const Quaternion &a);
 	inline Quaternion log(const Quaternion &a);
 
+	inline Quaternion angleAxis(const float& angle, mutil::Vector3 const& v);
+
 	inline float geodistance(const Quaternion &a, const Quaternion &b);
+
+	inline Quaternion cross(Quaternion const& q1, Quaternion const& q2);
+
 }

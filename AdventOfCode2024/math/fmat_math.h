@@ -286,6 +286,8 @@ namespace mutil
 		return adjugate(mat4) * (1.0f / determinant(mat4));
 	}
 
+
+
 	constexpr Matrix4 clamp(const Matrix4 &val, float min, float max)
 	{
 		Matrix4 result;

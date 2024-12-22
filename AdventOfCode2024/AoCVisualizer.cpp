@@ -149,9 +149,13 @@ void AoCVisualizer::Process()
     if(!ConsoleOutput || !ConsoleInput)
         return;
 
+    FPS.Frame();
+    const float frameTime = FPS.GetFrameTime();
     ProcessSystemEvents();
     CheckBufferSizeChange();
-    UpdateCamera();
+
+    Camera->Update(frameTime);
+
     Draw();
     printf(CSI "H"); // Move to (0,0)
     Present();
@@ -183,7 +187,7 @@ void AoCVisualizer::FillGradient(int startR, int startG, int startB, int endR, i
             int bg = static_cast<int>((1 - t) * startG + t * endG + (std::sin(phase + 2.0f) * 128));
             int bb = static_cast<int>((1 - t) * startB + t * endB + (std::sin(phase + 4.0f) * 128));
             mutil::Vector3 bk = { (float)std::abs(br) / 255 , (float)std::abs(bg) / 255, (float)std::abs(bb) / 255 };
-            CharacterBuffer[y * ViewportSize.X + x] = AoCCharacterInfo({ 1, 1, 1 }, bk * 1.0f, L' ');
+            CharacterBuffer[y * ViewportSize.X + x] = AoCCharacterInfo({ 1, 1, 1 }, bk * 0.3f, L' ');
         }
     }
 }
@@ -216,11 +220,14 @@ void AoCVisualizer::Present()
                 int bgG = mutil::clamp((int)(lastBClr.g * 255), 0, 255);
                 int bgB = mutil::clamp((int)(lastBClr.b * 255), 0, 255);
 
+                ++BackBufferSPrintfCounter;
+                ++BackBufferSPrintfFullColorCounter;
                 pos += swprintf(Intermediatebuffer + pos, (ViewportSize.Y * ViewportSize.X * 50) - pos,
                     WCSI L"38;2;%d;%d;%d;48;2;%d;%d;%dm%lc", fgR, fgG, fgB, bgR, bgG, bgB, ch);
             }
             else
             {
+                ++BackBufferSPrintfCounter;
                 pos += swprintf(Intermediatebuffer + pos, (ViewportSize.Y * ViewportSize.X * 50) - pos, L"%lc", ch);
             }
         }
@@ -244,6 +251,10 @@ void AoCVisualizer::CheckBufferSizeChange()
         RecreateBuffers(NewVS);
         ViewportSize.X = NewVS.X;
         ViewportSize.Y = NewVS.Y;
+
+        Camera->SetViewportSize({ NewVS.X, NewVS.Y });
+        Camera->RecalculateProjection();
+        Camera->InvalidateRayCache();
     }
 }
 
@@ -268,10 +279,11 @@ const bool AoCVisualizer::GetHitLocation_WithSphere(const mutil::Vector3& RayOri
 
     return true;
 }
-void AoCVisualizer::Pixel(const mutil::Vector2& Coord, AoCCharacterInfo& pixel) const
+void AoCVisualizer::Pixel(const int x, const int y, AoCCharacterInfo& pixel) const
 {
-    mutil::Vector3 rayDirection(Coord, -1);
-    mutil::Vector3 rayOrigin(0, 0, 1);
+    mutil::Vector3 rayOrigin = Camera->GetLocation();
+    mutil::Vector3 rayDirection = Camera->GetRayDirections()[x + y * ViewportSize.X];
+
     float radius = 0.5f;
 
     mutil::Vector3 hitPoint;
@@ -281,7 +293,7 @@ void AoCVisualizer::Pixel(const mutil::Vector2& Coord, AoCCharacterInfo& pixel) 
         // so that we will be able to switch between
         // what's outputed to the buffer
 
-        pixel.Back = hitPoint;// { 0.5f, 0.2f, 0 };
+        pixel.Back = { 0, 0, 0 };// hitPoint;// { 0.5f, 0.2f, 0 };
         pixel.Front = { 0, 128, 128 };
         pixel.Char = L'#';
     }
@@ -289,17 +301,16 @@ void AoCVisualizer::Pixel(const mutil::Vector2& Coord, AoCCharacterInfo& pixel) 
 void AoCVisualizer::Render()
 {
     static mutil::Vector2 one{ 1, 1 };
+
     for(int y = 0; y < ViewportSize.Y; ++y)
     {
         for(int x = 0; x < ViewportSize.X; ++x)
         {
-            mutil::Vector2 cord = { (float)x / (float)ViewportSize.X, (float)y / (float)ViewportSize.Y };
-            cord = (cord * 2.0f) - one;
-
-            // CharacterBuffer[y * ViewportSize.X + x].Back = mutil::Vector3(cord, 1);
+            //mutil::Vector2 cord = { (float)x / (float)ViewportSize.X, (float)y / (float)ViewportSize.Y };
+            //cord = (cord * 2.0f) - one;
 
             // cast a ray and perform shading on result
-            Pixel(cord, CharacterBuffer[y * ViewportSize.X + x]);
+            Pixel(x, y, CharacterBuffer[y * ViewportSize.X + x]);
 
             // perform shader on result
 
@@ -308,7 +319,42 @@ void AoCVisualizer::Render()
     }
     // as we now have full image, we can do post
 }
+void AoCVisualizer::DrawText(int x, int y, const wstring& text)
+{
+    const int drawTextBuffSize = 1024;
+    static wchar_t buff[drawTextBuffSize]{ 0 };
+    ZeroMemory(buff, drawTextBuffSize * sizeof(wchar_t));
 
+    swprintf(buff, drawTextBuffSize, L"%s", text.c_str());
+
+    if(CharacterBuffer)
+    {
+        for(int i = x; i < min(x + ViewportSize.X, drawTextBuffSize); i++)
+        {
+            if(buff[i] == 0)
+                return;
+            CharacterBuffer[(i)+y * ViewportSize.X].Char = buff[i];
+        }
+    }
+}
+void AoCVisualizer::DrawText(int x, int y, const string& text)
+{
+    const int drawTextBuffSize = 1024;
+    static char buff[drawTextBuffSize]{ 0 };
+    ZeroMemory(buff, drawTextBuffSize * sizeof(char));
+
+    sprintf_s(buff, drawTextBuffSize, "%s", text.c_str());
+
+    if(CharacterBuffer)
+    {
+        for(int i = x; i < min(x + ViewportSize.X, drawTextBuffSize); i++)
+        {
+            if(buff[i] == 0)
+                return;
+            CharacterBuffer[(i)+y * ViewportSize.X].Char = buff[i];
+        }
+    }
+}
 void AoCVisualizer::Draw()
 {
     // Define gradient colors (start and end colors) 
@@ -323,36 +369,40 @@ void AoCVisualizer::Draw()
     Render();
 
     // draw UI on top
-
     // draw any other things on top of scene and UI
-
-
 
     frameNum++;
 
 
-    FPS.Frame();
-
     // phase = phase + (0.005f * FPS.GetFrameTime());
+    std::ostringstream oss;
+    oss << "Frame: " << frameNum << " (FPS: " << FPS.GetFPS() << ") Delta time: " << FPS.GetFrameTime() << " ViewPort: (" << ViewportSize.X << ", " << ViewportSize.Y << ")";
+    DrawText(0, 0, oss.str());
 
-    wchar_t buff[128]{ 0 };
-    swprintf(buff, 128, L"Frame: %d (FPS: %f) (Frame: %f) (%dx%d)", frameNum, FPS.GetFPS(), FPS.GetFrameTime(), ViewportSize.X, ViewportSize.Y);
-    for(int i = 0; i < 128; i++)
-    {
-        if(buff[i] != 0)
-        {
-            if(CharacterBuffer) CharacterBuffer[i].Char = buff[i];
-        }
-    }
-    ::SetConsoleTitleW(buff);
+    // ::SetConsoleTitleW(buff);
+
+    std::ostringstream oss2;
+    auto& cl = Camera->GetLocation();
+    auto& cd = Camera->GetDirection();
+    oss2 << "Camera: Location: " << cl.x << ", " << cl.y << ", " << cl.z << ", Direction: " << cd.x << ", " << cd.y << ", " << cd.z;
+    DrawText(0, 1, oss2.str());
+
+    std::ostringstream oss3;
+    oss3 << "Present: BackBuff SPrint #: " << BackBufferSPrintfCounter << ", Full color SPrint #: " << BackBufferSPrintfFullColorCounter;
+    DrawText(0, 2, oss3.str());
+    BackBufferSPrintfCounter = 0;
+    BackBufferSPrintfFullColorCounter = 0;
+
+
+
 }
 #pragma endregion
 
 
-#pragma region Scene and Camera (camera is not an actual object like in proper engines)
+#pragma region Scene
 void AoCVisualizer::InitializeDefaultScene()
 {
-    Camera = std::make_shared<AoCDefaultVisCamera>();
+    Camera = std::make_shared<AoCVisCamera>();
     Lights.push_back(std::make_shared<AoCVisDirectionalLight>());
 }
 
@@ -394,9 +444,6 @@ void AoCVisualizer::RemoveActors(std::vector<std::shared_ptr<AoCVisActor>> Actor
     ::LeaveCriticalSection(&MainCS);
 }
 
-void AoCVisualizer::UpdateCamera()
-{
-}
 #pragma endregion
 
 
@@ -538,22 +585,158 @@ void FPSCounter::Frame()
 #pragma region Camera
 AoCVisCamera::AoCVisCamera()
 {
-    this->Transform.Location = { 0, 0, 0 };
-    this->Transform.Rotation = mutil::Quaternion::Quaternion();
+    this->Transform.Location = { 0, 0, 3 };
+    this->Transform.Direction = { 0, 0, -1 };
     this->Transform.Scale = { 1,1,1 };
+
+
 }
-AoCVisCamera::AoCVisCamera(const mutil::Vector3& StartLocation, const mutil::Quaternion& StartRotation)
+const std::vector<mutil::Vector3>& AoCVisCamera::GetRayDirections()
 {
-    this->Transform.Location = StartLocation;
-    this->Transform.Rotation = StartRotation;
-    this->Transform.Scale = { 1,1,1 };
+    if(RayDirectionsNeedToRecompute)
+    {
+        RayDirectionsNeedToRecompute = false;
+
+        RayDirections.resize(ViewPortSize.x * ViewPortSize.y);
+
+        for(uint32_t y = 0; y < ViewPortSize.y; y++)
+        {
+            for(uint32_t x = 0; x < ViewPortSize.x; x++)
+            {
+                mutil::Vector2 coord = { (float)x / (float)ViewPortSize.x, (float)y / (float)ViewPortSize.y };
+                coord = coord * 2.0f; // -1 -> 1
+                coord.x -= 1.f;
+                coord.y -= 1.f;
+
+                mutil::Vector4 target = InvProjection * mutil::Vector4(coord.x, coord.y, 1, 1);
+                mutil::Vector3 rayDirection = mutil::Vector3(InvView * mutil::Vector4(mutil::normalize(mutil::Vector3(target) / target.w), 0)); // World space
+                RayDirections[x + y * ViewPortSize.x] = rayDirection;
+            }
+        }
+    }
+
+    return RayDirections;
 }
 
-AoCDefaultVisCamera::AoCDefaultVisCamera()
+void AoCVisCamera::Update(float deltaTime)
 {
+    mutil::Vector2 mousePos;
+
+    POINT mousePoint;
+    GetCursorPos(&mousePoint);
+    HWND consoleWindow = GetConsoleWindow();
+    RECT consoleRect;
+    GetWindowRect(consoleWindow, &consoleRect);
+    mousePos.x = mousePoint.x - consoleRect.left;
+    mousePos.y = mousePoint.y - consoleRect.top;
+
+    mutil::Vector2 delta = (mousePos - LastMousePos) * 0.002f; // this is mouse sensitivity
+    LastMousePos = mousePos;
+
+    // movement here. 
+    // but ONLY if mouse RMB is being pressed
+    if(GetAsyncKeyState(VK_RBUTTON) & 0x8000)
+    {
+        mutil::Vector3 up{ 0.0f, 1.0f, 0.0f };
+        mutil::Vector3 right = mutil::cross(Transform.Direction, up);
+        bool moved{ false };
+        if(GetAsyncKeyState('W') & 0x8000) // forward
+        {
+            Transform.Location += Transform.Direction * GetSpeed() * deltaTime;
+            moved = true;
+        }
+        else if(GetAsyncKeyState('S') & 0x8000) // backward
+        {
+            Transform.Location -= Transform.Direction * GetSpeed() * deltaTime;
+            moved = true;
+        }
+        else if(GetAsyncKeyState('A') & 0x8000) // left
+        {
+            Transform.Location -= right * GetSpeed() * deltaTime;
+            moved = true;
+        }
+        else if(GetAsyncKeyState('D') & 0x8000) // right
+        {
+            Transform.Location += right * GetSpeed() * deltaTime;
+            moved = true;
+        }
+        else if(GetAsyncKeyState('Q') & 0x8000) // pan up
+        {
+            Transform.Location += up * GetSpeed() * deltaTime;
+            moved = true;
+        }
+        else if(GetAsyncKeyState('E') & 0x8000) // pan down
+        {
+            Transform.Location -= up * GetSpeed() * deltaTime;
+            moved = true;
+        }
+        else if(GetAsyncKeyState('R') & 0x8000) // camera speed up
+        {
+            SetSpeed(max(10, GetSpeed() + 0.01f));
+        }
+        else if(GetAsyncKeyState('F') & 0x8000) // camera speed down
+        {
+            SetSpeed(min(0.001f, GetSpeed() - 0.01f));
+        }
+
+        if(delta.x != 0 || delta.y != 0)
+        {
+            float pd = delta.y * GetRotationSpeed() * 5;
+            float yd = delta.x * GetRotationSpeed();
+
+            Transform.Rotation = mutil::normalize(mutil::cross(mutil::angleAxis(pd, right), mutil::angleAxis(-yd, up)));
+            Transform.Direction = mutil::normalize(mutil::rotatevector(Transform.Rotation, Transform.Direction));
+            moved = true;
+        }
+
+        if(moved)
+        {
+            RecalculateView();
+            InvalidateRayCache();
+        }
+    }
 }
-AoCDefaultVisCamera::AoCDefaultVisCamera(const mutil::Vector3& StartLocation, const mutil::Quaternion& StartRotation)
+
+void AoCVisCamera::RecalculateProjection()
 {
-    //AoCDefaultVisCamera(StartLocation, StartRotation);
+    // int gcd = std::gcd(ViewPortSize.x, ViewPortSize.y);
+    //Projection = mutil::perspective(mutil::radians(VerticalFoV), (float)ViewPortSize.y/gcd, NearClip, FarClip);
+    Projection = mutil::perspectiveFov(mutil::radians(VerticalFoV), (float)ViewPortSize.x / 2, (float)ViewPortSize.y, NearClip, FarClip);
+    InvProjection = mutil::inverse(Projection);
 }
+
+void AoCVisCamera::RecalculateView()
+{
+    View = mutil::lookAt(Transform.Location, Transform.Location + Transform.Direction, { 0, 1, 0 });
+    InvView = mutil::inverse(View);
+}
+
+void AoCVisCamera::SetLocation(const mutil::Vector3& Location)
+{
+    this->Transform.Location = Location;
+    InvalidateRayCache();
+}
+void AoCVisCamera::SetDirection(const mutil::Vector3& Direction)
+{
+    this->Transform.Direction = Direction;
+    InvalidateRayCache();
+}
+
+void AoCVisCamera::SetVerticalFoV(const float vFOV)
+{
+    this->VerticalFoV = vFOV;
+    InvalidateRayCache();
+}
+void AoCVisCamera::SetNearClip(const float NearClip)
+{
+    this->NearClip = NearClip;
+    InvalidateRayCache();
+}
+void AoCVisCamera::SetFarClip(const float FarClip)
+{
+    this->FarClip = FarClip;
+    InvalidateRayCache();
+}
+
+
 #pragma endregion

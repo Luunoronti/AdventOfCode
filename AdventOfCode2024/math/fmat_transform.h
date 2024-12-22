@@ -98,6 +98,23 @@ namespace mutil
 		return result;
 	}
 
+	inline Matrix4 MUTIL_VECTORCALL perspectiveFov(float fov, float width, float height, float zNear, float zFar)
+	{
+		float const rad = fov;
+		float const h = cos(0.5f * rad) / sin(0.5f * rad);
+		float const w = h * height / width;
+
+		Matrix4 Result(0.0f);
+		Result.columns[0].x = w;
+		Result.columns[1].y = h;
+		Result.columns[2].z = zFar / (zFar - zNear);
+		Result.columns[2].w = 1.0f;
+		Result.columns[3].z = -(zFar * zNear) / (zFar - zNear);
+		return Result;
+	}
+
+
+
 	/*!
 	Rotates a 4x4 matrix and returns the new matrix.
 
