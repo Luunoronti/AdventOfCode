@@ -35,10 +35,8 @@ public:
             if(i >= 4)
             {
                 mutil::IntVector4 changeVector(lastChange0, lastChange1, lastChange2, lastChange3);
-                if(firstChangesWithPrices.find(changeVector) == firstChangesWithPrices.end())
-                {
-                    firstChangesWithPrices[changeVector] = price;
-                }
+                if(firstPriceChanges.find(changeVector) == firstPriceChanges.end())
+                    firstPriceChanges[changeVector] = price;
             }
             secret = prune(mix(secret, secret * 64));
             secret = prune(mix(secret, secret / 32));
@@ -54,34 +52,20 @@ public:
         return secretNumber % 16777216;
     }
 
-    __forceinline const void FillPriceChangeVectorMap(PriceChangeMap& map) const
-    {
-        for(const auto& c : firstChangesWithPrices)
-            map[c.first] += c.second;
-    }
-    __forceinline const int GetPriceForChangeVector(const mutil::IntVector4& ChangeVector) const
-    {
-        auto it = firstChangesWithPrices.find(ChangeVector);
-        if(it != firstChangesWithPrices.end())
-            return it->second;
-        return 0;
-    }
     uint64_t secret;
     uint64_t initialSecret;
-    PriceChangeMap firstChangesWithPrices;
+    PriceChangeMap firstPriceChanges;
 };
 
 vector<Monkey> monkeys;
-PriceChangeMap globalChangeMapForLive;
-PriceChangeMap globalChangeMapForTest;
 const int64_t AoC_2024_22::Step1()
 {
+    TIME_PART;
     monkeys.clear();
 
     vector<int> input;
     aoc::AoCStream() >> input;
 
-    TIME_PART;
     int64_t sum = 0;
 
     for(const auto& secret : input)
@@ -98,11 +82,9 @@ const int64_t AoC_2024_22::Step2()
 {
     TIME_PART;
 
-    // test input does change from P1 to P2, but live input does not
+    // test input does change from P1 to P2, live input does not
     if(IsTest())
     {
-        globalChangeMapForTest.clear();
-
         monkeys.clear();
         vector<int> input;
         aoc::AoCStream() >> input;
@@ -117,16 +99,16 @@ const int64_t AoC_2024_22::Step2()
     }
 
     // construct the map with all possible price change vectors
-    PriceChangeMap allChanges;
+    PriceChangeMap sumPricesPerChangeVector;
     for(const auto& m : monkeys)
-        m.FillPriceChangeVectorMap(allChanges);
-
-    // now, estimate the highest possible price
+        for(const auto& c : m.firstPriceChanges)
+            sumPricesPerChangeVector[c.first] += c.second;
+    
+    // now, get the highest possible price
     int64_t highestPrice = 0;
-    for(const auto& c : allChanges)
-    {
+    for(const auto& c : sumPricesPerChangeVector)
         highestPrice = max(highestPrice, c.second);
-    }
+    
     return highestPrice;
 };
 
