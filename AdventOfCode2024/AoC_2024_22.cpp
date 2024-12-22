@@ -16,18 +16,25 @@ public:
 
         for(int i = 0; i < repetitions; i++)
         {
+            // price is a ones-digit of the secret
             int price = secret % 10;
 
+            // this is our change history over last 4 iterations
+            // we shift it 'left' and store current change
             changeVector[3] = changeVector[2];
             changeVector[2] = changeVector[1];
             changeVector[1] = changeVector[0];
             changeVector[0] = price - lastPrice;
 
+            // remember last price for next iteration
             lastPrice = price;
 
+            // if we are over 3 iterations, we start to store prices
+            // if there is already price stored for given change vector, we don't override it.
             if(i >= 4 && firstPriceChanges.find(changeVector) == firstPriceChanges.end())
                 firstPriceChanges[changeVector] = price;
 
+            // process secret as per spec
             secret = prune(mix(secret, secret * 64));
             secret = prune(mix(secret, secret / 32));
             secret = prune(mix(secret, secret * 2048));
