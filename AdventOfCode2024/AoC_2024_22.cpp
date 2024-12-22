@@ -7,34 +7,26 @@ class Monkey
 {
 public:
     Monkey(uint64_t startingSecret)
-        : secret(startingSecret), initialSecret(startingSecret)
-    {
-    }
+        : secret(startingSecret) {}
 
-    void CountSecretAndPrices(int repetitions)
+    void ProcessSecretAndPrices(int repetitions)
     {
         int lastPrice = 0;
-        int lastChange0 = 0;
-        int lastChange1 = 0;
-        int lastChange2 = 0;
-        int lastChange3 = 0;
+        mutil::IntVector4 changeVector;
 
         for(int i = 0; i < repetitions; i++)
         {
             int price = secret % 10;
 
-            if(i > 0)
-            {
-                lastChange3 = lastChange2;
-                lastChange2 = lastChange1;
-                lastChange1 = lastChange0;
-                lastChange0 = price - lastPrice;
-            }
+            changeVector[3] = changeVector[2];
+            changeVector[2] = changeVector[1];
+            changeVector[1] = changeVector[0];
+            changeVector[3] = price - lastPrice;
+
             lastPrice = price;
 
             if(i >= 4)
             {
-                mutil::IntVector4 changeVector(lastChange0, lastChange1, lastChange2, lastChange3);
                 if(firstPriceChanges.find(changeVector) == firstPriceChanges.end())
                     firstPriceChanges[changeVector] = price;
             }
@@ -43,40 +35,36 @@ public:
             secret = prune(mix(secret, secret * 2048));
         }
     }
-    __forceinline static uint64_t mix(uint64_t secretNumber, uint64_t value)
-    {
-        return value ^ secretNumber;
-    }
-    __forceinline static uint64_t prune(uint64_t secretNumber)
-    {
-        return secretNumber % 16777216;
-    }
+    __forceinline static uint64_t mix(uint64_t secretNumber, uint64_t value) { return value ^ secretNumber; }
+    __forceinline static uint64_t prune(uint64_t secretNumber) { return secretNumber % 16777216; }
 
     uint64_t secret;
-    uint64_t initialSecret;
     PriceChangeMap firstPriceChanges;
 };
 
 vector<Monkey> monkeys;
-const int64_t AoC_2024_22::Step1()
-{
-    TIME_PART;
-    monkeys.clear();
 
+const int64_t AoC_2024_22::Compute() const
+{
+    monkeys.clear();
     vector<int> input;
     aoc::AoCStream() >> input;
-
-    int64_t sum = 0;
 
     for(const auto& secret : input)
         monkeys.push_back(Monkey(secret));
 
+    int64_t sum = 0;
     concurrency::parallel_for_each(monkeys.begin(), monkeys.end(), [&sum](Monkey& monkey)
         {
-            monkey.CountSecretAndPrices(2000);
+            monkey.ProcessSecretAndPrices(2000);
             InterlockedAdd64(&sum, (int64_t)monkey.secret);
         });
     return sum;
+}
+const int64_t AoC_2024_22::Step1()
+{
+    TIME_PART;
+    return Compute();
 };
 const int64_t AoC_2024_22::Step2()
 {
@@ -84,36 +72,18 @@ const int64_t AoC_2024_22::Step2()
 
     // test input does change from P1 to P2, live input does not
     if(IsTest())
-    {
-        monkeys.clear();
-        vector<int> input;
-        aoc::AoCStream() >> input;
-
-        for(const auto& secret : input)
-            monkeys.push_back(Monkey(secret));
-
-        concurrency::parallel_for_each(monkeys.begin(), monkeys.end(), [](Monkey& monkey)
-            {
-                monkey.CountSecretAndPrices(2000);
-            });
-    }
+        Compute();
 
     // construct the map with all possible price change vectors
     PriceChangeMap sumPricesPerChangeVector;
     for(const auto& m : monkeys)
         for(const auto& c : m.firstPriceChanges)
             sumPricesPerChangeVector[c.first] += c.second;
-    
+
     // now, get the highest possible price
     int64_t highestPrice = 0;
     for(const auto& c : sumPricesPerChangeVector)
         highestPrice = max(highestPrice, c.second);
-    
+
     return highestPrice;
 };
-
-
-
-
-
-
