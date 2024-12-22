@@ -36,7 +36,9 @@ public:
             {
                 mutil::IntVector4 changeVector(lastChange0, lastChange1, lastChange2, lastChange3);
                 if(firstChangesWithPrices.find(changeVector) == firstChangesWithPrices.end())
+                {
                     firstChangesWithPrices[changeVector] = price;
+                }
             }
             secret = prune(mix(secret, secret * 64));
             secret = prune(mix(secret, secret / 32));
@@ -55,7 +57,7 @@ public:
     __forceinline const void FillPriceChangeVectorMap(PriceChangeMap& map) const
     {
         for(const auto& c : firstChangesWithPrices)
-            map[c.first] = 1;
+            map[c.first] += c.second;
     }
     __forceinline const int GetPriceForChangeVector(const mutil::IntVector4& ChangeVector) const
     {
@@ -70,6 +72,8 @@ public:
 };
 
 vector<Monkey> monkeys;
+PriceChangeMap globalChangeMapForLive;
+PriceChangeMap globalChangeMapForTest;
 const int64_t AoC_2024_22::Step1()
 {
     monkeys.clear();
@@ -80,7 +84,7 @@ const int64_t AoC_2024_22::Step1()
     TIME_PART;
     int64_t sum = 0;
 
-    for(const auto& secret : input) 
+    for(const auto& secret : input)
         monkeys.push_back(Monkey(secret));
 
     concurrency::parallel_for_each(monkeys.begin(), monkeys.end(), [&sum](Monkey& monkey)
@@ -97,12 +101,15 @@ const int64_t AoC_2024_22::Step2()
     // test input does change from P1 to P2, but live input does not
     if(IsTest())
     {
+        globalChangeMapForTest.clear();
+
         monkeys.clear();
         vector<int> input;
         aoc::AoCStream() >> input;
 
-        for(const auto& secret : input) 
+        for(const auto& secret : input)
             monkeys.push_back(Monkey(secret));
+
         concurrency::parallel_for_each(monkeys.begin(), monkeys.end(), [](Monkey& monkey)
             {
                 monkey.CountSecretAndPrices(2000);
@@ -110,34 +117,16 @@ const int64_t AoC_2024_22::Step2()
     }
 
     // construct the map with all possible price change vectors
-    // the value doesn't matter
     PriceChangeMap allChanges;
     for(const auto& m : monkeys)
         m.FillPriceChangeVectorMap(allChanges);
 
     // now, estimate the highest possible price
     int64_t highestPrice = 0;
-
-    CRITICAL_SECTION cs;
-    ::InitializeCriticalSection(&cs);
-
-    concurrency::parallel_for_each(allChanges.begin(), allChanges.end(), [&](const auto& c)
-        {
-            int priceSum = 0;
-            for(auto& m : monkeys)
-            {
-                priceSum += m.GetPriceForChangeVector(c.first);
-            }
-
-            ::EnterCriticalSection(&cs);
-            if(highestPrice < priceSum)
-            {
-                highestPrice = priceSum;
-            }
-            ::LeaveCriticalSection(&cs);
-        });
-
-    ::DeleteCriticalSection(&cs);
+    for(const auto& c : allChanges)
+    {
+        highestPrice = max(highestPrice, c.second);
+    }
     return highestPrice;
 };
 
