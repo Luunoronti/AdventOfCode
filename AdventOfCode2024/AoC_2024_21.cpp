@@ -34,6 +34,66 @@ private:
         }
     }
 public:
+    void ProduceRequiredMovesForInputToFile(const string& Input, const string& OutputFile)
+    {
+        /**
+        * Given our k-pad:
+        +---+---+---+
+        | 7 | 8 | 9 |
+        +---+---+---+
+        | 4 | 5 | 6 |
+        +---+---+---+
+        | 1 | 2 | 3 |
+        +---+---+---+
+            | 0 | A |
+            +---+---+
+
+            // we need to figure out the shortest path required, from current location
+            // so first, get the position required
+            // then find the shortest path
+            // then output that as a list of moves
+        */
+        std::ofstream ofile(OutputFile, std::ios::binary);
+        if(!ofile) { std::cerr << "Error opening output file: " << OutputFile << std::endl; return; }
+
+        char outChar = 0;
+        for(const auto c : Input)
+        {
+            auto newLoc = GetLocationForCharacter(c);
+
+            // now, depending on where do we need to go, we take different paths:
+            // if we need to go up, we do that BEFORE we go left or right
+            // if we have to go down, we first go left or right
+            // this way, we are sure to get to the location, given one 'empty' spot
+            while(newLoc != CurrentLocation)
+            {
+                if(newLoc.y < CurrentLocation.y)
+                {
+                    CurrentLocation.y--;
+                    outChar = '^';
+                }
+                else if(newLoc.x < CurrentLocation.x)
+                {
+                    CurrentLocation.x--;
+                    outChar = '<';
+                }
+                else if(newLoc.x > CurrentLocation.x)
+                {
+                    CurrentLocation.x++;
+                    outChar = '>';
+                }
+                else if(newLoc.y > CurrentLocation.y)
+                {
+                    CurrentLocation.y++;
+                    outChar = 'v';
+                }
+                ofile.put(outChar);
+            }
+            ofile.put('A');
+        }
+
+        ofile.close();
+    }
     vector<char> ProduceRequiredMovesForInput(const string& Input)
     {
         /**
@@ -123,6 +183,49 @@ private:
     }
 
 public:
+    void ProduceRequiredMovesForInputUsingFiles(const string& InputFile, const string& OutputFile)
+    {
+        std::ofstream ofile(OutputFile, std::ios::binary);
+        std::ifstream ifile(InputFile, std::ios::binary);
+        if(!ofile) { std::cerr << "Error opening output file: " << OutputFile << std::endl; return; }
+        if(!ifile) { std::cerr << "Error opening input file: " << InputFile << std::endl; return; }
+
+        char inChar;
+        char outChar = 0;
+        while(ifile.get(inChar))
+        {
+            auto newLoc = GetLocationForCharacter(inChar);
+            while(newLoc != CurrentLocation)
+            {
+                if(newLoc.y > CurrentLocation.y)
+                {
+                    CurrentLocation.y++;
+                    outChar = 'v';
+                }
+                else if(newLoc.x < CurrentLocation.x)
+                {
+                    CurrentLocation.x--;
+                    outChar = '<';
+                }
+                else if(newLoc.x > CurrentLocation.x)
+                {
+                    CurrentLocation.x++;
+                    outChar = '>';
+                }
+                else if(newLoc.y < CurrentLocation.y)
+                {
+                    CurrentLocation.y--;
+                    outChar = '^';
+                }
+
+                ofile.put(outChar);
+            }
+            ofile.put('A');
+        }
+
+        ofile.close();
+        ifile.close();
+    };
     vector<char> ProduceRequiredMovesForInput(vector<char>& Input)
     {
         /**
@@ -188,6 +291,12 @@ void PrintChars(const vector<char>& vc)
     }
     cout << endl;
 }
+std::string createFileName(int index)
+{
+    std::ostringstream oss;
+    oss << "C:\\Temp\\day_21\\R_" << std::setw(2) << std::setfill('0') << index << ".bin";
+    return oss.str();
+}
 const int64_t AoC_2024_21::Step1()
 {
     TIME_PART;
@@ -208,6 +317,7 @@ const int64_t AoC_2024_21::Step1()
         kpadRobot.Reset();
         auto stepsRequired = kpadRobot.ProduceRequiredMovesForInput(line);
         //PrintChars(stepsRequired);
+        int index = 0;
         for(auto& ctrl : ControlRobots)
         {
             ctrl.Reset();
@@ -222,7 +332,7 @@ const int64_t AoC_2024_21::Step1()
         lineTmp[1] = line[1];
         lineTmp[2] = line[2];
         int num = stoi(lineTmp);
-        
+
         sum += (num * count);
     }
     return sum;
@@ -230,17 +340,46 @@ const int64_t AoC_2024_21::Step1()
 const int64_t AoC_2024_21::Step2()
 {
     TIME_PART;
-    return 0;
+    vector<string> lines;
+    aoc::AoCStream() >> lines;
+
+    //return 0;
+
+    KeypadRobot kpadRobot;
+    vector<ControlRobot> ControlRobots;
+
+    for(int i = 0; i < 25; i++)
+        ControlRobots.push_back(ControlRobot());
+
+    int64_t sum = 0;
+    for(const auto& line : lines)
+    {
+        cout << line << endl;
+        kpadRobot.Reset();
+        kpadRobot.ProduceRequiredMovesForInputToFile(line, createFileName(0));
+        //PrintChars(stepsRequired);
+        cout << "Starting" << endl;
+        int index = 0;
+        for(auto& ctrl : ControlRobots)
+        {
+            cout << "Robot # " << index << endl;
+            ctrl.Reset();
+            ctrl.ProduceRequiredMovesForInputUsingFiles(createFileName(index), createFileName(index + 1));
+            //PrintChars(stepsRequired);
+            index++;
+        }
+
+        int count = 0;// stepsRequired.size();
+
+        // well.. lol
+        char lineTmp[4]{ 0 };
+        lineTmp[0] = line[0];
+        lineTmp[1] = line[1];
+        lineTmp[2] = line[2];
+        int num = stoi(lineTmp);
+
+        sum += (num * count);
+    }
+    return sum;
 };
 
-
-/*
-379A
-^A^^<<A>>AvvvA
-<A>A<AAv<AA>>^AvAA^Av<AAA>^A
-v<<A>>^AvA^Av<<A>>^AAv<A<A>>^AAvAA<^A>Av<A>^AA<A>Av<A<A>>^AAAvA<^A>A
-
-*/ 
-// 379A
-// v<<A>>^AvA^Av<<A>>^AAv<A<A>>^AAvAA<^A>Av<A>^AA<A>Av<A<A>>^AAAvA<^A>A
-// <v<A>>^AvA^A<vA<AA>>^AAvA<^A>AAvA^A<vA>^AA<A>A<v<A>A>^AAAvA<^A>A

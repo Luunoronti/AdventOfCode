@@ -448,8 +448,8 @@
     "year": 2024
   },
   {
-    "run": true,
-    "debugRun": true,
+    "run": false,
+    "debugRun": false,
     "enableVisualization": false,
     "name": "____",
     "day": 20,
@@ -472,8 +472,8 @@
     "year": 2024
   },
   {
-    "run": true,
-    "debugRun": true,
+    "run": false,
+    "debugRun": false,
     "name": "Keypad Conundrum",
     "day": 21,
     "liveStep1": {
@@ -495,24 +495,24 @@
     "year": 2024
   },
   {
-    "run": false,
-    "debugRun": false,
-    "name": "____",
+    "run": true,
+    "debugRun": true,
+    "name": "Monkey Market",
     "day": 22,
     "liveStep1": {
-      "expectedResult": 0,
+      "expectedResult": 14476723788,
       "knownErrors": []
     },
     "liveStep2": {
-      "expectedResult": 0,
-      "knownErrors": []
+      "expectedResult": 1630,
+      "knownErrors": [1685, 1659, 1644, 1604]
     },
     "testStep1": {
-      "expectedResult": 0,
+      "expectedResult": 37327623,
       "knownErrors": []
     },
     "testStep2": {
-      "expectedResult": 0,
+      "expectedResult": 23,
       "knownErrors": []
     },
     "year": 2024

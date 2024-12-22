@@ -512,4 +512,27 @@ namespace aoc
         char* pool;
         FreeBlock* freeList;
     };
+
+
+    // Custom hash function for IntVector4
+    struct IntVector4Hash
+    {
+        __forceinline std::size_t operator()(const mutil::IntVector4& vec) const noexcept
+        {
+            std::size_t h1 = std::hash<int>()(vec.x);
+            std::size_t h2 = std::hash<int>()(vec.y);
+            std::size_t h3 = std::hash<int>()(vec.z);
+            std::size_t h4 = std::hash<int>()(vec.w);
+            return h1 ^ (h2 << 1) ^ (h3 << 2) ^ (h4 << 3);
+        }
+    };
+
+    // Custom equality function for IntVector4
+    struct IntVector4Equal
+    {
+        __forceinline bool operator()(const mutil::IntVector4& vec1, const mutil::IntVector4& vec2) const noexcept
+        {
+            return vec1.x == vec2.x && vec1.y == vec2.y && vec1.z == vec2.z && vec1.w == vec2.w;
+        }
+    };
 }
