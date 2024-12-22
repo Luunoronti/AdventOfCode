@@ -12,7 +12,7 @@ public:
     void ProcessSecretAndPrices(int repetitions)
     {
         int lastPrice = 0;
-        mutil::IntVector4 changeVector;
+        mutil::IntVector4 changeVector{ 0 };
 
         for(int i = 0; i < repetitions; i++)
         {
@@ -21,7 +21,7 @@ public:
             changeVector[3] = changeVector[2];
             changeVector[2] = changeVector[1];
             changeVector[1] = changeVector[0];
-            changeVector[3] = price - lastPrice;
+            changeVector[0] = price - lastPrice;
 
             lastPrice = price;
 
