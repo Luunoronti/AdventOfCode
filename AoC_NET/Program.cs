@@ -1,55 +1,113 @@
-﻿using System.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using System.Diagnostics;
+using System.Runtime.Serialization;
+using System.Text;
 
-var lines = File.ReadAllLines(@"C:\Users\wikto\Downloads\Erosion\Erosion.log");
-List<string> outputLines = [];
+string inpt = "123";
+string inpt2 = @"1
+2
+3
+2024";
 
-Dictionary<string, int> toRemoveSingleLine = new()
+string inpp = @"";
+
+List<long> inputs = [];
+Dictionary<string, long> bananas = [];
+Dictionary<long, long> precalc = new();
+string inp = File.ReadAllText(@"C:\Work\AoC\AdventOfCode\AdventOfCode2024\Live\2024_22_2.txt");
+ReadInput(inp);
+
+var ts = Stopwatch.GetTimestamp();
+P1();
+var ts2 = Stopwatch.GetTimestamp();
+P2();
+var ts3 = Stopwatch.GetTimestamp();
+
+Console.WriteLine($"P1: {Stopwatch.GetElapsedTime(ts, ts2)}");
+Console.WriteLine($"P2: {Stopwatch.GetElapsedTime(ts2, ts3)}");
+void P1()
 {
-    { "____", 0 },
-    { "Mesh is marked for CPU read", 0 },
-    { "r.Lumen", 0 },
-    { "Mounting Engine plugin", 0 },
-    { "LogWorldPartition: Data Layer Instance", 0 },
-    { "LogScript: Warning: Script Msg: Divide by zero: Divide_IntInt", 5 },
-    { "LogScript: Warning: Accessed None trying to read property CallFunc_CreateDynamicMaterialInstance_ReturnValue_2", 9 },
-    {  "Material index 0 is invalid.", 7 },
-    { "Warning: Accessed None trying to read property ActionEnterMaterialInstanc", 6 },
-
-    { "LogScript: Warning: Script call stack:", 0 },
-    { "/ErosionCore/Vehicles/BP_ErosionVehicle_Base.BP_ErosionVehicle_Base_C:Timeline__UpdateFunc", 0 },
-    { "/ErosionCore/Vehicles/BP_ErosionVehicle_Base.BP_ErosionVehicle_Base_C:ExecuteUbergraph_BP_ErosionVehicle_Base", 0 },
-    { "PIE: Warning: AttachTo: '/ErosionUpperWorld/Maps/L_UpperWorld_Main/_Generated_", 0 },
-    { "Warning: Ignoring primary asset ", 0 },
-    { "Spawner: ", 0 },
-    { "Targetting: ", 0 },
-     
-
-};
-
-bool check(string line, out int lto)
-{
-    foreach (var pair in toRemoveSingleLine)
+    long res = 0;
+    long toCalc = 0;
+    foreach (var nr in inputs)
     {
-        if (line.Contains(pair.Key))
+        toCalc = nr;
+        for (long i = 0; i < 2000; i++)
         {
-            lto = pair.Value;
-            return true;
+            toCalc = Calculate(toCalc);
+        }
+
+        res += toCalc;
+    }
+    Console.WriteLine($"P1: {res}");
+
+    //Console.ReadLine();
+}
+void P2()
+{
+    long toCalc = 0;
+
+    foreach (var nr in inputs)
+    {
+        List<long> changes = [];
+        HashSet<string> firstchanges = [];
+        toCalc = nr;
+        for (long i = 0; i < 2000; i++)
+        {
+            long tmp = toCalc % 10;
+            toCalc = Calculate(toCalc);
+            long tmp2 = toCalc % 10;
+            long change = tmp2 - tmp;
+            changes.Add(change);
+            if (changes.Count > 3)
+            {
+                string c = string.Join(',', changes.Skip(changes.Count() - 4));
+                if (!firstchanges.Contains(c))
+                {
+                    firstchanges.Add(c);
+                    if (bananas.ContainsKey(c))
+                    {
+                        bananas[c] += tmp2;
+                    }
+                    else
+                    {
+                        bananas.Add(c, tmp2);
+                    }
+                }
+            }
         }
     }
-    lto = 0;
-    return false;
+    var r = bananas.OrderByDescending(b => b.Value);
+    var res = bananas.Max(b => b.Value);
+    Console.WriteLine($"P2:{res}");
+    Console.ReadLine();
 }
-for (var i = 0; i < lines.Length; i++)
+
+long Calculate(long i)
 {
-    var line = lines[i];
-    if (check(line, out var lto))
+    long res = 0;
+    if (precalc.ContainsKey(i))
     {
-        i += lto;
-        continue;
+        res = precalc[i];
     }
+    else
+    {
+        res = ((i << 6) ^ i) % 16777216;
+        res = ((res >> 5) ^ res) % 16777216;
+        res = ((res << 11) ^ res) % 16777216;
 
-    outputLines.Add(line);
+        precalc.Add(i, res);
+    }
+    return res; ;
 }
 
-File.WriteAllLines(@"C:\Users\wikto\Downloads\Erosion\Erosion2.log", outputLines.ToArray());
+void ReadInput(string input)
+{
+    foreach (var l in input.Split('\n'))
+    {
+        long i;
+        if (long.TryParse(l, out i))
+        {
+            inputs.Add(i);
+        }
+    }
+}

@@ -472,8 +472,8 @@
     "year": 2024
   },
   {
-    "run": false,
-    "debugRun": false,
+    "run": true,
+    "debugRun": true,
     "name": "Keypad Conundrum",
     "day": 21,
     "liveStep1": {
@@ -496,7 +496,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "name": "Monkey Market",
     "day": 22,
     "liveStep1": {

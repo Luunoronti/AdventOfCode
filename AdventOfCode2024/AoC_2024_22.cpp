@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "AoC_2024_22.h"
 
+#include <conio.h> // for kbhit and getch
+
+
 typedef std::unordered_map<mutil::IntVector4, int, aoc::IntVector4Hash, aoc::IntVector4Equal> PriceChangeMap;
 
 class Monkey
@@ -30,7 +33,7 @@ public:
             lastPrice = price;
 
             // if we are over 3 iterations, we start to store prices
-            // if there is already price stored for given change vector, we don't override it.
+            // if there is a price stored for given change vector already, don't override it.
             if(i >= 4 && firstPriceChanges.find(changeVector) == firstPriceChanges.end())
                 firstPriceChanges[changeVector] = price;
 
