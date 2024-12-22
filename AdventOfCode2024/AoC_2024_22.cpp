@@ -25,11 +25,9 @@ public:
 
             lastPrice = price;
 
-            if(i >= 4)
-            {
-                if(firstPriceChanges.find(changeVector) == firstPriceChanges.end())
-                    firstPriceChanges[changeVector] = price;
-            }
+            if(i >= 4 && firstPriceChanges.find(changeVector) == firstPriceChanges.end())
+                firstPriceChanges[changeVector] = price;
+
             secret = prune(mix(secret, secret * 64));
             secret = prune(mix(secret, secret / 32));
             secret = prune(mix(secret, secret * 2048));
