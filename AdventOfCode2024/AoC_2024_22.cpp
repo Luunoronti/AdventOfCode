@@ -62,16 +62,20 @@ const int64_t AoC_2024_22::Compute() const
         monkeys.push_back(Monkey(secret));
 
     int64_t sum = 0;
-    concurrency::parallel_for_each(monkeys.begin(), monkeys.end(), [&sum](Monkey& monkey)
-        {
-            monkey.ProcessSecretAndPrices(2000);
-            InterlockedAdd64(&sum, (int64_t)monkey.secret);
-        });
+    for(auto& monkey : monkeys)
+    {
+        monkey.ProcessSecretAndPrices(2000);
+        sum += (int64_t)monkey.secret;// InterlockedAdd64(&sum, (int64_t)monkey.secret);
+    };
+    //concurrency::parallel_for_each(monkeys.begin(), monkeys.end(), [&sum](Monkey& monkey)
+    //    {
+    //        monkey.ProcessSecretAndPrices(2000);
+    //        InterlockedAdd64(&sum, (int64_t)monkey.secret);
+    //    });
     return sum;
 }
 const int64_t AoC_2024_22::Step1()
 {
-    Sleep(1000000);
     TIME_PART;
     return Compute();
 };

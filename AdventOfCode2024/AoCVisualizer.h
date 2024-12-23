@@ -23,14 +23,48 @@ private:
     LARGE_INTEGER startTime;
     LARGE_INTEGER frameQPFTime;
 };
+struct JsonColor
+{
+    int r{ 0 };
+    int g{ 0 };
+    int b{ 0 };
+
+    mutil::Vector3 ToColor()
+    {
+        return mutil::Vector3((float)r / 255, (float)g / 255, (float)b / 255);
+    }
+    static JsonColor FromColor(const mutil::Vector3& color)
+    {
+        JsonColor c;
+        c.r = (int)(color.x * 255);
+        c.g = (int)(color.y * 255);
+        c.b = (int)(color.z * 255);
+        return c;
+    }
+};
 struct AoCVisualizerConfig
 {
     bool AllowMouseCapture{ false };
     bool AlternateBuffer{ false };
     bool HideCursor{ false };
     bool ClearScreenOnExit{ true };
+    bool Force16colorsMode{ false };
+
+    int clearMode{ 0 }; // 0: fill with color, 1: fill with gradient, 2: fill with animated gradient
+    int legendVisibility{ 1 }; // 0: never, 1: when camera move pressed, 2: always
+    int cameraMoveMouseButton{ 0x04 }; // camera move mouse button. LMB: 1, RMB: 2, MMB: 4
+    JsonColor clearColor;
+    JsonColor infoColor;
+    JsonColor gradientStartColor;
+    JsonColor gradientEndColor;
+    float animatedGradientSpeed{ 0.01f };
 
     bool EnableVT{ true }; // always true for now
+
+
+    bool visualizeNormals{ false };
+    bool visualizeHitPoints{ false };
+
 };
 
 struct AoCCharacterInfo
@@ -72,10 +106,36 @@ class AoCVisLight : public AoCVisActor
 class AoCVisDirectionalLight : public AoCVisLight
 {};
 
+class AoCVisInputKey
+{
+public:
+    AoCVisInputKey(const int KeyCode) : KeyCode(KeyCode) {}
+    void Update();
+
+    int KeyCode;
+    bool IsPressed{ false };
+    bool IsReleased{ false };
+    bool IsDown{ false };
+};
+class AoCVisInput
+{
+public:
+    AoCVisInput(AoCVisualizerConfig* Config) : Config(Config) { }
+    void Update();
+    void Release();
+    void AddKey(int code);
+    unordered_map<int, shared_ptr<AoCVisInputKey>> Keys;
+    mutil::IntVector2 MouseLocation;
+    mutil::IntVector2 LastMouseLocation;
+    mutil::IntVector2 MouseDelta;
+    AoCVisualizerConfig* Config;
+    bool wasPressedLastFrame{ false };
+};
+
 class AoCVisCamera : public AoCVisActor
 {
 public:
-    AoCVisCamera();
+    AoCVisCamera(AoCVisualizerConfig* config, AoCVisInput* Input);
 
     void Update(float deltaTime);
 
@@ -123,13 +183,20 @@ private:
     float VerticalFoV{ 45.0f };
     float NearClip{ 0.1f };
     float FarClip{ 100.0f };
-    float Speed{ 0.005f };
-    float RotationSpeed{ 0.1f };
+    float Speed{ 1.0f };
+    float RotationSpeed{ 180 };
 
     mutil::IntVector2 ViewPortSize;
     std::vector<mutil::Vector3> RayDirections;
     bool RayDirectionsNeedToRecompute{ true };
+
+    AoCVisualizerConfig* Config;
+    AoCVisInput* Input;
+
+    bool singleKeyPressKeyPressed{ false };
 };
+
+typedef std::function<void(const int ObjectHandle, const mutil::Vector3& hitPoint, const mutil::IntVector2& screenPos, AoCCharacterInfo& pixel)> PixelShaderFunc;
 
 class AoCVisualizer
 {
@@ -154,6 +221,9 @@ public:
     HANDLE ConsoleInput;
     HANDLE ConsoleOutput;
 
+    HANDLE ActiveScreenBuffer;
+    HANDLE BackBuffer;
+
 #pragma region Actual drawing
     FPSCounter FPS;
     CHAR_INFO* ConsoleBuffer{ nullptr };
@@ -161,10 +231,10 @@ public:
     COORD ViewportSize{ 0 };
     AoCCharacterInfo* CharacterBuffer{ nullptr };
     wchar_t* Intermediatebuffer{ nullptr };
+    WORD* Intermediate16ColorAttributeBuffer{ nullptr };
 
     int BackBufferSPrintfCounter{ 0 };
     int BackBufferSPrintfFullColorCounter{ 0 };
-
 
     __forceinline const bool GetHitLocation_WithSphere(const mutil::Vector3& RayOrigin, const mutil::Vector3& RayDirection, const float SphereRadius, mutil::Vector3& HitLocation) const;
 
@@ -177,6 +247,15 @@ public:
     void CheckBufferSizeChange();
     void RecreateBuffers(const COORD& NewSize);
     void FillGradient(int startR, int startG, int startB, int endR, int endG, int endB, float phase);
+
+    void InitPixelShaders();
+
+    PixelShaderFunc PixelShader;
+    PixelShaderFunc ActualPixelShader;
+
+    PixelShaderFunc Vis_HitInfoPixelShader;
+    PixelShaderFunc Vis_NormalPixelShader;
+
 #pragma endregion
 
 #pragma region Scene
@@ -195,6 +274,8 @@ private:
     void AddLight(std::shared_ptr<AoCVisLight> Lights);
     void RemoveLight(std::shared_ptr<AoCVisLight> Lights);
 #pragma endregion
+
+    std::shared_ptr<AoCVisInput> Input;
 
 #pragma region Helpers
 public:

@@ -668,6 +668,14 @@ long AoCBase::GetMinimum(const vector<long>& List)
 
 #pragma region Json database
 // Define to_json and from_json functions for MyStruct 
+void to_json(nlohmann::json& j, const JsonColor& s)
+{
+    j = nlohmann::json{
+        {"x", s.r},
+        {"y", s.g},
+        {"z", s.b} };
+}
+
 void to_json(nlohmann::json& j, const AoCBaseExecutionConfigurationResultEntry& s)
 {
     j = nlohmann::json{
@@ -695,7 +703,16 @@ void to_json(nlohmann::json& j, const AoCVisualizerConfig& s)
         {"allowMouseCapture", s.AllowMouseCapture},
         {"alternateBuffer", s.AlternateBuffer},
         {"hideCursor", s.HideCursor},
-        {"clearScreenOnExit", s.ClearScreenOnExit}
+        {"clearMode", s.clearMode},
+        {"legendVisibility", s.legendVisibility},
+        {"cameraMoveMouseButton", s.cameraMoveMouseButton},
+        {"clearColor", s.clearColor},
+        {"infoColor", s.infoColor},
+        {"gradientStartColor", s.gradientStartColor},
+        {"gradientEndColor", s.gradientEndColor},
+        {"animatedGradientSpeed", s.animatedGradientSpeed},
+        {"clearScreenOnExit", s.ClearScreenOnExit},
+        {"force16colorsMode", s.Force16colorsMode}
     };
 }
 void to_json(nlohmann::json& j, const AoCProgramConfiguration& s)
@@ -707,6 +724,13 @@ void to_json(nlohmann::json& j, const AoCProgramConfiguration& s)
     };
 }
 
+
+void from_json(const nlohmann::json& j, JsonColor& s)
+{
+    if(j.contains("r")) j.at("r").get_to(s.r);
+    if(j.contains("g")) j.at("g").get_to(s.g);
+    if(j.contains("b")) j.at("b").get_to(s.b);
+}
 void from_json(const nlohmann::json& j, AoCBaseExecutionConfigurationResultEntry& s)
 {
     if(j.contains("expectedResult")) j.at("expectedResult").get_to(s.ExpectedResult);
@@ -734,6 +758,15 @@ void from_json(const nlohmann::json& j, AoCVisualizerConfig& s)
     if(j.contains("alternateBuffer")) j.at("alternateBuffer").get_to(s.AlternateBuffer);
     if(j.contains("hideCursor")) j.at("hideCursor").get_to(s.HideCursor);
     if(j.contains("clearScreenOnExit")) j.at("clearScreenOnExit").get_to(s.ClearScreenOnExit);
+    if(j.contains("clearMode")) j.at("clearMode").get_to(s.clearMode);
+    if(j.contains("cameraMoveMouseButton")) j.at("cameraMoveMouseButton").get_to(s.cameraMoveMouseButton);
+    if(j.contains("legendVisibility")) j.at("legendVisibility").get_to(s.legendVisibility);
+    if(j.contains("animatedGradientSpeed")) j.at("animatedGradientSpeed").get_to(s.animatedGradientSpeed);
+    if(j.contains("clearColor")) j.at("clearColor").get_to(s.clearColor);
+    if(j.contains("infoColor")) j.at("infoColor").get_to(s.infoColor);
+    if(j.contains("gradientStartColor")) j.at("gradientStartColor").get_to(s.gradientStartColor);
+    if(j.contains("gradientEndColor")) j.at("gradientEndColor").get_to(s.gradientEndColor);
+    if(j.contains("force16colorsMode")) j.at("force16colorsMode").get_to(s.Force16colorsMode);
 }
 void from_json(const nlohmann::json& j, AoCProgramConfiguration& s)
 {

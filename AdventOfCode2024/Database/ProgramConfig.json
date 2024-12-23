@@ -1,11 +1,34 @@
 {
-    "runAllInDebug": false,
-    "runAllInRelease": false,
-    "visualizer":
-    {
-        "allowMouseCapture": false, 
-        "alternateBuffer": false,
-        "hideCursor": true,
-        "clearScreenOnExit" : true
+  "runAllInDebug": false,
+  "runAllInRelease": false,
+  "visualizer": {
+    "allowMouseCapture": false,
+    "alternateBuffer": false,
+    "hideCursor": true,
+    "force16colorsMode": false,
+    "clearScreenOnExit": true,
+    "legendVisibility": 1, 
+    "cameraMoveMouseButton": 4,
+    "clearMode": 2,
+    "clearColor": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "infoColor": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    },
+    "gradientStartColor": {
+      "r": 0,
+      "g": 0,
+      "b": 255
+    },
+    "gradientEndColor": {
+      "r": 255,
+      "g": 255,
+      "b": 255
     }
+  }
 }
