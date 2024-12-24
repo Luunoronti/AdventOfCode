@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AoC_NET", "AoC_NET\AoC_NET.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aocnetagent", "aocnetagent\aocnetagent.csproj", "{B33154CC-54D9-4334-9323-D407EFFEF64C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day24_2024_Graph", "Day24_2024_Graph\Day24_2024_Graph.csproj", "{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,26 @@ Global
 		{B33154CC-54D9-4334-9323-D407EFFEF64C}.Release|x64.Build.0 = Release|Any CPU
 		{B33154CC-54D9-4334-9323-D407EFFEF64C}.Release|x86.ActiveCfg = Release|Any CPU
 		{B33154CC-54D9-4334-9323-D407EFFEF64C}.Release|x86.Build.0 = Release|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Debug|ARM.Build.0 = Debug|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Debug|x64.Build.0 = Debug|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Debug|x86.Build.0 = Debug|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Release|ARM.ActiveCfg = Release|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Release|ARM.Build.0 = Release|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Release|ARM64.Build.0 = Release|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Release|x64.ActiveCfg = Release|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Release|x64.Build.0 = Release|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Release|x86.ActiveCfg = Release|Any CPU
+		{5A4DF539-E3F2-46A8-86C8-B9691E0727F8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

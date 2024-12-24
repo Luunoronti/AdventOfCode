@@ -71,3 +71,5 @@ const string BKBLUE = "\033[44m";
 const string BKMAGENTA = "\033[45m";
 const string BKCYAN = "\033[46m";
 const string BKWHITE = "\033[47m";
+const string OK = "[\033[32m*]\033[0m";
+const string ERR = "[\033[31mX]\033[0m";

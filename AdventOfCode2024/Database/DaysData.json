@@ -520,9 +520,9 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "name": "LAN Party",
-    "enableVisualization": true,
+    "enableVisualization": false,
     "day": 23,
     "liveStep1": {
       "expectedResult": 1240,
@@ -543,24 +543,24 @@
     "year": 2024
   },
   {
-    "run": false,
-    "debugRun": false,
-    "name": "____",
+    "run": true,
+    "debugRun": true,
+    "name": "Crossed Wires",
     "day": 24,
     "liveStep1": {
-      "expectedResult": 0,
+      "expectedResult": 49574189473968,
       "knownErrors": []
     },
     "liveStep2": {
-      "expectedResult": 0,
+      "expectedResult": 1,
       "knownErrors": []
     },
     "testStep1": {
-      "expectedResult": 0,
+      "expectedResult": 2024,
       "knownErrors": []
     },
     "testStep2": {
-      "expectedResult": 0,
+      "expectedResult": 1,
       "knownErrors": []
     },
     "year": 2024
