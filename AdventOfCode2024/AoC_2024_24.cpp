@@ -581,6 +581,13 @@ const int64_t AoC_2024_24::Step2()
     }
     cout << OK << "Full adders created." << endl;
     
+    // this is where we would have to check for connections between adders.
+    // however, the problem turned out to be swaps inside adders only.
+    // we got 4 swaps (8 strings in total) already.
+    // but looking for proper interconnections would be just the same
+    // as looking for gates to swap in FullAdder::TryCreate()
+
+
     std::sort(Changes.begin(), Changes.end());
     for(auto c : Changes)
     {
