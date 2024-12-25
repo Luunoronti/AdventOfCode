@@ -564,5 +564,28 @@
       "knownErrors": []
     },
     "year": 2024
+  },
+  {
+    "run": true,
+    "debugRun": true,
+    "name": "Code Chronicle",
+    "day": 25,
+    "liveStep1": {
+      "expectedResult": 3365,
+      "knownErrors": []
+    },
+    "liveStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "testStep1": {
+      "expectedResult": 3,
+      "knownErrors": []
+    },
+    "testStep2": {
+      "expectedResult": 0,
+      "knownErrors": []
+    },
+    "year": 2024
   }
 ]

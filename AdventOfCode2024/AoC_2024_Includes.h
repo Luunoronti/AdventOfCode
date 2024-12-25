@@ -23,3 +23,4 @@
 #include "AoC_2024_22.h"
 #include "AoC_2024_23.h"
 #include "AoC_2024_24.h"
+#include "AoC_2024_25.h"

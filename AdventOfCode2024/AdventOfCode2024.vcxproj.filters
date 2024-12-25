@@ -150,6 +150,9 @@
     <ClCompile Include="AoC2024.cpp">
       <Filter>Source Files\2024</Filter>
     </ClCompile>
+    <ClCompile Include="AoC_2024_25.cpp">
+      <Filter>Source Files\2024</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AoC_2024_32.h">
@@ -268,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="json.hpp">
       <Filter>Source Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC_2024_25.h">
+      <Filter>Source Files\2024</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

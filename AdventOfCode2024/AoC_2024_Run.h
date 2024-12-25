@@ -23,3 +23,4 @@ AoCBase::ExecuteSteps<AoC_2024_21>();
 AoCBase::ExecuteSteps<AoC_2024_22>();
 AoCBase::ExecuteSteps<AoC_2024_23>();
 AoCBase::ExecuteSteps<AoC_2024_24>();
+AoCBase::ExecuteSteps<AoC_2024_25>();
