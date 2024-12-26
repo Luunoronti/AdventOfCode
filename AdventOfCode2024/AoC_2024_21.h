@@ -7,5 +7,6 @@ public:
     const int64_t Step1() override;
     const int64_t Step2() override;
 
+    const int64_t Process(int robotsCount);
 };
 

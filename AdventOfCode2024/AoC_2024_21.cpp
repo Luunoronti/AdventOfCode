@@ -1,23 +1,133 @@
 #include "pch.h"
 #include "AoC_2024_21.h"
 
+#define PRINT_DEBUG 0
 
-class KeypadRobot
+struct CustomNumPunct : std::numpunct<char>
+{
+protected:
+    char do_thousands_sep() const override { return ','; }
+    std::string do_grouping() const override { return "\3"; }
+};
+
+class Robot
 {
 public:
-    KeypadRobot()
+    Robot(shared_ptr<Robot> Next) :Next(Next) {}
+    virtual void Reset() = 0;
+    virtual void Process(char Input) = 0;
+protected:
+    shared_ptr<Robot> Next;
+};
+
+
+class CountingRobot : public Robot
+{
+public:
+    CountingRobot() : Robot(nullptr)
     {
-        Reset();
     }
-    void Reset()
+
+    // Inherited via Robot
+    void Reset() override
+    {
+        Sum = 0;
+    }
+    __forceinline void Process(char Input) override
+    {
+        cout << Input;
+        ++Sum;
+#if PRINT_DEBUG
+        if(Sum > 100000000 && Sum % 100000000 == 0)
+            cout << Sum << endl;
+#endif
+    }
+    const int64_t GetResult(const string& line) const
+    {
+        int lineMultiplier = std::stoi(line.substr(0, 3));
+        return lineMultiplier * Sum;
+    }
+private:
+    int64_t Sum{ 0 };
+};
+
+
+/**
+    * Given our k-pad:
+    +---+---+---+
+    | 7 | 8 | 9 |
+    +---+---+---+
+    | 4 | 5 | 6 |
+    +---+---+---+
+    | 1 | 2 | 3 |
+    +---+---+---+
+        | 0 | A |
+        +---+---+
+
+        // we need to figure out the shortest path required, from current location
+        // so first, get the position required
+        // then find the shortest path
+        // then output that as a list of moves
+*/
+
+class KeypadRobot : public Robot
+{
+public:
+    KeypadRobot(shared_ptr<Robot> Next) : Robot(Next) {}
+    void Reset() override
     {
         CurrentLocation = GetLocationForCharacter('A');
     }
+    void ProcessInput(const string& inputLine)
+    {
+        for(const char c : inputLine)
+            Process(c);
+    }
+    void Process(char Input) override
+    {
+        if(!Next)
+        {
+            cerr << "No next robot specified. Work chain is broken." << endl;
+            return;
+        }
 
+#if PRINT_DEBUG
+        cout << endl << endl << Input << endl << endl;
+#endif
+
+        auto newLoc = GetLocationForCharacter(Input);
+        // now, depending on where do we need to go, we take different paths:
+        // if we need to go up, we do that BEFORE we go left or right
+        // if we have to go down, we first go left or right
+        // this way, we are sure to get to the location, given one 'empty' spot
+        while(newLoc != CurrentLocation)
+        {
+            if(newLoc.y < CurrentLocation.y)
+            {
+                CurrentLocation.y--;
+                Next->Process('^');
+            }
+            else if(newLoc.x < CurrentLocation.x)
+            {
+                CurrentLocation.x--;
+                Next->Process('<');
+            }
+            else if(newLoc.x > CurrentLocation.x)
+            {
+                CurrentLocation.x++;
+                Next->Process('>');
+            }
+            else if(newLoc.y > CurrentLocation.y)
+            {
+                CurrentLocation.y++;
+                Next->Process('v');
+            }
+        }
+        Next->Process('A');
+    };
 private:
     mutil::IntVector2 GetLocationForCharacter(const char c)
     {
-        // not nice, but will do the job
         switch(c)
         {
         case '7': return mutil::IntVector2(0, 0);
@@ -33,79 +143,122 @@ private:
         case 'A': return mutil::IntVector2(2, 3);
         }
     }
-public:
-    vector<char> ProduceRequiredMovesForInput(const string& Input)
-    {
-        /**
-        * Given our k-pad:
-        +---+---+---+
-        | 7 | 8 | 9 |
-        +---+---+---+
-        | 4 | 5 | 6 |
-        +---+---+---+
-        | 1 | 2 | 3 |
-        +---+---+---+
-            | 0 | A |
-            +---+---+
 
-            // we need to figure out the shortest path required, from current location
-            // so first, get the position required
-            // then find the shortest path
-            // then output that as a list of moves
-        */
-        vector<char> output;
-
-        for(const auto c : Input)
-        {
-            auto newLoc = GetLocationForCharacter(c);
-
-            // now, depending on where do we need to go, we take different paths:
-            // if we need to go up, we do that BEFORE we go left or right
-            // if we have to go down, we first go left or right
-            // this way, we are sure to get to the location, given one 'empty' spot
-            while(newLoc != CurrentLocation)
-            {
-                if(newLoc.y < CurrentLocation.y)
-                {
-                    CurrentLocation.y--;
-                    output.push_back('^');
-                }
-                else if(newLoc.x < CurrentLocation.x)
-                {
-                    CurrentLocation.x--;
-                    output.push_back('<');
-                }
-                else if(newLoc.x > CurrentLocation.x)
-                {
-                    CurrentLocation.x++;
-                    output.push_back('>');
-                }
-                else if(newLoc.y > CurrentLocation.y)
-                {
-                    CurrentLocation.y++;
-                    output.push_back('v');
-                }
-            }
-
-            output.push_back('A');
-            int aa = 0;
-        }
-        return output;
-    }
 private:
     mutil::IntVector2 CurrentLocation;
 };
-class ControlRobot
+
+
+/**
+    * Given our k-pad:
+        +---+---+
+        | ^ | A |
+    +---+---+---+
+    | < | v | > |
+    +---+---+---+
+    // we need to figure out the shortest path required, from current location
+    // so first, get the position required
+    // then find the shortest path
+    // then output that as a list of moves
+*/
+
+class ControlRobot : public Robot
 {
 public:
-    ControlRobot()
-    {
-        Reset();
-    }
-    void Reset()
+    ControlRobot(shared_ptr<Robot> Next) : Robot(Next) {}
+
+    // Inherited via Robot
+    void Reset() override
     {
         CurrentLocation = GetLocationForCharacter('A');
     }
+
+    __forceinline void Process(char Input) override
+    {
+        if(!Next)
+        {
+            cerr << "No next robot specified. Work chain is broken." << endl;
+            return;
+        }
+
+        auto newLoc = GetLocationForCharacter(Input);
+
+        // we need to go down BEFORE going left/right
+        // we need to go left/right BEFORE going up
+
+        while(newLoc != CurrentLocation)
+        {
+            // new logic is a bit more complex:
+            // we prefer to move left/right before up/down
+            // this calls for check if we can actually move in 
+            // that direction
+            if(newLoc.x < CurrentLocation.x)
+            {
+                //if(CurrentLocation.x == 1 && CurrentLocation.y == 0 && newLoc.y > CurrentLocation.y)
+                //{
+                //    // can't go left. go down instead
+                //    CurrentLocation.y++;
+                //    Next->Process('v');
+                //    continue;
+                //}
+                CurrentLocation.x--;
+                Next->Process('<');
+                continue;
+            }
+            else if(newLoc.x > CurrentLocation.x)
+            {
+                CurrentLocation.x++;
+                Next->Process('>');
+                continue;
+            }
+            else if(newLoc.y > CurrentLocation.y)
+            {
+                CurrentLocation.y++;
+                Next->Process('v');
+                continue;
+            }
+            else if(newLoc.y < CurrentLocation.y)
+            {
+                //if(CurrentLocation.x == 0 && newLoc.x > CurrentLocation.x)
+                //{
+                //    // can't go up. go right instead
+                //    CurrentLocation.x++;
+                //    Next->Process('>');
+                //    continue;
+                //}
+
+                CurrentLocation.y--;
+                Next->Process('^');
+                continue;
+            }
+
+
+            continue;
+
+            if(newLoc.y > CurrentLocation.y)
+            {
+                CurrentLocation.y++;
+                Next->Process('v');
+            }
+            else if(newLoc.x < CurrentLocation.x)
+            {
+                CurrentLocation.x--;
+                Next->Process('<');
+            }
+            else if(newLoc.x > CurrentLocation.x)
+            {
+                CurrentLocation.x++;
+                Next->Process('>');
+            }
+            else if(newLoc.y < CurrentLocation.y)
+            {
+                CurrentLocation.y--;
+                Next->Process('^');
+            }
+        }
+        Next->Process('A');
+    }
+
 private:
     mutil::IntVector2 GetLocationForCharacter(const char c)
     {
@@ -119,64 +272,11 @@ private:
         case '>': return mutil::IntVector2(2, 1);
         }
     }
-
-public:
-    vector<char> ProduceRequiredMovesForInput(vector<char>& Input)
-    {
-        /**
-        * Given our k-pad:
-            +---+---+
-            | ^ | A |
-        +---+---+---+
-        | < | v | > |
-        +---+---+---+
-            // we need to figure out the shortest path required, from current location
-            // so first, get the position required
-            // then find the shortest path
-            // then output that as a list of moves
-        */
-
-        vector<char> output;
-
-        for(const auto c : Input)
-        {
-            auto newLoc = GetLocationForCharacter(c);
-
-            // we need to go down BEFORE going left/right
-            // we need to go left/right BEFORE going up
-
-            while(newLoc != CurrentLocation)
-            {
-                if(newLoc.y > CurrentLocation.y)
-                {
-                    CurrentLocation.y++;
-                    output.push_back('v');
-                }
-                else if(newLoc.x < CurrentLocation.x)
-                {
-                    CurrentLocation.x--;
-                    output.push_back('<');
-                }
-                else if(newLoc.x > CurrentLocation.x)
-                {
-                    CurrentLocation.x++;
-                    output.push_back('>');
-                }
-                else if(newLoc.y < CurrentLocation.y)
-                {
-                    CurrentLocation.y--;
-                    output.push_back('^');
-                }
-            }
-
-            output.push_back('A');
-            int aa = 0;
-        }
-        return output;
-    }
 private:
     mutil::IntVector2 CurrentLocation;
 };
+
+
 
 
 void PrintChars(const vector<char>& vc)
@@ -189,319 +289,79 @@ void PrintChars(const vector<char>& vc)
 }
 
 
-class CommandCounter
+const int64_t AoC_2024_21::Process(int robotsCount)
 {
-public:
-    CommandCounter() : count(0) {}
-    void PushCharacter(const char c)
-    {
-        if(c == '\0')
-        {
-            // end of stream, produce counter
-            cout << endl << "EOL: " << count << endl;
-            return;
-        }
-
-        // for test, all we do is to print out our
-        // characters
-        count++;
-    }
-
-    int count;
-};
-
-class ControlRobotStream
-{
-public:
-    void PushCharacter(const char c)
-    {
-        if(c == '\0')
-        {
-            if(downStream) downStream->PushCharacter('\0');
-            if(downCounter) downCounter->PushCharacter('\0');
-            return;
-        }
-
-        // refer to ControlRobot::ProduceRequiredMovesForInput() for logic explanation
-        auto newLoc = GetLocationForCharacter(c);
-
-        // we need to go down BEFORE going left/right
-        // we need to go left/right BEFORE going up
-
-        while(newLoc != CurrentLocation)
-        {
-            if(newLoc.y > CurrentLocation.y)
-            {
-                CurrentLocation.y++;
-                if(downStream) downStream->PushCharacter('v');
-                if(downCounter) downCounter->PushCharacter('v');
-            }
-            else if(newLoc.x < CurrentLocation.x)
-            {
-                CurrentLocation.x--;
-                if(downStream) downStream->PushCharacter('<');
-                if(downCounter) downCounter->PushCharacter('<');
-            }
-            else if(newLoc.x > CurrentLocation.x)
-            {
-                CurrentLocation.x++;
-                if(downStream) downStream->PushCharacter('>');
-                if(downCounter) downCounter->PushCharacter('>');
-            }
-            else if(newLoc.y < CurrentLocation.y)
-            {
-                CurrentLocation.y--;
-                if(downStream) downStream->PushCharacter('^');
-                if(downCounter) downCounter->PushCharacter('^');
-            }
-        }
-        if(downStream) downStream->PushCharacter('A');
-        if(downCounter) downCounter->PushCharacter('A');
-
-    }
-
-    ControlRobotStream& operator>>(ControlRobotStream controlRobot)
-    {
-        downStream = &controlRobot;
-        return *this;
-    }
-    ControlRobotStream& operator>>(CommandCounter counter)
-    {
-        downCounter = &counter;
-        return *this;
-    }
-private:
-    static mutil::IntVector2 GetLocationForCharacter(const char c)
-    {
-        // not nice, but will do the job
-        switch(c)
-        {
-        case '^': return mutil::IntVector2(1, 0);
-        case 'A': return mutil::IntVector2(2, 0);
-        case '<': return mutil::IntVector2(0, 1);
-        case 'v': return mutil::IntVector2(1, 1);
-        case '>': return mutil::IntVector2(2, 1);
-        }
-    }
-
-private:
-    ControlRobotStream* downStream{ nullptr };
-    CommandCounter* downCounter{ nullptr };
-    mutil::IntVector2 CurrentLocation;
-    friend class KeypadRobotStream;
-};
-
-class KeypadRobotStream
-{
-public:
-    KeypadRobotStream(const string& Input)
-        : input(Input)
-    {
-        CurrentLocation = GetLocationForCharacter('A');
-    }
-    KeypadRobotStream& operator>>(ControlRobotStream controlRobot)
-    {
-        // push required commands to next stream
-        // one by one (so we produce them one by one as well
-        // refer to KeypadRobot::ProduceRequiredMovesForInput() for
-        // information on our logic
-        for(const auto c : input)
-        {
-            auto newLoc = GetLocationForCharacter(c);
-
-            // we need to go down BEFORE going left/right
-            // we need to go left/right BEFORE going up
-            while(newLoc != CurrentLocation)
-            {
-                if(newLoc.y > CurrentLocation.y)
-                {
-                    CurrentLocation.y++;
-                    controlRobot.PushCharacter('v');
-                    if(commandCounter) commandCounter->PushCharacter('v');
-                }
-                else if(newLoc.x < CurrentLocation.x)
-                {
-                    CurrentLocation.x--;
-                    controlRobot.PushCharacter('<');
-                    if(commandCounter) commandCounter->PushCharacter('<');
-                }
-                else if(newLoc.x > CurrentLocation.x)
-                {
-                    CurrentLocation.x++;
-                    controlRobot.PushCharacter('>');
-                    if(commandCounter) commandCounter->PushCharacter('>');
-                }
-                else if(newLoc.y < CurrentLocation.y)
-                {
-                    CurrentLocation.y--;
-                    controlRobot.PushCharacter('^');
-                    if(commandCounter) commandCounter->PushCharacter('^');
-                }
-            }
-            controlRobot.PushCharacter('A');
-            if(commandCounter) commandCounter->PushCharacter('A');
-        }
-
-        // push EOL so that the stream knows it's the end of stream
-        controlRobot.PushCharacter('\0');
-
-        return *this;
-    }
-    KeypadRobotStream& operator>>(CommandCounter counter)
-    {
-        commandCounter = &counter;
-        return *this;
-    }
-
-private:
-    static mutil::IntVector2 GetLocationForCharacter(const char c)
-    {
-        // not nice, but will do the job
-        switch(c)
-        {
-        case '7': return mutil::IntVector2(0, 0);
-        case '8': return mutil::IntVector2(1, 0);
-        case '9': return mutil::IntVector2(2, 0);
-        case '4': return mutil::IntVector2(0, 1);
-        case '5': return mutil::IntVector2(1, 1);
-        case '6': return mutil::IntVector2(2, 1);
-        case '1': return mutil::IntVector2(0, 2);
-        case '2': return mutil::IntVector2(1, 2);
-        case '3': return mutil::IntVector2(2, 2);
-        case '0': return mutil::IntVector2(1, 3);
-        case 'A': return mutil::IntVector2(2, 3);
-        }
-    }
-
-    CommandCounter* commandCounter{ nullptr };
-    string input;
-    mutil::IntVector2 CurrentLocation;
-};
-
-
-const int64_t AoC_2024_21::Step1()
-{
-
-
-    //while(true)
-    //{
-    //    while(!_kbhit())
-    //    {
-    //        // Get the current state of the mouse buttons 
-    //        if (GetAsyncKeyState(VK_RBUTTON) & 0x8000) 
-    //        { 
-    //            std::cout << "Right mouse button pressed!" << std::endl; 
-    //        }
-
-    //        Sleep(1);
-    //    }
-    //    char ch = _getch(); 
-    //    std::cout << "Key pressed: " << ch << std::endl;
-    //}
-
-
-
-    return 0;
-
-    TIME_PART;
     vector<string> lines;
     aoc::AoCStream() >> lines;
 
-    KeypadRobot kpadRobot;
-    vector<ControlRobot> ControlRobots;
+    // our accountant will count the result steps
+    shared_ptr<CountingRobot> Accountant = make_shared<CountingRobot>();
 
-    ControlRobots.push_back(ControlRobot());
-    ControlRobots.push_back(ControlRobot());
-    // ControlRobots.push_back(ControlRobot());
+    // create X control robots
+    shared_ptr<Robot> ctrl = Accountant;
+    vector<shared_ptr<ControlRobot>> ControlRobots;
+    for(int i = 0; i < robotsCount - 1; i++)
+    {
+        shared_ptr<ControlRobot> newRobot = make_shared<ControlRobot>(ctrl);
+        ControlRobots.push_back(newRobot);
+        ctrl = newRobot;
+    }
+
+    // and kpad robot that will actually press
+    // the digits keypad
+    shared_ptr<KeypadRobot> kpadRobot = make_shared<KeypadRobot>(ctrl);
 
     int64_t sum = 0;
-    for(const auto& line : lines)
+    for(auto& line : lines)
     {
-        cout << line << endl;
-        kpadRobot.Reset();
-        auto stepsRequired = kpadRobot.ProduceRequiredMovesForInput(line);
-        //PrintChars(stepsRequired);
-        int index = 0;
-        for(auto& ctrl : ControlRobots)
-        {
-            ctrl.Reset();
-            stepsRequired = ctrl.ProduceRequiredMovesForInput(stepsRequired);
-            //PrintChars(stepsRequired);
-        }
-        int count = stepsRequired.size();
+        // reset everything
+        Accountant->Reset();
+        kpadRobot->Reset();
+        std::for_each(ControlRobots.begin(), ControlRobots.end(), [](const auto& r) { r->Reset(); });
 
-        // well.. lol
-        char lineTmp[4]{ 0 };
-        lineTmp[0] = line[0];
-        lineTmp[1] = line[1];
-        lineTmp[2] = line[2];
-        int num = stoi(lineTmp);
+        // process
+        kpadRobot->ProcessInput(line);
 
-        sum += (num * count);
+#if PRINT_DEBUG
+        cout << " done. Line result: " << Accountant->GetResult(line) << endl;
+#endif
+        cout << endl;
+        // count result
+        sum += Accountant->GetResult(line);
     }
     return sum;
+}
+const int64_t AoC_2024_21::Step1()
+{
+    if(!IsTest())return 0;
+
+    // Apply the locale to cout 
+    std::locale customLocale(std::locale::classic(), new CustomNumPunct);
+    std::cout.imbue(customLocale);
+
+    TIME_PART;
+    return Process(3);
 };
 const int64_t AoC_2024_21::Step2()
 {
-    vector<string> lines;
-    aoc::AoCStream() >> lines;
-
-    for(const auto& line : lines)
-    {
-        CommandCounter counter;
-        cout << line << endl;
-        KeypadRobotStream(line)
-            >> ControlRobotStream()
-            >> ControlRobotStream()
-            >> ControlRobotStream()
-            >> counter
-            ;
-
-        cout << endl;
-    }
-
+    if(!IsTest())return 0;
     return 0;
+    std::locale customLocale(std::locale::classic(), new CustomNumPunct);
+    std::cout.imbue(customLocale);
 
     TIME_PART;
-
-    //return 0;
-
-    KeypadRobot kpadRobot;
-    vector<ControlRobot> ControlRobots;
-
-    for(int i = 0; i < 25; i++)
-        ControlRobots.push_back(ControlRobot());
-
-    int64_t sum = 0;
-    for(const auto& line : lines)
-    {
-        cout << line << endl;
-        kpadRobot.Reset();
-        vector<char> stepsRequired;
-        stepsRequired = kpadRobot.ProduceRequiredMovesForInput(line);
-        //PrintChars(stepsRequired);
-        cout << "Starting" << endl;
-        int index = 0;
-        for(auto& ctrl : ControlRobots)
-        {
-            cout << "Robot # " << index << endl;
-            ctrl.Reset();
-            stepsRequired = ctrl.ProduceRequiredMovesForInput(stepsRequired);
-            //PrintChars(stepsRequired);
-            index++;
-        }
-
-        int count = 0;// stepsRequired.size();
-
-        // well.. lol
-        char lineTmp[4]{ 0 };
-        lineTmp[0] = line[0];
-        lineTmp[1] = line[1];
-        lineTmp[2] = line[2];
-        int num = stoi(lineTmp);
-
-        sum += (num * count);
-    }
-    return sum;
+    return Process(25);
 };
 
+
+
+/*
+* v<A<AA>>^AvAA<^A>Av<<A>>^AvA^Av<<A>>^AAv<A>A^A<A>Av<A<A>>^AAAvA<^A>A
+* <vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A
+* 
+*
+*
+*
+* v<<A>>^AvA^Av<<A>>^AAv<A<A>>^AAvAA<^A>Av<A>^AA<A>Av<A<A>>^AAAvA<^A>A
+*
+* */

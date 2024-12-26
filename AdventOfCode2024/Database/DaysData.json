@@ -448,10 +448,10 @@
     "year": 2024
   },
   {
-    "run": false,
-    "debugRun": false,
+    "run": true,
+    "debugRun": true,
     "enableVisualization": false,
-    "name": "____",
+    "name": "Race Condition",
     "day": 20,
     "liveStep1": {
       "expectedResult": 0,
@@ -544,7 +544,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "name": "Crossed Wires",
     "day": 24,
     "liveStep1": {
@@ -567,7 +567,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "name": "Code Chronicle",
     "day": 25,
     "liveStep1": {
