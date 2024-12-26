@@ -373,7 +373,7 @@ void AoCMachineDebugger::OnAfterStep(AoCMachine* machine)
 void AoCMachineDebugger::OnBeforeStep(AoCMachine* machine)
 {
     // write current state on screen
-    printf("Step %d: \t A: %10lld \t B: %10lld \t C: %10lld \t PC: \t %10lld \t =>  %s ",
+    printf("Step %lld: \t A: %10lld \t B: %10lld \t C: %10lld \t PC: \t %10lld \t =>  %s ",
         machine->StepCounter,
         machine->Registers[machine->A],
         machine->Registers[machine->B],

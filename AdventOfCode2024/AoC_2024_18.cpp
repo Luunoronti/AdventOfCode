@@ -16,7 +16,7 @@ const int64_t AoC_2024_18::Step1()
     int width = IsTest() ? 7 : 71;
     int heigth = IsTest() ? 7 : 71;
     int size = IsTest() ? 12 : 1024;
-    size = min(size, Locations.size());
+    size = min(size, (int)Locations.size());
 
     Map2d<uint8_t> map(width, heigth);
 
@@ -37,7 +37,7 @@ const int64_t AoC_2024_18::Step2()
     int width = IsTest() ? 7 : 71;
     int heigth = IsTest() ? 7 : 71;
     int size = IsTest() ? 12 : 1024;
-    size = min(size, Locations.size());
+    size = min(size, (int)Locations.size());
 
     Map2d<uint8_t> map(width, heigth);
 

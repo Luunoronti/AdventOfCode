@@ -150,7 +150,7 @@ namespace aoc
             private:
                 __selected_value_stream() {}
                 T __value{};
-                Map2d* map;
+                Map2d* map{ nullptr };
             };
 
             template<typename T>
@@ -233,6 +233,49 @@ namespace aoc
                         ZeroMemory(&Map[0], sizeof(T) * Width * Height);
                     }
                 }
+            }
+
+            template<typename _T>
+            void createFrom(const Map2d<_T>& source, std::function<T(const _T& sourceValue)> convertFunction)
+            {
+                Width = source.Width;
+                Height = source.Height;
+                if(Width > 0 && Height > 0)
+                {
+                    Map.resize(Width * Height);
+                    ZeroMemory(&Map[0], sizeof(T) * Width * Height);
+                
+                    for(int y = 0; y < source.Height; ++y)
+                    {
+                        for(int x = 0; x < source.Width; ++x)
+                        {
+                            Set(x, y, convertFunction(source.Get(x, y)));
+                        }
+                    }
+
+                }
+            }
+
+            template<typename _T>
+            Map2d<_T> ToMap(std::function<T(const _T& sourceValue)> convertFunction)
+            {
+                Map2d<_T> dst;
+                dst.Width = Width;
+                dst.Height = Height;
+                if(Width > 0 && Height > 0)
+                {
+                    dst.Map.resize(Width * Height);
+                    ZeroMemory(&dst.Map[0], sizeof(T) * Width * Height);
+
+                    for(int y = 0; y < Height; ++y)
+                    {
+                        for(int x = 0; x < Width; ++x)
+                        {
+                            dst.Set(x, y, convertFunction(Get(x, y)));
+                        }
+                    }
+                }
+                return dst;
             }
 
             __forceinline void Set(const int x, const int y, const T& value)
@@ -331,15 +374,40 @@ namespace aoc
 
             void print() const
             {
+                print([](int, int, const T& v) {return v; }, [](int, int, const T& v) {return mutil::Vector3(1, 1, 1); });
+            }
+            void print(std::function<char(const int x, const int y, const T& value)> toPrint) const
+            {
+                print(toPrint, [](int, int, const T& v) {return mutil::Vector3(1,1,1); });
+            }
+            void print(std::function<mutil::Vector3(int x, int y, T value)> foregroundColor) const
+            {
+                print([](int, int, const T& v) {return v; }, foregroundColor);
+            }
+
+            void print(std::function<char(const int x, const int y, const T& value)> toPrint,
+                std::function<mutil::Vector3(int x, int y, T value)> foregroundColor) const
+            {
+                std::ostringstream oss;
                 for(int _y = 0; _y < Height; ++_y)
                 {
                     for(int _x = 0; _x < Width; ++_x)
                     {
-                        aoc::dout << Map[_x + _y * Width];
+                        mutil::Vector3 c = foregroundColor(_x, _y, Get(_x, _y));
+                        int fgR = mutil::clamp((int)(c.r * 255), 0, 255);
+                        int fgG = mutil::clamp((int)(c.g * 255), 0, 255);
+                        int fgB = mutil::clamp((int)(c.b * 255), 0, 255);
+
+                        oss << "\x1b[38;2;" << fgR << ";" << fgG << ";" << fgB << "m";
+                        oss << toPrint(_x, _y, Map[_x + _y * Width]);
                     }
-                    aoc::dout << std::endl;
+                    oss << std::endl;
                 }
+                oss << "\033[0m";
+
+                std::cout << oss.str();
             }
+
 
             __selected_value_stream<T>& select_value(T _value)
             {
@@ -370,7 +438,7 @@ namespace aoc
                 ZeroMemory(&Map[0], sizeof(T) * Width * Height);
             }
 
-            int64_t GetLengthOfShortestPath(mutil::IntVector2 Start, mutil::IntVector2 End, const std::function<bool(const mutil::IntVector2&, T)> isValid)
+            int64_t GetLengthOfShortestPath(const mutil::IntVector2& Start, const mutil::IntVector2& End, const std::function<bool(const mutil::IntVector2&, T)> isValid)
             {
                 if(!WithinBounds(Start) || !isValid(Start, Get(Start)) || !WithinBounds(End) || !isValid(End, Get(End)))
                     return -1;
@@ -383,7 +451,7 @@ namespace aoc
                 int64_t steps = 0;
                 while(!queue.empty())
                 {
-                    int qSize = queue.size();
+                    int qSize = (int)queue.size();
                     for(int i = 0; i < qSize; ++i)
                     {
                         mutil::IntVector2 curr = queue.front();
@@ -408,6 +476,37 @@ namespace aoc
                 return -1;
             }
 
+
+            void fill(const mutil::IntVector2& Start, const T& value)
+            {
+                // fill(Start, [&value](const T& v, const int x, const int y) {return value; });
+            }
+            void fill(const mutil::IntVector2& Start, std::function<bool(const T& value, const int x, const int y)> allowFunc, 
+                std::function<T(const T& value, const int x, const int y)> valueFunc)
+            {
+                std::deque<std::pair<int, int>> queue;
+                queue.push_back({ Start.x, Start.y });
+                Map2d<int8_t> filled(Width, Height, true);
+                int64_t area{ 0 };
+
+                while(!queue.empty())
+                {
+                    const auto [cx, cy] = queue.back();
+                    queue.pop_back();
+
+                    if(!WithinBounds(cx, cy)) continue;
+                    if(1 == filled.Get(cx, cy)) continue;
+                    if(!allowFunc(Get(cx, cy), cx, cy)) continue;
+
+                    Set(cx, cy, valueFunc(Get(cx, cy), cx, cy));
+                    filled.Set(cx, cy, 1);
+
+                    queue.push_back({ cx + 1, cy });
+                    queue.push_back({ cx - 1, cy });
+                    queue.push_back({ cx, cy + 1 });
+                    queue.push_back({ cx, cy - 1 });
+                }
+            }
 
         private:
             __selected_value_stream<T> __selected_value_stream;

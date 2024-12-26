@@ -180,7 +180,7 @@ void AoCVisualizer::Process()
         return;
 
     FPS.Frame();
-    const float frameTime = FPS.GetFrameTime();
+    const float frameTime = (float)FPS.GetFrameTime();
     ProcessSystemEvents();
     Input->Update();
 
@@ -294,7 +294,7 @@ void AoCVisualizer::Present()
         }
 
         DWORD charsWritten = 0;
-        WriteConsoleOutputCharacter(BackBuffer, Intermediatebuffer, wcslen(Intermediatebuffer), { 0, 0 }, &charsWritten);
+        WriteConsoleOutputCharacter(BackBuffer, Intermediatebuffer, (DWORD)wcslen(Intermediatebuffer), { 0, 0 }, &charsWritten);
         WriteConsoleOutputAttribute(BackBuffer, Intermediate16ColorAttributeBuffer, ViewportSize.Y * ViewportSize.X, { 0, 0 }, &charsWritten);
 
         // swap console buffer
@@ -427,14 +427,14 @@ void AoCVisualizer::InitPixelShaders()
 {
     PixelShader = [](const int ObjectHandler, const mutil::Vector3& hitPoint, const mutil::IntVector2& screenPos, AoCCharacterInfo& pixel)
         {
-            pixel.Back = { 0, 0.7, 0.6 };
+            pixel.Back = { 0, 0.7f, 0.6f };
             switch(ObjectHandler)
             {
-            case 0: pixel.Back = { 0, 0.7, 0.6 }; break;
-            case 1: pixel.Back = { 1, 0.7, 0.6 }; break;
-            case 2: pixel.Back = { 0.3, 0.1, 0.6 }; break;
+            case 0: pixel.Back = { 0, 0.7f, 0.6f }; break;
+            case 1: pixel.Back = { 1, 0.7f, 0.6f }; break;
+            case 2: pixel.Back = { 0.3f, 0.1f, 0.6f }; break;
             }
-            pixel.Front = { 0.4, 0.6, 0.3 };
+            pixel.Front = { 0.4f, 0.6f, 0.3f };
             pixel.Char = L'o';
         };
     Vis_HitInfoPixelShader = [](const int ObjectHandler, const mutil::Vector3& hitPoint, const mutil::IntVector2& screenPos, AoCCharacterInfo& pixel)
@@ -813,9 +813,9 @@ const std::vector<mutil::Vector3>& AoCVisCamera::GetRayDirections()
 
         RayDirections.resize(ViewPortSize.x * ViewPortSize.y);
 
-        for(uint32_t y = 0; y < ViewPortSize.y; y++)
+        for(int32_t y = 0; y < ViewPortSize.y; y++)
         {
-            for(uint32_t x = 0; x < ViewPortSize.x; x++)
+            for(int32_t x = 0; x < ViewPortSize.x; x++)
             {
                 mutil::Vector2 coord = { (float)x / (float)ViewPortSize.x, (float)y / (float)ViewPortSize.y };
                 coord = coord * 2.0f; // -1 -> 1

@@ -109,7 +109,7 @@ const int64_t AoC_2024_19::Step1()
 
     for(const auto& towel : TowelsStr)
     {
-        const int len = towel.length();
+        const int len = (int)towel.length();
         int cs = CalculateChecksum(towel, 0, len);
         AllTowels[len].insert(cs);
         testMap[cs] = towel;

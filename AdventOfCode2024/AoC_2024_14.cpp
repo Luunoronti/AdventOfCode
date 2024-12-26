@@ -150,9 +150,9 @@ const int64_t AoC_2024_14::Step2()
     aoc::maps::Map2d<int8_t> map(areaX, areaY);
 
 #pragma region VISUALIZATION
-    COORD bufferSize = { areaX, areaY + 1 };
+    COORD bufferSize = { (SHORT)areaX, (SHORT)areaY + 1 };
     COORD bufferCoord = { 0, 0 };
-    SMALL_RECT writeRegion = { 0, 0, areaX - 1, areaY };
+    SMALL_RECT writeRegion = { 0, 0, (SHORT)areaX - 1, (SHORT)areaY };
     CHAR_INFO* consoleBuffer{ nullptr };
     if(CurrentStepConfiguration.EnableVisualization)
     {

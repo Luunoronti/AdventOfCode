@@ -130,18 +130,20 @@ private:
     {
         switch(c)
         {
-        case '7': return mutil::IntVector2(0, 0);
-        case '8': return mutil::IntVector2(1, 0);
-        case '9': return mutil::IntVector2(2, 0);
-        case '4': return mutil::IntVector2(0, 1);
-        case '5': return mutil::IntVector2(1, 1);
-        case '6': return mutil::IntVector2(2, 1);
-        case '1': return mutil::IntVector2(0, 2);
-        case '2': return mutil::IntVector2(1, 2);
-        case '3': return mutil::IntVector2(2, 2);
-        case '0': return mutil::IntVector2(1, 3);
-        case 'A': return mutil::IntVector2(2, 3);
+        case '7': return { 0, 0 };
+        case '8': return { 1, 0 };
+        case '9': return { 2, 0 };
+        case '4': return { 0, 1 };
+        case '5': return { 1, 1 };
+        case '6': return { 2, 1 };
+        case '1': return { 0, 2 };
+        case '2': return { 1, 2 };
+        case '3': return { 2, 2 };
+        case '0': return { 1, 3 };
+        case 'A': return { 2, 3 };
         }
+
+        return { 0, 0 };
     }
 
 private:
@@ -265,12 +267,13 @@ private:
         // not nice, but will do the job
         switch(c)
         {
-        case '^': return mutil::IntVector2(1, 0);
-        case 'A': return mutil::IntVector2(2, 0);
-        case '<': return mutil::IntVector2(0, 1);
-        case 'v': return mutil::IntVector2(1, 1);
-        case '>': return mutil::IntVector2(2, 1);
+        case '^': return { 1, 0 };
+        case 'A': return { 2, 0 };
+        case '<': return { 0, 1 };
+        case 'v': return { 1, 1 };
+        case '>': return { 2, 1 };
         }
+        return { 0, 0 };
     }
 private:
     mutil::IntVector2 CurrentLocation;
@@ -358,7 +361,7 @@ const int64_t AoC_2024_21::Step2()
 /*
 * v<A<AA>>^AvAA<^A>Av<<A>>^AvA^Av<<A>>^AAv<A>A^A<A>Av<A<A>>^AAAvA<^A>A
 * <vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A
-* 
+*
 *
 *
 *
