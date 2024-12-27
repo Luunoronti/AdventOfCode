@@ -407,7 +407,46 @@ namespace aoc
 
                 std::cout << oss.str();
             }
+            void print(std::function<char(const int x, const int y, const T& value)> toPrint, std::function<mutil::Vector3(int x, int y, T value)> foregroundColor
+            ,std::function<mutil::Vector3(int x, int y, T value)> backgroundColor) const
+            {
+                std::ostringstream oss;
+                for(int _y = 0; _y < Height; ++_y)
+                {
+                    for(int _x = 0; _x < Width; ++_x)
+                    {
+                        mutil::Vector3 c = foregroundColor(_x, _y, Get(_x, _y));
+                        int fgR = mutil::clamp((int)(c.r * 255), 0, 255);
+                        int fgG = mutil::clamp((int)(c.g * 255), 0, 255);
+                        int fgB = mutil::clamp((int)(c.b * 255), 0, 255);
 
+                        oss << "\x1b[38;2;" << fgR << ";" << fgG << ";" << fgB << "m";
+
+                        c = backgroundColor(_x, _y, Get(_x, _y));
+                        fgR = mutil::clamp((int)(c.r * 255), 0, 255);                
+                        fgG = mutil::clamp((int)(c.g * 255), 0, 255);
+                        fgB = mutil::clamp((int)(c.b * 255), 0, 255);
+
+                        oss << "\x1b[48;2;" << fgR << ";" << fgG << ";" << fgB << "m";
+                        oss << toPrint(_x, _y, Map[_x + _y * Width]);
+                    }
+                    oss << "\033[0m" << std::endl;
+                }
+                oss << "\033[0m";
+
+                std::cout << oss.str();
+            }
+
+            void for_each(std::function<void(Map2d<T>& map, const int x, const int y, const T& value)> func)
+            {
+                for(int y = 0; y < Height; y++)
+                {
+                    for(int x = 0; x < Width; x++)
+                    {
+                        func(*this, x, y, Get(x, y));
+                    }
+                }
+            }
 
             __selected_value_stream<T>& select_value(T _value)
             {

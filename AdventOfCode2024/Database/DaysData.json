@@ -354,8 +354,8 @@
     "year": 2024
   },
   {
-    "run": false,
-    "debugRun": false,
+    "run": true,
+    "debugRun": true,
     "name": "Reindeer Maze",
     "enableVisualization": false,
     "day": 16,
@@ -454,19 +454,19 @@
     "name": "Race Condition",
     "day": 20,
     "liveStep1": {
-      "expectedResult": 0,
+      "expectedResult": 1450,
       "knownErrors": []
     },
     "liveStep2": {
-      "expectedResult": 0,
+      "expectedResult": 1015247,
       "knownErrors": []
     },
     "testStep1": {
-      "expectedResult": 0,
+      "expectedResult": 1,
       "knownErrors": []
     },
     "testStep2": {
-      "expectedResult": 0,
+      "expectedResult": 1,
       "knownErrors": []
     },
     "year": 2024
