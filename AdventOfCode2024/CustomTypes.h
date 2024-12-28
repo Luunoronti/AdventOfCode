@@ -371,6 +371,22 @@ namespace aoc
                 }
                 return false;
             }
+            __forceinline bool find(const T& _value, mutil::IntVector2& location) const
+            {
+                for(int _y = 0; _y < Height; ++_y)
+                {
+                    for(int _x = 0; _x < Width; ++_x)
+                    {
+                        if(Map[_x + _y * Width] == _value)
+                        {
+                            location.x = _x;
+                            location.y = _y;
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
 
             void print() const
             {

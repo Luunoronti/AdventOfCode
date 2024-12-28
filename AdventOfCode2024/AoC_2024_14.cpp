@@ -47,14 +47,14 @@ struct FRobot
     }
 
 };
-void ParseLine(const char* line, FRobot* pRobot)
+void ParseLine(const string& line, FRobot* pRobot)
 {
     /*
         format:
         p=15,97 v=2,6
         [..]
     */
-    const char* p = line;
+    const char* p = &line[0];
     p += 2; // skip 'p+'
     pRobot->sx = strtol(p, (char**)&p, 10);
     p += 1; // skip ','
@@ -69,13 +69,8 @@ const int64_t AoC_2024_14::Step1()
 {
     TIME_PART;
 
-    FILE* file;
-    fopen_s(&file, GetFileName().c_str(), "r");
-    if(file == NULL)
-    {
-        perror("Failed to open file");
-        return 0;
-    }
+    vector<string> lines;
+    aoc::AoCStream() >> lines;
 
     int64_t quadrants[4]{ 0 };
     char line[128];
@@ -86,14 +81,13 @@ const int64_t AoC_2024_14::Step1()
     int halfAreaX = areaX / 2;
     int halfAreaY = areaY / 2;
 
-    while(fgets(line, sizeof(line), file))
+    for(const auto& line : lines)
     {
         ParseLine(line, &robot);
         robot.Simulate(100);
         robot.Wrap(areaX, areaY);
         robot.SelectQuadrant(halfAreaX, halfAreaY, quadrants);
     }
-    fclose(file);
 
     return quadrants[Q1] * quadrants[Q2] * quadrants[Q3] * quadrants[Q4];
 };

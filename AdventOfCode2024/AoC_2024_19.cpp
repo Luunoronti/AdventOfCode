@@ -4,9 +4,9 @@
 
 using namespace std;
 
-void rtrim(char* str)
+void rtrim(string& str)
 {
-    size_t len = std::strlen(str);
+    size_t len = str.size();
     while(len > 0 && std::isspace(str[len - 1]))
     {
         str[len - 1] = '\0';
@@ -15,44 +15,28 @@ void rtrim(char* str)
 }
 int ReadInput(const string& FileName, vector<string>& Towels, vector<string>& Designs)
 {
-    FILE* file;
-    fopen_s(&file, FileName.c_str(), "r");
-    if(!file)
+    vector<string> lines;
+    aoc::AoCStream() >> lines;
+
+    string line = lines[0];
+    // Read the first line
+    rtrim(line);
+    char* context = nullptr;
+    char* token = strtok_s(&line[0], ", ", &context);
+    while(token)
     {
-        std::cerr << "Error opening file: " << FileName.c_str() << std::endl;
-        return -1;
+        Towels.push_back(token);
+        token = strtok_s(nullptr, ", ", &context);
     }
 
-    char line[1024 * 10];
-    // Read the first line
-    if(std::fgets(line, sizeof(line), file))
-    {
-        rtrim(line);
-        char* context = nullptr;
-        char* token = strtok_s(line, ", ", &context);
-        while(token)
-        {
-            Towels.push_back(token);
-            token = strtok_s(nullptr, ", ", &context);
-        }
-    }
     // Skip the blank line
-    if(std::fgets(line, sizeof(line), file) && line[0] != '\n')
+    for(int i = 2; i < lines.size(); i++)
     {
-        std::cerr << "Expected a blank line after the first line." << std::endl;
-        std::fclose(file);
-        return -2;
+        string l = lines[i];
+        rtrim(l);
+        if(l.size() > 0)
+            Designs.push_back(l);
     }
-    // Read the remaining lines
-    while(std::fgets(line, sizeof(line), file))
-    {
-        rtrim(line);
-        if(std::strlen(line) > 0)
-        {
-            Designs.push_back(line);
-        }
-    }
-    std::fclose(file);
     return 0;
 }
 

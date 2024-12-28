@@ -21,12 +21,7 @@ public:
 private:
     void ClearState();
 
-    __forceinline const int BufPos(const int& x, const int& y) const 
-    {
-        return x + y * Width;
-    };
-
-    StepForwardResult StepForward(vector<uint8_t>* StepoverBuffer);
+    StepForwardResult StepForward(aoc::maps::Map2d<uint8_t>* StepoverBuffer);
     void TurnRight();
     void MarkCurrentLocation();
     long CountMarkedLocations();
@@ -39,19 +34,12 @@ private:
 
 
 private:
-    int Width;
-    int Height;
-    string Map;
-    vector<uint8_t> Marks;
+    aoc::maps::Map2d<char> Map;
+    aoc::maps::Map2d<uint8_t> Marks;
 
-    int StartLocationX;
-    int StartLocationY;
-
-    int LocationX;
-    int LocationY;
-
-    int StepX;
-    int StepY;
+    mutil::IntVector2 StartLocation;
+    mutil::IntVector2 Location;
+    mutil::IntVector2 Step;
 public:
 
 };
