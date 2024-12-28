@@ -55,127 +55,104 @@ int ReadInput(const string& FileName, vector<string>& Towels, vector<string>& De
     std::fclose(file);
     return 0;
 }
-int CalculateChecksum(const std::string& str, size_t startIndex, size_t requiredLength)
-{
-    if(startIndex + requiredLength > str.length())
-    {
-        return 0;
-    }
-    int checksum = 0;
-    for(size_t i = startIndex; i < startIndex + requiredLength; ++i)
-    {
-        checksum = (checksum * 31 + str[i]) % 1000000007;
-    }
-    return checksum;
-}
-
-unordered_map<int, string> testMap;
-unordered_map<int, unordered_set<int>> AllTowels;
-unordered_set<int> allKnownLengths;
-
-uint64_t tt = 0;
-uint64_t CheckDesign(const std::string& design, int startindex)
-{
-    if(startindex == design.size())
-    {
-        //cout << "Found! " << ++tt << endl;
-        return 1;
-    }
-
-    uint64_t localSum = 0;
-    for(auto towelLen : allKnownLengths)
-    {
-        if(towelLen + startindex > design.size())
-            continue;
-        const unordered_set<int> towelSums = AllTowels[towelLen];
-        int cs = CalculateChecksum(design, startindex, towelLen);
-        if(towelSums.count(cs) == 1)
-        {
-            localSum += CheckDesign(design, startindex + towelLen);
-        }
-    }
-    return localSum;
-}
 
 bool startsWith(const std::string& a, const std::string& b)
 {
     if(b.size() > a.size())
-    {
         return false;
-    }
+    return a.compare(0, b.size(), b) == 0;
+}
+bool isSame(const std::string& a, const std::string& b)
+{
+    if(b.size() != a.size())
+        return false;
     return a.compare(0, b.size(), b) == 0;
 }
 
-
-bool IsDesignPossible(const unordered_map<int, vector<string>>& towelsSized, const string& design)
+bool IsDesignPossible(string design, vector<string> towels, unordered_map<string, bool>& cache)
 {
-    queue<string> q;
-    q.push(design);
+    if(cache.find(design) != cache.end())
+        return cache[design];
 
-    bool found = false;
-    while(!q.empty())
+    for(int i = 0; i < towels.size(); ++i)
     {
-        //string s = q.top();
-        string s = q.front();
-        q.pop();
+        if(isSame(design, towels[i]))
+            return true;
+    }
 
-        for(const auto& p : towelsSized)
+    for(int i = 1; i < design.size(); ++i)
+    {
+        if(IsDesignPossible(design.substr(0, i), towels, cache)
+            && IsDesignPossible(design.substr(i), towels, cache))
         {
-            for(const auto& t : p.second)
-            {
-
-                if(!startsWith(s, t))
-                    continue;
-                if(s.size() == t.size())
-                    return true;
-                q.push(s.substr(p.first, s.size() - p.first));
-
-                // cout << s.substr(t.size(), s.size() - t.size()) << "                                                                                     " << '\r';
-                //cout << PAD_LEFT(100, ' ') << s.substr(t.size(), s.size() - t.size()) << "  => " << PAD_LEFT(7, ' ')<< t << '\r';
-                //cout << PAD_LEFT(100, ' ') << d.substr(0, d.size() - s.size()) << "  => " << PAD_LEFT(7, ' ')<< t << '\r';
-                cout << design.substr(0, design.size() - s.size()) << endl;
-
-                break;
-            }
+            cache[design] = true;
+            return true;
         }
     }
+    cache[design] = false;
     return false;
 }
+
+int64_t SumPossibleDesigns(string design, vector<string> towels, unordered_map<string, int64_t>& cache)
+{
+    int64_t loc = 0;
+    if(cache.find(design) != cache.end())
+        return cache[design];
+
+    for(int i = 0; i < towels.size(); ++i)
+    {
+        if(isSame(design, towels[i]))
+            loc++;
+    }
+
+    for(int i = 0; i < towels.size(); ++i)
+    {
+        if(design.size() > towels[i].size() && startsWith(design, towels[i]))
+            loc += SumPossibleDesigns(design.substr(towels[i].size()), towels, cache);
+    }
+
+    cache[design] = loc;
+    return loc;
+}
+
+
 const int64_t AoC_2024_19::Step1()
 {
     //if(!IsTest())return 0;
     TIME_PART;
-    AllTowels.clear();
-    testMap.clear();
     vector<string> TowelsStr;
     vector<string> Designs;
     if(0 != ReadInput(GetFileName(), TowelsStr, Designs))
         return 0;
 
+    std::sort(TowelsStr.begin(), TowelsStr.end(), [](const string& a, const string& b) { return a.size() > b.size(); });
 
-    // to test if design is actually possible,
-    // just search if this design starts with a towel pattern, 
-    // and if we found one, 
-
-    // we sort TowelStr by string len
-    std::sort(TowelsStr.begin(), TowelsStr.end(), [](const string& a, const string& b) { return a.size() < b.size(); });
-
-    unordered_map<string, int> possibleDesigns;
-    unordered_map<int, vector<string>> towelsSized;
-    for(const auto& t : TowelsStr)
-    {
-        towelsSized[(int)t.size()].push_back(t);
-    }
-
+    int sum = 0;
+    unordered_map<string, bool> cache;
     for(const auto& d : Designs)
     {
-        cout << "Checking design " << d << endl;
-        IsDesignPossible(towelsSized, d);
+        if(IsDesignPossible(d, TowelsStr, cache))
+            sum++;
     }
-    return possibleDesigns.size();
+    return sum;
 };
 const int64_t AoC_2024_19::Step2()
 {
+    //if(!IsTest())return 0;
+
     TIME_PART;
-    return 0;
+    vector<string> TowelsStr;
+    vector<string> Designs;
+    if(0 != ReadInput(GetFileName(), TowelsStr, Designs))
+        return 0;
+
+    std::sort(TowelsStr.begin(), TowelsStr.end(), [](const string& a, const string& b) { return a.size() > b.size(); });
+
+    int64_t sum = 0;
+    unordered_map<string, int64_t> cache;
+    for(const auto& d : Designs)
+    {
+        sum += SumPossibleDesigns(d, TowelsStr, cache);
+    }
+    return sum;
 };

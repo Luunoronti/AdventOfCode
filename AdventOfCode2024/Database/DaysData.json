@@ -430,11 +430,11 @@
     "name": "Linen Layout",
     "day": 19,
     "liveStep1": {
-      "expectedResult": 0,
-      "knownErrors": []
+      "expectedResult": 283,
+      "knownErrors": [ 271 ]
     },
     "liveStep2": {
-      "expectedResult": 0,
+      "expectedResult": 615388132411142,
       "knownErrors": []
     },
     "testStep1": {
@@ -442,7 +442,7 @@
       "knownErrors": []
     },
     "testStep2": {
-      "expectedResult": 0,
+      "expectedResult": 16,
       "knownErrors": []
     },
     "year": 2024
