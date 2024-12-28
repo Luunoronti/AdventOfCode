@@ -5,6 +5,7 @@
 
 
 #define PAD_LEFT(num, ch) std::setw(num) << std::setfill(ch)
+#define PAD_RIGHT(num, ch) std::left << std::setw(num) << std::setfill(ch)
 
 typedef std::vector<std::vector<long>> LongListList;
 

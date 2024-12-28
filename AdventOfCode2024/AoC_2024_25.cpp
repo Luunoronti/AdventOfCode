@@ -93,7 +93,5 @@ const int64_t AoC_2024_25::Step1()
 const int64_t AoC_2024_25::Step2()
 {
     TIME_PART;
-    vector<string> input;
-    aoc::AoCStream() >> input;
-    return 0;
+    return 1;
 }

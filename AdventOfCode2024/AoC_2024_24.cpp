@@ -593,5 +593,6 @@ const int64_t AoC_2024_24::Step2()
     {
         cout << c << ",";
     }
+    cout << endl << endl;
     return 1;
 };

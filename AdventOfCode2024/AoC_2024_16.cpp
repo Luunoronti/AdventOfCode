@@ -15,7 +15,7 @@ struct State
 };
 const vector<mutil::IntVector2> directions = { {0, 1}, {1, 0}, {0, -1}, {-1, 0} };
 
-int bfs_shortest_path(const aoc::maps::Map2d<char>& maze, const mutil::IntVector2& start, const mutil::IntVector2& end)
+int FindShortest(const aoc::maps::Map2d<char>& maze, const mutil::IntVector2& start, const mutil::IntVector2& end)
 {
     //queue<State> q;
     priority_queue<State, vector<State>, greater<State>> pq;
@@ -62,17 +62,18 @@ int bfs_shortest_path(const aoc::maps::Map2d<char>& maze, const mutil::IntVector
 
 const int64_t AoC_2024_16::Step1()
 {
+    TIME_PART;
+
     aoc::maps::Map2d<char> maze;
     aoc::AoCStream() >> maze;
 
-    TIME_PART;
 
     int sx, sy, ex, ey;
     if(!maze.find('S', sx, sy) || !maze.find('E', ex, ey))
         throw std::runtime_error("Unable to find start or end point");
 
 
-    return bfs_shortest_path(maze, { sx, sy }, { ex, ey });
+    return FindShortest(maze, { sx, sy }, { ex, ey });
 }
 
 
@@ -82,50 +83,6 @@ const int64_t AoC_2024_16::Step2()
     aoc::AoCStream() >> maze;
 
     TIME_PART;
-
-    // int sx, sy, ex, ey;
-    //if(!maze.find('S', sx, sy) || !maze.find('E', ex, ey))
-    //    throw std::runtime_error("Unable to find start or end point");
-
     return 0;
 }
 
-void AoC_2024_16::Tick(double timeDelta)
-{
-
-    ::Sleep(100);
-    this->RepeatTick();
-}
-
-
-/*
-int main() {
-    vector<string> grid = {
-        "#################",
-        "#...#...#...#..E#",
-        "#.#.#.#.#.#.#.#.#",
-        "#.#.#.#...#...#.#",
-        "#.#.#.#.###.#.#.#",
-        "#...#.#.#.....#.#",
-        "#.#.#.#.#.#####.#",
-        "#.#...#.#.#.....#",
-        "#.#.#####.#.###.#",
-        "#.#.#.......#...#",
-        "#.#.###.#####.###",
-        "#.#.#...#.....#.#",
-        "#.#.#.#####.###.#",
-        "#.#.#.........#.#",
-        "#.#.#.#########.#",
-        "#S#.............#",
-        "#################"
-    };
-
-    pair<int, int> start = { 15, 1 };
-    pair<int, int> end = { 1, 15 };
-
-    int shortest_path_cost = bfs_shortest_path(grid, start, end);
-    cout << "Shortest path cost: " << shortest_path_cost << endl;
-
-    return 0;
-}
-*/

@@ -117,6 +117,8 @@ const int64_t AoC_2024_17::Step2()
         }
     }
 
+    // TODO: I messed up the code at some point
+    // expected values: 117440 for test and 266932601404433 for live
     return 0;
 };
 
