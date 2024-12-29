@@ -13,7 +13,6 @@ void CreateFileIfDoesNotExist(const std::string& FileName, int day, int year, bo
 {
     struct stat buffer;
     if(stat(FileName.c_str(), &buffer) == 0) return;
-
     if(isLocal)
     {
         std::string command = "code \"" + FileName + "\"";

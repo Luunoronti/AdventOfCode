@@ -2,14 +2,6 @@
 
 #include "AoC_2024_07.h"
 
-void AoC_2024_07::OnInitTestingTests()
-{
-    
-}
-void AoC_2024_07::OnInitLiveTests()
-{
-    OnInitTestingTests();
-}
 void AoC_2024_07::ParseInputLineAndStoreInputData(const string& Line)
 {
     istringstream s(Line);

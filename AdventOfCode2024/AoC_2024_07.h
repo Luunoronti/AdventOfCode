@@ -18,9 +18,6 @@ public:
 
     const int64_t Step1() override;
     const int64_t Step2() override;
-    void OnInitTestingTests() override;
-    void OnInitLiveTests() override;
-
 private:
     void ParseInputLineAndStoreInputData(const string& Line);
     const int64_t ProcessData(const SingleLineData& Data, bool AllowConcat) const;

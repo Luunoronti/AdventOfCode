@@ -27,6 +27,9 @@ public:
     CountingRobot() : Robot(nullptr)
     {
     }
+    CountingRobot(const bool PrintReceivedCharacters) : PrintReceivedCharacters(PrintReceivedCharacters), Robot(nullptr)
+    {
+    }
 
     // Inherited via Robot
     void Reset() override
@@ -35,12 +38,9 @@ public:
     }
     __forceinline void Process(char Input) override
     {
-        cout << Input;
         ++Sum;
-#if PRINT_DEBUG
-        if(Sum > 100000000 && Sum % 100000000 == 0)
-            cout << Sum << endl;
-#endif
+        if(PrintReceivedCharacters)
+            cout << Input;
     }
     const int64_t GetResult(const string& line) const
     {
@@ -49,6 +49,7 @@ public:
     }
 private:
     int64_t Sum{ 0 };
+    bool PrintReceivedCharacters{ false };
 };
 
 
@@ -90,10 +91,6 @@ public:
             cerr << "No next robot specified. Work chain is broken." << endl;
             return;
         }
-
-#if PRINT_DEBUG
-        cout << endl << endl << Input << endl << endl;
-#endif
 
         auto newLoc = GetLocationForCharacter(Input);
         // now, depending on where do we need to go, we take different paths:
@@ -185,11 +182,19 @@ public:
 
         auto newLoc = GetLocationForCharacter(Input);
 
+
+
+
+
         // we need to go down BEFORE going left/right
         // we need to go left/right BEFORE going up
 
         while(newLoc != CurrentLocation)
         {
+
+            // if we need to go left or right, check if we can, maybe we have to go down first
+
+
             // new logic is a bit more complex:
             // we prefer to move left/right before up/down
             // this calls for check if we can actually move in 
@@ -298,7 +303,7 @@ const int64_t AoC_2024_21::Process(int robotsCount)
     aoc::AoCStream() >> lines;
 
     // our accountant will count the result steps
-    shared_ptr<CountingRobot> Accountant = make_shared<CountingRobot>();
+    shared_ptr<CountingRobot> Accountant = make_shared<CountingRobot>(true);
 
     // create X control robots
     shared_ptr<Robot> ctrl = Accountant;
@@ -322,6 +327,7 @@ const int64_t AoC_2024_21::Process(int robotsCount)
         kpadRobot->Reset();
         std::for_each(ControlRobots.begin(), ControlRobots.end(), [](const auto& r) { r->Reset(); });
 
+        cout << line << " ";
         // process
         kpadRobot->ProcessInput(line);
 
@@ -345,8 +351,17 @@ const int64_t AoC_2024_21::Step1()
     TIME_PART;
     return Process(3);
 };
+
 const int64_t AoC_2024_21::Step2()
 {
+    constexpr static auto v = {'A', 'B', 'C', 'D'};
+    auto m = v | std::views::enumerate | std::ranges::to<std::map>();
+
+
+    // auto m2 = aoc::AoCStream() | std::views::enumerate;
+
+
+
     if(!IsTest())return 0;
     return 0;
     std::locale customLocale(std::locale::classic(), new CustomNumPunct);
@@ -357,14 +372,3 @@ const int64_t AoC_2024_21::Step2()
 };
 
 
-
-/*
-* v<A<AA>>^AvAA<^A>Av<<A>>^AvA^Av<<A>>^AAv<A>A^A<A>Av<A<A>>^AAAvA<^A>A
-* <vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A
-*
-*
-*
-*
-* v<<A>>^AvA^Av<<A>>^AAv<A<A>>^AAvAA<^A>Av<A>^AA<A>Av<A<A>>^AAAvA<^A>A
-*
-* */

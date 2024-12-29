@@ -11,14 +11,17 @@ void AoC_2024_06::ClearState() // turned out I am using it once, so this should 
 {
     Map.clear();
     Marks.clear();
-    Step = { 0, -1 }; // starting north
+    Width = 0;
+    Height = 0;
+    StepX = 0;
+    StepY = -1; // starting north
 }
 
 const int64_t AoC_2024_06::Step1()
 {
     ClearState();
-    aoc::AoCStream() >> Map;
-    Marks = aoc::maps::Map2d<uint8_t>(Map.Width, Map.Height);
+    Map = ReadStringFromFile(1, Height, Width);
+    Marks = vector<uint8_t>(Map.size());
 
     TIME_PART;
     FindStartLocation();
@@ -48,11 +51,11 @@ const int64_t AoC_2024_06::Step2()
     TIME_PART;
     long sum = 0;
 
-    for(int y = 0; y < Map.Height; ++y)
+    for(int y = 0; y < Height; ++y)
     {
-        for(int x = 0; x < Map.Width; ++x)
+        for(int x = 0; x < Width; ++x)
         {
-            if(!Marks.Get(x, y))
+            if(!Marks[BufPos(x, y)])
                 continue;
 
             PutArtificialWallAt(x, y);
@@ -69,66 +72,76 @@ const int64_t AoC_2024_06::Step2()
 
 void AoC_2024_06::TurnRight()
 {
-    if(Step.x == 1) { Step.x = 0; Step.y = 1; }
-    else if(Step.y == 1) { Step.x = -1; Step.y = 0; }
-    else if(Step.x == -1) { Step.x = 0; Step.y = -1; }
-    else if(Step.y == -1) { Step.x = 1; Step.y = 0; }
+    if(StepX == 1) { StepX = 0; StepY = 1; }
+    else if(StepY == 1) { StepX = -1; StepY = 0; }
+    else if(StepX == -1) { StepX = 0; StepY = -1; }
+    else if(StepY == -1) { StepX = 1; StepY = 0; }
 }
 void AoC_2024_06::MarkCurrentLocation()
 {
-    Marks.Set(Location, 1);
+    Marks[BufPos(LocationX, LocationY)] = 1;
 }
 long AoC_2024_06::CountMarkedLocations()
 {
     long sum = 0;
-    for(const uint8_t m : Marks.Map)
+    for(const uint8_t m : Marks)
         sum += m;
     return sum;
 }
 void AoC_2024_06::FindStartLocation()
 {
-    if(Map.find('^', Location))
+    for(int y = 0; y < Height; ++y)
     {
-        StartLocation = Location;
-        return;
+        for(int x = 0; x < Width; ++x)
+        {
+            if(Map[BufPos(x, y)] == '^')
+            {
+                StartLocationX = LocationX = x;
+                StartLocationY = LocationY = y;
+                return;
+            }
+        }
     }
-    cout << RED << BLINK << "Day 2024/06: Unable to find starting location" << RESET << endl;
+    cout << RED << BLINK << "Unable to find starting location" << RESET << endl;
 }
 
 void AoC_2024_06::PutArtificialWallAt(const int x, const int y)
 {
-    Map.Set(x, y, '#');
+    Map[BufPos(x, y)] = '#';
 }
 void AoC_2024_06::ClearArtificialWall(const int x, const int y)
 {
-    Map.Set(x, y, '.');
+    Map[BufPos(x, y)] = '.';
 }
 
-StepForwardResult AoC_2024_06::StepForward(aoc::maps::Map2d<uint8_t>* StepoverBuffer)
+StepForwardResult AoC_2024_06::StepForward(vector<uint8_t>* StepoverBuffer)
 {
-    Location += Step;
+    LocationX += StepX;
+    LocationY += StepY;
 
-    if(!Map.WithinBounds(Location))
+    if(LocationX < 0 || LocationY < 0 || LocationX >= Width || LocationY >= Height)
         return OutOfMap;
 
 
     if(StepoverBuffer)
     {
-        const int step = StepoverBuffer->Get(Location);
-        if((Step.y < 0 && step & SOBM_NORTH)
-            || (Step.x > 0 && step & SOBM_EAST)
-            || (Step.y > 0 && step & SOBM_SOUTH)
-            || (Step.x < 0 && step & SOBM_WEST)
+        const int step = (*StepoverBuffer)[BufPos(LocationX, LocationY)];
+        if((StepY < 0 && step & SOBM_NORTH)
+            || (StepX > 0 && step & SOBM_EAST)
+            || (StepY > 0 && step & SOBM_SOUTH)
+            || (StepX < 0 && step & SOBM_WEST)
             )
             return Overstep;
     }
 
-    const char& mark = Map.Get(Location);
+    const char& mark = Map[BufPos(LocationX, LocationY)];
 
     if(mark == '#')
     {
         // get back
-        Location -= Step;
+        LocationX -= StepX;
+        LocationY -= StepY;
+
         return Obstacle;
     }
     return Ok;
@@ -137,12 +150,13 @@ StepForwardResult AoC_2024_06::StepForward(aoc::maps::Map2d<uint8_t>* StepoverBu
 
 bool AoC_2024_06::CheckForCircularPath()
 {
-    Location = StartLocation;
-    Step = { 0, -1 };
+    LocationX = StartLocationX;
+    LocationY = StartLocationY;
+    StepX = 0;
+    StepY = -1;
 
-
-    aoc::maps::Map2d<uint8_t> SteppedOverBuffer(Map.Width, Map.Height, true);
-    SteppedOverBuffer.Set(Location, SOBM_NORTH);
+    vector<uint8_t>SteppedOverBuffer(Map.size());
+    SteppedOverBuffer[BufPos(LocationX, LocationY)] = SOBM_NORTH;
 
     while(true)
     {
@@ -163,12 +177,12 @@ bool AoC_2024_06::CheckForCircularPath()
         else
         {
             uint8_t mask = 0;
-            if(Step.y < 0) mask = SOBM_NORTH;
-            if(Step.x > 0) mask = SOBM_EAST;
-            if(Step.y > 0) mask = SOBM_SOUTH;
-            if(Step.x < 0) mask = SOBM_WEST;
+            if(StepY < 0) mask = SOBM_NORTH;
+            if(StepX > 0) mask = SOBM_EAST;
+            if(StepY > 0) mask = SOBM_SOUTH;
+            if(StepX < 0) mask = SOBM_WEST;
 
-            SteppedOverBuffer.Set(Location, SteppedOverBuffer.Get(Location) | mask);
+            SteppedOverBuffer[BufPos(LocationX, LocationY)] |= mask;
         }
     }
 }

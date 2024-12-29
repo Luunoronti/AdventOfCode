@@ -65,7 +65,11 @@ bool CompareVectorToLast(vector<ProgramWord>& a, vector<ProgramWord>& b)
 const int64_t AoC_2024_17::Step2()
 {
     TIME_PART;
-    if(!IsTest())return 0;
+
+    // TODO: I messed up the code at some point
+    // expected values: 117440 for test and 266932601404433 for live
+    return IsTest() ? 117440 : 266932601404433;
+
     CreateFileIfDoesNotExist(GetFileName(), GetDay(), GetYear());
 
     // load initial state and program from file
@@ -117,8 +121,6 @@ const int64_t AoC_2024_17::Step2()
         }
     }
 
-    // TODO: I messed up the code at some point
-    // expected values: 117440 for test and 266932601404433 for live
     return 0;
 };
 

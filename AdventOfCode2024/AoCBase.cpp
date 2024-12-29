@@ -1,5 +1,9 @@
 ﻿#include "pch.h"
 #include "AoCBase.h"
+#include <iostream> 
+#include <fstream> 
+#include <sstream>
+#include <string>
 
 using namespace aoc;
 
@@ -8,19 +12,6 @@ AoCProgramConfiguration AoCBase::ProgramConfiguration;
 bool AoCBase::ProgramConfigurationLoaded{ false };
 
 #pragma region Execution
-
-void AoCBase::Tick(double timeDelta)
-{
-}
-void AoCBase::OnBegin() {}
-void AoCBase::OnEnd() {}
-
-void AoCBase::RepeatTick()
-{
-    RepeatTickRequest = 1;
-}
-
-
 
 void AoCBase::ExecutePart(AoCBase& instance, bool test, int step, AoCBaseExecutionConfigurationAndResult& dayConfiguration, AoCBaseExecutionConfigurationResultEntry& partConfiguration)
 {
@@ -46,7 +37,6 @@ void AoCBase::ExecutePart(AoCBase& instance, bool test, int step, AoCBaseExecuti
 
     AoCStream::SetFileData(instance.GetFileName(), instance.GetYear(), instance.GetDay(), test);
     instance.SetTest(test);
-    instance.OnInitTestingTests();
     if(!partConfiguration.EnableVisualization && (dayConfiguration.EnableDebugOutput || partConfiguration.EnableDebugOutput))
     {
         dout.setEnabled(true);
@@ -54,49 +44,15 @@ void AoCBase::ExecutePart(AoCBase& instance, bool test, int step, AoCBaseExecuti
     }
 
     instance.CurrentStepConfiguration = partConfiguration;
-    instance.OnInitStep(step);
 
     instance.LastGlobalTime = 0;
+    instance.ReadInputFile();
+
     partConfiguration.Result = step == 1 ? instance.Step1() : instance.Step2();
 
-
-    // new approach involves Tick() function.
-    // normally, it's a void. If you want to keep 
-    // it running, you set a flag indicating so.
-    // so new steps would execute that and forget about Step1() and Step2() as those are being deprecated
-    if(Context.Visualizer)
-    {
-        instance.RepeatTickRequest = 0;
-        LONGLONG startTicks = AoCVisualizer::GetQPCTicks();
-        instance.OnBegin();
-        do
-        {
-            instance.RepeatTickRequest = 0;
-            if(Context.Visualizer)
-                Context.Visualizer->ProcessSystemEvents();
-
-            double timeDelta = AoCVisualizer::GetQPCTimeDelta(startTicks) * 0.001;
-            instance.Tick(timeDelta);
-
-            if(Context.Visualizer)
-            {
-                // Context.Visualizer->Present();
-                //Sleep(0); // this need to be better
-            }
-        } while(instance.RepeatTickRequest);
-        instance.OnEnd();
-    }
-
-    // repeast for time measurement
     Context.PartConfig->EnableVisualization = false;
-    instance.RepeatTickRequest = 0;
-    instance.OnBegin();
-    instance.Tick(0);
-    instance.OnEnd();
-
 
     partConfiguration.Time = instance.LastGlobalTime;
-    instance.OnCloseStep(1);
     dout.setEnabled(false);
 
     if(Context.Visualizer)
@@ -152,26 +108,20 @@ void AoCBase::ExecuteStep(AoCBase& instance)
     }
 
     AoCStream::SetFileData(instance.GetFileName(), result.Year, result.Day, instance.IsTest());
-    instance.OnInitTests();
     instance.SetTest(true);
-    instance.OnInitTestingTests();
 
     ExecutePart(instance, true, 1, result, result.Step1Test);
     ExecutePart(instance, true, 2, result, result.Step2Test);
 
-    instance.OnCloseTestingTests();
     instance.SetTest(false);
 
     if(result.EnableDebugOutput) dout.setEnabled(true);
-    instance.OnInitLiveTests();
     dout.setEnabled(false);
 
     ExecutePart(instance, false, 1, result, result.Step1Live);
     ExecutePart(instance, false, 2, result, result.Step2Live);
 
     if(result.EnableDebugOutput) dout.setEnabled(true);
-    instance.OnCloseLiveTests();
-    instance.OnCloseTests();
     dout.setEnabled(false);
 
     ResultReports.push_back(result);
@@ -469,17 +419,72 @@ void AoCBase::SetTest(const bool IsTest)
     IsUnderTest = IsTest;
 }
 
-void AoCBase::OnInitTests() {}
-void AoCBase::OnInitStep(const int Step) {}
-void AoCBase::OnCloseStep(const int Step) {}
-void AoCBase::OnCloseTests() {}
-void AoCBase::OnInitTestingTests() {}
-void AoCBase::OnCloseTestingTests() {}
-void AoCBase::OnInitLiveTests() {}
-void AoCBase::OnCloseLiveTests() {}
 
 
 #pragma region File IO
+
+void AoCBase::ReadInputFile()
+{
+    const string& FileName = GetFileName();
+    struct stat buffer;
+    if(stat(FileName.c_str(), &buffer) != 0)
+    {
+        if(IsTest())
+        {
+            std::string command = "code \"" + FileName + "\"";
+            int result = system(command.c_str());
+            if(result == 0)
+            {
+                std::cout << "VS Code opened successfully on file " << FileName << std::endl;
+                while(stat(FileName.c_str(), &buffer) != 0)
+                {
+                    ::Sleep(1);
+                }
+                return;
+            }
+            else std::cerr << "Failed to open VS Code. Attempting to revert to Notepad" << std::endl;
+
+            command = "notepad \"" + FileName + "\"";
+            result = system(command.c_str());
+            if(result == 0)
+            {
+                std::cout << "Notepad opened successfully on file " << FileName << std::endl;
+                return;
+            }
+            else std::cerr << "Failed to open Notepad." << std::endl;
+        }
+        else
+        {
+            std::string command = "aocnetagent download-input " + to_string(GetYear()) + " " + to_string(GetDay()) + " \"" + FileName + "\"";
+            int result = system(command.c_str());
+            if(result == 0)
+            {
+                std::cout << "aocnetagent opened successfully on file " << FileName << std::endl;
+                while(stat(FileName.c_str(), &buffer) != 0)
+                {
+                    ::Sleep(1);
+                }
+                return;
+            }
+            else std::cerr << "Failed to open aocnetagent." << std::endl;
+
+        }
+    }
+
+    std::ifstream file(FileName);
+    if(!file.is_open())
+    {
+        throw std::runtime_error("Could not open file " + FileName);
+    }
+    std::string content((std::istreambuf_iterator<char>(file)), (std::istreambuf_iterator<char>()));
+    Input = content;
+}
+
+
+
+
+
+
 std::vector<int64_t> ParseStringToVector_Helper(const std::string& input)
 {
     std::vector<int64_t> result;
@@ -887,8 +892,4 @@ void AoCBase::LoadProgramConfig()
     file.close();
 }
 #pragma endregion
-
-
-
-
 

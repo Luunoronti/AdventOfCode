@@ -33,6 +33,13 @@
 #include <deque>
 #include <stack>
 #include <queue>
+#include <map>
+#include <ranges>
+#include <iostream> 
+#include <fstream> 
+#include <sstream> 
+#include <string>
+
 
 #include "json.hpp"
 

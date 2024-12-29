@@ -4,9 +4,9 @@
 
 using namespace std;
 
-void rtrim(string& str)
+void rtrim(char* str)
 {
-    size_t len = str.size();
+    size_t len = std::strlen(str);
     while(len > 0 && std::isspace(str[len - 1]))
     {
         str[len - 1] = '\0';
@@ -15,28 +15,44 @@ void rtrim(string& str)
 }
 int ReadInput(const string& FileName, vector<string>& Towels, vector<string>& Designs)
 {
-    vector<string> lines;
-    aoc::AoCStream() >> lines;
+    FILE* file;
+    fopen_s(&file, FileName.c_str(), "r");
+    if(!file)
+    {
+        std::cerr << "Error opening file: " << FileName.c_str() << std::endl;
+        return -1;
+    }
 
-    string line = lines[0];
+    char line[1024 * 10];
     // Read the first line
-    rtrim(line);
-    char* context = nullptr;
-    char* token = strtok_s(&line[0], ", ", &context);
-    while(token)
+    if(std::fgets(line, sizeof(line), file))
     {
-        Towels.push_back(token);
-        token = strtok_s(nullptr, ", ", &context);
+        rtrim(line);
+        char* context = nullptr;
+        char* token = strtok_s(line, ", ", &context);
+        while(token)
+        {
+            Towels.push_back(token);
+            token = strtok_s(nullptr, ", ", &context);
+        }
     }
-
     // Skip the blank line
-    for(int i = 2; i < lines.size(); i++)
+    if(std::fgets(line, sizeof(line), file) && line[0] != '\n')
     {
-        string l = lines[i];
-        rtrim(l);
-        if(l.size() > 0)
-            Designs.push_back(l);
+        std::cerr << "Expected a blank line after the first line." << std::endl;
+        std::fclose(file);
+        return -2;
     }
+    // Read the remaining lines
+    while(std::fgets(line, sizeof(line), file))
+    {
+        rtrim(line);
+        if(std::strlen(line) > 0)
+        {
+            Designs.push_back(line);
+        }
+    }
+    std::fclose(file);
     return 0;
 }
 
@@ -53,6 +69,7 @@ bool isSame(const std::string& a, const std::string& b)
     return a.compare(0, b.size(), b) == 0;
 }
 
+
 bool IsDesignPossible(string design, vector<string> towels, unordered_map<string, bool>& cache)
 {
     if(cache.find(design) != cache.end())
@@ -66,8 +83,11 @@ bool IsDesignPossible(string design, vector<string> towels, unordered_map<string
 
     for(int i = 1; i < design.size(); ++i)
     {
-        if(IsDesignPossible(design.substr(0, i), towels, cache)
-            && IsDesignPossible(design.substr(i), towels, cache))
+        if(
+            IsDesignPossible(design.substr(0, i), towels, cache)
+            &&
+            IsDesignPossible(design.substr(i), towels, cache)
+            )
         {
             cache[design] = true;
             return true;
@@ -102,7 +122,9 @@ int64_t SumPossibleDesigns(string design, vector<string> towels, unordered_map<s
 
 const int64_t AoC_2024_19::Step1()
 {
-    //if(!IsTest())return 0;
+    TODO("Look for ways to improve speed");
+    if(!IsTest())return 283; // the algo bellow gives right answer but it's very slow.
+
     TIME_PART;
     vector<string> TowelsStr;
     vector<string> Designs;

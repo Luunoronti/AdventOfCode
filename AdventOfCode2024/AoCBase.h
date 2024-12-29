@@ -2,8 +2,6 @@
 #include "pch.h"
 #include "AoCVisualizer.h"
 
-
-
 #define PAD_LEFT(num, ch) std::setw(num) << std::setfill(ch)
 #define PAD_RIGHT(num, ch) std::left << std::setw(num) << std::setfill(ch)
 
@@ -68,7 +66,6 @@ public:
     static AoCProgramConfiguration ProgramConfiguration;
     static bool ProgramConfigurationLoaded;
 
-
     static void PrintExecutionReport();
     static void ReadDaysDatabaseIfNotDoneAlready();
 
@@ -78,15 +75,18 @@ public:
         static_assert(std::is_base_of<AoCBase, T>::value, "T must derive from AoCBase");
         T instance;
         ExecuteStep(instance);
-
-
     }
 
     static void ExecuteStep(AoCBase& instance);
-
     static void ExecutePart(AoCBase& instance, bool test, int step, AoCBaseExecutionConfigurationAndResult& dayConfiguration, AoCBaseExecutionConfigurationResultEntry& partConfiguration);
 
 protected:
+    void ReadInputFile();
+
+
+
+
+    /* OLD IO => TO REMOVE */
     LongListList ReadLongVectorsFromFile(int Step) const;
 
     LongListList ReadVerticalVectorsFromFile(int Step) const;
@@ -98,6 +98,8 @@ protected:
     const int GetFileSingleLineWidth(int Step) const;
 
     static long GetMinimum(const vector<long>& List);
+
+    /* OLD IO <== TO REMOVE */
 
     template<typename T1>
     __forceinline static int IndexOf(const vector<T1>& List, T1 Value)
@@ -135,39 +137,21 @@ public:
     void SetTest(const bool IsTest);
     static AoCBaseExecutionConfigurationAndResult GetResultJsonEntry(int Year, int Day);
     static void LoadProgramConfig();
-    virtual void OnInitTests();
-    virtual void OnInitTestingTests();
-    virtual void OnCloseTestingTests();
-
-    virtual void OnInitLiveTests();
-    virtual void OnCloseLiveTests();
-
-    virtual void OnInitStep(const int Step);
-
-    virtual void OnCloseStep(const int Step);
-    virtual void OnCloseTests();
 
     AoCBaseExecutionConfigurationAndResult CurrentDayConfiguration;
     AoCBaseExecutionConfigurationResultEntry CurrentStepConfiguration;
-
     AoCExecutionContext* Context;
-
-    virtual void OnBegin();
-    virtual void OnEnd();
-    virtual void Tick(double timeDelta);
-    
-    /** if this method is called, next tick is to be invoked again*/
-    void RepeatTick(); 
-
+protected:
+    std::string Input;
 private:
     bool IsUnderTest{ false };
     int Step{ 0 };
     double LastGlobalTime{ 0 };
-    int8_t RepeatTickRequest : 1;
     static vector<AoCBaseExecutionConfigurationAndResult> DaysDatabase;
-
     friend class _Time;
 };
+
+
 
 
 class _Time

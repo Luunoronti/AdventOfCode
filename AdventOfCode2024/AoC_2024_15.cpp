@@ -209,174 +209,174 @@ void AoC_2024_15::ReadInput(int& mapDimX, int& mapDimY)
     mapDimY = y;
 }
 
-void AoC_2024_15::OnBegin()
-{
-    taskCompleted = false;
-    MovementCommandsinitialSize = 0;
-    MovementCommands.clear();
-
-    // if these are not empty here, we may have a memory leak
-    if(!ActorsToAddToScene.empty())
-        throw std::runtime_error("Actors to add to the scene is not empty");
-    if(World && !World->Map.empty())
-        throw std::runtime_error("Scene is not empty");
-
-    int mapWidth = 0, mapHeight = 0;
-    ReadInput(mapWidth, mapHeight);
-
-    if(Robot)
-    {
-        // construct controller
-        RobotController = new ARobotController();
-        // possess robot
-        RobotController->Possess(Robot);
-    }
-    else
-    {
-        throw std::runtime_error("Unable to find robot");
-    }
-
-    // construct map
-    World = new UWorld(mapWidth, mapHeight);
-    for(AActor* actor : ActorsToAddToScene)
-    {
-        World->Set(actor->startPosX, actor->startPosY, actor);
-    }
-    ActorsToAddToScene.clear();
-
-
-    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    // ALL OF THIS WOULD BE NORMALLY DONE BY ENGINE 
-    // OR SOME SORT OF VISUALIZER
-    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    // hide cursor
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    if(hConsole != INVALID_HANDLE_VALUE)
-    {
-        CONSOLE_CURSOR_INFO cursorInfo;
-        GetConsoleCursorInfo(hConsole, &cursorInfo);
-        cursorInfo.bVisible = FALSE;
-        SetConsoleCursorInfo(hConsole, &cursorInfo);
-    }
-
-    // allocate console
-    ConBufferSize.X = mapWidth;
-    ConBufferSize.Y = mapHeight + 2;
-
-    ConBufferCoord.X = 0;
-    ConBufferCoord.Y = 0;
-
-    ConWriteRegion.Left = 0;
-    ConWriteRegion.Top = 0;
-    ConWriteRegion.Right = mapWidth;
-    ConWriteRegion.Bottom = mapHeight + 1;
-
-    // Allocate a buffer to hold the CHAR_INFO data
-    ConBuffer = new CHAR_INFO[2 + mapWidth * (mapHeight + 3)];
-
-    if(this->Context->PartConfig->EnableVisualization)
-        DrawMap();
-    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-}
-void AoC_2024_15::OnEnd()
-{
-    if(this->Context->PartConfig->EnableVisualization)
-        ClearConsole();
-
-    // clear up
-    if(World)
-    {
-        for(AActor* actor : World->Map)
-        {
-            if(actor)
-            {
-                delete actor;
-            }
-        }
-        World->Map.clear();
-        delete World;
-    }
-    World = nullptr;
-    if(RobotController)
-        delete RobotController;
-    RobotController = nullptr;
-    Robot = nullptr;
-
-    delete[] ConBuffer;
-    ConBuffer = nullptr;
-
-    ConBufferSize.X = 0;
-    ConBufferSize.Y = 0;
-
-    ConBufferCoord.X = 0;
-    ConBufferCoord.Y = 0;
-
-    ConWriteRegion.Left = 0;
-    ConWriteRegion.Top = 0;
-    ConWriteRegion.Right = 0;
-    ConWriteRegion.Bottom = 0;
-}
-
-void AoC_2024_15::Tick(double timeDelta)
-{
-    //if(IsTest())return;
-
-    // if we have visualization disabled, just simulate everything
-    // at once
-    if(!this->Context->PartConfig->EnableVisualization)
-    {
-        TIME_PART;
-        for(const MoveCommand command : this->MovementCommands)
-        {
-            RobotController->Move(command);
-        }
-        this->Context->PartConfig->Result = ComputeAnswerForCurrentWorld();
-    }
-    else
-    {
-        // this is to allow for hooking up OBS
-        // to console window :)
-        initialDelay -= timeDelta;
-        if(GetStep() == 1 && IsTest() && initialDelay > 0)
-        {
-            this->RepeatTick();
-            return;
-        }
-
-        // normal Tick() starts here
-        tickDelayTime -= timeDelta;
-        if(tickDelayTime <= 0)
-        {
-            if(taskCompleted)
-            {
-                return;
-            }
-
-            if(!this->MovementCommands.empty())
-            {
-                const MoveCommand command = this->MovementCommands.front();
-                this->MovementCommands.pop_front();
-                RobotController->Move(command);
-
-                // if command buffer is empty, compute the last thing they want us to
-                // also set timer to some higher value so that we will see
-                // the result for a bit before it is being discarded
-
-                if(this->MovementCommands.empty())
-                {
-                    this->Context->PartConfig->Result = ComputeAnswerForCurrentWorld();
-                    tickDelayTime = 2;
-                    taskCompleted = true;
-                }
-            }
-
-            DrawMap(); // this would be normally done by the engine in rendering thread
-            if(!taskCompleted)
-                tickDelayTime = IsTest() ? (GetStep() == 1 ? 0.01 : .001) : 0.0001;
-        }
-        this->RepeatTick();
-    }
-}
+//void AoC_2024_15::OnBegin()
+//{
+//    taskCompleted = false;
+//    MovementCommandsinitialSize = 0;
+//    MovementCommands.clear();
+//
+//    // if these are not empty here, we may have a memory leak
+//    if(!ActorsToAddToScene.empty())
+//        throw std::runtime_error("Actors to add to the scene is not empty");
+//    if(World && !World->Map.empty())
+//        throw std::runtime_error("Scene is not empty");
+//
+//    int mapWidth = 0, mapHeight = 0;
+//    ReadInput(mapWidth, mapHeight);
+//
+//    if(Robot)
+//    {
+//        // construct controller
+//        RobotController = new ARobotController();
+//        // possess robot
+//        RobotController->Possess(Robot);
+//    }
+//    else
+//    {
+//        throw std::runtime_error("Unable to find robot");
+//    }
+//
+//    // construct map
+//    World = new UWorld(mapWidth, mapHeight);
+//    for(AActor* actor : ActorsToAddToScene)
+//    {
+//        World->Set(actor->startPosX, actor->startPosY, actor);
+//    }
+//    ActorsToAddToScene.clear();
+//
+//
+//    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//    // ALL OF THIS WOULD BE NORMALLY DONE BY ENGINE 
+//    // OR SOME SORT OF VISUALIZER
+//    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//    // hide cursor
+//    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+//    if(hConsole != INVALID_HANDLE_VALUE)
+//    {
+//        CONSOLE_CURSOR_INFO cursorInfo;
+//        GetConsoleCursorInfo(hConsole, &cursorInfo);
+//        cursorInfo.bVisible = FALSE;
+//        SetConsoleCursorInfo(hConsole, &cursorInfo);
+//    }
+//
+//    // allocate console
+//    ConBufferSize.X = mapWidth;
+//    ConBufferSize.Y = mapHeight + 2;
+//
+//    ConBufferCoord.X = 0;
+//    ConBufferCoord.Y = 0;
+//
+//    ConWriteRegion.Left = 0;
+//    ConWriteRegion.Top = 0;
+//    ConWriteRegion.Right = mapWidth;
+//    ConWriteRegion.Bottom = mapHeight + 1;
+//
+//    // Allocate a buffer to hold the CHAR_INFO data
+//    ConBuffer = new CHAR_INFO[2 + mapWidth * (mapHeight + 3)];
+//
+//    if(this->Context->PartConfig->EnableVisualization)
+//        DrawMap();
+//    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//}
+//void AoC_2024_15::OnEnd()
+//{
+//    if(this->Context->PartConfig->EnableVisualization)
+//        ClearConsole();
+//
+//    // clear up
+//    if(World)
+//    {
+//        for(AActor* actor : World->Map)
+//        {
+//            if(actor)
+//            {
+//                delete actor;
+//            }
+//        }
+//        World->Map.clear();
+//        delete World;
+//    }
+//    World = nullptr;
+//    if(RobotController)
+//        delete RobotController;
+//    RobotController = nullptr;
+//    Robot = nullptr;
+//
+//    delete[] ConBuffer;
+//    ConBuffer = nullptr;
+//
+//    ConBufferSize.X = 0;
+//    ConBufferSize.Y = 0;
+//
+//    ConBufferCoord.X = 0;
+//    ConBufferCoord.Y = 0;
+//
+//    ConWriteRegion.Left = 0;
+//    ConWriteRegion.Top = 0;
+//    ConWriteRegion.Right = 0;
+//    ConWriteRegion.Bottom = 0;
+//}
+//
+//void AoC_2024_15::Tick(double timeDelta)
+//{
+//    //if(IsTest())return;
+//
+//    // if we have visualization disabled, just simulate everything
+//    // at once
+//    if(!this->Context->PartConfig->EnableVisualization)
+//    {
+//        TIME_PART;
+//        for(const MoveCommand command : this->MovementCommands)
+//        {
+//            RobotController->Move(command);
+//        }
+//        this->Context->PartConfig->Result = ComputeAnswerForCurrentWorld();
+//    }
+//    else
+//    {
+//        // this is to allow for hooking up OBS
+//        // to console window :)
+//        initialDelay -= timeDelta;
+//        if(GetStep() == 1 && IsTest() && initialDelay > 0)
+//        {
+//            this->RepeatTick();
+//            return;
+//        }
+//
+//        // normal Tick() starts here
+//        tickDelayTime -= timeDelta;
+//        if(tickDelayTime <= 0)
+//        {
+//            if(taskCompleted)
+//            {
+//                return;
+//            }
+//
+//            if(!this->MovementCommands.empty())
+//            {
+//                const MoveCommand command = this->MovementCommands.front();
+//                this->MovementCommands.pop_front();
+//                RobotController->Move(command);
+//
+//                // if command buffer is empty, compute the last thing they want us to
+//                // also set timer to some higher value so that we will see
+//                // the result for a bit before it is being discarded
+//
+//                if(this->MovementCommands.empty())
+//                {
+//                    this->Context->PartConfig->Result = ComputeAnswerForCurrentWorld();
+//                    tickDelayTime = 2;
+//                    taskCompleted = true;
+//                }
+//            }
+//
+//            DrawMap(); // this would be normally done by the engine in rendering thread
+//            if(!taskCompleted)
+//                tickDelayTime = IsTest() ? (GetStep() == 1 ? 0.01 : .001) : 0.0001;
+//        }
+//        this->RepeatTick();
+//    }
+//}
 
 void AoC_2024_15::ARobotController::Possess(AActor* ActorToPossess)
 {

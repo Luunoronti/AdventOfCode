@@ -1,9 +1,6 @@
 #include "pch.h"
 #include "AoC_2024_02.h"
 
-void AoC_2024_02::OnInitTestingTests() {  }
-void AoC_2024_02::OnInitLiveTests() {  }
-
 
 const bool AoC_2024_02::AnalyzeList(vector<int> List, const bool Allow2ndCheck) const
 {

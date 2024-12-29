@@ -156,10 +156,6 @@ class AoC_2024_15 : public AoC2024
 
 public:
     const virtual __forceinline int GetDay() const override { return 15; }
-    void Tick(double timeDelta) override;
-    void OnBegin() override;
-    void OnEnd() override;
-
 private:
     void ReadInput(int& mapDimX, int& mapDimY);
     MoveCommand ToMoveCommand(const char input);

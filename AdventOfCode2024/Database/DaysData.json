@@ -426,7 +426,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "name": "Linen Layout",
     "day": 19,
     "liveStep1": {
@@ -449,7 +449,7 @@
   },
   {
     "run": true,
-    "debugRun": true,
+    "debugRun": false,
     "enableVisualization": false,
     "name": "Race Condition",
     "day": 20,
