@@ -1,0 +1,6 @@
+C:\Work\AoC\AdventOfCode\AdventOfCode2023\obj\Debug\net7.0-windows\AdventOfCode2023.csproj.AssemblyReference.cache
+C:\Work\AoC\AdventOfCode\AdventOfCode2023\obj\Debug\net7.0-windows\AdventOfCode2023.GeneratedMSBuildEditorConfig.editorconfig
+C:\Work\AoC\AdventOfCode\AdventOfCode2023\obj\Debug\net7.0-windows\AdventOfCode2023.AssemblyInfoInputs.cache
+C:\Work\AoC\AdventOfCode\AdventOfCode2023\obj\Debug\net7.0-windows\AdventOfCode2023.AssemblyInfo.cs
+C:\Work\AoC\AdventOfCode\AdventOfCode2023\obj\Debug\net7.0-windows\AdventOfCode2023.csproj.CoreCompileInputs.cache
+C:\Work\AoC\AdventOfCode\AdventOfCode2023\obj\Debug\net7.0-windows\AdventOfCode2023.sourcelink.json

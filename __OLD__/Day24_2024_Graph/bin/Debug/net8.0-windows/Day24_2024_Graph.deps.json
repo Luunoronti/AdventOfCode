@@ -1,0 +1,97 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Day24_2024_Graph/1.0.0": {
+        "dependencies": {
+          "Syncfusion.SfChart.WPF": "28.1.36",
+          "Syncfusion.SfDiagram.WPF": "28.1.36"
+        },
+        "runtime": {
+          "Day24_2024_Graph.dll": {}
+        }
+      },
+      "Syncfusion.Licensing/28.1.36": {
+        "runtime": {
+          "lib/net8.0/Syncfusion.Licensing.dll": {
+            "assemblyVersion": "28.1.36.0",
+            "fileVersion": "28.1.36.0"
+          }
+        }
+      },
+      "Syncfusion.SfChart.WPF/28.1.36": {
+        "dependencies": {
+          "Syncfusion.Licensing": "28.1.36"
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.SfChart.WPF.dll": {
+            "assemblyVersion": "28.1.36.0",
+            "fileVersion": "28.1.36.0"
+          }
+        }
+      },
+      "Syncfusion.SfDiagram.WPF/28.1.36": {
+        "dependencies": {
+          "Syncfusion.Licensing": "28.1.36",
+          "Syncfusion.Shared.WPF": "28.1.36"
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.SfDiagram.WPF.dll": {
+            "assemblyVersion": "28.1.36.0",
+            "fileVersion": "28.1.36.0"
+          }
+        }
+      },
+      "Syncfusion.Shared.WPF/28.1.36": {
+        "dependencies": {
+          "Syncfusion.Licensing": "28.1.36"
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.Shared.WPF.dll": {
+            "assemblyVersion": "28.1.36.0",
+            "fileVersion": "28.1.36.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Day24_2024_Graph/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Syncfusion.Licensing/28.1.36": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MmpXZdmJd07FUlQMiq7PYftNGK87JoDMkAve1I7roNiRBTHKlnin/vXAccEi1VcCFIHTPPCsRQkONrKWfR9HiA==",
+      "path": "syncfusion.licensing/28.1.36",
+      "hashPath": "syncfusion.licensing.28.1.36.nupkg.sha512"
+    },
+    "Syncfusion.SfChart.WPF/28.1.36": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sKSP9ahCFKPrZWUo1s6UGl33UlyjdvR9o75r/VyvZeMkIsw1tkZTXWHterK3aT5D73as2LNzJenjhTGJfNHnSQ==",
+      "path": "syncfusion.sfchart.wpf/28.1.36",
+      "hashPath": "syncfusion.sfchart.wpf.28.1.36.nupkg.sha512"
+    },
+    "Syncfusion.SfDiagram.WPF/28.1.36": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BUtY1Kf1qFAQnzcrNjzM5nGzsWI3dRK3U3O7iCn2so+5rKpP/VoijlEbcfxgEmiwHegFOpC2RlK7WggCyGCtNw==",
+      "path": "syncfusion.sfdiagram.wpf/28.1.36",
+      "hashPath": "syncfusion.sfdiagram.wpf.28.1.36.nupkg.sha512"
+    },
+    "Syncfusion.Shared.WPF/28.1.36": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nGVJu64FmC7s2OlAphH7gJ7qPVYeLMIRRY0T8MkROnxXqHtj2bef/dZyaecbnDb0WlNJ+mQWMxzvLWARNMXOWw==",
+      "path": "syncfusion.shared.wpf/28.1.36",
+      "hashPath": "syncfusion.shared.wpf.28.1.36.nupkg.sha512"
+    }
+  }
+}

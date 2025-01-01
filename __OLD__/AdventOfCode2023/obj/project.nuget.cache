@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "E+1lwoVVx81NyhkXqD8mUlj3RTtwQ+97pmARbIM6+QCndpP7k7DJtHCmQbePZT5BJ0gIYh7fwY8942OW1mYe6Q==",
+  "success": true,
+  "projectFilePath": "C:\\Work\\AoC\\AdventOfCode\\AdventOfCode2023\\AdventOfCode2023.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\wikto\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
