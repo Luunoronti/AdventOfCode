@@ -1,0 +1,268 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0-windows7.0": {
+      "Syncfusion.Licensing/28.1.36": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/Syncfusion.Licensing.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/Syncfusion.Licensing.dll": {}
+        }
+      },
+      "Syncfusion.SfChart.WPF/28.1.36": {
+        "type": "package",
+        "dependencies": {
+          "Syncfusion.Licensing": "28.1.36"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/Syncfusion.SfChart.WPF.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.SfChart.WPF.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Syncfusion.SfDiagram.WPF/28.1.36": {
+        "type": "package",
+        "dependencies": {
+          "Syncfusion.Licensing": "28.1.36",
+          "Syncfusion.Shared.WPF": "28.1.36"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/Syncfusion.SfDiagram.WPF.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.SfDiagram.WPF.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Syncfusion.Shared.WPF/28.1.36": {
+        "type": "package",
+        "dependencies": {
+          "Syncfusion.Licensing": "28.1.36"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/Syncfusion.Shared.WPF.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.Shared.WPF.dll": {
+            "related": ".xml"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Syncfusion.Licensing/28.1.36": {
+      "sha512": "MmpXZdmJd07FUlQMiq7PYftNGK87JoDMkAve1I7roNiRBTHKlnin/vXAccEi1VcCFIHTPPCsRQkONrKWfR9HiA==",
+      "type": "package",
+      "path": "syncfusion.licensing/28.1.36",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "lib/MonoAndroid90/Syncfusion.Licensing.dll",
+        "lib/Xamarin.Mac/Syncfusion.Licensing.dll",
+        "lib/Xamarin.iOS10/Syncfusion.Licensing.dll",
+        "lib/net462/Syncfusion.Licensing.dll",
+        "lib/net6.0/Syncfusion.Licensing.dll",
+        "lib/net7.0/Syncfusion.Licensing.dll",
+        "lib/net8.0/Syncfusion.Licensing.dll",
+        "lib/net9.0/Syncfusion.Licensing.dll",
+        "lib/netstandard2.0/Syncfusion.Licensing.dll",
+        "lib/uap10.0/Syncfusion.Licensing.dll",
+        "syncfusion.licensing.28.1.36.nupkg.sha512",
+        "syncfusion.licensing.nuspec",
+        "syncfusion_logo.png"
+      ]
+    },
+    "Syncfusion.SfChart.WPF/28.1.36": {
+      "sha512": "sKSP9ahCFKPrZWUo1s6UGl33UlyjdvR9o75r/VyvZeMkIsw1tkZTXWHterK3aT5D73as2LNzJenjhTGJfNHnSQ==",
+      "type": "package",
+      "path": "syncfusion.sfchart.wpf/28.1.36",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "lib/net462/Design/Syncfusion.Design.Wpf.dll",
+        "lib/net462/Design/Syncfusion.SfChart.WPF.DesignTools.dll",
+        "lib/net462/Design/Syncfusion.SfChart.WPF.Expression.Design.dll",
+        "lib/net462/Design/Syncfusion.SfChart.WPF.VisualStudio.Design.dll",
+        "lib/net462/Syncfusion.SfChart.WPF.dll",
+        "lib/net462/Syncfusion.SfChart.WPF.xml",
+        "lib/net6.0-windows7.0/Design/Syncfusion.SfChart.WPF.DesignTools.dll",
+        "lib/net6.0-windows7.0/Syncfusion.SfChart.WPF.dll",
+        "lib/net6.0-windows7.0/Syncfusion.SfChart.WPF.xml",
+        "lib/net8.0-windows7.0/Design/Syncfusion.SfChart.WPF.DesignTools.dll",
+        "lib/net8.0-windows7.0/Syncfusion.SfChart.WPF.dll",
+        "lib/net8.0-windows7.0/Syncfusion.SfChart.WPF.xml",
+        "lib/net9.0-windows7.0/Design/Syncfusion.SfChart.WPF.DesignTools.dll",
+        "lib/net9.0-windows7.0/Syncfusion.SfChart.WPF.dll",
+        "lib/net9.0-windows7.0/Syncfusion.SfChart.WPF.xml",
+        "syncfusion.sfchart.wpf.28.1.36.nupkg.sha512",
+        "syncfusion.sfchart.wpf.nuspec",
+        "syncfusion_logo.png",
+        "tools/VisualStudioToolsManifest.xml"
+      ]
+    },
+    "Syncfusion.SfDiagram.WPF/28.1.36": {
+      "sha512": "BUtY1Kf1qFAQnzcrNjzM5nGzsWI3dRK3U3O7iCn2so+5rKpP/VoijlEbcfxgEmiwHegFOpC2RlK7WggCyGCtNw==",
+      "type": "package",
+      "path": "syncfusion.sfdiagram.wpf/28.1.36",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "lib/net462/Design/Syncfusion.Design.Wpf.dll",
+        "lib/net462/Design/Syncfusion.SfDiagram.WPF.DesignTools.dll",
+        "lib/net462/Design/Syncfusion.SfDiagram.WPF.Expression.Design.dll",
+        "lib/net462/Design/Syncfusion.SfDiagram.WPF.VisualStudio.Design.dll",
+        "lib/net462/Syncfusion.SfDiagram.WPF.dll",
+        "lib/net462/Syncfusion.SfDiagram.WPF.xml",
+        "lib/net6.0-windows7.0/Design/Syncfusion.SfDiagram.WPF.DesignTools.dll",
+        "lib/net6.0-windows7.0/Syncfusion.SfDiagram.WPF.dll",
+        "lib/net6.0-windows7.0/Syncfusion.SfDiagram.WPF.xml",
+        "lib/net8.0-windows7.0/Design/Syncfusion.SfDiagram.WPF.DesignTools.dll",
+        "lib/net8.0-windows7.0/Syncfusion.SfDiagram.WPF.dll",
+        "lib/net8.0-windows7.0/Syncfusion.SfDiagram.WPF.xml",
+        "lib/net9.0-windows7.0/Design/Syncfusion.SfDiagram.WPF.DesignTools.dll",
+        "lib/net9.0-windows7.0/Syncfusion.SfDiagram.WPF.dll",
+        "lib/net9.0-windows7.0/Syncfusion.SfDiagram.WPF.xml",
+        "syncfusion.sfdiagram.wpf.28.1.36.nupkg.sha512",
+        "syncfusion.sfdiagram.wpf.nuspec",
+        "syncfusion_logo.png",
+        "tools/VisualStudioToolsManifest.xml"
+      ]
+    },
+    "Syncfusion.Shared.WPF/28.1.36": {
+      "sha512": "nGVJu64FmC7s2OlAphH7gJ7qPVYeLMIRRY0T8MkROnxXqHtj2bef/dZyaecbnDb0WlNJ+mQWMxzvLWARNMXOWw==",
+      "type": "package",
+      "path": "syncfusion.shared.wpf/28.1.36",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "lib/net462/Design/Syncfusion.Design.Wpf.dll",
+        "lib/net462/Design/Syncfusion.Shared.WPF.DesignTools.dll",
+        "lib/net462/Design/Syncfusion.Shared.Wpf.Expression.Design.dll",
+        "lib/net462/Design/Syncfusion.Shared.Wpf.VisualStudio.Design.dll",
+        "lib/net462/Design/Syncfusion.Shared.Wpf.dll.Design.dll",
+        "lib/net462/Syncfusion.Shared.WPF.dll",
+        "lib/net462/Syncfusion.Shared.WPF.xml",
+        "lib/net6.0-windows7.0/Design/Syncfusion.Shared.WPF.DesignTools.dll",
+        "lib/net6.0-windows7.0/Syncfusion.Shared.WPF.dll",
+        "lib/net6.0-windows7.0/Syncfusion.Shared.WPF.xml",
+        "lib/net8.0-windows7.0/Design/Syncfusion.Shared.WPF.DesignTools.dll",
+        "lib/net8.0-windows7.0/Syncfusion.Shared.WPF.dll",
+        "lib/net8.0-windows7.0/Syncfusion.Shared.WPF.xml",
+        "lib/net9.0-windows7.0/Design/Syncfusion.Shared.WPF.DesignTools.dll",
+        "lib/net9.0-windows7.0/Syncfusion.Shared.WPF.dll",
+        "lib/net9.0-windows7.0/Syncfusion.Shared.WPF.xml",
+        "syncfusion.shared.wpf.28.1.36.nupkg.sha512",
+        "syncfusion.shared.wpf.nuspec",
+        "syncfusion_logo.png",
+        "tools/VisualStudioToolsManifest.xml"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0-windows7.0": [
+      "Syncfusion.SfChart.WPF >= 28.1.36",
+      "Syncfusion.SfDiagram.WPF >= 28.1.36"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\wikto\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Work\\AdventOfCode\\Day24_2024_Graph\\Day24_2024_Graph.csproj",
+      "projectName": "Day24_2024_Graph",
+      "projectPath": "C:\\Work\\AdventOfCode\\Day24_2024_Graph\\Day24_2024_Graph.csproj",
+      "packagesPath": "C:\\Users\\wikto\\.nuget\\packages\\",
+      "outputPath": "C:\\Work\\AdventOfCode\\Day24_2024_Graph\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\wikto\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0-windows"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net8.0-windows7.0": {
+        "targetAlias": "net8.0-windows",
+        "dependencies": {
+          "Syncfusion.SfChart.WPF": {
+            "target": "Package",
+            "version": "[28.1.36, )"
+          },
+          "Syncfusion.SfDiagram.WPF": {
+            "target": "Package",
+            "version": "[28.1.36, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          },
+          "Microsoft.WindowsDesktop.App.WPF": {
+            "privateAssets": "none"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
