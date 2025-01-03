@@ -8,6 +8,8 @@
 #include "Base/TimeKeeper.h"
 #include "Base/fonts.h"
 
+#include "Base/Tracy/tracy/Tracy.hpp"
+
 const char fxShader[] =
     "void fxShader(out vec4 color, in vec2 uv) {"
     "   vec2 tex_size = vec2(textureSize(image, 0));"
@@ -50,7 +52,7 @@ int main()
         tigrFillRect(screen, 120, 130, 20, 20, tigrRGB(0x00, 0x0f, 0x0f));
         tigrLine(screen, 10, 10, 200, 200, tigrRGB(0x00, 0x0f, 0x0f));
         
-
+        FrameMarkStart("Filling with pixels");
         for(int y = 0; y < min(frameNum, screen->h); y++)
         {
             for(int x = 0; x < min(frameNum, screen->w); x++)
@@ -58,7 +60,7 @@ int main()
                 screen->pix[x + y*screen->w] = tigrRGB(0xff, 0x00, 0x00);
             }
         }
-
+        FrameMarkEnd("Filling with pixels");
 
         //for(int i = 0; i < frameNum; i++)
         //{
@@ -80,6 +82,8 @@ int main()
         tigrPrint(screen, cfont_24, 120, 220, tigrRGB(0x00, 0xff, 0xff), oss.str().c_str());
         tigrPrint(screen, cfont_30, 120, 260, tigrRGB(0x00, 0xff, 0xff), oss.str().c_str());*/
         tigrUpdate(screen);
+
+        FrameMark;
     }
     aocReleaseFonts();
     tigrFree(screen);

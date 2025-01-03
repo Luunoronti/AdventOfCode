@@ -19,6 +19,9 @@
     <Filter Include="Base\Tigr">
       <UniqueIdentifier>{34d5caa1-4a60-4ed3-8746-9bc7c0c6c56a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Tracy">
+      <UniqueIdentifier>{aad773a9-dd66-4ecd-a336-37b037aca23f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AoC_Cpp.cpp">
@@ -27,7 +30,7 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Base\Tigr\tigr.c">
+    <ClCompile Include="Base\Tigr\tigr.cpp">
       <Filter>Base\Tigr</Filter>
     </ClCompile>
     <ClCompile Include="Base\TimeKeeper.cpp">
@@ -35,6 +38,9 @@
     </ClCompile>
     <ClCompile Include="Base\fonts.cpp">
       <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Tracy\TracyClient.cpp">
+      <Filter>Base\Tracy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
