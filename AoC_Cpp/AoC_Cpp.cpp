@@ -1,12 +1,14 @@
 // AoC_Cpp.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-
 #include "pch.h"
-#include <iostream>
-#include <sstream>
-#include "Base/Tigr/tigr.h"
-#include "Base/TimeKeeper.h"
-#include "Base/fonts.h"
+#include <TimeKeeper.h>
+
+//#include <Methane/Kit.h>
+
+#include <Methane/Data/AppShadersProvider.h>
+#include <Methane/Data/Math.hpp>
+#include <Methane/Instrumentation.h>
+
 
 const char fxShader[] =
     "void fxShader(out vec4 color, in vec2 uv) {"
@@ -19,7 +21,7 @@ int main()
 {
     std::cout << "Hello World!\n";
 
-    TimeKeeper keeper;
+    //TimeKeeper keeper;
     int frameNum = 0;
     Tigr* screen = tigrWindow(1920, 1080, "Hello", 0);
     aocLoadFonts();
@@ -28,32 +30,35 @@ int main()
     float duration = 1;
     float phase = 0;
 
+    float3 test(1, 0, 2);
+
+
     while(!tigrClosed(screen))
     {
         phase += tigrTime();
 
-        keeper.Frame();
+        //keeper.Frame();
 
         while (phase > duration) 
         {
             phase -= duration;
         }
-        float p = 6.28 * phase / duration;
+        float p = 6.28f * phase / duration;
         tigrSetPostFX(screen, 8, 8, 1, 1);
 
         tigrClear(screen, tigrRGB(0x80, 0x90, 0xa0));
 
         std::ostringstream oss;
-        oss << "Frame: " << frameNum << " (FPS: " << keeper.GetFPS() << ") Delta time: " << keeper.GetFrameTime();
+        //oss << "Frame: " << frameNum << " (FPS: " << keeper.GetFPS() << ") Delta time: " << keeper.GetFrameTime();
         frameNum++;
 
         tigrFillRect(screen, 120, 130, 20, 20, tigrRGB(0x00, 0x0f, 0x0f));
         tigrLine(screen, 10, 10, 200, 200, tigrRGB(0x00, 0x0f, 0x0f));
         
 
-        for(int y = 0; y < min(frameNum, screen->h); y++)
+        for(int y = 0; y < std::min(frameNum, screen->h); y++)
         {
-            for(int x = 0; x < min(frameNum, screen->w); x++)
+            for(int x = 0; x < std::min(frameNum, screen->w); x++)
             {
                 screen->pix[x + y*screen->w] = tigrRGB(0xff, 0x00, 0x00);
             }
@@ -74,11 +79,11 @@ int main()
 
 
         tigrPrint(screen, cfont_10, 120, 110, tigrRGB(0x00, 0xff, 0xff), oss.str().c_str());
-        /*tigrPrint(screen, cfont_14, 120, 130, tigrRGB(0x00, 0xff, 0xff), oss.str().c_str());
+        tigrPrint(screen, cfont_14, 120, 130, tigrRGB(0x00, 0xff, 0xff), oss.str().c_str());
         tigrPrint(screen, cfont_16, 120, 160, tigrRGB(0x00, 0xff, 0xff), oss.str().c_str());
         tigrPrint(screen, cfont_20, 120, 190, tigrRGB(0x00, 0xff, 0xff), oss.str().c_str());
         tigrPrint(screen, cfont_24, 120, 220, tigrRGB(0x00, 0xff, 0xff), oss.str().c_str());
-        tigrPrint(screen, cfont_30, 120, 260, tigrRGB(0x00, 0xff, 0xff), oss.str().c_str());*/
+        tigrPrint(screen, cfont_30, 120, 260, tigrRGB(0x00, 0xff, 0xff), oss.str().c_str());
         tigrUpdate(screen);
     }
     aocReleaseFonts();

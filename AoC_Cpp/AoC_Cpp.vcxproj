@@ -240,6 +240,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>.\Base;.\Base\hlsl++;.\Base\Methane\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -522,6 +525,82 @@
   <ItemGroup>
     <ClInclude Include="Base\fonts.h" />
     <ClInclude Include="Base\fonts_bin.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\bitmask.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\common.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\config.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\data_packing.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\dependent.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\half.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\matrix_float.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\matrix_float_type.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\platforms\neon.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\platforms\scalar.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\platforms\sse.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\platforms\wasm.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\platforms\xbox360.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\quaternion.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\quaternion_type.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row0_1.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row0_2.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row0_3.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row0_4.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row1_1.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row1_2.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row1_3.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row1_4.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row2_1.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row2_2.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row2_3.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row2_4.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row3_1.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row3_2.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row3_3.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\matrix_row3_4.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_double_w.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_double_x.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_double_y.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_double_z.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_float_w.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_float_x.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_float_y.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_float_z.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_int_w.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_int_x.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_int_y.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_int_z.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_uint_w.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_uint_x.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_uint_y.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\swizzle\vector_uint_z.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\transform\common.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\transform\float2x2.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\transform\float3x3.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\transform\float4x4.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\type_traits.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\vector_double.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\vector_double_type.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\vector_float.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\vector_float8.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\vector_float_type.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\vector_int.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\vector_int_type.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\vector_uint.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++\vector_uint_type.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++_dependent.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++_matrix_float.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++_matrix_float_type.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++_quaternion.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++_quaternion_type.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++_vector_double.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++_vector_double_type.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++_vector_float.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++_vector_float8.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++_vector_float_type.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++_vector_int.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++_vector_int_type.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++_vector_uint.h" />
+    <ClInclude Include="Base\hlsl++\hlsl++_vector_uint_type.h" />
     <ClInclude Include="Base\Tigr\tigr.h" />
     <ClInclude Include="Base\TimeKeeper.h" />
     <ClInclude Include="pch.h" />

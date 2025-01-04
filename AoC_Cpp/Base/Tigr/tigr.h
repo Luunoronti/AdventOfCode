@@ -103,6 +103,16 @@ void tigrSetPostShader(Tigr *bmp, const char* code, int size);
 // p4: contrast - contrast boost (1 = no change, 2 = 2X contrast, etc)
 void tigrSetPostFX(Tigr *bmp, float p1, float p2, float p3, float p4);
 
+// Sets post-FX properties for a window.
+//
+// The built-in post-FX shader uses the following parameters:
+// params.x: hblur - use bilinear filtering along the x-axis (pixels)
+// params.y: vblur - use bilinear filtering along the y-axis (pixels)
+// params.z: scanlines - CRT scanlines effect (0-1)
+// params.w: contrast - contrast boost (1 = no change, 2 = 2X contrast, etc)
+//void tigrSetPostFX(Tigr *bmp, float4 params);
+
+
 
 // Drawing ----------------------------------------------------------------
 

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EDdvNwOVvp7T8nXrnl3MvkoUwelNgNf/Sdq89Djhg4Lt9E9EHeXLBn+tpzTkOAXYqPaUAo4oeKKNg+N2pfWX/w==",
+  "dgSpecHash": "KkblL1KVTAyhxHhPgcHxTZk3Ie65nrc+toUPMGUnL7GZOfhX0Dpzgt7n7lvsXlkTbXN7gc0Uvl+o4xxeT0PkAQ==",
   "success": true,
-  "projectFilePath": "C:\\Work\\AdventOfCode\\Day24_2024_Graph\\Day24_2024_Graph.csproj",
+  "projectFilePath": "C:\\Work\\AdventOfCode\\__OLD__\\Day24_2024_Graph\\Day24_2024_Graph.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\wikto\\.nuget\\packages\\syncfusion.licensing\\28.1.36\\syncfusion.licensing.28.1.36.nupkg.sha512",
     "C:\\Users\\wikto\\.nuget\\packages\\syncfusion.sfchart.wpf\\28.1.36\\syncfusion.sfchart.wpf.28.1.36.nupkg.sha512",

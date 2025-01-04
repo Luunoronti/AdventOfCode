@@ -1,6 +1,5 @@
 //////// Start of inlined file: tigr_amalgamated.c ////////
 
-
 #include "tigr.h"
 
 //////// Start of inlined file: tigr_internal.h ////////
@@ -6419,6 +6418,15 @@ void tigrSetPostShader(Tigr* bmp, const char* code, int size) {
     tigrGAPIEnd(bmp);
 #endif
 }
+
+//void tigrSetPostFX(Tigr* bmp,  float4 params)
+//{
+//    TigrInternal* win = tigrInternal(bmp);
+//    win->p1 = params[0];
+//    win->p2 = params[1];
+//    win->p3 = params[2];
+//    win->p4 = params[3];
+//}
 
 void tigrSetPostFX(Tigr* bmp, float p1, float p2, float p3, float p4) {
     TigrInternal* win = tigrInternal(bmp);

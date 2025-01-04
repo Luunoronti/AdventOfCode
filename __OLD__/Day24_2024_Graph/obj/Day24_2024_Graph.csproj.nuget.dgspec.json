@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Work\\AdventOfCode\\Day24_2024_Graph\\Day24_2024_Graph.csproj": {}
+    "C:\\Work\\AdventOfCode\\__OLD__\\Day24_2024_Graph\\Day24_2024_Graph.csproj": {}
   },
   "projects": {
-    "C:\\Work\\AdventOfCode\\Day24_2024_Graph\\Day24_2024_Graph.csproj": {
+    "C:\\Work\\AdventOfCode\\__OLD__\\Day24_2024_Graph\\Day24_2024_Graph.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Work\\AdventOfCode\\Day24_2024_Graph\\Day24_2024_Graph.csproj",
+        "projectUniqueName": "C:\\Work\\AdventOfCode\\__OLD__\\Day24_2024_Graph\\Day24_2024_Graph.csproj",
         "projectName": "Day24_2024_Graph",
-        "projectPath": "C:\\Work\\AdventOfCode\\Day24_2024_Graph\\Day24_2024_Graph.csproj",
+        "projectPath": "C:\\Work\\AdventOfCode\\__OLD__\\Day24_2024_Graph\\Day24_2024_Graph.csproj",
         "packagesPath": "C:\\Users\\wikto\\.nuget\\packages\\",
-        "outputPath": "C:\\Work\\AdventOfCode\\Day24_2024_Graph\\obj\\",
+        "outputPath": "C:\\Work\\AdventOfCode\\__OLD__\\Day24_2024_Graph\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -39,6 +39,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {

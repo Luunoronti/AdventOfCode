@@ -9,4 +9,32 @@
 
 // add headers that you want to pre-compile here
 
+//>>>>>>>> HLSL++
+#define HLSLPP_FEATURE_TRANSFORM
+#include <hlsl++.h>
+
+// normally, we should not declare namespace use in pch
+// but this library is used all over and we just want
+// same experience as in real HLSL.
+using namespace hlslpp;
+//<<<<<<<< HLSL++
+
+//>>>>>>>> Methane
+//#include <Methane/Kit.h>
+//<<<<<<<< Methane
+
+
+//>>>>>>>> Tigr
+#include <Tigr/tigr.h>
+#include <fonts.h>
+//<<<<<<<< Tigr
+
+
+ 
+//>>>>>>>> STD
+#include <iostream>
+#include <sstream>
+//<<<<<<<< STD
+
+
 #endif //PCH_H
