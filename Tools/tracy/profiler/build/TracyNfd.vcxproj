@@ -1,0 +1,1080 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{58B8B5F8-70B8-36E7-8B92-FD8015D1A017}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>TracyNfd</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Temp\tracy\profiler\build\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TracyNfd.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TracyNfd</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Temp\tracy\profiler\build\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TracyNfd.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TracyNfd</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Temp\tracy\profiler\build\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">TracyNfd.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">TracyNfd</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Temp\tracy\profiler\build\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">TracyNfd.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">TracyNfd</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Temp\tracy\cmake\..\nfd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NOMINMAX;WIN32_LEAN_AND_MEAN;IMGUI_ENABLE_FREETYPE;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;NOMINMAX;WIN32_LEAN_AND_MEAN;IMGUI_ENABLE_FREETYPE;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Temp\tracy\cmake\..\nfd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Temp\tracy\cmake\..\nfd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Temp\tracy\cmake\..\nfd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;NOMINMAX;WIN32_LEAN_AND_MEAN;IMGUI_ENABLE_FREETYPE;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;NOMINMAX;WIN32_LEAN_AND_MEAN;IMGUI_ENABLE_FREETYPE;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Temp\tracy\cmake\..\nfd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Temp\tracy\cmake\..\nfd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Temp\tracy\cmake\..\nfd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;NOMINMAX;WIN32_LEAN_AND_MEAN;IMGUI_ENABLE_FREETYPE;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;NOMINMAX;WIN32_LEAN_AND_MEAN;IMGUI_ENABLE_FREETYPE;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Temp\tracy\cmake\..\nfd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Temp\tracy\cmake\..\nfd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Temp\tracy\cmake\..\nfd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;NOMINMAX;WIN32_LEAN_AND_MEAN;IMGUI_ENABLE_FREETYPE;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;NOMINMAX;WIN32_LEAN_AND_MEAN;IMGUI_ENABLE_FREETYPE;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Temp\tracy\cmake\..\nfd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Temp\tracy\cmake\..\nfd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Temp\tracy\profiler\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Temp/tracy/profiler/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Temp/tracy/profiler -BC:/Temp/tracy/profiler/build --check-stamp-file C:/Temp/tracy/profiler/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompilerSupport.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CrayClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\OrangeC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\TIClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.31\Modules\ExternalProject\shared_internal_commands.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FetchContent.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FetchContent\CMakeLists.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\FindGit.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FindPkgConfig.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeDetermineLinkerId.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\WindowsPaths.cmake;C:\Temp\tracy\cmake\CPM.cmake;C:\Temp\tracy\cmake\config.cmake;C:\Temp\tracy\cmake\server.cmake;C:\Temp\tracy\cmake\vendor.cmake;C:\Temp\tracy\cmake\version.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeCCompiler.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeCXXCompiler.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeRCCompiler.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeSystem.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Temp\tracy\profiler\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Temp/tracy/profiler/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Temp/tracy/profiler -BC:/Temp/tracy/profiler/build --check-stamp-file C:/Temp/tracy/profiler/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompilerSupport.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CrayClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\OrangeC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\TIClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.31\Modules\ExternalProject\shared_internal_commands.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FetchContent.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FetchContent\CMakeLists.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\FindGit.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FindPkgConfig.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeDetermineLinkerId.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\WindowsPaths.cmake;C:\Temp\tracy\cmake\CPM.cmake;C:\Temp\tracy\cmake\config.cmake;C:\Temp\tracy\cmake\server.cmake;C:\Temp\tracy\cmake\vendor.cmake;C:\Temp\tracy\cmake\version.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeCCompiler.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeCXXCompiler.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeRCCompiler.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeSystem.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Temp\tracy\profiler\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Temp/tracy/profiler/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Temp/tracy/profiler -BC:/Temp/tracy/profiler/build --check-stamp-file C:/Temp/tracy/profiler/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompilerSupport.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CrayClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\OrangeC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\TIClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.31\Modules\ExternalProject\shared_internal_commands.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FetchContent.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FetchContent\CMakeLists.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\FindGit.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FindPkgConfig.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeDetermineLinkerId.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\WindowsPaths.cmake;C:\Temp\tracy\cmake\CPM.cmake;C:\Temp\tracy\cmake\config.cmake;C:\Temp\tracy\cmake\server.cmake;C:\Temp\tracy\cmake\vendor.cmake;C:\Temp\tracy\cmake\version.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeCCompiler.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeCXXCompiler.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeRCCompiler.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeSystem.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Temp\tracy\profiler\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Temp/tracy/profiler/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Temp/tracy/profiler -BC:/Temp/tracy/profiler/build --check-stamp-file C:/Temp/tracy/profiler/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineCompilerSupport.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CrayClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\OrangeC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\TIClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.31\Modules\ExternalProject\shared_internal_commands.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FetchContent.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FetchContent\CMakeLists.cmake.in;C:\Program Files\CMake\share\cmake-3.31\Modules\FindGit.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\FindPkgConfig.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeDetermineLinkerId.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\WindowsPaths.cmake;C:\Temp\tracy\cmake\CPM.cmake;C:\Temp\tracy\cmake\config.cmake;C:\Temp\tracy\cmake\server.cmake;C:\Temp\tracy\cmake\vendor.cmake;C:\Temp\tracy\cmake\version.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeCCompiler.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeCXXCompiler.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeRCCompiler.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\3.31.3\CMakeSystem.cmake;C:\Temp\tracy\profiler\build\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Temp\tracy\profiler\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Temp\tracy\nfd\nfd_win.cpp" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\LEB128.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\MCDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\MCFixedLenDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\MCInst.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\MCInstrDesc.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\MCRegisterInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\Mapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\MathExtras.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\SStream.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\AArch64\AArch64AddressingModes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\AArch64\AArch64BaseInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\AArch64\AArch64Disassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\AArch64\AArch64InstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\AArch64\AArch64Mapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\AArch64\AArch64Module.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\ARM\ARMAddressingModes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\ARM\ARMBaseInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\ARM\ARMDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\ARM\ARMInstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\ARM\ARMMapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\ARM\ARMModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\BPF\BPFConstants.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\BPF\BPFDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\BPF\BPFInstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\BPF\BPFMapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\BPF\BPFModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\EVM\EVMDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\EVM\EVMInstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\EVM\EVMMapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\EVM\EVMModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\M680X\M680XDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\M680X\M680XDisassemblerInternals.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\M680X\M680XInstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\M680X\M680XModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\M68K\M68KDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\M68K\M68KInstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\M68K\M68KModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\MOS65XX\MOS65XXDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\MOS65XX\MOS65XXDisassemblerInternals.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\MOS65XX\MOS65XXModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Mips\MipsDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Mips\MipsInstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Mips\MipsMapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Mips\MipsModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\PowerPC\PPCDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\PowerPC\PPCInstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\PowerPC\PPCMapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\PowerPC\PPCModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\PowerPC\PPCPredicates.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\RISCV\RISCVBaseInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\RISCV\RISCVDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\RISCV\RISCVInstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\RISCV\RISCVMapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\RISCV\RISCVModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SH\SHDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SH\SHInstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SH\SHModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Sparc\Sparc.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Sparc\SparcDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Sparc\SparcInstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Sparc\SparcMapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Sparc\SparcModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SystemZ\SystemZDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SystemZ\SystemZInstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SystemZ\SystemZMCTargetDesc.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SystemZ\SystemZMapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SystemZ\SystemZModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TMS320C64x\TMS320C64xDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TMS320C64x\TMS320C64xInstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TMS320C64x\TMS320C64xMapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TMS320C64x\TMS320C64xModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TriCore\TriCoreDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TriCore\TriCoreLinkage.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TriCore\TriCoreMapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TriCore\TriCoreModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\WASM\WASMDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\WASM\WASMInstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\WASM\WASMMapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\WASM\WASMModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86BaseInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86Disassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86DisassemblerDecoder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86DisassemblerDecoderCommon.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86InstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86InstPrinterCommon.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86Mapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86Module.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\XCore\XCoreDisassembler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\XCore\XCoreInstPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\XCore\XCoreMapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\XCore\XCoreModule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\contrib\windows_kernel\libc.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\cs_priv.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\cs_simple_types.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\cstool\cstool.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\cstool\getopt.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\arm.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\arm64.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\bpf.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\capstone.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\evm.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\m680x.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\m68k.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\mips.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\mos65xx.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\platform.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\ppc.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\riscv.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\sh.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\sparc.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\systemz.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\tms320c64x.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\tricore.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\wasm.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\x86.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\xcore.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\platform.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\windowsce\intrin.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\windowsce\stdint.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\cstest\include\capstone_test.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\cstest\include\factory.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\cstest\include\helper.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\fuzz\platform.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\X86DisassemblerDecoderCommon.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\AccelTable.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\Analysis.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\AntiDepBreaker.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\AsmPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\AsmPrinterHandler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\AtomicExpandUtils.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\BasicBlockSectionUtils.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\BasicTTIImpl.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\CSEConfigBase.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\CalcSpillWeights.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\CallingConvLower.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\CodeGenCommonISel.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\CodeGenPassBuilder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\CommandFlags.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\CostTable.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\DAGCombine.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\DFAPacketizer.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\DIE.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\DbgEntityHistoryCalculator.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\DebugHandlerBase.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\DwarfStringPoolEntry.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\EdgeBundles.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ExecutionDomainFix.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ExpandReductions.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ExpandVectorPredication.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\FastISel.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\FaultMaps.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\FunctionLoweringInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GCMetadata.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GCMetadataPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\CSEInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\CSEMIRBuilder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\CallLowering.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\Combiner.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\CombinerHelper.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\CombinerInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\GISelChangeObserver.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\GISelKnownBits.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\GISelWorkList.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\GenericMachineInstrs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\IRTranslator.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\InlineAsmLowering.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\InstructionSelect.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\InstructionSelector.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\InstructionSelectorImpl.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\LegacyLegalizerInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\LegalizationArtifactCombiner.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\Legalizer.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\LegalizerHelper.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\LegalizerInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\LoadStoreOpt.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\Localizer.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\LostDebugLocObserver.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\MIPatternMatch.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\MachineIRBuilder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\RegBankSelect.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\RegisterBank.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\RegisterBankInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\Utils.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ISDOpcodes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\IndirectThunks.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\IntrinsicLowering.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LatencyPriorityQueue.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LazyMachineBlockFrequencyInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LexicalScopes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LinkAllAsmWriterComponents.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LinkAllCodegenComponents.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveInterval.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveIntervalCalc.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveIntervalUnion.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveIntervals.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LivePhysRegs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveRangeCalc.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveRangeEdit.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveRegMatrix.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveRegUnits.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveStacks.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveVariables.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LoopTraversal.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LowLevelType.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MBFIWrapper.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MIRFSDiscriminator.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MIRFormatter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MIRParser\MIParser.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MIRParser\MIRParser.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MIRPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MIRSampleProfile.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MIRYamlMapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachORelocation.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineBasicBlock.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineBlockFrequencyInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineBranchProbabilityInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineCombinerPattern.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineConstantPool.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineCycleAnalysis.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineDominanceFrontier.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineDominators.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineFrameInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineFunction.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineFunctionPass.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineInstr.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineInstrBuilder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineInstrBundle.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineInstrBundleIterator.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineJumpTableInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineLoopInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineLoopUtils.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineMemOperand.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineModuleInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineModuleInfoImpls.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineModuleSlotTracker.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineOperand.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineOptimizationRemarkEmitter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineOutliner.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachinePassManager.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachinePassRegistry.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachinePipeliner.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachinePostDominators.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineRegionInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineRegisterInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineSSAContext.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineSSAUpdater.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineScheduler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineSizeOpts.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineStableHash.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineTraceMetrics.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MacroFusion.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ModuloSchedule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MultiHazardRecognizer.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\NonRelocatableStringpool.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PBQP\CostAllocator.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PBQP\Graph.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PBQP\Math.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PBQP\ReductionRules.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PBQP\Solution.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PBQPRAConstraint.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ParallelCG.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\Passes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PreISelIntrinsicLowering.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PseudoSourceValue.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RDFGraph.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RDFLiveness.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RDFRegisters.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ReachingDefAnalysis.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RegAllocCommon.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RegAllocPBQP.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RegAllocRegistry.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\Register.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RegisterClassInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RegisterPressure.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RegisterScavenging.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RegisterUsageInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ReplaceWithVeclib.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ResourcePriorityQueue.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RuntimeLibcalls.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ScheduleDAG.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ScheduleDAGInstrs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ScheduleDAGMutation.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ScheduleDFS.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ScheduleHazardRecognizer.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SchedulerRegistry.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ScoreboardHazardRecognizer.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SelectionDAG.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SelectionDAGAddressAnalysis.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SelectionDAGISel.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SelectionDAGNodes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SelectionDAGTargetInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SlotIndexes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\Spiller.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\StableHashing.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\StackMaps.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\StackProtector.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SwiftErrorValueTracking.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SwitchLoweringUtils.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TailDuplicator.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetCallingConv.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetFrameLowering.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetInstrInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetLowering.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetLoweringObjectFileImpl.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetOpcodes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetPassConfig.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetRegisterInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetSchedule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetSubtargetInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TileShapeInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\UnreachableBlockElim.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\VLIWMachineScheduler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ValueTypes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\VirtRegMap.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\WasmEHFuncInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\WinEHFuncInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Frontend\OpenMP\OMPAssume.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Frontend\OpenMP\OMPConstants.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Frontend\OpenMP\OMPContext.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Frontend\OpenMP\OMPGridValues.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Frontend\OpenMP\OMPIRBuilder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\AbstractCallSite.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Argument.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\AssemblyAnnotationWriter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Assumptions.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Attributes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\AutoUpgrade.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\BasicBlock.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\BuiltinGCs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\CFG.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\CallingConv.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Comdat.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Constant.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ConstantFolder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ConstantRange.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Constants.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DIBuilder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DataLayout.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DebugInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DebugInfoMetadata.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DebugLoc.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DerivedTypes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DerivedUser.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DiagnosticHandler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DiagnosticInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DiagnosticPrinter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Dominators.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\FPEnv.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\FixedPointBuilder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Function.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GCStrategy.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GVMaterializer.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GetElementPtrTypeIterator.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GlobalAlias.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GlobalIFunc.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GlobalObject.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GlobalValue.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GlobalVariable.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IRBuilder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IRBuilderFolder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IRPrintingPasses.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\InlineAsm.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\InstIterator.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\InstVisitor.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\InstrTypes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Instruction.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Instructions.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicInst.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Intrinsics.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsAArch64.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsAMDGPU.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsARM.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsBPF.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsHexagon.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsMips.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsNVPTX.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsPowerPC.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsR600.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsRISCV.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsS390.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsVE.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsWebAssembly.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsX86.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsXCore.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\LLVMContext.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\LLVMRemarkStreamer.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\LegacyPassManager.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\LegacyPassManagers.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\LegacyPassNameParser.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\MDBuilder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Mangler.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\MatrixBuilder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Metadata.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Module.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ModuleSlotTracker.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ModuleSummaryIndex.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ModuleSummaryIndexYAML.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\NoFolder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\OperandTraits.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Operator.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\OptBisect.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PassInstrumentation.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PassManager.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PassManagerImpl.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PassManagerInternal.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PassTimingInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PatternMatch.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PredIteratorCache.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PrintPasses.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ProfileSummary.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PseudoProbe.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ReplaceConstant.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\SSAContext.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\SafepointIRVerifier.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Statepoint.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\StructuralHash.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\SymbolTableListTraits.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\TrackingMDRef.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Type.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\TypeFinder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Use.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\UseListOrder.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\User.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Value.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ValueHandle.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ValueMap.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ValueSymbolTable.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Verifier.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\Coverage\CoverageMapping.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\Coverage\CoverageMappingReader.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\Coverage\CoverageMappingWriter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\GCOV.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\InstrProf.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\InstrProfCorrelator.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\InstrProfReader.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\InstrProfWriter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\ProfileCommon.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\RawMemProfReader.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\SampleProf.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\SampleProfReader.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\SampleProfWriter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\DirectiveEmitter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\Error.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\Main.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\Record.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\SetTheory.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\StringMatcher.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\StringToOffsetTable.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\TableGenBackend.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Target\CGPassBuilderOption.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Target\CodeGenCWrappers.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Target\TargetIntrinsicInfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Target\TargetLoweringObjectFile.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Target\TargetMachine.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Target\TargetOptions.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\utils.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\windows\winkernel_mm.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-build\include\freetype\config\ftconfig.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-build\include\freetype\config\ftoption.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\builds\amiga\include\config\ftconfig.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\builds\amiga\include\config\ftmodule.h" />
+    <None Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\builds\atari\ATARI.H">
+    </None>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\builds\vms\ftconfig.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\devel\ft2build.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\devel\ftoption.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\ftconfig.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\ftheader.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\ftmodule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\ftoption.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\ftstdlib.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\integer-types.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\mac-support.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\public-macros.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\freetype.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftadvanc.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftbbox.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftbdf.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftbitmap.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftbzip2.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftcache.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftchapters.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftcid.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftcolor.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftdriver.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\fterrdef.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\fterrors.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftfntfmt.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftgasp.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftglyph.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftgxval.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftgzip.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftimage.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftincrem.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftlcdfil.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftlist.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftlogging.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftlzw.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftmac.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftmm.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftmodapi.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftmoderr.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftotval.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftoutln.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftparams.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftpfr.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftrender.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftsizes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftsnames.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftstroke.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftsynth.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftsystem.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\fttrigon.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\fttypes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftwinfnt.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\autohint.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\cffotypes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\cfftypes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\compiler-macros.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftcalc.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftdebug.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftdrv.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftgloadr.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\fthash.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftmemory.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftmmtypes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftobjs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftpsprop.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftrfork.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftserv.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftstream.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\fttrace.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftvalid.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\psaux.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\pshints.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svbdf.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svcfftl.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svcid.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svfntfmt.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svgldict.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svgxval.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svkern.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svmetric.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svmm.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svotval.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svpfr.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svpostnm.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svprop.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svpscmap.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svpsinfo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svsfnt.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svttcmap.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svtteng.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svttglyf.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svwinfnt.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\sfnt.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\svginterface.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\t1types.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\tttypes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\wofftypes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\otsvg.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\t1tables.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ttnameid.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\tttables.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\tttags.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\ft2build.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afblue.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afcjk.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afcover.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afdummy.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\aferrors.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afglobal.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afhints.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afindic.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\aflatin.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afloader.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afmodule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afranges.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afscript.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afshaper.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afstyles.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\aftypes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afws-decl.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afws-iter.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\ft-hb.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\base\ftbase.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\base\md5.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\bdf\bdf.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\bdf\bdfdrivr.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\bdf\bdferror.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftccache.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftccback.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftcerror.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftcglyph.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftcimage.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftcmanag.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftcmru.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftcsbits.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cffcmap.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cffdrivr.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cfferrs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cffgload.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cffload.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cffobjs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cffparse.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cfftoken.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cid\ciderrs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cid\cidgload.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cid\cidload.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cid\cidobjs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cid\cidparse.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cid\cidriver.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cid\cidtoken.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gxvalid\gxvalid.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gxvalid\gxvcommn.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gxvalid\gxverror.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gxvalid\gxvfeat.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gxvalid\gxvmod.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gxvalid\gxvmort.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gxvalid\gxvmorx.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\crc32.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\ftzconf.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\gzguts.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\inffast.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\inffixed.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\inflate.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\inftrees.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\zlib.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\zutil.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\lzw\ftzopen.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\otvalid\otvalid.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\otvalid\otvcommn.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\otvalid\otverror.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\otvalid\otvgpos.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\otvalid\otvmod.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pcf\pcf.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pcf\pcfdrivr.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pcf\pcferror.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pcf\pcfread.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pcf\pcfutil.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrcmap.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrdrivr.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrerror.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrgload.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrload.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrobjs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrsbit.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrtypes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\afmparse.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\cffdecode.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psarrst.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psauxerr.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psauxmod.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psblues.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psconv.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\pserror.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psfixed.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psfont.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psft.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psglue.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\pshints.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psintrp.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psobjs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psread.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psstack.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\pstypes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\t1cmap.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\t1decode.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pshinter\pshalgo.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pshinter\pshglob.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pshinter\pshmod.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pshinter\pshnterr.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pshinter\pshrec.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psnames\psmodule.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psnames\psnamerr.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psnames\pstables.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\raster\ftmisc.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\raster\ftraster.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\raster\ftrend1.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\raster\rasterrs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sdf\ftsdf.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sdf\ftsdfcommon.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sdf\ftsdferrs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sdf\ftsdfrend.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\pngshim.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\sfdriver.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\sferrors.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\sfobjs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\sfwoff.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\sfwoff2.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttbdf.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttcmap.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttcmapc.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttcolr.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttcpal.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttkern.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttload.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttmtx.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttpost.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttsbit.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttsvg.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\woff2tags.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\smooth\ftgrays.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\smooth\ftsmerrs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\smooth\ftsmooth.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\svg\ftsvg.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\svg\svgtypes.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\truetype\ttdriver.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\truetype\tterrors.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\truetype\ttgload.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\truetype\ttgxvar.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\truetype\ttinterp.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\truetype\ttobjs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\truetype\ttpload.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1afm.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1driver.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1errors.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1gload.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1load.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1objs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1parse.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1tokens.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type42\t42drivr.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type42\t42error.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type42\t42objs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type42\t42parse.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type42\t42types.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\winfonts\fnterrs.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\winfonts\winfnt.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\subprojects\dlg\include\dlg\dlg.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\subprojects\dlg\include\dlg\output.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\getopt.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\glad\gl.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\glad\gles2.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\glad\vulkan.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\linmath.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\mingw\_mingw_dxhelper.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\mingw\dinput.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\mingw\xinput.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\nuklear.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\nuklear_glfw_gl2.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\stb_image_write.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\tinycthread.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\include\GLFW\glfw3.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\include\GLFW\glfw3native.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\cocoa_joystick.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\cocoa_platform.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\cocoa_time.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\internal.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\linux_joystick.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\mappings.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\null_joystick.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\null_platform.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\platform.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\posix_poll.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\posix_thread.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\posix_time.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\win32_joystick.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\win32_platform.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\win32_thread.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\win32_time.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\wl_platform.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\x11_platform.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\xkb_unicode.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\src\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\src\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\src\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\src\ini.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\src\profiler\IconsFontAwesome6.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\src\stb_image.h" />
+    <ClInclude Include="C:\Temp\tracy\profiler\src\stb_image_resize.h" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Temp\tracy\profiler\build\ZERO_CHECK.vcxproj">
+      <Project>{D597AFB9-71B1-3872-A48F-ED5CE2CB810A}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

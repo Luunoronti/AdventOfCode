@@ -1,0 +1,2331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Temp\tracy\nfd\nfd_win.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\LEB128.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\MCDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\MCFixedLenDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\MCInst.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\MCInstrDesc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\MCRegisterInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\Mapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\MathExtras.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\SStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\AArch64\AArch64AddressingModes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\AArch64\AArch64BaseInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\AArch64\AArch64Disassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\AArch64\AArch64InstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\AArch64\AArch64Mapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\AArch64\AArch64Module.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\ARM\ARMAddressingModes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\ARM\ARMBaseInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\ARM\ARMDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\ARM\ARMInstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\ARM\ARMMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\ARM\ARMModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\BPF\BPFConstants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\BPF\BPFDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\BPF\BPFInstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\BPF\BPFMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\BPF\BPFModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\EVM\EVMDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\EVM\EVMInstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\EVM\EVMMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\EVM\EVMModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\M680X\M680XDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\M680X\M680XDisassemblerInternals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\M680X\M680XInstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\M680X\M680XModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\M68K\M68KDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\M68K\M68KInstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\M68K\M68KModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\MOS65XX\MOS65XXDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\MOS65XX\MOS65XXDisassemblerInternals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\MOS65XX\MOS65XXModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Mips\MipsDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Mips\MipsInstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Mips\MipsMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Mips\MipsModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\PowerPC\PPCDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\PowerPC\PPCInstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\PowerPC\PPCMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\PowerPC\PPCModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\PowerPC\PPCPredicates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\RISCV\RISCVBaseInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\RISCV\RISCVDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\RISCV\RISCVInstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\RISCV\RISCVMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\RISCV\RISCVModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SH\SHDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SH\SHInstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SH\SHModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Sparc\Sparc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Sparc\SparcDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Sparc\SparcInstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Sparc\SparcMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\Sparc\SparcModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SystemZ\SystemZDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SystemZ\SystemZInstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SystemZ\SystemZMCTargetDesc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SystemZ\SystemZMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\SystemZ\SystemZModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TMS320C64x\TMS320C64xDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TMS320C64x\TMS320C64xInstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TMS320C64x\TMS320C64xMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TMS320C64x\TMS320C64xModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TriCore\TriCoreDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TriCore\TriCoreLinkage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TriCore\TriCoreMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\TriCore\TriCoreModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\WASM\WASMDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\WASM\WASMInstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\WASM\WASMMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\WASM\WASMModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86BaseInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86Disassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86DisassemblerDecoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86DisassemblerDecoderCommon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86InstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86InstPrinterCommon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86Mapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\X86\X86Module.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\XCore\XCoreDisassembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\XCore\XCoreInstPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\XCore\XCoreMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\arch\XCore\XCoreModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\contrib\windows_kernel\libc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\cs_priv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\cs_simple_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\cstool\cstool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\cstool\getopt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\arm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\arm64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\bpf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\capstone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\evm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\m680x.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\m68k.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\mips.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\mos65xx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\ppc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\riscv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\sh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\sparc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\systemz.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\tms320c64x.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\tricore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\wasm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\x86.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\capstone\xcore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\windowsce\intrin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\include\windowsce\stdint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\cstest\include\capstone_test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\cstest\include\factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\cstest\include\helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\fuzz\platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\X86DisassemblerDecoderCommon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\AccelTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\Analysis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\AntiDepBreaker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\AsmPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\AsmPrinterHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\AtomicExpandUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\BasicBlockSectionUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\BasicTTIImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\CSEConfigBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\CalcSpillWeights.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\CallingConvLower.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\CodeGenCommonISel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\CodeGenPassBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\CommandFlags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\CostTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\DAGCombine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\DFAPacketizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\DIE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\DbgEntityHistoryCalculator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\DebugHandlerBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\DwarfStringPoolEntry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\EdgeBundles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ExecutionDomainFix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ExpandReductions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ExpandVectorPredication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\FastISel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\FaultMaps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\FunctionLoweringInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GCMetadata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GCMetadataPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\CSEInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\CSEMIRBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\CallLowering.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\Combiner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\CombinerHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\CombinerInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\GISelChangeObserver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\GISelKnownBits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\GISelWorkList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\GenericMachineInstrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\IRTranslator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\InlineAsmLowering.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\InstructionSelect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\InstructionSelector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\InstructionSelectorImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\LegacyLegalizerInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\LegalizationArtifactCombiner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\Legalizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\LegalizerHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\LegalizerInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\LoadStoreOpt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\Localizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\LostDebugLocObserver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\MIPatternMatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\MachineIRBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\RegBankSelect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\RegisterBank.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\RegisterBankInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\GlobalISel\Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ISDOpcodes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\IndirectThunks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\IntrinsicLowering.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LatencyPriorityQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LazyMachineBlockFrequencyInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LexicalScopes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LinkAllAsmWriterComponents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LinkAllCodegenComponents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveInterval.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveIntervalCalc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveIntervalUnion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveIntervals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LivePhysRegs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveRangeCalc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveRangeEdit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveRegMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveRegUnits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveStacks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LiveVariables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LoopTraversal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\LowLevelType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MBFIWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MIRFSDiscriminator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MIRFormatter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MIRParser\MIParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MIRParser\MIRParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MIRPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MIRSampleProfile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MIRYamlMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachORelocation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineBasicBlock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineBlockFrequencyInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineBranchProbabilityInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineCombinerPattern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineConstantPool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineCycleAnalysis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineDominanceFrontier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineDominators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineFrameInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineFunction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineFunctionPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineInstr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineInstrBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineInstrBundle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineInstrBundleIterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineJumpTableInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineLoopInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineLoopUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineMemOperand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineModuleInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineModuleInfoImpls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineModuleSlotTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineOperand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineOptimizationRemarkEmitter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineOutliner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachinePassManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachinePassRegistry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachinePipeliner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachinePostDominators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineRegionInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineRegisterInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineSSAContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineSSAUpdater.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineScheduler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineSizeOpts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineStableHash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MachineTraceMetrics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MacroFusion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ModuloSchedule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\MultiHazardRecognizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\NonRelocatableStringpool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PBQP\CostAllocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PBQP\Graph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PBQP\Math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PBQP\ReductionRules.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PBQP\Solution.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PBQPRAConstraint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ParallelCG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\Passes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PreISelIntrinsicLowering.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\PseudoSourceValue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RDFGraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RDFLiveness.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RDFRegisters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ReachingDefAnalysis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RegAllocCommon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RegAllocPBQP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RegAllocRegistry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\Register.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RegisterClassInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RegisterPressure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RegisterScavenging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RegisterUsageInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ReplaceWithVeclib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ResourcePriorityQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\RuntimeLibcalls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ScheduleDAG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ScheduleDAGInstrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ScheduleDAGMutation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ScheduleDFS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ScheduleHazardRecognizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SchedulerRegistry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ScoreboardHazardRecognizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SelectionDAG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SelectionDAGAddressAnalysis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SelectionDAGISel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SelectionDAGNodes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SelectionDAGTargetInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SlotIndexes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\Spiller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\StableHashing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\StackMaps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\StackProtector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SwiftErrorValueTracking.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\SwitchLoweringUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TailDuplicator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetCallingConv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetFrameLowering.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetInstrInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetLowering.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetLoweringObjectFileImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetOpcodes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetPassConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetRegisterInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetSchedule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TargetSubtargetInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\TileShapeInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\UnreachableBlockElim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\VLIWMachineScheduler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\ValueTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\VirtRegMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\WasmEHFuncInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\CodeGen\WinEHFuncInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Frontend\OpenMP\OMPAssume.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Frontend\OpenMP\OMPConstants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Frontend\OpenMP\OMPContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Frontend\OpenMP\OMPGridValues.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Frontend\OpenMP\OMPIRBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\AbstractCallSite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Argument.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\AssemblyAnnotationWriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Assumptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Attributes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\AutoUpgrade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\BasicBlock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\BuiltinGCs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\CFG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\CallingConv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Comdat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Constant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ConstantFolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ConstantRange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DIBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DataLayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DebugInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DebugInfoMetadata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DebugLoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DerivedTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DerivedUser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DiagnosticHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DiagnosticInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\DiagnosticPrinter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Dominators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\FPEnv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\FixedPointBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GCStrategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GVMaterializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GetElementPtrTypeIterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GlobalAlias.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GlobalIFunc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GlobalObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GlobalValue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\GlobalVariable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IRBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IRBuilderFolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IRPrintingPasses.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\InlineAsm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\InstIterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\InstVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\InstrTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Instruction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Instructions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicInst.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Intrinsics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsAArch64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsAMDGPU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsARM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsBPF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsHexagon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsMips.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsNVPTX.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsPowerPC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsR600.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsRISCV.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsS390.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsVE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsWebAssembly.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsX86.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\IntrinsicsXCore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\LLVMContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\LLVMRemarkStreamer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\LegacyPassManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\LegacyPassManagers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\LegacyPassNameParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\MDBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Mangler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\MatrixBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Metadata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Module.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ModuleSlotTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ModuleSummaryIndex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ModuleSummaryIndexYAML.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\NoFolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\OperandTraits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Operator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\OptBisect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PassInstrumentation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PassManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PassManagerImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PassManagerInternal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PassTimingInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PatternMatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PredIteratorCache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PrintPasses.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ProfileSummary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\PseudoProbe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ReplaceConstant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\SSAContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\SafepointIRVerifier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Statepoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\StructuralHash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\SymbolTableListTraits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\TrackingMDRef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\TypeFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Use.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\UseListOrder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\User.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Value.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ValueHandle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ValueMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\ValueSymbolTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\IR\Verifier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\Coverage\CoverageMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\Coverage\CoverageMappingReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\Coverage\CoverageMappingWriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\GCOV.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\InstrProf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\InstrProfCorrelator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\InstrProfReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\InstrProfWriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\ProfileCommon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\RawMemProfReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\SampleProf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\SampleProfReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\ProfileData\SampleProfWriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\DirectiveEmitter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\Error.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\Main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\Record.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\SetTheory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\StringMatcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\StringToOffsetTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\TableGen\TableGenBackend.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Target\CGPassBuilderOption.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Target\CodeGenCWrappers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Target\TargetIntrinsicInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Target\TargetLoweringObjectFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Target\TargetMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\suite\synctools\tablegen\include\llvm\Target\TargetOptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\capstone-src\windows\winkernel_mm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-build\include\freetype\config\ftconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-build\include\freetype\config\ftoption.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\builds\amiga\include\config\ftconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\builds\amiga\include\config\ftmodule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\builds\vms\ftconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\devel\ft2build.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\devel\ftoption.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\ftconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\ftheader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\ftmodule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\ftoption.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\ftstdlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\integer-types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\mac-support.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\config\public-macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\freetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftadvanc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftbbox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftbdf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftbitmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftbzip2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftcache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftchapters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftcid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftcolor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftdriver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\fterrdef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\fterrors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftfntfmt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftgasp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftglyph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftgxval.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftgzip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftimage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftincrem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftlcdfil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftlist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftlogging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftlzw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftmac.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftmm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftmodapi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftmoderr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftotval.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftoutln.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftparams.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftpfr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftrender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftsizes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftsnames.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftstroke.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftsynth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftsystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\fttrigon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\fttypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ftwinfnt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\autohint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\cffotypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\cfftypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\compiler-macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftcalc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftdebug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftdrv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftgloadr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\fthash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftmemory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftmmtypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftobjs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftpsprop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftrfork.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftserv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftstream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\fttrace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\ftvalid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\psaux.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\pshints.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svbdf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svcfftl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svcid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svfntfmt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svgldict.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svgxval.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svkern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svmetric.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svmm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svotval.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svpfr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svpostnm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svprop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svpscmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svpsinfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svsfnt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svttcmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svtteng.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svttglyf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\services\svwinfnt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\sfnt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\svginterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\t1types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\tttypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\internal\wofftypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\otsvg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\t1tables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\ttnameid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\tttables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\freetype\tttags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\include\ft2build.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afblue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afcjk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afcover.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afdummy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\aferrors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afglobal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afhints.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afindic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\aflatin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afloader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afmodule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afranges.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afscript.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afshaper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afstyles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\aftypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afws-decl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\afws-iter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\autofit\ft-hb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\base\ftbase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\base\md5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\bdf\bdf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\bdf\bdfdrivr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\bdf\bdferror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftccache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftccback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftcerror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftcglyph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftcimage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftcmanag.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftcmru.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cache\ftcsbits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cffcmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cffdrivr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cfferrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cffgload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cffload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cffobjs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cffparse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cff\cfftoken.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cid\ciderrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cid\cidgload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cid\cidload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cid\cidobjs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cid\cidparse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cid\cidriver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\cid\cidtoken.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gxvalid\gxvalid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gxvalid\gxvcommn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gxvalid\gxverror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gxvalid\gxvfeat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gxvalid\gxvmod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gxvalid\gxvmort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gxvalid\gxvmorx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\crc32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\ftzconf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\gzguts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\inffast.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\inffixed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\inflate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\inftrees.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\zlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\gzip\zutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\lzw\ftzopen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\otvalid\otvalid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\otvalid\otvcommn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\otvalid\otverror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\otvalid\otvgpos.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\otvalid\otvmod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pcf\pcf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pcf\pcfdrivr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pcf\pcferror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pcf\pcfread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pcf\pcfutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrcmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrdrivr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrerror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrgload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrobjs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrsbit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pfr\pfrtypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\afmparse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\cffdecode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psarrst.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psauxerr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psauxmod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psblues.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psconv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\pserror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psfixed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psfont.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psft.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psglue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\pshints.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psintrp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psobjs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\psstack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\pstypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\t1cmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psaux\t1decode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pshinter\pshalgo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pshinter\pshglob.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pshinter\pshmod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pshinter\pshnterr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\pshinter\pshrec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psnames\psmodule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psnames\psnamerr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\psnames\pstables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\raster\ftmisc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\raster\ftraster.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\raster\ftrend1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\raster\rasterrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sdf\ftsdf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sdf\ftsdfcommon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sdf\ftsdferrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sdf\ftsdfrend.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\pngshim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\sfdriver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\sferrors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\sfobjs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\sfwoff.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\sfwoff2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttbdf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttcmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttcmapc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttcolr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttcpal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttkern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttmtx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttpost.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttsbit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\ttsvg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\sfnt\woff2tags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\smooth\ftgrays.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\smooth\ftsmerrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\smooth\ftsmooth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\svg\ftsvg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\svg\svgtypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\truetype\ttdriver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\truetype\tterrors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\truetype\ttgload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\truetype\ttgxvar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\truetype\ttinterp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\truetype\ttobjs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\truetype\ttpload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1afm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1driver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1errors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1gload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1load.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1objs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1parse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type1\t1tokens.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type42\t42drivr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type42\t42error.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type42\t42objs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type42\t42parse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\type42\t42types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\winfonts\fnterrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\src\winfonts\winfnt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\subprojects\dlg\include\dlg\dlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\subprojects\dlg\include\dlg\output.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\getopt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\glad\gl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\glad\gles2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\glad\vulkan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\linmath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\mingw\_mingw_dxhelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\mingw\dinput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\mingw\xinput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\nuklear.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\nuklear_glfw_gl2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\stb_image_write.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\deps\tinycthread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\include\GLFW\glfw3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\include\GLFW\glfw3native.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\cocoa_joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\cocoa_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\cocoa_time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\linux_joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\mappings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\null_joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\null_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\posix_poll.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\posix_thread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\posix_time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\win32_joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\win32_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\win32_thread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\win32_time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\wl_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\x11_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\build\_deps\glfw-src\src\xkb_unicode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\src\imgui\imgui_impl_glfw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\src\imgui\imgui_impl_opengl3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\src\imgui\imgui_impl_opengl3_loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\src\ini.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\src\profiler\IconsFontAwesome6.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\src\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Temp\tracy\profiler\src\stb_image_resize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Temp\tracy\profiler\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Temp\tracy\profiler\build\_deps\freetype-src\builds\atari\ATARI.H" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{CA853CE9-8531-3358-A4E8-A876C6759F4D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{E513DAD6-E91C-309B-BD09-B24B368D0938}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Day24_2024_Graph")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c659e3818f74e32bff131ae123b75de137dd4b56")]
 [assembly: System.Reflection.AssemblyProductAttribute("Day24_2024_Graph")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Day24_2024_Graph")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -23,6 +23,10 @@ using namespace hlslpp;
 //#include <Methane/Kit.h>
 //<<<<<<<< Methane
 
+//>>>>>>>> Tracy
+#include <Tracy/tracy/Tracy.hpp>
+//<<<<<<<< Tracy
+
 
 //>>>>>>>> Tigr
 #include <Tigr/tigr.h>
@@ -30,11 +34,14 @@ using namespace hlslpp;
 //<<<<<<<< Tigr
 
 
- 
 //>>>>>>>> STD
 #include <iostream>
 #include <sstream>
 //<<<<<<<< STD
 
+
+//>>>>>>>> LOCAL
+#include <PipeOperatorBase.h>
+//<<<<<<<< LOCAL
 
 #endif //PCH_H

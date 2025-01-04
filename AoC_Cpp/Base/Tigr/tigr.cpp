@@ -170,6 +170,8 @@ void tigrGAPIPresent(Tigr* bmp, int w, int h);
 #ifndef __TIGR_GLSL_HDR_H__
 #define __TIGR_GLSL_HDR_H__
 
+#undef GLSL_VERSION_HEADER
+
 #if __ANDROID__ || __IOS__
 #define GLSL_VERSION_HEADER \
     "#version 300 es\n"     \
@@ -359,7 +361,9 @@ void tigrPosition(Tigr* bmp, int scale, int windowW, int windowH, int out[4]) {
     out[3] = out[1] + bmp->h * scale;
 }
 
-void tigrClear(Tigr* bmp, TPixel color) {
+void tigrClear(Tigr* bmp, TPixel color) 
+{
+    ZoneScopedC(0x90b545);
     int count = bmp->w * bmp->h;
     int n;
     for(n = 0; n < count; n++)
@@ -640,7 +644,10 @@ void tigrBlit(Tigr* dst, Tigr* src, int dx, int dy, int sx, int sy, int w, int h
     } while(--h);
 }
 
-void tigrBlitTint(Tigr* dst, Tigr* src, int dx, int dy, int sx, int sy, int w, int h, TPixel tint) {
+void tigrBlitTint(Tigr* dst, Tigr* src, int dx, int dy, int sx, int sy, int w, int h, TPixel tint) 
+{
+    ZoneScopedC(0xeeff00);
+
     int cw = dst->cw >= 0 ? dst->cw : dst->w;
     int ch = dst->ch >= 0 ? dst->ch : dst->h;
 
@@ -2036,7 +2043,10 @@ int tigrTextWidth(TigrFont* font, const char* text) {
     return w;
 }
 
-int tigrTextHeight(TigrFont* font, const char* text) {
+int tigrTextHeight(TigrFont* font, const char* text) 
+{
+    ZoneScopedC(0x4da9ef);
+
     int rowh, h, c;
     tigrSetupFont(font);
 
@@ -6632,7 +6642,7 @@ void tigrGAPIDraw(int legacy, GLuint uniform_model, GLuint tex, Tigr* bmp, int x
     }
 }
 
-void tigrGAPIPresent(Tigr* bmp, int w, int h) 
+void tigrGAPIPresent(Tigr* bmp, int w, int h)
 {
     ZoneScopedC(0xbbaaa0);
 
@@ -6751,7 +6761,10 @@ void* tigrReadFile(const char* fileName, int* length) {
 #endif  // __ANDROID__
 
 // Reads a single UTF8 codepoint.
-const char* tigrDecodeUTF8(const char* text, int* cp) {
+const char* tigrDecodeUTF8(const char* text, int* cp) 
+{
+    ZoneScopedC(0x26adad);
+
     unsigned char c = *text++;
     int extra = 0, min = 0;
     *cp = 0;
@@ -6862,7 +6875,7 @@ void tigrSetPostShader(Tigr * bmp, const char* code, int size) {
 //    win->p4 = params[3];
 //}
 
-void tigrSetPostFX(Tigr* bmp, float p1, float p2, float p3, float p4) {
+void tigrSetPostFX(Tigr * bmp, float p1, float p2, float p3, float p4) {
     TigrInternal* win = tigrInternal(bmp);
     win->p1 = p1;
     win->p2 = p2;

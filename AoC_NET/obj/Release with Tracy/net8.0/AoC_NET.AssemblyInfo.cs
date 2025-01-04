@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AoC_NET")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release with Tracy")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4cb8f00005aee103c8a60f019af1d0fa5d4adfd0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c659e3818f74e32bff131ae123b75de137dd4b56")]
 [assembly: System.Reflection.AssemblyProductAttribute("AoC_NET")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AoC_NET")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

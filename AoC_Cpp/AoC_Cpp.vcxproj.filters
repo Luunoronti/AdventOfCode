@@ -302,5 +302,8 @@
     <ClInclude Include="Base\hlsl++\hlsl++\transform\float4x4.h">
       <Filter>Base\hlsl++\hlsl++\transform</Filter>
     </ClInclude>
+    <ClInclude Include="Base\PipeOperatorBase.h">
+      <Filter>Base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
