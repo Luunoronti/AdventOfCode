@@ -92,3 +92,5 @@ Day24_2024_Graph/bin
 /Tools/tracy/profiler/build/TracyNfd.dir
 /Tools/tracy/profiler/build/TracyServer.dir
 /Tools/tracy/profiler/build/TracyZstd.dir
+AoC_NET/obj/Release with Tracy/net8.0/AoC_NET.AssemblyInfo.cs
+AoC_NET/obj/Release with Tracy/net8.0/AoC_NET.AssemblyInfoInputs.cache
