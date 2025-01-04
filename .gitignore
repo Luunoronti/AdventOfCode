@@ -383,3 +383,15 @@ Day24_2024_Graph/bin/Debug/net8.0-windows/Syncfusion.Shared.WPF.dll
 /AdventOfCode2024/Debug
 /AdventOfCode/Intermediate
 /AdventOfCode/Saved
+/__OLD__/AdventOfCode2023/obj
+/AoC_Cpp/Release with Tracy/AoC_Cpp.tlog
+/Tools/tracy/.vscode
+/Tools/tracy/profiler/build/_deps
+/Tools/tracy/profiler/build/CPM_modules
+/Tools/tracy/profiler/build/Debug
+/Tools/tracy/profiler/build/MinSizeRel
+/Tools/tracy/profiler/build/tracy-profiler.dir
+/Tools/tracy/profiler/build/TracyImGui.dir
+/Tools/tracy/profiler/build/TracyNfd.dir
+/Tools/tracy/profiler/build/TracyServer.dir
+/Tools/tracy/profiler/build/TracyZstd.dir
