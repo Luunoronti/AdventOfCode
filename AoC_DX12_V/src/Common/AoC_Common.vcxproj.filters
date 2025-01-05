@@ -4,6 +4,18 @@
     <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\stdafx.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCBase.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCExecutor.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCResultsAggregator.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCConfiguration.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\stdafx.h">
@@ -13,6 +25,18 @@
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\aoc.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCBase.hpp">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCExecutor.hpp">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCResultsAggregator.hpp">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCConfiguration.hpp">
       <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>

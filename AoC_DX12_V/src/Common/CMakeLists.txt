@@ -5,7 +5,14 @@ set(sources
     stdafx.h
     pipes.h
     aoc.h
-    
+    AoCBase.hpp
+    AoCBase.cpp
+    AoCExecutor.hpp
+    AoCExecutor.cpp
+    AoCResultsAggregator.hpp
+    AoCResultsAggregator.cpp
+    AoCConfiguration.hpp
+    AoCConfiguration.cpp
     )
 
 source_group("Sources" FILES ${sources})

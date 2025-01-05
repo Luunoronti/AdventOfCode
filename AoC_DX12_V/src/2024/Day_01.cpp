@@ -10,8 +10,11 @@ void Test()
 {
     ZoneScopedN("Test");
 
-    float2 test2;
-    float2 a = test2.xx;
+    hlslpp::float2 test2;
+    hlslpp::float2 a = test2.xx;
+
+    hlslpp::float1 f1;
+
 
 
 }

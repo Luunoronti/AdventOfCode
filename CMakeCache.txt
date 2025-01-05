@@ -18,6 +18,24 @@
 2024_LIB_DEPENDS:STATIC=general;TracyClient;general;AoC_Common;
 
 //Value Computed by CMake
+AdventOfCode_BINARY_DIR:STATIC=C:/Work/AdventOfCode
+
+//Value Computed by CMake
+AdventOfCode_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+AdventOfCode_SOURCE_DIR:STATIC=C:/Work/AdventOfCode
+
+//Value Computed by CMake
+Advent_BINARY_DIR:STATIC=C:/Work/AdventOfCode
+
+//Value Computed by CMake
+Advent_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+Advent_SOURCE_DIR:STATIC=C:/Work/AdventOfCode
+
+//Value Computed by CMake
 AoC_BINARY_DIR:STATIC=C:/Work/AdventOfCode
 
 //Dependencies for the target
@@ -271,7 +289,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=AoC
+CMAKE_PROJECT_NAME:STATIC=AdventOfCode
 
 //Value Computed by CMake
 CMAKE_PROJECT_VERSION:STATIC=0.11.1

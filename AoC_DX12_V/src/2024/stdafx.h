@@ -16,7 +16,7 @@
 // normally, we should not declare namespace use in pch
 // but this library is used all over and we just want
 // same experience as in real HLSL.
-using namespace hlslpp;
+//using namespace hlslpp;
 
 
 #include <intrin.h>

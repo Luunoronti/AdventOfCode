@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.6)
 option (GFX_API_DX12 "Build with DX12" ON)
 option (GFX_API_VK "Build with Vulkan" ON)
 
-project (AoC)
+project (AdventOfCode)
 
 if(NOT DEFINED GFX_API)
 else()

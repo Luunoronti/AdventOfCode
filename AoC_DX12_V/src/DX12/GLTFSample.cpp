@@ -17,6 +17,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#include <hlsl++.h>
 #include "stdafx.h"
 #include <intrin.h>
 #include <Tracy.hpp>
@@ -477,8 +478,11 @@ void GLTFSample::OnRender()
 }
 
 
+#include <AoCConfiguration.hpp>
 int main()
 {
+    AoCConfiguration::GetResultJsonEntry(2024, 12);
+
     LPCSTR Name = "SampleDX12 v1.4.1";
     // create new DX sample
     RunFramework(GetModuleHandle(nullptr), TEXT(""), 1, new GLTFSample(Name));
