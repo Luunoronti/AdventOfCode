@@ -54,7 +54,7 @@ add_subdirectory(Tools/Tracy)
 # reference libs used by both backends
 add_subdirectory(AoC_DX12_V/libs/cauldron)
 add_subdirectory(AoC_DX12_V/src/Common)
-add_subdirectory(AoC_DX12_V/src/2024)
+
 
 
 # application icon
@@ -76,3 +76,5 @@ endif()
 set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/AoC_DX12_V/libs/cauldron/src/common/Icon/Cauldron_Common.rc PROPERTIES VS_TOOL_OVERRIDE "Resource compiler")
 set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/AoC_DX12_V/libs/cauldron/src/common/Icon/GPUOpenChip.ico  PROPERTIES VS_TOOL_OVERRIDE "Image")
 
+
+add_subdirectory(AoC_DX12_V/src/2024)

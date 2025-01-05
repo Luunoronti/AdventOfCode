@@ -17,6 +17,9 @@
       <FullPath>C:\Work\AdventOfCode\x64\MinSizeRel\copied_amd_ags_bin</FullPath>
     </ProjectOutput>
     <ProjectOutput>
+      <FullPath>C:\Work\AdventOfCode\bin\AoC_Common.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
       <FullPath>C:\Work\AdventOfCode\x64\MinSizeRel\copied_common_config</FullPath>
     </ProjectOutput>
   </ProjectOutputs>

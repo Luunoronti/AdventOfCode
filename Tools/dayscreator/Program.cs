@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace dayscreator
 {
@@ -11,7 +12,7 @@ namespace dayscreator
         static void Main(string[] args)
         {
             bool force = true;
-            bool localDir = false;
+            bool localDir = Environment.CurrentDirectory.EndsWith("bin\\Debug");
 
             // first argument is the year
             int.TryParse(args[0], out var year);
@@ -30,11 +31,11 @@ namespace dayscreator
             var srcFiles = new Dictionary<string, (string, List<string>)>();
 
             // recreate missing files
-            for (var i = 1; i <= 5; i++) RecreateSources(rootDir, 1, 5, i, srcFiles);
-            for (var i = 6; i <= 10; i++) RecreateSources(rootDir, 6, 10, i, srcFiles);
-            for (var i = 11; i <= 15; i++) RecreateSources(rootDir, 11, 15, i, srcFiles);
-            for (var i = 16; i <= 20; i++) RecreateSources(rootDir, 16, 20, i, srcFiles);
-            for (var i = 21; i <= 25; i++) RecreateSources(rootDir, 21, 25, i, srcFiles);
+            for (var i = 1; i <= 5; i++) RecreateSources(rootDir, year, 1, 5, i, srcFiles);
+            for (var i = 6; i <= 10; i++) RecreateSources(rootDir, year, 6, 10, i, srcFiles);
+            for (var i = 11; i <= 15; i++) RecreateSources(rootDir, year, 11, 15, i, srcFiles);
+            for (var i = 16; i <= 20; i++) RecreateSources(rootDir, year, 16, 20, i, srcFiles);
+            for (var i = 21; i <= 25; i++) RecreateSources(rootDir, year, 21, 25, i, srcFiles);
 
             // also, recreate stdafx files if do not exist
             if (force || !File.Exists($"{rootDir}\\stdafx.h"))
@@ -58,9 +59,40 @@ namespace dayscreator
             AddYearToCmakeLinkLibs(year, otherCmakes);
             AddLibToMainCMake(year, localDir);
 
+            // also add an include that will include all days
+            // and make a macro to run each day
+            WriteDaysHeader(rootDir, year, srcFiles);
+
+            AddDaysToDatabase(localDir, year);
+
             if (!localDir)
                 Process.Start($"{Environment.CurrentDirectory}\\GenerateSolutions.bat");
+        }
 
+        static void WriteDaysHeader(string rootDir, int year, Dictionary<string, (string, List<string>)> days)
+        {
+
+            // #define RUN_YEAR_2024(f, c) \
+            // f<Year2024Day01>(c);
+
+            // #pragma once
+            // #include "..\\2024\\Days 1-5\\Day_01.h"
+            string hFile = "#pragma once" + Environment.NewLine;
+            foreach (var l in days.Select(d => d.Value.Item2).SelectMany(d => d).Where(s => s.EndsWith(".h")))
+            {
+                hFile += $"#include \"../{year}/{l}\"{Environment.NewLine}";
+            }
+
+            hFile += Environment.NewLine;
+            hFile += $"#define RUN_YEAR_{year}(f, c) \\";
+            hFile += Environment.NewLine;
+            for (int i = 1; i <= 25; i++)
+            {
+                hFile += $"f<Year{year}Day{i:d2}>(c);\\{Environment.NewLine}";
+            }
+            hFile += Environment.NewLine;
+
+            File.WriteAllText(rootDir + "\\Days.h", hFile);
         }
 
         static void AddLibToMainCMake(int year, bool localDir)
@@ -97,7 +129,7 @@ namespace dayscreator
                 }
             }
         }
-        static void RecreateSources(string root, int dm, int dmax, int index, Dictionary<string, (string, List<string>)> srcFiles)
+        static void RecreateSources(string root, int year, int dm, int dmax, int index, Dictionary<string, (string, List<string>)> srcFiles)
         {
             if (!srcFiles.TryGetValue($"src_{dm}-{dmax}", out var list))
                 list = srcFiles[$"src_{dm}-{dmax}"] = ($"Days {dm}-{dmax}", new List<string>());
@@ -110,16 +142,16 @@ namespace dayscreator
             var cppFile = $"{dir}\\Day {index:d2}.cpp";
             var hFile = $"{dir}\\Day {index:d2}.h";
 
-            var cppContent = $@"
-#include ""stdafx.h""
-#include ""Day {index:d2}.h""
-";
-            var hContent = $@"
-#pragma once
-";
+            File.WriteAllText(cppFile, daycppContent
+                .Replace("%%DAY%%", $"{index:d2}")
+                .Replace("%%YEAR%%", $"{year}")
+                );
+            File.WriteAllText(hFile, dayHeaderContent
+                .Replace("%%DAY%%", $"{index:d2}")
+                .Replace("%%YEAR%%", $"{year}")
+                .Replace("%%DAY_NL%%", $"{index}")
 
-            File.WriteAllText(cppFile, cppContent);
-            File.WriteAllText(hFile, hContent);
+                );
         }
 
         static void RecreateCMake(string root, int year, Dictionary<string, (string, List<string>)> srcFiles)
@@ -158,6 +190,37 @@ namespace dayscreator
                 );
         }
 
+        static void AddDaysToDatabase(bool localDir, int year)
+        {
+            var path = $"{Environment.CurrentDirectory}\\Database\\DaysData.json";
+            if (localDir)
+                path = $"{Environment.CurrentDirectory}\\..\\..\\..\\..\\Database\\DaysData.json";
+
+            var data = JsonConvert.DeserializeObject<List<Day>>(File.ReadAllText(path));
+
+            for (int i = 1; i <= 25; i++)
+            {
+                if (data.Any(d => d.year == year && d.day == i))
+                    continue;
+
+                data.Add(new Day
+                {
+                    day = i,
+                    year = year,
+                    debugRun = false,
+                    enableVisualization = false,
+                    run = false,
+                    name = "___",
+                    liveStep1 = new DayPart() { knownErrors = new KnownErrors() },
+                    liveStep2 = new DayPart() { knownErrors = new KnownErrors() },
+                    testStep1 = new DayPart() { knownErrors = new KnownErrors() },
+                    testStep2 = new DayPart() { knownErrors = new KnownErrors() },
+                });
+            }
+
+            File.WriteAllText(path, JsonConvert.SerializeObject(data, Formatting.Indented));
+        }
+
 
         private const string stdAfxHContent = @"
 // stdafx.h : include file for standard system include files,
@@ -172,6 +235,7 @@ namespace dayscreator
 #include <mutex>
 #include <vector>
 #include <fstream>
+#include <string>
 
 #define HLSLPP_FEATURE_TRANSFORM
 #include <hlsl++.h>
@@ -195,7 +259,6 @@ namespace dayscreator
 // and not in this file
 ";
 
-
         private const string cmakeContent = @"include(${CMAKE_CURRENT_SOURCE_DIR}/../../../common.cmake)
 
 set(src_g
@@ -205,9 +268,9 @@ set(src_g
 
 %%SRC_DAYS%%
 
-set(CMAKE_CXX_STANDARD ""20"")
 
 add_library(%%YEAR%% STATIC ${src_g} %%SRCS%%)
+set_property(TARGET %%YEAR%% PROPERTY CXX_STANDARD 23)
 
 %%SRC_GROUPS%%
 
@@ -263,5 +326,133 @@ endif()
 
 ";
 
-    }
+        private const string daycppContent = @"
+#include ""stdafx.h""
+#include ""Day %%DAY%%.h""
+
+const std::string Year%%YEAR%%Day%%DAY%%::Part1(const AoCExecutionContext* Context)
+{
+    return """";
 }
+
+const std::string Year%%YEAR%%Day%%DAY%%::Part2(const AoCExecutionContext* Context)
+{
+    return """";
+}
+";
+        private const string dayHeaderContent = @"#pragma once
+#include <AoCBase.h>
+
+class Year%%YEAR%%Day%%DAY%% : public AoCBase
+{
+public:
+    const std::string Part1(const AoCExecutionContext* Context) override;
+    const std::string Part2(const AoCExecutionContext* Context) override;
+    const __forceinline int GetYear() const override { return %%YEAR%%; };
+    const __forceinline int GetDay() const override { return %%DAY_NL%%; }
+
+};";
+    }
+
+
+
+
+
+
+
+    public class RootObject
+    {
+        public List<Day> Days
+        {
+            get; set;
+        }
+    }
+
+    public class Day
+    {
+        public bool run
+        {
+            get; set;
+        }
+        public bool debugRun
+        {
+            get; set;
+        }
+        public string name
+        {
+            get; set;
+        }
+        public int day
+        {
+            get; set;
+        }
+        public DayPart liveStep1
+        {
+            get; set;
+        }
+        public DayPart liveStep2
+        {
+            get; set;
+        }
+        public DayPart testStep1
+        {
+            get; set;
+        }
+        public DayPart testStep2
+        {
+            get; set;
+        }
+        public int year
+        {
+            get; set;
+        }
+        public bool enableVisualization
+        {
+            get; set;
+        }
+    }
+
+    public class DayPart
+    {
+        public string expectedResultStr
+        {
+            get;
+            set;
+        } = "";
+        public long expectedResult
+        {
+            get; set;
+        }
+        public KnownErrors knownErrors
+        {
+            get; set;
+        }
+        public bool enableVisualization
+        {
+            get; set;
+        }
+    }
+
+    public class KnownErrors
+    {
+        public string[] general
+        {
+            get; set;
+        } = new string[0];
+        public object[] tooSmall
+        {
+            get; set;
+        } = new string[0];
+        public object[] tooBig
+        {
+            get; set;
+        } = new string[0];
+    }
+
+
+
+}
+
+
+
+

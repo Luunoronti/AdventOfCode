@@ -86,7 +86,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <MinimalRebuild></MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>Disabled</Optimization>
@@ -127,7 +127,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <MinimalRebuild></MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>MaxSpeed</Optimization>
@@ -170,7 +170,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <MinimalRebuild></MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>MinSpace</Optimization>
@@ -214,7 +214,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <MinimalRebuild></MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>MaxSpeed</Optimization>
@@ -329,13 +329,181 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\stdafx.h" />
-    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day_01.cpp">
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 01.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
-    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day_01.h" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 01.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 02.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 02.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 03.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 03.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 04.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 04.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 05.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 05.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 06.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 06.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 07.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 07.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 08.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 08.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 09.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 09.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 10.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 10.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 11.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 11.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 12.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 12.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 13.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 13.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 14.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 14.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 15.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 15.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 16.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 16.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 17.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 17.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 18.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 18.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 19.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 19.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 20.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 20.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 21.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 21.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 22.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 22.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 23.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 23.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 24.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 24.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 25.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/MinSizeRel/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Work/AdventOfCode/AoC_DX12_V/src/2024/CMakeFiles/2024.dir/RelWithDebInfo/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 25.h" />
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\CMakeFiles\2024.dir\Debug\cmake_pch.hxx" />
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\CMakeFiles\2024.dir\Release\cmake_pch.hxx" />
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\CMakeFiles\2024.dir\MinSizeRel\cmake_pch.hxx" />

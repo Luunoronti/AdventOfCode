@@ -1,29 +1,31 @@
 #pragma once
+#include "base.h"
 #include <stdint.h>
 #include <string>
 
 struct AoCExecutionContext
 {
-    class AoCBaseExecutionConfiguration* DayConfig;
-    class AoCBaseExecutionConfigurationEntry* PartConfig;
+    struct AoCBaseExecutionConfiguration* DayConfig;
+    struct AoCBaseExecutionConfigurationEntry* PartConfig;
     class AoCVisualizer* Visualizer;
+    std::string Input;
 };
 
-class AoCBase
+class AOCLIBRARY_API AoCBase
 {
+    friend class AoCExecutor;
 public:
-public:
-    virtual const int64_t Step1() { return 0; };
-    virtual const int64_t Step2() { return 0; };
+    virtual const std::string Part1(const AoCExecutionContext* Context) { return ""; };
+    virtual const std::string Part2(const AoCExecutionContext* Context) { return ""; };
     const virtual __forceinline int GetYear() const { return 0; };
     const virtual __forceinline int GetDay() const = 0;
     const __forceinline int GetStep() const { return Step; };
-    const bool IsTest() const;
-    void SetTest(const bool IsTest);
+    const bool IsTest() const { return IsUnderTest; }
+    void SetTest(const bool IsTest) { IsUnderTest = IsTest; }
 
 
 protected:
-    std::string Input;
+
     AoCExecutionContext* Context;
 
 private:

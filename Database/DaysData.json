@@ -5,36 +5,50 @@
     "name": "Historian Hysteria",
     "day": 1,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 2580760,
-      "knownErrors":{
-        "general": [ "-1", "-2" ]
-      } 
+      "knownErrors": {
+        "general": [
+          "-1",
+          "-2"
+        ],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 25358365,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 11,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 31,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
@@ -42,38 +56,47 @@
     "name": "Red-Nosed Reports",
     "day": 2,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 472,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 520,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 2,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 4,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
@@ -81,38 +104,47 @@
     "name": "Mull It Over",
     "day": 3,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 163931492,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 76911921,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 161,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 48,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
@@ -120,38 +152,47 @@
     "name": "Ceres Search",
     "day": 4,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 2543,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1930,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 18,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 9,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
@@ -159,78 +200,95 @@
     "name": "Print Queue",
     "day": 5,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 5991,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 5479,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 143,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 123,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
     "debugRun": false,
     "name": "Guard Gallivant",
     "day": 6,
-    "enableDebugStream": false,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 4903,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1911,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 41,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 6,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
@@ -238,79 +296,95 @@
     "name": "Bridge Repair",
     "day": 7,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 5512534574980,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 328790210468594,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 3749,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 11387,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
     "debugRun": false,
     "name": "Resonant Collinearity",
     "day": 8,
-    "enableDebugStream": false,
     "liveStep1": {
-      "enableDebugStream": false,
+      "expectedResultStr": "",
       "expectedResult": 398,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1333,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 14,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 34,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
@@ -318,120 +392,147 @@
     "name": "Disk Fragmenter",
     "day": 9,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 6340197768906,
       "knownErrors": {
-        "general": ["6219938684618"],
+        "general": [
+          "6219938684618"
+        ],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 6363913128533,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 1928,
-      "enableDebugStream": false,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 2858,
-      "enableDebugStream": false,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
     "debugRun": false,
     "name": "Hoof It",
     "day": 10,
-    "enableDebugStream": false,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 566,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1324,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 36,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 81,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
     "debugRun": false,
-    "enableDebugStream": false,
     "name": "Plutonian Pebbles",
     "day": 11,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 184927,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 220357186726677,
       "knownErrors": {
-        "general": ["8184572693"],
+        "general": [
+          "8184572693"
+        ],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 55312,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 65601038650482,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
@@ -439,38 +540,49 @@
     "name": "Garden Groups",
     "day": 12,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 1461806,
       "knownErrors": {
-        "general": ["1485954"],
+        "general": [
+          "1485954"
+        ],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 887932,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 1930,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1206,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
@@ -478,38 +590,47 @@
     "name": "Claw Contraption",
     "day": 13,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 36870,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 78101482023732,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 480,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 875318608908,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
@@ -517,159 +638,195 @@
     "name": "Restroom Redoubt",
     "day": 14,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 210587128,
       "knownErrors": {
-        "general": ["218681250"],
+        "general": [
+          "218681250"
+        ],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 7286,
-      "enableVisualization": false,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 12,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
     "debugRun": false,
     "name": "Warehouse Woes",
     "day": 15,
-    "enableVisualization": false,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 1526673,
       "knownErrors": {
-        "general": ["1504676"],
+        "general": [
+          "1504676"
+        ],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1535509,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 10092,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 9021,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
     "debugRun": true,
     "name": "Reindeer Maze",
-    "enableVisualization": false,
     "day": 16,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 160624,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 0,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 11048,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 0,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
     "debugRun": false,
     "name": "Chronospatial Computer",
-    "enableVisualization": false,
     "day": 17,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 214760314,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 266932601404433,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 4635635210,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 117440,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
@@ -677,38 +834,47 @@
     "name": "RAM Run",
     "day": 18,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 278,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 22,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
@@ -716,78 +882,97 @@
     "name": "Linen Layout",
     "day": 19,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 283,
       "knownErrors": {
-        "general": ["271"],
+        "general": [
+          "271"
+        ],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 615388132411142,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 6,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 16,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
     "debugRun": false,
-    "enableVisualization": false,
     "name": "Race Condition",
     "day": 20,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 1450,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1015247,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 1,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
@@ -795,118 +980,148 @@
     "name": "Keypad Conundrum",
     "day": 21,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 184716,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1630,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 126384,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 23,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
     "debugRun": false,
-    "enableVisualization": false,
     "name": "Monkey Market",
     "day": 22,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 14476723788,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1630,
       "knownErrors": {
-        "general": ["1685", "1659", "1644", "1604"],
+        "general": [
+          "1685",
+          "1659",
+          "1644",
+          "1604"
+        ],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 37327623,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 23,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
     "debugRun": false,
     "name": "LAN Party",
-    "enableVisualization": false,
     "day": 23,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 1240,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 0,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 7,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 0,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
@@ -914,38 +1129,47 @@
     "name": "Crossed Wires",
     "day": 24,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 49574189473968,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 2024,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
   },
   {
     "run": true,
@@ -953,37 +1177,1246 @@
     "name": "Code Chronicle",
     "day": 25,
     "liveStep1": {
+      "expectedResultStr": "",
       "expectedResult": 3365,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "liveStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep1": {
+      "expectedResultStr": "",
       "expectedResult": 3,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
     "testStep2": {
+      "expectedResultStr": "",
       "expectedResult": 1,
       "knownErrors": {
         "general": [],
         "tooSmall": [],
         "tooBig": []
-      }
+      },
+      "enableVisualization": false
     },
-    "year": 2024
+    "year": 2024,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 1,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 2,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 3,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 4,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 5,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 6,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 7,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 8,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 9,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 10,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 11,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 12,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 13,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 14,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 15,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 16,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 17,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 18,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 19,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 20,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 21,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 22,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 23,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 24,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
+  },
+  {
+    "run": true,
+    "debugRun": false,
+    "name": "___",
+    "day": 25,
+    "liveStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "liveStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep1": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "testStep2": {
+      "expectedResultStr": "",
+      "expectedResult": 0,
+      "knownErrors": {
+        "general": [],
+        "tooSmall": [],
+        "tooBig": []
+      },
+      "enableVisualization": false
+    },
+    "year": 2023,
+    "enableVisualization": false
   }
 ]

@@ -1,3 +1,27 @@
 C:\Work\AdventOfCode\AoC_DX12_V\src\2024\CMakeFiles\2024.dir\cmake_pch.cxx;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\cmake_pch.obj
 C:\Work\AdventOfCode\AoC_DX12_V\src\2024\stdafx.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\stdafx.obj
-C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Day_01.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day_01.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 01.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 01.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 02.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 02.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 03.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 03.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 04.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 04.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 05.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 05.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 06.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 06.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 07.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 07.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 08.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 08.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 09.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 09.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 10.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 10.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 11.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 11.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 12.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 12.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 13.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 13.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 14.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 14.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 15.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 15.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 16.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 16.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 17.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 17.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 18.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 18.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 19.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 19.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 20.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 20.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 21.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 21.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 22.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 22.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 23.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 23.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 24.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 24.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 25.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\2024\2024.dir\MinSizeRel\Day 25.obj

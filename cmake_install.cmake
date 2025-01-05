@@ -37,9 +37,9 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("C:/Work/AdventOfCode/Tools/tracy/cmake_install.cmake")
   include("C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/cmake_install.cmake")
   include("C:/Work/AdventOfCode/AoC_DX12_V/src/Common/cmake_install.cmake")
-  include("C:/Work/AdventOfCode/AoC_DX12_V/src/2024/cmake_install.cmake")
   include("C:/Work/AdventOfCode/AoC_DX12_V/src/VK/cmake_install.cmake")
   include("C:/Work/AdventOfCode/AoC_DX12_V/src/DX12/cmake_install.cmake")
+  include("C:/Work/AdventOfCode/AoC_DX12_V/src/2024/cmake_install.cmake")
 
 endif()
 

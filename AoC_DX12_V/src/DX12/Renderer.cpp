@@ -404,7 +404,8 @@ void Renderer::AllocateShadowMaps(GLTFCommon* pGLTFCommon)
         std::vector<SceneShadowInfo>::iterator CurrentShadow = m_shadowMapPool.begin();
         for( uint32_t i = 0; CurrentShadow < m_shadowMapPool.end(); ++i, ++CurrentShadow)
         {
-            CurrentShadow->ShadowMap.InitDepthStencil(m_pDevice, "m_pShadowMap", &CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_D32_FLOAT, CurrentShadow->ShadowResolution, CurrentShadow->ShadowResolution, 1, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL));
+            auto tex = CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_D32_FLOAT, CurrentShadow->ShadowResolution, CurrentShadow->ShadowResolution, 1, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
+            CurrentShadow->ShadowMap.InitDepthStencil(m_pDevice, "m_pShadowMap", &tex);
             CurrentShadow->ShadowMap.CreateDSV(CurrentShadow->ShadowIndex, &m_ShadowMapPoolDSV);
             CurrentShadow->ShadowMap.CreateSRV(CurrentShadow->ShadowIndex, &m_ShadowMapPoolSRV);
         }
@@ -456,7 +457,8 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
 
     m_GPUTimer.GetTimeStamp(pCmdLst1, "Begin Frame");
 
-    pCmdLst1->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(pSwapChain->GetCurrentBackBufferResource(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
+    auto tr = CD3DX12_RESOURCE_BARRIER::Transition(pSwapChain->GetCurrentBackBufferResource(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
+    pCmdLst1->ResourceBarrier(1, &tr);
 
     // Render shadow maps 
     std::vector<CD3DX12_RESOURCE_BARRIER> ShadowReadBarriers;
@@ -476,7 +478,8 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
         while (ShadowMap < m_shadowMapPool.end())
         {
             SetViewportAndScissor(pCmdLst1, 0, 0, ShadowMap->ShadowResolution, ShadowMap->ShadowResolution);
-            pCmdLst1->OMSetRenderTargets(0, NULL, false, &m_ShadowMapPoolDSV.GetCPU(ShadowMap->ShadowIndex));
+            auto handle = m_ShadowMapPoolDSV.GetCPU(ShadowMap->ShadowIndex);
+            pCmdLst1->OMSetRenderTargets(0, NULL, false, &handle);
             
             per_frame* cbDepthPerFrame = m_GLTFDepth->SetPerFrameConstants();
             cbDepthPerFrame->mCameraCurrViewProj = pPerFrame->lights[ShadowMap->LightIndex].mLightViewProj;
@@ -667,7 +670,8 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
         m_GPUTimer.GetTimeStamp(pCmdLst1, "Magnifier");
 
         // Transition magnifier state to PIXEL_SHADER_RESOURCE, as it is going to be pRscCurrentInput replacing m_GBuffer.m_HDR which is in that state.
-        pCmdLst1->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_MagnifierPS.GetPassOutputResource(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
+        auto tr = CD3DX12_RESOURCE_BARRIER::Transition(m_MagnifierPS.GetPassOutputResource(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+        pCmdLst1->ResourceBarrier(1, &tr);
     }
 
     // Start tracking input/output resources at this point to handle HDR and SDR render paths 
@@ -738,7 +742,8 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
         m_ColorConversionPS.Draw(pCmdLst2, &SRVCurrentInput);
         m_GPUTimer.GetTimeStamp(pCmdLst2, "Color conversion");
 
-        pCmdLst2->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(pRscCurrentInput, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET));
+        auto tr = CD3DX12_RESOURCE_BARRIER::Transition(pRscCurrentInput, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
+        pCmdLst2->ResourceBarrier(1, &tr);
     }
     else
     {
@@ -750,7 +755,8 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
             m_ToneMappingPS.Draw(pCmdLst2, &SRVCurrentInput, pState->Exposure, pState->SelectedTonemapperIndex);
             m_GPUTimer.GetTimeStamp(pCmdLst2, "Tone mapping");
 
-            pCmdLst2->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(pRscCurrentInput, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET));
+            auto tr = CD3DX12_RESOURCE_BARRIER::Transition(pRscCurrentInput, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
+            pCmdLst2->ResourceBarrier(1, &tr);
         }
 
         // Render HUD  ------------------------------------------------------------------------
@@ -762,8 +768,9 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
     }
 
     // If magnifier is used, make sure m_GBuffer.m_HDR which is not pRscCurrentInput gets reverted back to RT state.
-    if (pState->bUseMagnifier)
-        pCmdLst2->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_GBuffer.m_HDR.GetResource(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET));
+    if(pState->bUseMagnifier)
+        auto tr = CD3DX12_RESOURCE_BARRIER::Transition(m_GBuffer.m_HDR.GetResource(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
+        pCmdLst2->ResourceBarrier(1, &tr);
 
     if (!m_pScreenShotName.empty())
     {
@@ -772,7 +779,8 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
 
     // Transition swapchain into present mode
 
-    pCmdLst2->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(pSwapChain->GetCurrentBackBufferResource(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
+    auto tr2 = CD3DX12_RESOURCE_BARRIER::Transition(pSwapChain->GetCurrentBackBufferResource(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
+    pCmdLst2->ResourceBarrier(1, &tr2);
 
     m_GPUTimer.OnEndFrame();
 

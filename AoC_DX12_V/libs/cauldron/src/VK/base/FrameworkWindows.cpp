@@ -46,7 +46,7 @@ static constexpr bool ENABLE_GPU_VALIDATION_DEFAULT = false;
 #endif
 
 
-int RunFramework(HINSTANCE hInstance, LPSTR lpCmdLine, int nCmdShow, FrameworkWindows *pFramework)
+int RunFramework(HINSTANCE hInstance, LPCSTR lpCmdLine, int nCmdShow, FrameworkWindows *pFramework)
 {
     // Init logging
     int result = Log::InitLogSystem();

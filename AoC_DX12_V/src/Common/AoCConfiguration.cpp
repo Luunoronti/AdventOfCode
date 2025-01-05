@@ -15,8 +15,8 @@ void to_json(nlohmann::json& j, const AoCBaseExecutionConfigurationKnownErrors& 
 {
     j = nlohmann::json{
         {"tooBig", s.TooBig},
-        {"tooSmall", s.TooSmall}, 
-        {"general", s.General} 
+        {"tooSmall", s.TooSmall},
+        {"general", s.General}
     };
 }
 
@@ -84,7 +84,7 @@ void from_json(const nlohmann::json& j, AoCBaseExecutionConfigurationKnownErrors
 }
 void from_json(const nlohmann::json& j, AoCBaseExecutionConfigurationEntry& s)
 {
-    if(j.contains("ExpectedResultStr")) j.at("ExpectedResultStr").get_to(s.ExpectedResultStr);
+    if(j.contains("expectedResultStr")) j.at("expectedResultStr").get_to(s.ExpectedResultStr);
     if(j.contains("expectedResult")) j.at("expectedResult").get_to(s.ExpectedResult);
     if(j.contains("knownErrors")) j.at("knownErrors").get_to(s.KnownErrorResults);
     if(j.contains("enableDebugStream")) j.at("enableDebugStream").get_to(s.EnableDebugOutput);
@@ -130,10 +130,6 @@ void from_json(const nlohmann::json& j, AoCBaseExecutionConfiguration& s)
 
 
 
-
-std::vector<AoCBaseExecutionConfiguration> AoCConfiguration::DaysDatabase;
-bool AoCConfiguration::ProgramConfigurationLoaded{ false };
-
 void AoCConfiguration::ReadDaysDatabaseIfNotDoneAlready()
 {
     if(DaysDatabase.size() > 0)
@@ -173,3 +169,45 @@ AoCBaseExecutionConfiguration AoCConfiguration::GetResultJsonEntry(int Year, int
     }
     throw std::runtime_error("Unable to find database entry for year " + std::to_string(Year) + " day " + std::to_string(Day));
 }
+
+const void AoCBaseExecutionConfigurationKnownErrors::GetGeneral(std::vector<std::string>& general) const
+{
+    general.clear();
+    for(const auto& g : General)
+        general.push_back(g);
+}
+const void AoCBaseExecutionConfigurationKnownErrors::GetTooBig(std::vector<int64_t>& tooBig) const
+{
+    tooBig.clear();
+    for(const auto& g : TooBig)
+        tooBig.push_back(g);
+}
+const void AoCBaseExecutionConfigurationKnownErrors::GetTooSmall(std::vector<int64_t>& tooSmall) const
+{
+    tooSmall.clear();
+    for(const auto& g : TooSmall)
+        tooSmall.push_back(g);
+}
+
+const int64_t AoCBaseExecutionConfigurationEntry::GetExpectedResult() const
+{
+    return ExpectedResult;
+}
+const std::string AoCBaseExecutionConfigurationEntry::GetExpectedResultStr() const
+{
+    return ExpectedResultStr;
+}
+
+const AoCBaseExecutionConfigurationKnownErrors* AoCBaseExecutionConfigurationEntry::GetKnownErrorResults() const
+{
+    return &KnownErrorResults;
+}
+
+
+const int AoCBaseExecutionConfiguration::GetYear() const { return Year; };
+const int AoCBaseExecutionConfiguration::GetDay() const { return Day; };
+const bool AoCBaseExecutionConfiguration::GetOkToRunInRelease() const { return OkToRunInRelease; };
+const bool AoCBaseExecutionConfiguration::GetOkToRunInDebug() const { return OkToRunInDebug; };
+const bool AoCBaseExecutionConfiguration::GetEnableDebugOutput() const { return EnableDebugOutput; };
+const bool AoCBaseExecutionConfiguration::GetEnableVisualization() const { return EnableVisualization; };
+const std::string AoCBaseExecutionConfiguration::GetName() const { return Name; }

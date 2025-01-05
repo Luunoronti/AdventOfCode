@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Work\AdventOfCode\x64\MinSizeRel\ZERO_CHECK</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Work\AdventOfCode\x64\MinSizeRel\copied_common_media_src</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Work\AdventOfCode\x64\MinSizeRel\copied_dxc_bin</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Work\AdventOfCode\x64\MinSizeRel\copied_winpixevent_bin</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Work\AdventOfCode\x64\MinSizeRel\copied_amd_ags_bin</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Work\AdventOfCode\bin\AoC_Common.dll</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

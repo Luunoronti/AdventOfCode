@@ -3,9 +3,9 @@
 #include <string>
 #include <vector>
 #include <hlsl++.h>
+#include "base.h"
 
-
-struct JsonColor
+struct AOCLIBRARY_API JsonColor
 {
     int r{ 0 };
     int g{ 0 };
@@ -27,6 +27,11 @@ struct JsonColor
 
 struct AoCBaseExecutionConfigurationKnownErrors
 {
+public:
+    const AOCLIBRARY_API void GetGeneral(std::vector<std::string>& general) const;
+    const AOCLIBRARY_API void GetTooBig(std::vector<int64_t>& general) const;
+    const AOCLIBRARY_API void GetTooSmall(std::vector<int64_t>& general) const;
+public:
     std::vector<std::string> General;
     std::vector<int64_t> TooBig;
     std::vector<int64_t> TooSmall;
@@ -35,6 +40,10 @@ struct AoCBaseExecutionConfigurationKnownErrors
 
 struct AoCBaseExecutionConfigurationEntry
 {
+    const AOCLIBRARY_API int64_t GetExpectedResult() const;
+    const AOCLIBRARY_API std::string GetExpectedResultStr() const;
+    const AOCLIBRARY_API AoCBaseExecutionConfigurationKnownErrors* GetKnownErrorResults() const;
+
     int64_t ExpectedResult;
     std::string ExpectedResultStr;
     AoCBaseExecutionConfigurationKnownErrors KnownErrorResults;
@@ -45,6 +54,14 @@ struct AoCBaseExecutionConfigurationEntry
 
 struct AoCBaseExecutionConfiguration
 {
+    const AOCLIBRARY_API int GetYear() const;
+    const AOCLIBRARY_API int GetDay() const;
+    const AOCLIBRARY_API bool GetOkToRunInRelease() const;
+    const AOCLIBRARY_API bool GetOkToRunInDebug() const;
+    const AOCLIBRARY_API bool GetEnableDebugOutput() const;
+    const AOCLIBRARY_API bool GetEnableVisualization() const;
+    const AOCLIBRARY_API std::string GetName() const;
+    
     int Year{ 0 };
     int8_t Day{ 0 };
     std::string Name;
@@ -61,15 +78,12 @@ struct AoCBaseExecutionConfiguration
     AoCBaseExecutionConfigurationEntry Part2Live;
 };
 
-
-
 class AoCConfiguration
 {
 private:
-    static bool ProgramConfigurationLoaded;
-    static std::vector<AoCBaseExecutionConfiguration> DaysDatabase;
-
-    static void ReadDaysDatabaseIfNotDoneAlready();
+    bool ProgramConfigurationLoaded{ false };
+    std::vector<AoCBaseExecutionConfiguration> DaysDatabase;
+    void ReadDaysDatabaseIfNotDoneAlready();
 public:
-    static AoCBaseExecutionConfiguration GetResultJsonEntry(int Year, int Day);
+    AoCBaseExecutionConfiguration AOCLIBRARY_API GetResultJsonEntry(int Year, int Day);
 };

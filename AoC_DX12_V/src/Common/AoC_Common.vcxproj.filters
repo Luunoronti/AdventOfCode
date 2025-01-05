@@ -18,6 +18,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\base.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\stdafx.h">
       <Filter>Sources</Filter>
     </ClInclude>

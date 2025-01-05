@@ -132,3 +132,5 @@ AoC_NET/obj/Release with Tracy/net8.0/AoC_NET.AssemblyInfoInputs.cache
 AoC_DX12_V/src/DX12/AoC_DX12.dir/MinSizeRel/AoC_DX12.tlog
 AoC_DX12_V/libs/cauldron/src/DX12/Cauldron_DX12.dir/MinSizeRel/Cauldron_DX12.tlog
 AoC_DX12_V/libs/cauldron/libs/imgui/ImGUI.dir/MinSizeRel/ImGUI.tlog
+AoC_DX12_V/src/Common/AoC_Common.dir/MinSizeRel/AoC_Common.tlog/
+

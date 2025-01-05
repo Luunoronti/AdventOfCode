@@ -7,16 +7,160 @@
     <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day_01.cpp">
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 01.cpp">
       <Filter>Days 1-5</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 02.cpp">
+      <Filter>Days 1-5</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 03.cpp">
+      <Filter>Days 1-5</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 04.cpp">
+      <Filter>Days 1-5</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 05.cpp">
+      <Filter>Days 1-5</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 06.cpp">
+      <Filter>Days 6-10</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 07.cpp">
+      <Filter>Days 6-10</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 08.cpp">
+      <Filter>Days 6-10</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 09.cpp">
+      <Filter>Days 6-10</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 10.cpp">
+      <Filter>Days 6-10</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 11.cpp">
+      <Filter>Days 11-15</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 12.cpp">
+      <Filter>Days 11-15</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 13.cpp">
+      <Filter>Days 11-15</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 14.cpp">
+      <Filter>Days 11-15</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 15.cpp">
+      <Filter>Days 11-15</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 16.cpp">
+      <Filter>Days 16-20</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 17.cpp">
+      <Filter>Days 16-20</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 18.cpp">
+      <Filter>Days 16-20</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 19.cpp">
+      <Filter>Days 16-20</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 20.cpp">
+      <Filter>Days 16-20</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 21.cpp">
+      <Filter>Days 21-25</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 22.cpp">
+      <Filter>Days 21-25</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 23.cpp">
+      <Filter>Days 21-25</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 24.cpp">
+      <Filter>Days 21-25</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 25.cpp">
+      <Filter>Days 21-25</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\stdafx.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day_01.h">
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 01.h">
       <Filter>Days 1-5</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 02.h">
+      <Filter>Days 1-5</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 03.h">
+      <Filter>Days 1-5</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 04.h">
+      <Filter>Days 1-5</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day 05.h">
+      <Filter>Days 1-5</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 06.h">
+      <Filter>Days 6-10</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 07.h">
+      <Filter>Days 6-10</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 08.h">
+      <Filter>Days 6-10</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 09.h">
+      <Filter>Days 6-10</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 6-10\Day 10.h">
+      <Filter>Days 6-10</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 11.h">
+      <Filter>Days 11-15</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 12.h">
+      <Filter>Days 11-15</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 13.h">
+      <Filter>Days 11-15</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 14.h">
+      <Filter>Days 11-15</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 11-15\Day 15.h">
+      <Filter>Days 11-15</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 16.h">
+      <Filter>Days 16-20</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 17.h">
+      <Filter>Days 16-20</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 18.h">
+      <Filter>Days 16-20</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 19.h">
+      <Filter>Days 16-20</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 16-20\Day 20.h">
+      <Filter>Days 16-20</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 21.h">
+      <Filter>Days 21-25</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 22.h">
+      <Filter>Days 21-25</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 23.h">
+      <Filter>Days 21-25</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 24.h">
+      <Filter>Days 21-25</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 21-25\Day 25.h">
+      <Filter>Days 21-25</Filter>
     </ClInclude>
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\CMakeFiles\2024.dir\Debug\cmake_pch.hxx">
       <Filter>Precompile Header File</Filter>
@@ -37,6 +181,21 @@
   <ItemGroup>
     <Filter Include="Days 1-5">
       <UniqueIdentifier>{E2CF798D-C77E-3D85-8E05-07FF3687DACA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Days 11-15">
+      <UniqueIdentifier>{A969C4A9-2210-34FE-A649-BD58D497638A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Days 16-20">
+      <UniqueIdentifier>{CF977202-D928-346F-87C4-73F056E3CBD9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Days 21-25">
+      <UniqueIdentifier>{CC20E1A4-03CE-3668-87D5-1AD6AEED6EE0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Days 6-10">
+      <UniqueIdentifier>{870318FF-E1A9-37FB-B08A-F1EAC76F313E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{C9F347F5-7C0D-326D-88B1-70245C7DF1E1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Precompile Header File">
       <UniqueIdentifier>{2A6D26FA-66D7-3963-9E1C-A82D24F703D5}</UniqueIdentifier>

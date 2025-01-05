@@ -105,7 +105,7 @@ void GLTFSample::BuildUI()
 
         if (ImGui::CollapsingHeader("Scene", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            char* cameraControl[] = { "Orbit", "WASD", "cam #0", "cam #1", "cam #2", "cam #3" , "cam #4", "cam #5" };
+            const char* cameraControl[] = { "Orbit", "WASD", "cam #0", "cam #1", "cam #2", "cam #3" , "cam #4", "cam #5" };
 
             if (m_activeCamera >= m_pGltfLoader->m_cameras.size() + 2)
                 m_activeCamera = 0;

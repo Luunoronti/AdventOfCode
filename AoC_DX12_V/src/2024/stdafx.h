@@ -1,3 +1,4 @@
+
 // stdafx.h : include file for standard system include files,
 // or project specific include files that are used frequently, but
 // are changed infrequently
@@ -10,6 +11,7 @@
 #include <mutex>
 #include <vector>
 #include <fstream>
+#include <string>
 
 #define HLSLPP_FEATURE_TRANSFORM
 #include <hlsl++.h>
@@ -22,6 +24,3 @@
 #include <intrin.h>
 #include <Tracy.hpp>
 #include <aoc.h>
-
-
-

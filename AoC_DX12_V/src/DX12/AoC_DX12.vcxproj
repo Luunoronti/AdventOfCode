@@ -124,7 +124,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>..\..\..\Tools\tracy\Debug\TracyClient.lib;..\Common\Debug\AoC_Common.lib;..\2024\Debug\2024.lib;..\..\libs\cauldron\src\DX12\Debug\Cauldron_DX12d.lib;..\..\libs\cauldron\libs\imgui\Debug\ImGUId.lib;d3dcompiler.lib;D3D12.lib;..\Common\Debug\AoC_Common.lib;..\..\libs\cauldron\src\DX12\Debug\Cauldron_DX12d.lib;..\..\libs\cauldron\src\common\Debug\Cauldron_Commond.lib;..\..\..\Tools\tracy\Debug\TracyClient.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\Debug\ImGUId.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\Tools\tracy\Debug\TracyClient.lib;..\2024\Debug\2024.lib;..\..\libs\cauldron\src\DX12\Debug\Cauldron_DX12d.lib;..\..\libs\cauldron\libs\imgui\Debug\ImGUId.lib;d3dcompiler.lib;D3D12.lib;..\Common\Debug\AoC_Common.lib;..\..\libs\cauldron\src\DX12\Debug\Cauldron_DX12d.lib;..\..\libs\cauldron\src\common\Debug\Cauldron_Commond.lib;..\..\..\Tools\tracy\Debug\TracyClient.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\Debug\ImGUId.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -177,7 +177,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>..\..\..\Tools\tracy\Release\TracyClient.lib;..\Common\Release\AoC_Common.lib;..\2024\Release\2024.lib;..\..\libs\cauldron\src\DX12\Release\Cauldron_DX12.lib;..\..\libs\cauldron\libs\imgui\Release\ImGUI.lib;d3dcompiler.lib;D3D12.lib;..\Common\Release\AoC_Common.lib;..\..\libs\cauldron\src\DX12\Release\Cauldron_DX12.lib;..\..\libs\cauldron\src\common\Release\Cauldron_Common.lib;..\..\..\Tools\tracy\Release\TracyClient.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\Release\ImGUI.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\Tools\tracy\Release\TracyClient.lib;..\2024\Release\2024.lib;..\..\libs\cauldron\src\DX12\Release\Cauldron_DX12.lib;..\..\libs\cauldron\libs\imgui\Release\ImGUI.lib;d3dcompiler.lib;D3D12.lib;..\Common\Release\AoC_Common.lib;..\..\libs\cauldron\src\DX12\Release\Cauldron_DX12.lib;..\..\libs\cauldron\src\common\Release\Cauldron_Common.lib;..\..\..\Tools\tracy\Release\TracyClient.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\Release\ImGUI.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -230,7 +230,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>..\..\..\Tools\tracy\MinSizeRel\TracyClient.lib;..\Common\MinSizeRel\AoC_Common.lib;..\2024\MinSizeRel\2024.lib;..\..\libs\cauldron\src\DX12\MinSizeRel\Cauldron_DX12.lib;..\..\libs\cauldron\libs\imgui\MinSizeRel\ImGUI.lib;d3dcompiler.lib;D3D12.lib;..\Common\MinSizeRel\AoC_Common.lib;..\..\libs\cauldron\src\DX12\MinSizeRel\Cauldron_DX12.lib;..\..\libs\cauldron\src\common\MinSizeRel\Cauldron_Common.lib;..\..\..\Tools\tracy\MinSizeRel\TracyClient.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\MinSizeRel\ImGUI.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\Tools\tracy\MinSizeRel\TracyClient.lib;..\2024\MinSizeRel\2024.lib;..\..\libs\cauldron\src\DX12\MinSizeRel\Cauldron_DX12.lib;..\..\libs\cauldron\libs\imgui\MinSizeRel\ImGUI.lib;d3dcompiler.lib;D3D12.lib;..\Common\MinSizeRel\AoC_Common.lib;..\..\libs\cauldron\src\DX12\MinSizeRel\Cauldron_DX12.lib;..\..\libs\cauldron\src\common\MinSizeRel\Cauldron_Common.lib;..\..\..\Tools\tracy\MinSizeRel\TracyClient.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\MinSizeRel\ImGUI.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -282,7 +282,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>..\..\..\Tools\tracy\RelWithDebInfo\TracyClient.lib;..\Common\RelWithDebInfo\AoC_Common.lib;..\2024\RelWithDebInfo\2024.lib;..\..\libs\cauldron\src\DX12\RelWithDebInfo\Cauldron_DX12.lib;..\..\libs\cauldron\libs\imgui\RelWithDebInfo\ImGUI.lib;d3dcompiler.lib;D3D12.lib;..\Common\RelWithDebInfo\AoC_Common.lib;..\..\libs\cauldron\src\DX12\RelWithDebInfo\Cauldron_DX12.lib;..\..\libs\cauldron\src\common\RelWithDebInfo\Cauldron_Common.lib;..\..\..\Tools\tracy\RelWithDebInfo\TracyClient.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\RelWithDebInfo\ImGUI.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\Tools\tracy\RelWithDebInfo\TracyClient.lib;..\2024\RelWithDebInfo\2024.lib;..\..\libs\cauldron\src\DX12\RelWithDebInfo\Cauldron_DX12.lib;..\..\libs\cauldron\libs\imgui\RelWithDebInfo\ImGUI.lib;d3dcompiler.lib;D3D12.lib;..\Common\RelWithDebInfo\AoC_Common.lib;..\..\libs\cauldron\src\DX12\RelWithDebInfo\Cauldron_DX12.lib;..\..\libs\cauldron\src\common\RelWithDebInfo\Cauldron_Common.lib;..\..\..\Tools\tracy\RelWithDebInfo\TracyClient.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\RelWithDebInfo\ImGUI.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -364,6 +364,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\DX12\UI.h" />
     <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\DX12\stdafx.cpp" />
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\DX12\stdafx.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\DX12\RunDays.cpp" />
     <None Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common\Icon\GPUOpenChip.ico">
     </None>
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common\Icon\resource.h" />

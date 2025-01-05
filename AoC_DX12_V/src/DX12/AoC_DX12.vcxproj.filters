@@ -13,6 +13,9 @@
     <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\DX12\stdafx.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\DX12\RunDays.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\DX12\GLTFSample.h">

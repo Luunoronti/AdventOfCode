@@ -410,15 +410,6 @@ if(std::find(sp.KnownErrorResults.begin(), sp.KnownErrorResults.end(), sp.Result
 #pragma endregion
 
 
-const bool AoCBase::IsTest() const
-{
-    return IsUnderTest;
-}
-void AoCBase::SetTest(const bool IsTest)
-{
-    IsUnderTest = IsTest;
-}
-
 
 
 #pragma region File IO
