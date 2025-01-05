@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "AoCConfiguration.hpp"
+#include "AoCConfiguration.h"
 
 
 // Define to_json and from_json functions for MyStruct 

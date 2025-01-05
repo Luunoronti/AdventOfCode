@@ -139,13 +139,13 @@ json::array_t GetElementJsonArray(const json::object_t &root, const char *path, 
     return GetElement<json::array_t>(&root, path, default);
 }
 
-math::Vector4 GetElementVector(json::object_t &root, const char *path, math::Vector4 default)
+math::Vector4 GetElementVector(json::object_t &root, const char *path, math::Vector4 defaultValue)
 {
     if (root.find(path) != root.end() && !root[path].is_null())
     {
         return GetVector(root[path].get<json::array_t>());
     }
     else
-        return default;
+        return defaultValue;
 }
 

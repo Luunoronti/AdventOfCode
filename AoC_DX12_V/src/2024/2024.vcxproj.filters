@@ -7,7 +7,7 @@
     <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Day_01.cpp">
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day_01.cpp">
       <Filter>Days 1-5</Filter>
     </ClCompile>
   </ItemGroup>
@@ -15,7 +15,7 @@
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\stdafx.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Day_01.h">
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Days 1-5\Day_01.h">
       <Filter>Days 1-5</Filter>
     </ClInclude>
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\CMakeFiles\2024.dir\Debug\cmake_pch.hxx">

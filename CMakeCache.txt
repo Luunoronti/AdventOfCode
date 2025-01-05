@@ -15,6 +15,12 @@
 ########################
 
 //Dependencies for the target
+2022_LIB_DEPENDS:STATIC=general;TracyClient;general;AoC_Common;
+
+//Dependencies for the target
+2023_LIB_DEPENDS:STATIC=general;TracyClient;general;AoC_Common;
+
+//Dependencies for the target
 2024_LIB_DEPENDS:STATIC=general;TracyClient;general;AoC_Common;
 
 //Value Computed by CMake

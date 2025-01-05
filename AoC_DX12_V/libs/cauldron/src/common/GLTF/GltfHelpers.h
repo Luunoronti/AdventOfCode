@@ -35,5 +35,5 @@ float GetElementFloat(const json::object_t &root, const char *path, float pDefau
 int GetElementInt(const json::object_t &root, const char *path, int pDefault);
 bool GetElementBoolean(const json::object_t &root, const char *path, bool pDefault);
 json::array_t GetElementJsonArray(const json::object_t &root, const char *path, json::array_t pDefault);
-math::Vector4 GetElementVector(json::object_t &root, const char *path, math::Vector4 default);
+math::Vector4 GetElementVector(json::object_t &root, const char *path, math::Vector4 defaultValue);
 

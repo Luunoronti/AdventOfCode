@@ -6,8 +6,8 @@ set(src_g
     )
 
 set(src15
-    "Day_01.cpp"
-    "Day_01.h"
+    "Days 1-5/Day_01.cpp"
+    "Days 1-5/Day_01.h"
     )
 
 set(CMAKE_CXX_STANDARD "20")
