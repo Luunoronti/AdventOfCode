@@ -5,12 +5,7 @@
 #pragma once
 
 
-#define HLSLPP_FEATURE_TRANSFORM
 #include <hlsl++.h>
-// normally, we should not declare namespace use in pch
-// but this library is used all over and we just want
-// same experience as in real HLSL.
-//using namespace hlslpp;
 
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers

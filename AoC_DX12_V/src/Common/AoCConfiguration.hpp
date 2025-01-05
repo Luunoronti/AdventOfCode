@@ -2,13 +2,7 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
-
-#define HLSLPP_FEATURE_TRANSFORM
 #include <hlsl++.h>
-// normally, we should not declare namespace use in pch
-// but this library is used all over and we just want
-// same experience as in real HLSL.
-//using namespace hlslpp;
 
 
 struct JsonColor
@@ -17,11 +11,11 @@ struct JsonColor
     int g{ 0 };
     int b{ 0 };
 
-    hlslpp::float3 ToColor()
+    float3 ToColor()
     {
-        return hlslpp::float3((float)r / 255, (float)g / 255, (float)b / 255);
+        return float3((float)r / 255, (float)g / 255, (float)b / 255);
     }
-    static JsonColor FromColor(const hlslpp::float3& color)
+    static JsonColor FromColor(const float3& color)
     {
         JsonColor c;
         c.r = (int)(color.x * 255);

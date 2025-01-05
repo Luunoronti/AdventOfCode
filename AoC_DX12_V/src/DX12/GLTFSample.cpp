@@ -18,6 +18,7 @@
 // THE SOFTWARE.
 
 #include <hlsl++.h>
+
 #include "stdafx.h"
 #include <intrin.h>
 #include <Tracy.hpp>

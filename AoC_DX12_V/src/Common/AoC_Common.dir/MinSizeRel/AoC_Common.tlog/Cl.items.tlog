@@ -1,0 +1,5 @@
+C:\Work\AdventOfCode\AoC_DX12_V\src\Common\stdafx.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoC_Common.dir\MinSizeRel\stdafx.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCBase.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoC_Common.dir\MinSizeRel\AoCBase.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCExecutor.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoC_Common.dir\MinSizeRel\AoCExecutor.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCResultsAggregator.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoC_Common.dir\MinSizeRel\AoCResultsAggregator.obj
+C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCConfiguration.cpp;C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoC_Common.dir\MinSizeRel\AoCConfiguration.obj

@@ -1,5 +1,7 @@
 #pragma once
 
+#define HLSLPP_FEATURE_TRANSFORM
+
 #include "hlsl++/common.h"
 
 
@@ -23,3 +25,8 @@
 // Some functions depend on having the knowledge of types that have been defined before.
 // In order to break the header dependencies they are all defined here.
 #include "hlsl++/dependent.h"
+
+// normally, we should not declare namespace use in pch
+// but this library is used all over and we just want
+// same experience as in real HLSL.
+using namespace hlslpp;
