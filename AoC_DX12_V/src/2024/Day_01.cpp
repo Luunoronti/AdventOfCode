@@ -1,6 +1,17 @@
 
 #include "stdafx.h"
-#include <intrin.h>
-//#include "../../../Tools/tracy/public/tracy/Tracy.hpp"
+
 #include "Day_01.h"
 
+
+
+
+void Test()
+{
+    ZoneScopedN("Test");
+
+    float2 test2;
+    float2 a = test2.xx;
+
+
+}

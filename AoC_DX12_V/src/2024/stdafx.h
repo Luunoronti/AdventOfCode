@@ -11,3 +11,17 @@
 #include <vector>
 #include <fstream>
 
+#define HLSLPP_FEATURE_TRANSFORM
+#include <hlsl++.h>
+// normally, we should not declare namespace use in pch
+// but this library is used all over and we just want
+// same experience as in real HLSL.
+using namespace hlslpp;
+
+
+#include <intrin.h>
+#include <Tracy.hpp>
+#include <aoc.h>
+
+
+

@@ -9,6 +9,12 @@
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\stdafx.h">
       <Filter>Sources</Filter>
     </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\pipes.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\aoc.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\CMakeLists.txt" />

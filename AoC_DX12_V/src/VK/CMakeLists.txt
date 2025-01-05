@@ -18,3 +18,4 @@ target_link_libraries(AoC_VK LINK_PUBLIC AoC_Common TracyClient Cauldron_VK ImGU
 
 set_target_properties(AoC_VK PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_HOME_DIRECTORY}/bin" DEBUG_POSTFIX "d")
 target_include_directories (AoC_VK PUBLIC ${CMAKE_HOME_DIRECTORY}/Tools/tracy/public/tracy)
+target_include_directories (AoC_VK PUBLIC ${CMAKE_HOME_DIRECTORY}/Tools/hlsl++)

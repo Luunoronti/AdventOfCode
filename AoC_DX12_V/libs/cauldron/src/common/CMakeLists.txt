@@ -37,6 +37,7 @@ add_library (Cauldron_Common STATIC ${base_src} ${GLTF_src} ${Misc_src} ${shader
 target_link_libraries (Cauldron_Common PUBLIC TracyClient NJSON DXC Shcore)
 target_include_directories (Cauldron_Common PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories (Cauldron_Common PUBLIC ${CMAKE_HOME_DIRECTORY}/Tools/tracy/public/tracy)
+target_include_directories (Cauldron_Common PUBLIC ${CMAKE_HOME_DIRECTORY}/Tools/hlsl++)
 
 set_target_properties(Cauldron_Common PROPERTIES FOLDER Cauldron)
 

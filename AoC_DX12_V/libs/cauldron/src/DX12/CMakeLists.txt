@@ -142,6 +142,7 @@ add_library (Cauldron_DX12 STATIC ${GLTF_src} ${PostProc_src} ${Base_src} ${Widg
 target_link_libraries (Cauldron_DX12 TracyClient Cauldron_Common D3D12X winpixeventruntimelib)
 target_include_directories (Cauldron_DX12 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories (Cauldron_DX12 PUBLIC ${CMAKE_HOME_DIRECTORY}/Tools/tracy/public/tracy)
+target_include_directories (Cauldron_DX12 PUBLIC ${CMAKE_HOME_DIRECTORY}/Tools/hlsl++)
 set_target_properties(Cauldron_DX12 PROPERTIES FOLDER Cauldron)
 
 copyTargetCommand("${Shaders_GLTF_src}" ${CMAKE_HOME_DIRECTORY}/bin/ShaderLibDX copied_dx12_shaders_gltf_src)

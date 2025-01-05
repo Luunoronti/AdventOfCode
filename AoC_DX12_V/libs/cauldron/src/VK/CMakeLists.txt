@@ -147,6 +147,7 @@ add_library (Cauldron_VK STATIC ${GLTF_src} ${PostProc_src} ${Base_src} ${Widget
 target_link_libraries (Cauldron_VK Cauldron_Common TracyClient Vulkan::Vulkan)
 target_include_directories (Cauldron_VK PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories (Cauldron_VK PUBLIC ${CMAKE_HOME_DIRECTORY}/Tools/tracy/public/tracy)
+target_include_directories (Cauldron_VK PUBLIC ${CMAKE_HOME_DIRECTORY}/Tools/hlsl++)
 
 set_target_properties(Cauldron_VK PROPERTIES FOLDER Cauldron)
 
