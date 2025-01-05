@@ -479,12 +479,15 @@ void GLTFSample::OnRender()
 }
 
 
-#include <AoCConfiguration.hpp>
+#include <AoCConfiguration.h>
+#include <iostream>
 int main()
 {
+    std::cout << "Reading configuration" << std::endl;
     AoCConfiguration::GetResultJsonEntry(2024, 12);
 
     LPCSTR Name = "SampleDX12 v1.4.1";
     // create new DX sample
+    std::cout << "Starting framework" << std::endl;
     RunFramework(GetModuleHandle(nullptr), TEXT(""), 1, new GLTFSample(Name));
 }

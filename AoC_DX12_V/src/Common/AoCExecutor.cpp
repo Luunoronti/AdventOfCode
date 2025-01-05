@@ -1,4 +1,4 @@
-#include "AoCExecutor.hpp"
+#include "AoCExecutor.h"
 
 void AoCExecutor::ExecuteStep(AoCBase& instance)
 {

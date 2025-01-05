@@ -5,13 +5,13 @@ set(sources
     stdafx.h
     pipes.h
     aoc.h
-    AoCBase.hpp
+    AoCBase.h
     AoCBase.cpp
-    AoCExecutor.hpp
+    AoCExecutor.h
     AoCExecutor.cpp
-    AoCResultsAggregator.hpp
+    AoCResultsAggregator.h
     AoCResultsAggregator.cpp
-    AoCConfiguration.hpp
+    AoCConfiguration.h
     AoCConfiguration.cpp
     )
 

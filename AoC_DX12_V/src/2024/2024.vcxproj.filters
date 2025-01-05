@@ -5,18 +5,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\stdafx.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Day_01.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Days 1-5</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\stdafx.h">
-      <Filter>Sources</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Day_01.h">
-      <Filter>Sources</Filter>
+      <Filter>Days 1-5</Filter>
     </ClInclude>
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\CMakeFiles\2024.dir\Debug\cmake_pch.hxx">
       <Filter>Precompile Header File</Filter>
@@ -35,14 +35,14 @@
     <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Filter Include="Days 1-5">
+      <UniqueIdentifier>{E2CF798D-C77E-3D85-8E05-07FF3687DACA}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Precompile Header File">
       <UniqueIdentifier>{2A6D26FA-66D7-3963-9E1C-A82D24F703D5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{08F98FFF-BF85-30E3-BBF8-C8D6726F061C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources">
-      <UniqueIdentifier>{B74A0C19-D09C-3C0E-BE1D-220197C83549}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

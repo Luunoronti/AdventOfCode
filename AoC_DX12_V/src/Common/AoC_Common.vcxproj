@@ -296,13 +296,13 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\stdafx.h" />
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\pipes.h" />
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\aoc.h" />
-    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCBase.hpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCBase.h" />
     <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCBase.cpp" />
-    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCExecutor.hpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCExecutor.h" />
     <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCExecutor.cpp" />
-    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCResultsAggregator.hpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCResultsAggregator.h" />
     <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCResultsAggregator.cpp" />
-    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCConfiguration.hpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCConfiguration.h" />
     <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCConfiguration.cpp" />
   </ItemGroup>
   <ItemGroup />

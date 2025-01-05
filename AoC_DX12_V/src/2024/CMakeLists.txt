@@ -1,17 +1,20 @@
 include(${CMAKE_CURRENT_SOURCE_DIR}/../../../common.cmake)
 
-set(sources
-    stdafx.cpp
-    stdafx.h
-    Day_01.cpp
-    Day_01.h
+set(src_g
+    "stdafx.cpp"
+    "stdafx.h"
+    )
+
+set(src15
+    "Day_01.cpp"
+    "Day_01.h"
     )
 
 set(CMAKE_CXX_STANDARD "20")
 
-source_group("Sources" FILES ${sources})
-
-add_library(2024 STATIC ${sources} ${sources})
+add_library(2024 STATIC ${src_g} ${src15})
+source_group("Days 1-5" FILES ${src15})
+source_group("Source Files" FILES ${src_g})
 
 target_precompile_headers(2024 PRIVATE stdafx.h)
 

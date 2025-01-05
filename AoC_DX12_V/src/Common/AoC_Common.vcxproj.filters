@@ -27,16 +27,16 @@
     <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\aoc.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCBase.hpp">
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCBase.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCExecutor.hpp">
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCExecutor.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCResultsAggregator.hpp">
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCResultsAggregator.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCConfiguration.hpp">
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\Common\AoCConfiguration.h">
       <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>
