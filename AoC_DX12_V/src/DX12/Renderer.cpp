@@ -19,6 +19,7 @@
 
 #include "Renderer.h"
 #include "UI.h"
+#include <Tracy.hpp>
 
 #include <stdlib.h>
 
@@ -417,6 +418,8 @@ void Renderer::AllocateShadowMaps(GLTFCommon* pGLTFCommon)
 //--------------------------------------------------------------------------------------
 void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSwapChain)
 {
+    ZoneScopedC(0xb2b1e6);
+
     // Timing values
     UINT64 gpuTicksPerSecond;
     m_pDevice->GetGraphicsQueue()->GetTimestampFrequency(&gpuTicksPerSecond);
@@ -526,6 +529,8 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
     // Render Scene to the GBuffer ------------------------------------------------
     if (pPerFrame != NULL)
     {
+        ZoneScopedNC("GBuffer", 0xb2b1e6);
+
         pCmdLst1->RSSetViewports(1, &m_Viewport);
         pCmdLst1->RSSetScissorRects(1, &m_RectScissor);
 
@@ -631,6 +636,8 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
 
     // Bloom, takes HDR as input and applies bloom to it.
     {
+        ZoneScopedNC("Bloom", 0xb2b1e6);
+
         D3D12_CPU_DESCRIPTOR_HANDLE renderTargets[] = { m_GBuffer.m_HDRRTV.GetCPU() };
         pCmdLst1->OMSetRenderTargets(ARRAYSIZE(renderTargets), renderTargets, false, NULL);
 
@@ -644,6 +651,8 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
     // Apply TAA & Sharpen to m_HDR
     if (pState->bUseTAA)
     {
+        ZoneScopedNC("TAA", 0xb2b1e6);
+
         m_TAA.Draw(pCmdLst1, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
         m_GPUTimer.GetTimeStamp(pCmdLst1, "TAA");
     }
@@ -651,6 +660,8 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
     // Magnifier Pass: m_HDR as input, pass' own output
     if (pState->bUseMagnifier)
     {
+        ZoneScopedNC("Magnifier", 0xb2b1e6);
+
         // Note: assumes m_GBuffer.HDR is in D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE
         m_MagnifierPS.Draw(pCmdLst1, pState->MagnifierParams, m_GBuffer.m_HDRSRV);
         m_GPUTimer.GetTimeStamp(pCmdLst1, "Magnifier");
@@ -672,6 +683,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
     {
         // In place Tonemapping ------------------------------------------------------------------------
         {
+            ZoneScopedNC("HDR: Tonemapping", 0xb2b1e6);
             D3D12_RESOURCE_BARRIER inputRscToUAV = CD3DX12_RESOURCE_BARRIER::Transition(pRscCurrentInput, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
             pCmdLst1->ResourceBarrier(1, &inputRscToUAV);
 
@@ -683,6 +695,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
 
         // Render HUD  ------------------------------------------------------------------------
         {
+            ZoneScopedNC("HDR: HUD", 0xb2b1e6);
             pCmdLst1->RSSetViewports(1, &m_Viewport);
             pCmdLst1->RSSetScissorRects(1, &m_RectScissor);
             pCmdLst1->OMSetRenderTargets(1, &RTVCurrentOutput, true, NULL);
@@ -702,8 +715,10 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
     m_pDevice->GetGraphicsQueue()->ExecuteCommandLists(1, CmdListList1);
 
     // Wait for swapchain (we are going to render to it) -----------------------------------
-    pSwapChain->WaitForSwapChain();
-
+    {
+        ZoneScopedNC("Waiting for swap chain", 0xb2b1e6);
+        pSwapChain->WaitForSwapChain();
+    }
     // Keep tracking input/output resource views 
     pRscCurrentInput = pState->bUseMagnifier ? m_MagnifierPS.GetPassOutputResource() : m_GBuffer.m_HDR.GetResource(); // these haven't changed, re-assign as sanity check
     SRVCurrentInput  = pState->bUseMagnifier ? m_MagnifierPS.GetPassOutputSRV()      : m_GBuffer.m_HDRSRV;            // these haven't changed, re-assign as sanity check
@@ -731,6 +746,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
 
         // Tonemapping ------------------------------------------------------------------------
         {
+            ZoneScopedNC("SDR: Tonemapping", 0xb2b1e6);
             m_ToneMappingPS.Draw(pCmdLst2, &SRVCurrentInput, pState->Exposure, pState->SelectedTonemapperIndex);
             m_GPUTimer.GetTimeStamp(pCmdLst2, "Tone mapping");
 
@@ -739,6 +755,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
 
         // Render HUD  ------------------------------------------------------------------------
         {
+            ZoneScopedNC("SDR: HUD", 0xb2b1e6);
             m_ImGUI.Draw(pCmdLst2);
             m_GPUTimer.GetTimeStamp(pCmdLst2, "ImGUI Rendering");
         }

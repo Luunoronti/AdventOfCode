@@ -15,4 +15,5 @@ add_library(2024 STATIC ${sources} ${sources})
 target_precompile_headers(2024 PRIVATE stdafx.h)
 
 add_dependencies(2024 copied_common_config)
-target_link_libraries(2024 AoC_Common)
+target_link_libraries(2024 TracyClient AoC_Common)
+target_include_directories (2024 PUBLIC ${CMAKE_HOME_DIRECTORY}/Tools/tracy/public/tracy)

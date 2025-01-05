@@ -5,6 +5,7 @@ include(cmake/version.cmake)
 
 project(Tracy LANGUAGES CXX VERSION ${TRACY_VERSION_STRING})
 
+
 file(GENERATE OUTPUT .gitignore CONTENT "*")
 
 if(${BUILD_SHARED_LIBS})
@@ -193,3 +194,6 @@ if(TRACY_CLIENT_PYTHON)
 
     add_subdirectory(python)
 endif()
+
+
+set_target_properties(TracyClient PROPERTIES FOLDER Tools/ThirdParty)

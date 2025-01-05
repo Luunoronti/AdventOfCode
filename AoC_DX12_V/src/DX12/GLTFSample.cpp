@@ -19,6 +19,7 @@
 
 #include "stdafx.h"
 #include <intrin.h>
+#include <Tracy.hpp>
 
 #include "GLTFSample.h"
 
@@ -460,12 +461,16 @@ void GLTFSample::OnRender()
     }
     else
     {
+        ZoneScopedNC("Render", 0x00ffff);
         BuildUI();  // UI logic. Note that the rendering of the UI happens later.
         OnUpdate(); // Update camera, handle keyboard/mouse input
     }
 
     // Do Render frame using AFR
-    m_pRenderer->OnRender(&m_UIState, m_camera, &m_swapChain);
+    {
+
+        m_pRenderer->OnRender(&m_UIState, m_camera, &m_swapChain);
+    }
 
     // Framework will handle Present and some other end of frame logic
     EndFrame();

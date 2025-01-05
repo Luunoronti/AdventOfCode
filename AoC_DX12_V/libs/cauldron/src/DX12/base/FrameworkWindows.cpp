@@ -20,7 +20,7 @@
 #include "stdafx.h"
 #include "FrameworkWindows.h"
 #include "Misc/Misc.h"
-
+#include <Tracy.hpp>
 #include <array>
 
 LRESULT CALLBACK WindowProc(HWND hWnd,
@@ -129,7 +129,10 @@ int RunFramework(HINSTANCE hInstance, LPSTR lpCmdLine, int nCmdShow, FrameworkWi
             DispatchMessage(&msg); // send the message to the WindowProc function
         }
         else if(!bIsMinimized)
+        {
             pFramework->OnRender();
+            FrameMark;
+        }
     }
 
     // Destroy app-side framework 
@@ -624,6 +627,7 @@ namespace CAULDRON_DX12
     // EndFrame will handle Present and other end of frame logic needed
     void FrameworkWindows::EndFrame()
     {
+        ZoneScopedC(0xb9dbfe);
         m_swapChain.Present();
 
         // If we are doing GPU Validation, flush every frame

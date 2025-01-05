@@ -90,11 +90,13 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\Tools\tracy\public\tracy;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Work/AdventOfCode/Tools/tracy/public"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <MinimalRebuild></MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -105,16 +107,16 @@
       <SupportJustMyCode></SupportJustMyCode>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;TRACY_ENABLE;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;TRACY_ENABLE;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\Tools\tracy\public\tracy;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;C:\Work\AdventOfCode\Tools\tracy\public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\Tools\tracy\public\tracy;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;C:\Work\AdventOfCode\Tools\tracy\public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -122,7 +124,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>..\Common\Debug\AoC_Common.lib;..\2024\Debug\2024.lib;..\..\libs\cauldron\src\DX12\Debug\Cauldron_DX12d.lib;..\..\libs\cauldron\libs\imgui\Debug\ImGUId.lib;d3dcompiler.lib;D3D12.lib;..\Common\Debug\AoC_Common.lib;..\..\libs\cauldron\src\DX12\Debug\Cauldron_DX12d.lib;..\..\libs\cauldron\src\common\Debug\Cauldron_Commond.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\Debug\ImGUId.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\Tools\tracy\Debug\TracyClient.lib;..\Common\Debug\AoC_Common.lib;..\2024\Debug\2024.lib;..\..\libs\cauldron\src\DX12\Debug\Cauldron_DX12d.lib;..\..\libs\cauldron\libs\imgui\Debug\ImGUId.lib;d3dcompiler.lib;D3D12.lib;..\Common\Debug\AoC_Common.lib;..\..\libs\cauldron\src\DX12\Debug\Cauldron_DX12d.lib;..\..\libs\cauldron\src\common\Debug\Cauldron_Commond.lib;..\..\..\Tools\tracy\Debug\TracyClient.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\Debug\ImGUId.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -140,10 +142,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\Tools\tracy\public\tracy;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Work/AdventOfCode/Tools/tracy/public"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <MinimalRebuild></MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -154,18 +158,18 @@
       <SupportJustMyCode></SupportJustMyCode>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;TRACY_ENABLE;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;TRACY_ENABLE;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\Tools\tracy\public\tracy;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;C:\Work\AdventOfCode\Tools\tracy\public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\Tools\tracy\public\tracy;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;C:\Work\AdventOfCode\Tools\tracy\public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -173,7 +177,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>..\Common\Release\AoC_Common.lib;..\2024\Release\2024.lib;..\..\libs\cauldron\src\DX12\Release\Cauldron_DX12.lib;..\..\libs\cauldron\libs\imgui\Release\ImGUI.lib;d3dcompiler.lib;D3D12.lib;..\Common\Release\AoC_Common.lib;..\..\libs\cauldron\src\DX12\Release\Cauldron_DX12.lib;..\..\libs\cauldron\src\common\Release\Cauldron_Common.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\Release\ImGUI.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\Tools\tracy\Release\TracyClient.lib;..\Common\Release\AoC_Common.lib;..\2024\Release\2024.lib;..\..\libs\cauldron\src\DX12\Release\Cauldron_DX12.lib;..\..\libs\cauldron\libs\imgui\Release\ImGUI.lib;d3dcompiler.lib;D3D12.lib;..\Common\Release\AoC_Common.lib;..\..\libs\cauldron\src\DX12\Release\Cauldron_DX12.lib;..\..\libs\cauldron\src\common\Release\Cauldron_Common.lib;..\..\..\Tools\tracy\Release\TracyClient.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\Release\ImGUI.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -191,10 +195,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\Tools\tracy\public\tracy;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Work/AdventOfCode/Tools/tracy/public"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <MinimalRebuild></MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -205,18 +211,18 @@
       <SupportJustMyCode></SupportJustMyCode>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;TRACY_ENABLE;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;TRACY_ENABLE;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\Tools\tracy\public\tracy;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;C:\Work\AdventOfCode\Tools\tracy\public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\Tools\tracy\public\tracy;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;C:\Work\AdventOfCode\Tools\tracy\public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -224,7 +230,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>..\Common\MinSizeRel\AoC_Common.lib;..\2024\MinSizeRel\2024.lib;..\..\libs\cauldron\src\DX12\MinSizeRel\Cauldron_DX12.lib;..\..\libs\cauldron\libs\imgui\MinSizeRel\ImGUI.lib;d3dcompiler.lib;D3D12.lib;..\Common\MinSizeRel\AoC_Common.lib;..\..\libs\cauldron\src\DX12\MinSizeRel\Cauldron_DX12.lib;..\..\libs\cauldron\src\common\MinSizeRel\Cauldron_Common.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\MinSizeRel\ImGUI.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\Tools\tracy\MinSizeRel\TracyClient.lib;..\Common\MinSizeRel\AoC_Common.lib;..\2024\MinSizeRel\2024.lib;..\..\libs\cauldron\src\DX12\MinSizeRel\Cauldron_DX12.lib;..\..\libs\cauldron\libs\imgui\MinSizeRel\ImGUI.lib;d3dcompiler.lib;D3D12.lib;..\Common\MinSizeRel\AoC_Common.lib;..\..\libs\cauldron\src\DX12\MinSizeRel\Cauldron_DX12.lib;..\..\libs\cauldron\src\common\MinSizeRel\Cauldron_Common.lib;..\..\..\Tools\tracy\MinSizeRel\TracyClient.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\MinSizeRel\ImGUI.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -242,11 +248,13 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\Tools\tracy\public\tracy;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Work/AdventOfCode/Tools/tracy/public"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <MinimalRebuild></MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -257,16 +265,16 @@
       <SupportJustMyCode></SupportJustMyCode>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;TRACY_ENABLE;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;TRACY_ENABLE;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\Tools\tracy\public\tracy;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;C:\Work\AdventOfCode\Tools\tracy\public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\Tools\tracy\public\tracy;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\d3d12x;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui;C:\Work\AdventOfCode\Tools\tracy\public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -274,7 +282,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>..\Common\RelWithDebInfo\AoC_Common.lib;..\2024\RelWithDebInfo\2024.lib;..\..\libs\cauldron\src\DX12\RelWithDebInfo\Cauldron_DX12.lib;..\..\libs\cauldron\libs\imgui\RelWithDebInfo\ImGUI.lib;d3dcompiler.lib;D3D12.lib;..\Common\RelWithDebInfo\AoC_Common.lib;..\..\libs\cauldron\src\DX12\RelWithDebInfo\Cauldron_DX12.lib;..\..\libs\cauldron\src\common\RelWithDebInfo\Cauldron_Common.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\RelWithDebInfo\ImGUI.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\Tools\tracy\RelWithDebInfo\TracyClient.lib;..\Common\RelWithDebInfo\AoC_Common.lib;..\2024\RelWithDebInfo\2024.lib;..\..\libs\cauldron\src\DX12\RelWithDebInfo\Cauldron_DX12.lib;..\..\libs\cauldron\libs\imgui\RelWithDebInfo\ImGUI.lib;d3dcompiler.lib;D3D12.lib;..\Common\RelWithDebInfo\AoC_Common.lib;..\..\libs\cauldron\src\DX12\RelWithDebInfo\Cauldron_DX12.lib;..\..\libs\cauldron\src\common\RelWithDebInfo\Cauldron_Common.lib;..\..\..\Tools\tracy\RelWithDebInfo\TracyClient.lib;Shcore.lib;..\..\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.lib;..\..\libs\cauldron\libs\imgui\RelWithDebInfo\ImGUI.lib;..\..\libs\cauldron\libs\AGS\amd_ags_x64.lib;d3dcompiler.lib;D3D12.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -388,6 +396,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ProjectReference Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\imgui\ImGUI.vcxproj">
       <Project>{7CDCF201-11A4-3306-9F4D-EC71C28189DB}</Project>
       <Name>ImGUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Work\AdventOfCode\Tools\tracy\TracyClient.vcxproj">
+      <Project>{68E4FB50-1301-3F9B-99EA-C321C1E35EA0}</Project>
+      <Name>TracyClient</Name>
     </ProjectReference>
     <ProjectReference Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\AGS\copied_amd_ags_bin.vcxproj">
       <Project>{535E8BBA-E172-354B-8DE3-F3F3CF72969B}</Project>

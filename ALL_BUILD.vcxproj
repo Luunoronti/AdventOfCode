@@ -206,6 +206,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Project>{7CDCF201-11A4-3306-9F4D-EC71C28189DB}</Project>
       <Name>ImGUI</Name>
     </ProjectReference>
+    <ProjectReference Include="C:\Work\AdventOfCode\Tools\tracy\TracyClient.vcxproj">
+      <Project>{68E4FB50-1301-3F9B-99EA-C321C1E35EA0}</Project>
+      <Name>TracyClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

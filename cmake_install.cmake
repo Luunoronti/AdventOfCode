@@ -34,6 +34,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
+  include("C:/Work/AdventOfCode/Tools/tracy/cmake_install.cmake")
   include("C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/cmake_install.cmake")
   include("C:/Work/AdventOfCode/AoC_DX12_V/src/Common/cmake_install.cmake")
   include("C:/Work/AdventOfCode/AoC_DX12_V/src/2024/cmake_install.cmake")

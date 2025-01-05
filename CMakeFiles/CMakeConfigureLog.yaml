@@ -862,3 +862,251 @@ events:
       Microsoft (R) Incremental Linker Version 14.38.33143.0
       Copyright (C) Microsoft Corporation.  All rights reserved.
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CheckCSourceCompiles.cmake:58 (cmake_check_source_compiles)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/FindThreads.cmake:97 (CHECK_C_SOURCE_COMPILES)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "Tools/tracy/CMakeLists.txt:19 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-rfrnbm"
+      binary: "C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-rfrnbm"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_WARN_DEPRECATED: "FALSE"
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-rfrnbm'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Professional/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_05f93.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.13.0-preview-24568-05+37fc8280d for .NET Framework
+        Build started 1/5/2025 2:38:47 AM.
+        
+        Project "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rfrnbm\\cmTC_05f93.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_05f93.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rfrnbm\\Debug\\".
+          Creating directory "cmTC_05f93.dir\\Debug\\cmTC_05f93.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_05f93.dir\\Debug\\cmTC_05f93.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_05f93.dir\\Debug\\cmTC_05f93.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_05f93.dir\\Debug\\\\" /Fd"cmTC_05f93.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rfrnbm\\src.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33143 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_05f93.dir\\Debug\\\\" /Fd"cmTC_05f93.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rfrnbm\\src.c"
+          src.c
+        C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rfrnbm\\src.c(1,10): error C1083: Cannot open include file: 'pthread.h': No such file or directory [C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rfrnbm\\cmTC_05f93.vcxproj]
+        Done Building Project "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rfrnbm\\cmTC_05f93.vcxproj" (default targets) -- FAILED.
+        
+        Build FAILED.
+        
+        "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rfrnbm\\cmTC_05f93.vcxproj" (default target) (1) ->
+        (ClCompile target) -> 
+          C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rfrnbm\\src.c(1,10): error C1083: Cannot open include file: 'pthread.h': No such file or directory [C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rfrnbm\\cmTC_05f93.vcxproj]
+        
+            0 Warning(s)
+            1 Error(s)
+        
+        Time Elapsed 00:00:00.61
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CheckLibraryExists.cmake:78 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/FindThreads.cmake:112 (CHECK_LIBRARY_EXISTS)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/FindThreads.cmake:175 (_threads_check_lib)"
+      - "Tools/tracy/CMakeLists.txt:19 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthreads"
+    directories:
+      source: "C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-rvxgjm"
+      binary: "C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-rvxgjm"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_WARN_DEPRECATED: "FALSE"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREADS_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-rvxgjm'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Professional/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_4009e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.13.0-preview-24568-05+37fc8280d for .NET Framework
+        Build started 1/5/2025 2:38:48 AM.
+        
+        Project "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rvxgjm\\cmTC_4009e.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_4009e.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rvxgjm\\Debug\\".
+          Creating directory "cmTC_4009e.dir\\Debug\\cmTC_4009e.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_4009e.dir\\Debug\\cmTC_4009e.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_4009e.dir\\Debug\\cmTC_4009e.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_4009e.dir\\Debug\\\\" /Fd"cmTC_4009e.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rvxgjm\\CheckFunctionExists.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33143 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_4009e.dir\\Debug\\\\" /Fd"cmTC_4009e.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rvxgjm\\CheckFunctionExists.c"
+          CheckFunctionExists.c
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rvxgjm\\Debug\\cmTC_4009e.exe" /INCREMENTAL /ILK:"cmTC_4009e.dir\\Debug\\cmTC_4009e.ilk" /NOLOGO pthreads.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-rvxgjm/Debug/cmTC_4009e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-rvxgjm/Debug/cmTC_4009e.lib" /MACHINE:X64  /machine:x64 cmTC_4009e.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rvxgjm\\cmTC_4009e.vcxproj]
+        Done Building Project "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rvxgjm\\cmTC_4009e.vcxproj" (default targets) -- FAILED.
+        
+        Build FAILED.
+        
+        "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rvxgjm\\cmTC_4009e.vcxproj" (default target) (1) ->
+        (Link target) -> 
+          LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-rvxgjm\\cmTC_4009e.vcxproj]
+        
+            0 Warning(s)
+            1 Error(s)
+        
+        Time Elapsed 00:00:00.48
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CheckLibraryExists.cmake:78 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/FindThreads.cmake:112 (CHECK_LIBRARY_EXISTS)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/FindThreads.cmake:176 (_threads_check_lib)"
+      - "Tools/tracy/CMakeLists.txt:19 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthread"
+    directories:
+      source: "C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-u3pjbb"
+      binary: "C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-u3pjbb"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_WARN_DEPRECATED: "FALSE"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREAD_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-u3pjbb'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Professional/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_9c3a4.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.13.0-preview-24568-05+37fc8280d for .NET Framework
+        Build started 1/5/2025 2:38:48 AM.
+        
+        Project "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-u3pjbb\\cmTC_9c3a4.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_9c3a4.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-u3pjbb\\Debug\\".
+          Creating directory "cmTC_9c3a4.dir\\Debug\\cmTC_9c3a4.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_9c3a4.dir\\Debug\\cmTC_9c3a4.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_9c3a4.dir\\Debug\\cmTC_9c3a4.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_9c3a4.dir\\Debug\\\\" /Fd"cmTC_9c3a4.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-u3pjbb\\CheckFunctionExists.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33143 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_9c3a4.dir\\Debug\\\\" /Fd"cmTC_9c3a4.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-u3pjbb\\CheckFunctionExists.c"
+          CheckFunctionExists.c
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-u3pjbb\\Debug\\cmTC_9c3a4.exe" /INCREMENTAL /ILK:"cmTC_9c3a4.dir\\Debug\\cmTC_9c3a4.ilk" /NOLOGO pthread.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-u3pjbb/Debug/cmTC_9c3a4.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-u3pjbb/Debug/cmTC_9c3a4.lib" /MACHINE:X64  /machine:x64 cmTC_9c3a4.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: cannot open file 'pthread.lib' [C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-u3pjbb\\cmTC_9c3a4.vcxproj]
+        Done Building Project "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-u3pjbb\\cmTC_9c3a4.vcxproj" (default targets) -- FAILED.
+        
+        Build FAILED.
+        
+        "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-u3pjbb\\cmTC_9c3a4.vcxproj" (default target) (1) ->
+        (Link target) -> 
+          LINK : fatal error LNK1104: cannot open file 'pthread.lib' [C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-u3pjbb\\cmTC_9c3a4.vcxproj]
+        
+            0 Warning(s)
+            1 Error(s)
+        
+        Time Elapsed 00:00:00.47
+        
+      exitCode: 1
+...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CheckCXXCompilerFlag.cmake:55 (cmake_check_compiler_flag)"
+      - "Tools/tracy/cmake/config.cmake:10 (CHECK_CXX_COMPILER_FLAG)"
+      - "Tools/tracy/profiler/CMakeLists.txt:21 (include)"
+    checks:
+      - "Performing Test COMPILER_SUPPORTS_MARCH_NATIVE"
+    directories:
+      source: "C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-17v0e3"
+      binary: "C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-17v0e3"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_WARN_DEPRECATED: "FALSE"
+    buildResult:
+      variable: "COMPILER_SUPPORTS_MARCH_NATIVE"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-17v0e3'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Professional/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_72075.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.13.0-preview-24568-05+37fc8280d for .NET Framework
+        Build started 1/5/2025 2:42:44 AM.
+        
+        Project "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-17v0e3\\cmTC_72075.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_72075.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-17v0e3\\Debug\\".
+          Creating directory "cmTC_72075.dir\\Debug\\cmTC_72075.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_72075.dir\\Debug\\cmTC_72075.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_72075.dir\\Debug\\cmTC_72075.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D COMPILER_SUPPORTS_MARCH_NATIVE /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++20 /Fo"cmTC_72075.dir\\Debug\\\\" /Fd"cmTC_72075.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue  -march=native "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-17v0e3\\src.cxx"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33143 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D COMPILER_SUPPORTS_MARCH_NATIVE /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++20 /Fo"cmTC_72075.dir\\Debug\\\\" /Fd"cmTC_72075.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue  -march=native "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-17v0e3\\src.cxx"
+        cl : command line  warning D9002: ignoring unknown option '-march=native' [C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-17v0e3\\cmTC_72075.vcxproj]
+          src.cxx
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-17v0e3\\Debug\\cmTC_72075.exe" /INCREMENTAL /ILK:"cmTC_72075.dir\\Debug\\cmTC_72075.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-17v0e3/Debug/cmTC_72075.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Work/AdventOfCode/CMakeFiles/CMakeScratch/TryCompile-17v0e3/Debug/cmTC_72075.lib" /MACHINE:X64  /machine:x64 cmTC_72075.dir\\Debug\\src.obj
+          cmTC_72075.vcxproj -> C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-17v0e3\\Debug\\cmTC_72075.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_72075.dir\\Debug\\cmTC_72075.tlog\\unsuccessfulbuild".
+          Touching "cmTC_72075.dir\\Debug\\cmTC_72075.tlog\\cmTC_72075.lastbuildstate".
+        Done Building Project "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-17v0e3\\cmTC_72075.vcxproj" (default targets).
+        
+        Build succeeded.
+        
+        "C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-17v0e3\\cmTC_72075.vcxproj" (default target) (1) ->
+        (ClCompile target) -> 
+          cl : command line  warning D9002: ignoring unknown option '-march=native' [C:\\Work\\AdventOfCode\\CMakeFiles\\CMakeScratch\\TryCompile-17v0e3\\cmTC_72075.vcxproj]
+        
+            1 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.58
+        
+      exitCode: 0
+...

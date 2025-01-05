@@ -13,6 +13,6 @@ set(config
 
 copyTargetCommand("${config}" ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} copied_common_config)
 
-target_link_libraries(AoC_Common LINK_PUBLIC Cauldron_DX12 ImGUI amd_ags d3dcompiler D3D12)
-
+target_link_libraries(AoC_Common LINK_PUBLIC TracyClient Cauldron_DX12 ImGUI amd_ags d3dcompiler D3D12)
+target_include_directories (AoC_Common PUBLIC ${CMAKE_HOME_DIRECTORY}/Tools/tracy/public/tracy)
 

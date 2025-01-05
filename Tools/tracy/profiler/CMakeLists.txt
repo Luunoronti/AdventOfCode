@@ -1,5 +1,15 @@
 cmake_minimum_required(VERSION 3.16)
 
+
+
+
+add_subdirectory(build/_deps/capstone-src)
+add_subdirectory(build/_deps/freetype-src)
+add_subdirectory(build/_deps/glfw-src)
+
+
+
+
 option(NO_FILESELECTOR "Disable the file selector" OFF)
 option(GTK_FILESELECTOR "Use the GTK file selector on Linux instead of the xdg-portal one" OFF)
 option(LEGACY "Instead of Wayland, use the legacy X11 backend on Linux" OFF)
@@ -172,6 +182,8 @@ else()
 endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE TracyServer TracyImGui)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER Tools/ThirdParty)
 
 if(NOT EMSCRIPTEN)
     target_link_libraries(${PROJECT_NAME} PRIVATE TracyNfd)
