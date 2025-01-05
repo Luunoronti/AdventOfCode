@@ -22,6 +22,7 @@
 #include "stdafx.h"
 #include <intrin.h>
 #include <Tracy.hpp>
+#include <iostream>
 
 #include "GLTFSample.h"
 
@@ -41,8 +42,8 @@ GLTFSample::GLTFSample(LPCSTR name) : FrameworkWindows(name)
 void GLTFSample::OnParseCommandLine(LPSTR lpCmdLine, uint32_t* pWidth, uint32_t* pHeight)
 {
     // set some default values
-    *pWidth = 1920; 
-    *pHeight = 1080; 
+    *pWidth = 640;// 1920;
+    *pHeight = 480;// 1080;
     m_activeScene = 0; //load the first one by default
     m_VsyncEnabled = false;
     m_bIsBenchmarking = false;
@@ -54,32 +55,32 @@ void GLTFSample::OnParseCommandLine(LPSTR lpCmdLine, uint32_t* pWidth, uint32_t*
 
     //read globals
     auto process = [&](json jData)
-    {
-        *pWidth = jData.value("width", *pWidth);
-        *pHeight = jData.value("height", *pHeight);
-        m_fullscreenMode = jData.value("presentationMode", m_fullscreenMode);
-        m_activeScene = jData.value("activeScene", m_activeScene);
-        m_activeCamera = jData.value("activeCamera", m_activeCamera);
-        m_isCpuValidationLayerEnabled = jData.value("CpuValidationLayerEnabled", m_isCpuValidationLayerEnabled);
-        m_isGpuValidationLayerEnabled = jData.value("GpuValidationLayerEnabled", m_isGpuValidationLayerEnabled);
-        m_VsyncEnabled = jData.value("vsync", m_VsyncEnabled);
-        m_FreesyncHDROptionEnabled = jData.value("FreesyncHDROptionEnabled", m_FreesyncHDROptionEnabled);
-        m_bIsBenchmarking = jData.value("benchmark", m_bIsBenchmarking);
-        m_stablePowerState = jData.value("stablePowerState", m_stablePowerState);
-        m_fontSize = jData.value("fontsize", m_fontSize);
-    };
+        {
+            *pWidth = jData.value("width", *pWidth);
+            *pHeight = jData.value("height", *pHeight);
+            m_fullscreenMode = jData.value("presentationMode", m_fullscreenMode);
+            m_activeScene = jData.value("activeScene", m_activeScene);
+            m_activeCamera = jData.value("activeCamera", m_activeCamera);
+            m_isCpuValidationLayerEnabled = jData.value("CpuValidationLayerEnabled", m_isCpuValidationLayerEnabled);
+            m_isGpuValidationLayerEnabled = jData.value("GpuValidationLayerEnabled", m_isGpuValidationLayerEnabled);
+            m_VsyncEnabled = jData.value("vsync", m_VsyncEnabled);
+            m_FreesyncHDROptionEnabled = jData.value("FreesyncHDROptionEnabled", m_FreesyncHDROptionEnabled);
+            m_bIsBenchmarking = jData.value("benchmark", m_bIsBenchmarking);
+            m_stablePowerState = jData.value("stablePowerState", m_stablePowerState);
+            m_fontSize = jData.value("fontsize", m_fontSize);
+        };
 
     //read json globals from commandline
     //
     try
     {
-        if (strlen(lpCmdLine) > 0)
+        if(strlen(lpCmdLine) > 0)
         {
             auto j3 = json::parse(lpCmdLine);
             process(j3);
         }
     }
-    catch (json::parse_error)
+    catch(json::parse_error)
     {
         Trace("Error parsing commandline\n");
         exit(0);
@@ -89,7 +90,7 @@ void GLTFSample::OnParseCommandLine(LPSTR lpCmdLine, uint32_t* pWidth, uint32_t*
     //
     {
         std::ifstream f("AoC_Common.json");
-        if (!f)
+        if(!f)
         {
             MessageBox(NULL, "Config file not found!\n", "Cauldron Panic!", MB_ICONERROR);
             exit(0);
@@ -99,7 +100,7 @@ void GLTFSample::OnParseCommandLine(LPSTR lpCmdLine, uint32_t* pWidth, uint32_t*
         {
             f >> m_jsonConfigFile;
         }
-        catch (json::parse_error)
+        catch(json::parse_error)
         {
             MessageBox(NULL, "Error parsing GLTFSample.json!\n", "Cauldron Panic!", MB_ICONERROR);
             exit(0);
@@ -111,7 +112,7 @@ void GLTFSample::OnParseCommandLine(LPSTR lpCmdLine, uint32_t* pWidth, uint32_t*
     process(globals);
 
     // get the list of scenes
-    for (const auto & scene : m_jsonConfigFile["scenes"])
+    for(const auto& scene : m_jsonConfigFile["scenes"])
         m_sceneNames.push_back(scene["name"]);
 }
 
@@ -131,7 +132,7 @@ void GLTFSample::OnCreate()
     m_pRenderer->OnCreate(&m_device, &m_swapChain, m_fontSize);
 
     // init GUI (non gfx stuff)
-    ImGUI_Init((void *)m_windowHwnd);
+    ImGUI_Init((void*)m_windowHwnd);
     m_UIState.Initialize();
 
     OnResize(true);
@@ -161,7 +162,7 @@ void GLTFSample::OnDestroy()
     //shut down the shader compiler 
     DestroyShaderCache(&m_device);
 
-    if (m_pGltfLoader)
+    if(m_pGltfLoader)
     {
         delete m_pGltfLoader;
         m_pGltfLoader = NULL;
@@ -175,19 +176,19 @@ void GLTFSample::OnDestroy()
 //--------------------------------------------------------------------------------------
 bool GLTFSample::OnEvent(MSG msg)
 {
-    if (ImGUI_WndProcHandler(msg.hwnd, msg.message, msg.wParam, msg.lParam))
+    if(ImGUI_WndProcHandler(msg.hwnd, msg.message, msg.wParam, msg.lParam))
         return true;
 
     // handle function keys (F1, F2...) here, rest of the input is handled
     // by imGUI later in HandleInput() function
     const WPARAM& KeyPressed = msg.wParam;
-    switch (msg.message)
+    switch(msg.message)
     {
     case WM_KEYUP:
     case WM_SYSKEYUP:
         /* WINDOW TOGGLES */
-        if (KeyPressed == VK_F1) m_UIState.bShowControlsWindow ^= 1;
-        if (KeyPressed == VK_F2) m_UIState.bShowProfilerWindow ^= 1;
+        if(KeyPressed == VK_F1) m_UIState.bShowControlsWindow ^= 1;
+        if(KeyPressed == VK_F2) m_UIState.bShowProfilerWindow ^= 1;
         break;
     }
 
@@ -201,8 +202,8 @@ bool GLTFSample::OnEvent(MSG msg)
 //--------------------------------------------------------------------------------------
 void GLTFSample::OnResize(bool resizeRender)
 {
-	// Destroy resources (if we are not minimized)
-    if (resizeRender && m_Width && m_Height && m_pRenderer)
+    // Destroy resources (if we are not minimized)
+    if(resizeRender && m_Width && m_Height && m_pRenderer)
     {
         m_pRenderer->OnDestroyWindowSizeDependentResources();
         m_pRenderer->OnCreateWindowSizeDependentResources(&m_swapChain, m_Width, m_Height);
@@ -219,7 +220,7 @@ void GLTFSample::OnResize(bool resizeRender)
 void GLTFSample::OnUpdateDisplay()
 {
     // Destroy resources (if we are not minimized)
-    if (m_pRenderer)
+    if(m_pRenderer)
     {
         m_pRenderer->OnUpdateDisplayDependentResources(&m_swapChain);
     }
@@ -246,7 +247,7 @@ void GLTFSample::LoadScene(int sceneIndex)
     json scene = m_jsonConfigFile["scenes"][sceneIndex];
 
     // release everything and load the GLTF, just the light json data, the rest (textures and geometry) will be done in the main loop
-    if (m_pGltfLoader != NULL)
+    if(m_pGltfLoader != NULL)
     {
         m_pRenderer->UnloadScene();
         m_pRenderer->OnDestroyWindowSizeDependentResources();
@@ -258,7 +259,7 @@ void GLTFSample::LoadScene(int sceneIndex)
 
     delete(m_pGltfLoader);
     m_pGltfLoader = new GLTFCommon();
-    if (m_pGltfLoader->Load(scene["directory"], scene["filename"]) == false)
+    if(m_pGltfLoader->Load(scene["directory"], scene["filename"]) == false)
     {
         MessageBox(NULL, "The selected model couldn't be found, please check the documentation", "Cauldron Panic!", MB_ICONERROR);
         exit(0);
@@ -278,7 +279,7 @@ void GLTFSample::LoadScene(int sceneIndex)
         LOAD(scene, "skyDomeType", m_UIState.SelectedSkydomeTypeIndex);
 
         // Add a default light in case there are none
-        if (m_pGltfLoader->m_lights.size() == 0)
+        if(m_pGltfLoader->m_lights.size() == 0)
         {
             tfNode n;
             n.m_tranform.LookAt(PolarToVector(AMD_PI_OVER_2, 0.58f) * 3.5f, math::Vector4(0, 0, 0, 0));
@@ -306,13 +307,13 @@ void GLTFSample::LoadScene(int sceneIndex)
         m_camera.LookAt(from, to);
 
         // set benchmarking state if enabled 
-        if (m_bIsBenchmarking)
+        if(m_bIsBenchmarking)
         {
             std::string deviceName;
             std::string driverVersion;
             m_device.GetDeviceInfo(&deviceName, &driverVersion);
             BenchmarkConfig(scene["BenchmarkSettings"], m_activeCamera, m_pGltfLoader, deviceName, driverVersion);
-        } 
+        }
 
         // indicate the mainloop we started loading a GLTF and it needs to load the rest (textures and geometry)
         m_loadingScene = true;
@@ -338,7 +339,7 @@ void GLTFSample::OnUpdate()
     ImGuiIO& io = ImGui::GetIO();
 
     //If the mouse was not used by the GUI then it's for the camera
-    if (io.WantCaptureMouse)
+    if(io.WantCaptureMouse)
     {
         io.MouseDelta.x = 0;
         io.MouseDelta.y = 0;
@@ -347,7 +348,7 @@ void GLTFSample::OnUpdate()
 
     // Update Camera
     UpdateCamera(m_camera, io);
-    if (m_UIState.bUseTAA)
+    if(m_UIState.bUseTAA)
     {
         static uint32_t Seed;
         m_camera.SetProjectionJitter(m_Width, m_Height, Seed);
@@ -359,10 +360,10 @@ void GLTFSample::OnUpdate()
     HandleInput(io);
 
     // Animation Update
-    if (m_bPlay)
+    if(m_bPlay)
         m_time += (float)m_deltaTime / 1000.0f; // animation time in seconds
 
-    if (m_pGltfLoader)
+    if(m_pGltfLoader)
     {
         m_pGltfLoader->SetAnimationTime(0, m_time);
         m_pGltfLoader->TransformScene(0, math::Matrix4::identity());
@@ -375,10 +376,10 @@ void GLTFSample::HandleInput(const ImGuiIO& io)
     // Handle Keyboard/Mouse input here
 
     /* MAGNIFIER CONTROLS */
-    if (fnIsKeyTriggered('L'))                       m_UIState.ToggleMagnifierLock();
-    if (fnIsKeyTriggered('M') || io.MouseClicked[2]) m_UIState.bUseMagnifier ^= 1; // middle mouse / M key toggles magnifier
+    if(fnIsKeyTriggered('L'))                       m_UIState.ToggleMagnifierLock();
+    if(fnIsKeyTriggered('M') || io.MouseClicked[2]) m_UIState.bUseMagnifier ^= 1; // middle mouse / M key toggles magnifier
 
-    if (io.MouseClicked[1] && m_UIState.bUseMagnifier) // right mouse click
+    if(io.MouseClicked[1] && m_UIState.bUseMagnifier) // right mouse click
         m_UIState.ToggleMagnifierLock();
 }
 void GLTFSample::UpdateCamera(Camera& cam, const ImGuiIO& io)
@@ -390,17 +391,17 @@ void GLTFSample::UpdateCamera(Camera& cam, const ImGuiIO& io)
     cam.UpdatePreviousMatrices(); // set previous view matrix
 
     // Sets Camera based on UI selection (WASD, Orbit or any of the GLTF cameras)
-    if ((io.KeyCtrl == false) && (io.MouseDown[0] == true))
+    if((io.KeyCtrl == false) && (io.MouseDown[0] == true))
     {
         yaw -= io.MouseDelta.x / 100.f;
         pitch += io.MouseDelta.y / 100.f;
     }
 
     // Choose camera movement depending on setting
-    if (m_activeCamera == 0)
+    if(m_activeCamera == 0)
     {
         // If nothing has changed, don't calculate an update (we are getting micro changes in view causing bugs)
-        if (!io.MouseWheel && (!io.MouseDown[0] || (!io.MouseDelta.x && !io.MouseDelta.y) ))
+        if(!io.MouseWheel && (!io.MouseDown[0] || (!io.MouseDelta.x && !io.MouseDelta.y)))
             return;
 
         //  Orbiting
@@ -409,17 +410,17 @@ void GLTFSample::UpdateCamera(Camera& cam, const ImGuiIO& io)
 
         bool panning = (io.KeyCtrl == true) && (io.MouseDown[0] == true);
 
-        cam.UpdateCameraPolar(yaw, pitch, 
-            panning ? -io.MouseDelta.x / 100.0f : 0.0f, 
-            panning ? io.MouseDelta.y / 100.0f : 0.0f, 
+        cam.UpdateCameraPolar(yaw, pitch,
+            panning ? -io.MouseDelta.x / 100.0f : 0.0f,
+            panning ? io.MouseDelta.y / 100.0f : 0.0f,
             distance);
     }
-    else if (m_activeCamera == 1)
+    else if(m_activeCamera == 1)
     {
         //  WASD
         cam.UpdateCameraWASD(yaw, pitch, io.KeysDown, io.DeltaTime);
     }
-    else if (m_activeCamera > 1)
+    else if(m_activeCamera > 1)
     {
         // Use a camera from the GLTF
         m_pGltfLoader->GetCamera(m_activeCamera - 2, &cam);
@@ -444,18 +445,18 @@ void GLTFSample::OnRender()
     ImGUI_UpdateIO();
     ImGui::NewFrame();
 
-    if (m_loadingScene)
+    if(m_loadingScene)
     {
         // the scene loads in chunks, that way we can show a progress bar
         static int loadingStage = 0;
         loadingStage = m_pRenderer->LoadScene(m_pGltfLoader, loadingStage);
-        if (loadingStage == 0)
+        if(loadingStage == 0)
         {
             m_time = 0;
             m_loadingScene = false;
         }
     }
-    else if (m_pGltfLoader && m_bIsBenchmarking)
+    else if(m_pGltfLoader && m_bIsBenchmarking)
     {
         // Benchmarking takes control of the time, and exits the app when the animation is done
         std::vector<TimeStamp> timeStamps = m_pRenderer->GetTimingValues();
@@ -482,9 +483,14 @@ void GLTFSample::OnRender()
 void RunDays();
 int main()
 {
-    std::thread daysThread(RunDays);
-    std::string name = "";
-    // create new DX sample
-    RunFramework(GetModuleHandle(nullptr), (char*)name.c_str(), 1, new GLTFSample(name.c_str()));
+    std::thread daysThread;
+
+    std::cout << "Initializing framework...";
+    RunFramework(GetModuleHandle(nullptr), "", SW_SHOW, new GLTFSample("AdventOfCode"), [&daysThread]()
+        {
+            std::cout << "done." << std::endl << "Starting Days run..." << std::endl;
+            daysThread = std::thread(RunDays);
+        });
     daysThread.join();
+    std::cout << "Exiting" << std::endl;
 }

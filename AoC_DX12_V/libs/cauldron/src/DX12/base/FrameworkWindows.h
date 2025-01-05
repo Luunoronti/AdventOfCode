@@ -22,6 +22,7 @@
 #include "FreesyncHDR.h"
 #include "Device.h"
 #include "SwapChain.h"
+#include <functional>
 
 namespace CAULDRON_DX12
 {
@@ -109,5 +110,5 @@ namespace CAULDRON_DX12
 } // CAULDRON_DX12
 
 using namespace CAULDRON_DX12;
-int RunFramework(HINSTANCE hInstance, LPSTR lpCmdLine, int nCmdShow, FrameworkWindows *pFramework);
+int RunFramework(HINSTANCE hInstance, LPSTR lpCmdLine, int nCmdShow, FrameworkWindows *pFramework, std::function<void ()> onInitialized);
 void SetFullscreen(HWND hWnd, bool fullscreen);

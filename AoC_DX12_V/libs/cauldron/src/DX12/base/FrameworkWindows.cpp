@@ -22,6 +22,7 @@
 #include "Misc/Misc.h"
 #include <Tracy.hpp>
 #include <array>
+#include <functional>
 
 LRESULT CALLBACK WindowProc(HWND hWnd,
     UINT message,
@@ -47,7 +48,7 @@ static constexpr bool ENABLE_CPU_VALIDATION_DEFAULT = false;
 static constexpr bool ENABLE_GPU_VALIDATION_DEFAULT = false;
 #endif
 
-int RunFramework(HINSTANCE hInstance, LPSTR lpCmdLine, int nCmdShow, FrameworkWindows* pFramework)
+int RunFramework(HINSTANCE hInstance, LPSTR lpCmdLine, int nCmdShow, FrameworkWindows* pFramework, std::function<void ()> onInitialized)
 {
     // Init logging
     int result = Log::InitLogSystem();
@@ -81,8 +82,8 @@ int RunFramework(HINSTANCE hInstance, LPSTR lpCmdLine, int nCmdShow, FrameworkWi
     pFrameworkInstance = pFramework;
 
     // Get command line and config file parameters for app run
-    uint32_t Width = 1920;
-    uint32_t Height = 1080;
+    uint32_t Width = 640;// 1920;
+    uint32_t Height = 480;// 1080;
     pFramework->OnParseCommandLine(lpCmdLine, &Width, &Height);
 
     // Window setup based on config params
@@ -117,6 +118,9 @@ int RunFramework(HINSTANCE hInstance, LPSTR lpCmdLine, int nCmdShow, FrameworkWi
     ShowWindow(hWnd, nCmdShow);
     lBorderedStyle = GetWindowLong(hWnd, GWL_STYLE);
     lBorderlessStyle = lBorderedStyle & ~(WS_CAPTION | WS_THICKFRAME | WS_MINIMIZE | WS_MAXIMIZE | WS_SYSMENU);
+
+
+    onInitialized();
 
     // main loop
     MSG msg = { 0 };
