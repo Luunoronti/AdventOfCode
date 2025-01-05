@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{04A2B105-3C55-3194-ABC3-CCBB4C693F91}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>Cauldron_VK</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Cauldron_VK.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Cauldron_VKd</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Cauldron_VK.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Cauldron_VK</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Cauldron_VK.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Cauldron_VK</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Cauldron_VK.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Cauldron_VK</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/VulkanSDK/1.3.296.0/Include"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\VulkanSDK\1.3.296.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\VulkanSDK\1.3.296.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/VulkanSDK/1.3.296.0/Include"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\VulkanSDK\1.3.296.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\VulkanSDK\1.3.296.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/VulkanSDK/1.3.296.0/Include"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\VulkanSDK\1.3.296.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\VulkanSDK\1.3.296.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/VulkanSDK/1.3.296.0/Include"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\VulkanSDK\1.3.296.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\json;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\BEFORE;C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\inc;C:\VulkanSDK\1.3.296.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Work/AdventOfCode -BC:/Work/AdventOfCode --check-stamp-file C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\common.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Work/AdventOfCode -BC:/Work/AdventOfCode --check-stamp-file C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\common.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Work/AdventOfCode -BC:/Work/AdventOfCode --check-stamp-file C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\common.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Work/AdventOfCode -BC:/Work/AdventOfCode --check-stamp-file C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\common.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\GLTF\GltfBBoxPass.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\GLTF\GltfBBoxPass.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\GLTF\GltfDepthPass.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\GLTF\GltfDepthPass.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\GLTF\GltfHelpers.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\GLTF\GltfHelpers.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\GLTF\GltfPbrPass.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\GLTF\GltfPbrPass.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\GLTF\GltfMotionVectorsPass.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\GLTF\GltfMotionVectorsPass.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\GLTF\GLTFTexturesAndBuffers.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\GLTF\GLTFTexturesAndBuffers.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\Bloom.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\Bloom.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\BlurPS.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\BlurPS.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\DownSamplePS.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\DownSamplePS.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\PostProcPS.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\PostProcPS.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\PostProcCS.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\PostProcCS.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\SkyDome.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\SkyDome.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\SkyDomeProc.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\SkyDomeProc.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\ColorConversionPS.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\ColorConversionPS.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\Tonemapping.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\Tonemapping.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\TonemappingCS.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\TonemappingCS.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\TAA.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\TAA.h" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\MagnifierPS.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\PostProc\MagnifierPS.cpp" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\CommandListRing.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\CommandListRing.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\Device.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\Device.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\DeviceProperties.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\DeviceProperties.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\DynamicBufferRing.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\DynamicBufferRing.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\GBuffer.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\GBuffer.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\GPUTimestamps.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\GPUTimestamps.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\FrameworkWindows.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\FrameworkWindows.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\FreeSyncHDR.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\FreeSyncHDR.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\Helper.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\Helper.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\Imgui.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\Imgui.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\Instance.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\Instance.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\InstanceProperties.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\InstanceProperties.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ResourceViewHeaps.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ResourceViewHeaps.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ShaderCompilerHelper.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ShaderCompilerHelper.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\StaticBufferPool.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\StaticBufferPool.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\SwapChain.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\SwapChain.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\Texture.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\Texture.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\UploadHeap.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\UploadHeap.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\widgets\Axis.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\widgets\Axis.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\widgets\CheckerBoardFloor.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\widgets\CheckerboardFloor.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\widgets\Wireframe.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\widgets\Wireframe.h" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\widgets\WireframeBox.h" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\widgets\WireframeSphere.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ExtFreeSyncHDR.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ExtFreeSyncHDR.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ExtFp16.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ExtFp16.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ExtRayTracing.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ExtRayTracing.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ExtValidation.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ExtValidation.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ExtVRS.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ExtVRS.h" />
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ExtDebugUtils.cpp" />
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\base\ExtDebugUtils.h" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Work\AdventOfCode\ZERO_CHECK.vcxproj">
+      <Project>{B78AAE1F-E4C7-361E-BCB0-928C159A105B}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common\Cauldron_Common.vcxproj">
+      <Project>{9A9AE595-2D74-3A9E-8690-E0A3E0F7D359}</Project>
+      <Name>Cauldron_Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\DXC\copied_dxc_bin.vcxproj">
+      <Project>{8F04B8C7-972D-30EF-B9D4-0CA68458251C}</Project>
+      <Name>copied_dxc_bin</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\copied_vk_shaders_gltf_src.vcxproj">
+      <Project>{EFB514DD-FF77-306A-A713-B49B5B69104F}</Project>
+      <Name>copied_vk_shaders_gltf_src</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\copied_vk_shaders_postproc_src.vcxproj">
+      <Project>{BFB40396-DFCB-3415-87DD-9B297565B625}</Project>
+      <Name>copied_vk_shaders_postproc_src</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

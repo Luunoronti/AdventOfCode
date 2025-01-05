@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\media\BrdfLut.dds" />
+    <CustomBuild Include="C:\Work\AdventOfCode\CMakeFiles\8f384d2fc64d7f5901a8a49ba582c0cf\copied_common_media_src.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\common\CMakeFiles\copied_common_media_src" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{FC78D440-279C-3827-A4D0-E1D6139EFE17}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

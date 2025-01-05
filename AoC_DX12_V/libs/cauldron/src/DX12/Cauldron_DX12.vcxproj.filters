@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\GLTF\GltfBBoxPass.cpp">
+      <Filter>GLTF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\GLTF\GltfDepthPass.cpp">
+      <Filter>GLTF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\GLTF\GltfHelpers.cpp">
+      <Filter>GLTF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\GLTF\GltfPbrPass.cpp">
+      <Filter>GLTF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\GLTF\GltfMotionVectorsPass.cpp">
+      <Filter>GLTF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\GLTF\GLTFTexturesAndBuffers.cpp">
+      <Filter>GLTF</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\Bloom.cpp">
+      <Filter>PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\BakeSkinning.cpp">
+      <Filter>PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\BlurPS.cpp">
+      <Filter>PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\Debug.cpp">
+      <Filter>PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\DownSamplePS.cpp">
+      <Filter>PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\PostProcCS.cpp">
+      <Filter>PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\PostProcPS.cpp">
+      <Filter>PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\SkyDome.cpp">
+      <Filter>PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\SkyDomeProc.cpp">
+      <Filter>PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\TAA.cpp">
+      <Filter>PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\ColorConversionPS.cpp">
+      <Filter>PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\Tonemapping.cpp">
+      <Filter>PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\TonemappingCS.cpp">
+      <Filter>PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\ShadowResolvePass.cpp">
+      <Filter>PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\MagnifierPS.cpp">
+      <Filter>PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\Buffer.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\CommandListRing.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\Device.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\DynamicBufferRing.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\Fence.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\FrameworkWindows.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\FreesyncHDR.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\GBuffer.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\GPUTimestamps.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\Helper.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\Imgui.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\ResourceViewHeaps.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\ShaderCompilerHelper.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\StaticBufferPool.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\StaticConstantBufferPool.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\SaveTexture.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\SwapChain.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\Texture.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\UploadHeapSimple.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\UploadHeap.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\UserMarkers.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\widgets\Wireframe.cpp">
+      <Filter>Widgets</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\GLTF\GltfBBoxPass.h">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\GLTF\GltfDepthPass.h">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\GLTF\GltfHelpers.h">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\GLTF\GltfPbrPass.h">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\GLTF\GltfMotionVectorsPass.h">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\GLTF\GLTFTexturesAndBuffers.h">
+      <Filter>GLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\Bloom.h">
+      <Filter>PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\BakeSkinning.h">
+      <Filter>PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\BlurPS.h">
+      <Filter>PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\Debug.h">
+      <Filter>PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\DownSamplePS.h">
+      <Filter>PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\PostProcCS.h">
+      <Filter>PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\PostProcPS.h">
+      <Filter>PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\SkyDome.h">
+      <Filter>PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\SkyDomeProc.h">
+      <Filter>PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\TAA.h">
+      <Filter>PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\ColorConversionPS.h">
+      <Filter>PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\Tonemapping.h">
+      <Filter>PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\TonemappingCS.h">
+      <Filter>PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\ShadowResolvePass.h">
+      <Filter>PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\PostProc\MagnifierPS.h">
+      <Filter>PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\Buffer.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\CommandListRing.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\Device.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\DynamicBufferRing.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\Fence.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\FrameworkWindows.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\FreesyncHDR.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\GBuffer.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\GPUTimestamps.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\Helper.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\Imgui.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\ResourceViewHeaps.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\ShaderCompilerHelper.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\StaticBufferPool.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\StaticConstantBufferPool.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\SaveTexture.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\SwapChain.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\Texture.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\UploadHeapSimple.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\UploadHeap.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\base\UserMarkers.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\widgets\Wireframe.h">
+      <Filter>Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\widgets\WireframeBox.h">
+      <Filter>Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\widgets\WireframeSphere.h">
+      <Filter>Widgets</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Base">
+      <UniqueIdentifier>{3DA268CE-CA9F-3F8E-A8C1-5F89104BAC38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GLTF">
+      <UniqueIdentifier>{AFDAE9F3-7143-379F-BBB2-26BEE651B13E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PostProcess">
+      <UniqueIdentifier>{561033F0-EE4D-3862-A936-5429FAA13971}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Widgets">
+      <UniqueIdentifier>{7B07A4C7-92C9-35A7-A1EF-4D1396C73FA7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

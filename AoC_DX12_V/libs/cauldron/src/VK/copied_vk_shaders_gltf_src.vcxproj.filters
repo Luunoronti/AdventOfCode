@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFDepthPass-frag.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFDepthPass-vert.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFMotionVectorsPass-frag.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFMotionVectorsPass-vert.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFPBRLighting.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFPbrPass-frag.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFPbrPass-vert.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFVertexFactory.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTF_VS2PS_IO.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\PBRTextures.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\PixelParams.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDome.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDome.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDomeProc.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDomeProc.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\functions.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\perFrameStruct.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\shadowFiltering.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\skinning.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Work\AdventOfCode\CMakeFiles\a28467dc56c91d3a71302aa604129add\copied_vk_shaders_gltf_src.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeFiles\copied_vk_shaders_gltf_src" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFDepthPass-frag.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFDepthPass-vert.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFMotionVectorsPass-frag.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFMotionVectorsPass-vert.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFPBRLighting.h">
+      <Filter>Header Files</Filter>
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFPbrPass-frag.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFPbrPass-vert.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFVertexFactory.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTF_VS2PS_IO.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\PBRTextures.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\PixelParams.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDome.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDome.hlsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDomeProc.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDomeProc.hlsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\functions.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\perFrameStruct.h">
+      <Filter>Header Files</Filter>
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\shadowFiltering.h">
+      <Filter>Header Files</Filter>
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\skinning.h">
+      <Filter>Header Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{FC78D440-279C-3827-A4D0-E1D6139EFE17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{C9F347F5-7C0D-326D-88B1-70245C7DF1E1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

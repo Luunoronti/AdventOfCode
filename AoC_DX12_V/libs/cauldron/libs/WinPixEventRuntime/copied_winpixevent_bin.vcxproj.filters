@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\WinPixEventRuntime\WinPixEventRuntime.dll" />
+    <CustomBuild Include="C:\Work\AdventOfCode\CMakeFiles\7206bb36bd483a213f4ef02ba69cee59\copied_winpixevent_bin.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\WinPixEventRuntime\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\libs\WinPixEventRuntime\CMakeFiles\copied_winpixevent_bin" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{FC78D440-279C-3827-A4D0-E1D6139EFE17}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

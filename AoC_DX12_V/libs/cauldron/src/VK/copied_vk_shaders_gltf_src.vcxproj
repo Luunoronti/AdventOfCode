@@ -1,0 +1,1486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{EFB514DD-FF77-306A-A713-B49B5B69104F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>copied_vk_shaders_gltf_src</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFDepthPass-frag.glsl">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating GLTFDepthPass-frag.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFDepthPass-frag.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-frag.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating GLTFDepthPass-frag.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFDepthPass-frag.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-frag.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating GLTFDepthPass-frag.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFDepthPass-frag.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-frag.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating GLTFDepthPass-frag.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFDepthPass-frag.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-frag.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFDepthPass-vert.glsl">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating GLTFDepthPass-vert.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFDepthPass-vert.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-vert.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating GLTFDepthPass-vert.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFDepthPass-vert.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-vert.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating GLTFDepthPass-vert.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFDepthPass-vert.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-vert.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating GLTFDepthPass-vert.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFDepthPass-vert.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-vert.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFMotionVectorsPass-frag.glsl">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating GLTFMotionVectorsPass-frag.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFMotionVectorsPass-frag.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-frag.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating GLTFMotionVectorsPass-frag.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFMotionVectorsPass-frag.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-frag.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating GLTFMotionVectorsPass-frag.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFMotionVectorsPass-frag.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-frag.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating GLTFMotionVectorsPass-frag.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFMotionVectorsPass-frag.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-frag.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFMotionVectorsPass-vert.glsl">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating GLTFMotionVectorsPass-vert.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFMotionVectorsPass-vert.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-vert.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating GLTFMotionVectorsPass-vert.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFMotionVectorsPass-vert.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-vert.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating GLTFMotionVectorsPass-vert.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFMotionVectorsPass-vert.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-vert.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating GLTFMotionVectorsPass-vert.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFMotionVectorsPass-vert.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-vert.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFPBRLighting.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating GLTFPBRLighting.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFPBRLighting.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPBRLighting.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating GLTFPBRLighting.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFPBRLighting.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPBRLighting.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating GLTFPBRLighting.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFPBRLighting.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPBRLighting.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating GLTFPBRLighting.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFPBRLighting.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPBRLighting.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFPbrPass-frag.glsl">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating GLTFPbrPass-frag.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFPbrPass-frag.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-frag.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating GLTFPbrPass-frag.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFPbrPass-frag.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-frag.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating GLTFPbrPass-frag.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFPbrPass-frag.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-frag.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating GLTFPbrPass-frag.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFPbrPass-frag.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-frag.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFPbrPass-vert.glsl">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating GLTFPbrPass-vert.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFPbrPass-vert.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-vert.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating GLTFPbrPass-vert.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFPbrPass-vert.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-vert.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating GLTFPbrPass-vert.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFPbrPass-vert.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-vert.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating GLTFPbrPass-vert.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFPbrPass-vert.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-vert.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFVertexFactory.glsl">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating GLTFVertexFactory.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFVertexFactory.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFVertexFactory.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating GLTFVertexFactory.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFVertexFactory.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFVertexFactory.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating GLTFVertexFactory.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFVertexFactory.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFVertexFactory.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating GLTFVertexFactory.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTFVertexFactory.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFVertexFactory.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTF_VS2PS_IO.glsl">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating GLTF_VS2PS_IO.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTF_VS2PS_IO.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTF_VS2PS_IO.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating GLTF_VS2PS_IO.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTF_VS2PS_IO.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTF_VS2PS_IO.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating GLTF_VS2PS_IO.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTF_VS2PS_IO.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTF_VS2PS_IO.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating GLTF_VS2PS_IO.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/GLTF_VS2PS_IO.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTF_VS2PS_IO.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\PBRTextures.glsl">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating PBRTextures.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/PBRTextures.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\PBRTextures.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating PBRTextures.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/PBRTextures.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\PBRTextures.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating PBRTextures.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/PBRTextures.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\PBRTextures.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating PBRTextures.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/PBRTextures.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\PBRTextures.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\PixelParams.glsl">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating PixelParams.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/PixelParams.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\PixelParams.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating PixelParams.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/PixelParams.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\PixelParams.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating PixelParams.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/PixelParams.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\PixelParams.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating PixelParams.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/PixelParams.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\PixelParams.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDome.glsl">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating SkyDome.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDome.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating SkyDome.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDome.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating SkyDome.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDome.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating SkyDome.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDome.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDome.hlsl">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating SkyDome.hlsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDome.hlsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.hlsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating SkyDome.hlsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDome.hlsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.hlsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating SkyDome.hlsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDome.hlsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.hlsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating SkyDome.hlsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDome.hlsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.hlsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDomeProc.glsl">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating SkyDomeProc.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDomeProc.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating SkyDomeProc.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDomeProc.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating SkyDomeProc.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDomeProc.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating SkyDomeProc.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDomeProc.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDomeProc.hlsl">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating SkyDomeProc.hlsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDomeProc.hlsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.hlsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating SkyDomeProc.hlsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDomeProc.hlsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.hlsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating SkyDomeProc.hlsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDomeProc.hlsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.hlsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating SkyDomeProc.hlsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/SkyDomeProc.hlsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.hlsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\functions.glsl">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating functions.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/functions.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\functions.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating functions.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/functions.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\functions.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating functions.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/functions.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\functions.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating functions.glsl into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/functions.glsl C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\functions.glsl</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\perFrameStruct.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating perFrameStruct.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/perFrameStruct.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\perFrameStruct.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating perFrameStruct.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/perFrameStruct.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\perFrameStruct.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating perFrameStruct.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/perFrameStruct.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\perFrameStruct.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating perFrameStruct.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/perFrameStruct.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\perFrameStruct.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\shadowFiltering.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating shadowFiltering.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/shadowFiltering.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\shadowFiltering.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating shadowFiltering.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/shadowFiltering.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\shadowFiltering.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating shadowFiltering.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/shadowFiltering.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\shadowFiltering.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating shadowFiltering.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/shadowFiltering.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\shadowFiltering.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\skinning.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating skinning.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/skinning.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\skinning.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating skinning.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/skinning.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\skinning.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating skinning.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/skinning.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\skinning.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating skinning.h into C:/Work/AdventOfCode/bin/ShaderLibVK</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/shaders/skinning.h C:/Work/AdventOfCode/bin/ShaderLibVK
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\skinning.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\CMakeFiles\a28467dc56c91d3a71302aa604129add\copied_vk_shaders_gltf_src.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-frag.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-vert.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTF_VS2PS_IO.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPBRLighting.h;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-frag.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-vert.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-frag.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-vert.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.hlsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.hlsl;C:\Work\AdventOfCode\bin\ShaderLibVK\functions.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\PBRTextures.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\shadowFiltering.h;C:\Work\AdventOfCode\bin\ShaderLibVK\PixelParams.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\skinning.h;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFVertexFactory.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\perFrameStruct.h;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeFiles\copied_vk_shaders_gltf_src</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</VerifyInputsAndOutputsExist>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-frag.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-vert.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTF_VS2PS_IO.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPBRLighting.h;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-frag.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-vert.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-frag.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-vert.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.hlsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.hlsl;C:\Work\AdventOfCode\bin\ShaderLibVK\functions.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\PBRTextures.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\shadowFiltering.h;C:\Work\AdventOfCode\bin\ShaderLibVK\PixelParams.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\skinning.h;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFVertexFactory.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\perFrameStruct.h;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeFiles\copied_vk_shaders_gltf_src</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</VerifyInputsAndOutputsExist>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-frag.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-vert.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTF_VS2PS_IO.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPBRLighting.h;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-frag.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-vert.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-frag.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-vert.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.hlsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.hlsl;C:\Work\AdventOfCode\bin\ShaderLibVK\functions.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\PBRTextures.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\shadowFiltering.h;C:\Work\AdventOfCode\bin\ShaderLibVK\PixelParams.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\skinning.h;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFVertexFactory.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\perFrameStruct.h;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeFiles\copied_vk_shaders_gltf_src</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</VerifyInputsAndOutputsExist>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-frag.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPbrPass-vert.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTF_VS2PS_IO.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFPBRLighting.h;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-frag.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFDepthPass-vert.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-frag.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFMotionVectorsPass-vert.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDome.hlsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\SkyDomeProc.hlsl;C:\Work\AdventOfCode\bin\ShaderLibVK\functions.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\PBRTextures.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\shadowFiltering.h;C:\Work\AdventOfCode\bin\ShaderLibVK\PixelParams.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\skinning.h;C:\Work\AdventOfCode\bin\ShaderLibVK\GLTFVertexFactory.glsl;C:\Work\AdventOfCode\bin\ShaderLibVK\perFrameStruct.h;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeFiles\copied_vk_shaders_gltf_src</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</VerifyInputsAndOutputsExist>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Work/AdventOfCode -BC:/Work/AdventOfCode --check-stamp-file C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\common.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Work/AdventOfCode -BC:/Work/AdventOfCode --check-stamp-file C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\common.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Work/AdventOfCode -BC:/Work/AdventOfCode --check-stamp-file C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\common.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Work/AdventOfCode -BC:/Work/AdventOfCode --check-stamp-file C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/src/VK/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\common.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeFiles\copied_vk_shaders_gltf_src">
+    </None>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFDepthPass-frag.glsl">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFDepthPass-vert.glsl">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFMotionVectorsPass-frag.glsl">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFMotionVectorsPass-vert.glsl">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFPBRLighting.h">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFPbrPass-frag.glsl">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFPbrPass-vert.glsl">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTFVertexFactory.glsl">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\GLTF_VS2PS_IO.glsl">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\PBRTextures.glsl">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\PixelParams.glsl">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDome.glsl">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDome.hlsl">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDomeProc.glsl">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\SkyDomeProc.hlsl">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\functions.glsl">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\perFrameStruct.h">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\shadowFiltering.h">
+    </Text>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\skinning.h">
+    </Text>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Work\AdventOfCode\ZERO_CHECK.vcxproj">
+      <Project>{B78AAE1F-E4C7-361E-BCB0-928C159A105B}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\ColorConversionPS.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\DownSamplePS.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\MagnifierPS.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\TAA.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\TAASharpenerCS.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\blend.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\blur.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\tonemappers.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\tonemapping.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\tonemappingCS.glsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\CMakeFiles\a28467dc56c91d3a71302aa604129add\copied_vk_shaders_postproc_src.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\CMakeFiles\copied_vk_shaders_postproc_src" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\ColorConversionPS.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\DownSamplePS.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\MagnifierPS.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\TAA.hlsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\TAASharpenerCS.hlsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\blend.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\blur.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\tonemappers.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\tonemapping.glsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\VK\shaders\tonemappingCS.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{FC78D440-279C-3827-A4D0-E1D6139EFE17}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

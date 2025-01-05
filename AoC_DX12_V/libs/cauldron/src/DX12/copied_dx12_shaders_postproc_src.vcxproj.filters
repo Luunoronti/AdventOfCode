@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\ColorConversionPS.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\Debug.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\DownSamplePS.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\MagnifierPS.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\TAASharpenerCS.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\Tonemappers.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\Tonemapping.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\TonemappingCS.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\blend.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\blur.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\motionBlur.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\taa.hlsl" />
+    <CustomBuild Include="C:\Work\AdventOfCode\CMakeFiles\6158794d69aa1d06fbdc92233a42427d\copied_dx12_shaders_postproc_src.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\CMakeFiles\copied_dx12_shaders_postproc_src" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\ColorConversionPS.hlsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\Debug.hlsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\DownSamplePS.hlsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\MagnifierPS.hlsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\TAASharpenerCS.hlsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\Tonemappers.hlsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\Tonemapping.hlsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\TonemappingCS.hlsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\blend.hlsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\blur.hlsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\motionBlur.hlsl" />
+    <Text Include="C:\Work\AdventOfCode\AoC_DX12_V\libs\cauldron\src\DX12\shaders\taa.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{FC78D440-279C-3827-A4D0-E1D6139EFE17}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

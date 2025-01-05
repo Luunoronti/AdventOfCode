@@ -1,0 +1,4 @@
+# CMake generation dependency list for this directory.
+C:/Work/AdventOfCode/AoC_DX12_V/libs/cauldron/common.cmake
+C:/Work/AdventOfCode/AoC_DX12_V/src/Common/CMakeLists.txt
+C:/Work/AdventOfCode/common.cmake

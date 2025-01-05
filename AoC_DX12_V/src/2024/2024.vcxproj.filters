@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\CMakeFiles\2024.dir\cmake_pch.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\stdafx.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Day_01.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\stdafx.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\Day_01.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\CMakeFiles\2024.dir\Debug\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\CMakeFiles\2024.dir\Release\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\CMakeFiles\2024.dir\MinSizeRel\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\CMakeFiles\2024.dir\RelWithDebInfo\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Work\AdventOfCode\AoC_DX12_V\src\2024\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Precompile Header File">
+      <UniqueIdentifier>{2A6D26FA-66D7-3963-9E1C-A82D24F703D5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{08F98FFF-BF85-30E3-BBF8-C8D6726F061C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{B74A0C19-D09C-3C0E-BE1D-220197C83549}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
