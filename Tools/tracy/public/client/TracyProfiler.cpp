@@ -1378,6 +1378,7 @@ TRACY_API LuaZoneState& GetLuaZoneState() { return s_luaZoneState; }
 TRACY_API bool ProfilerAvailable() { return s_instance != nullptr; }
 TRACY_API bool ProfilerAllocatorAvailable() { return !RpThreadShutdown; }
 
+
 Profiler::Profiler()
     : m_timeBegin( 0 )
     , m_mainThread( detail::GetThreadHandleImpl() )
@@ -1419,6 +1420,7 @@ Profiler::Profiler()
     assert( !s_instance );
     s_instance = this;
 
+    
 #ifndef TRACY_DELAYED_INIT
 #  ifdef _MSC_VER
     // 3. But these variables need to be initialized in main thread within the .CRT$XCB section. Do it here.
@@ -1427,6 +1429,8 @@ Profiler::Profiler()
     s_threadHandle = ThreadHandleWrapper { m_mainThread };
 #  endif
 #endif
+
+    ::OutputDebugString(TEXT("\nStarting Tracy instance\n\n"));
 
     CalibrateTimer();
     CalibrateDelay();

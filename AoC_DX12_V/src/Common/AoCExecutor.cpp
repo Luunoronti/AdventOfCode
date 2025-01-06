@@ -1,3 +1,4 @@
+#include <Tracy.hpp>
 #include "AoCExecutor.h"
 #include "AoCConfiguration.h"
 #include <fstream>
@@ -11,6 +12,8 @@ namespace fs = std::filesystem;
 
 void AoCExecutor::ExecuteDayParts(AoCConfiguration* ConfigurationService, AoCBase* instance)
 {
+    ZoneScopedC(0x48c77c);
+
     // request configuration for this instance
     auto configuration = ConfigurationService->GetResultJsonEntry(instance->GetYear(), instance->GetDay());
 
@@ -28,30 +31,53 @@ void AoCExecutor::ExecuteDayParts(AoCConfiguration* ConfigurationService, AoCBas
 
     std::cout << "\033]0;" << "Advent of Code Year " << std::to_string(instance->GetYear()) << "\007";
 
-    std::cout << "Executing day " << instance->GetYear() << " " << instance->GetDay() << std::endl;
+    std::string dayName = std::to_string(instance->GetDay()) + "/" + std::to_string(instance->GetYear());
+    //std::cout << "Executing day " << dayName << std::endl;
+
+    ZoneName(dayName.c_str(), dayName.size());
 
     instance->SetTest(true);
     LoadInput(instance->GetYear(), instance->GetDay(), instance->IsTest(), 1, &context);
     context.PartConfig = &configuration.Part1Test;
     TODO("add timing");
-    instance->Part1(&context);
+    {
+        auto n = dayName + " Part 1 Test";
+        ZoneScopedC(0x988b3b);
+        ZoneName(n.c_str(), n.size());
+        instance->Part1(&context);
+    }
 
     LoadInput(instance->GetYear(), instance->GetDay(), instance->IsTest(), 2, &context);
     context.PartConfig = &configuration.Part2Test;
     TODO("add timing");
-    instance->Part2(&context);
+    {
+        auto n = dayName + " Part 2 Test";
+        ZoneScopedC(0x988b3b);
+        ZoneName(n.c_str(), n.size());
+        instance->Part2(&context);
+    }
 
 
     instance->SetTest(false);
     LoadInput(instance->GetYear(), instance->GetDay(), instance->IsTest(), 1, &context);
     context.PartConfig = &configuration.Part1Live;
     TODO("add timing");
-    instance->Part1(&context);
+    {
+        auto n = dayName + " Part 1 Live";
+        ZoneScopedC(0x969a0b);
+        ZoneName(n.c_str(), n.size());
+        instance->Part1(&context);
+    }
 
     LoadInput(instance->GetYear(), instance->GetDay(), instance->IsTest(), 2, &context);
     context.PartConfig = &configuration.Part2Live;
     TODO("add timing");
-    instance->Part2(&context);
+    {
+        auto n = dayName + " Part 2 Live";
+        ZoneScopedC(0x969a0b);
+        ZoneName(n.c_str(), n.size());
+        instance->Part2(&context);
+    }
 
 }
 
@@ -63,7 +89,7 @@ void AoCExecutor::LoadInput(int year, int day, bool isTest, int part, AoCExecuti
     std::string FileName = folder + "\\" + std::to_string(year) + "_" + std::to_string(day) + "_" + std::to_string(part) + ".txt";
 
     if(!fs::exists(folder))
-    { 
+    {
         fs::create_directories(folder);
     }
 

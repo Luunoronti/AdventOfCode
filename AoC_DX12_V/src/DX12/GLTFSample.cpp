@@ -439,6 +439,8 @@ void GLTFSample::ShowWindow()
 //--------------------------------------------------------------------------------------
 void GLTFSample::OnRender()
 {
+    ZoneScopedNC("Render", 0x00ffff);
+
     // Do any start of frame necessities
     BeginFrame();
 
@@ -464,7 +466,6 @@ void GLTFSample::OnRender()
     }
     else
     {
-        ZoneScopedNC("Render", 0x00ffff);
         BuildUI();  // UI logic. Note that the rendering of the UI happens later.
         OnUpdate(); // Update camera, handle keyboard/mouse input
     }
@@ -481,16 +482,27 @@ void GLTFSample::OnRender()
 
 
 void RunDays();
+void T1() { tracy::SetThreadName("T1"); ZoneScoped; ::Sleep(100000); }
+void T2() { tracy::SetThreadName("T2"); ZoneScoped; ::Sleep(100000); }
 int main()
 {
-    std::thread daysThread;
+    // tracy::StartupProfiler();
+
+    tracy::SetThreadName("Framework");
+    ZoneScoped;
+
+    std::thread t1(T1);
+    std::thread t2(T2);
+
+    std::thread daysThread(RunDays);
 
     std::cout << "Initializing framework...";
     RunFramework(GetModuleHandle(nullptr), "", SW_SHOW, new GLTFSample("AdventOfCode"), [&daysThread]()
         {
             std::cout << "done." << std::endl << "Starting Days run..." << std::endl;
-            daysThread = std::thread(RunDays);
         });
+
+
     daysThread.join();
     std::cout << "Exiting" << std::endl;
 }
