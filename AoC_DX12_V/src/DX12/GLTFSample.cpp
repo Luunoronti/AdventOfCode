@@ -506,3 +506,7 @@ int main()
     daysThread.join();
     std::cout << "Exiting" << std::endl;
 }
+
+
+// https://www.shadertoy.com/view/WdVSWd
+// https://github.com/A57R4L/SceneViewExtensionTemplate/blob/main/SceneViewExtensionTemplate/Source/SceneViewExtensionTemplate/Private/CustomSceneViewExtension.cpp
