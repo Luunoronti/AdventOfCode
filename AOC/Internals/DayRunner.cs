@@ -5,6 +5,7 @@
 using System.IO;
 using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.Serialization;
+using TermGlass;
 
 static class DayRunner
 {
@@ -33,16 +34,17 @@ static class DayRunner
 #if !DEBUG
             _ = Handler(Input);
 #endif
-            var startTime = Stopwatch.GetTimestamp();
+            Visualizer.ts = TimeSpan.Zero;
             var result = Handler(Input);
-            RunReport.AddResult(result, Stopwatch.GetElapsedTime(startTime), Config, PartConfig, RunTests);
+            RunReport.AddResult(result, Visualizer.ts, Config, PartConfig, RunTests);
         }
         private void RunInternal(bool RunTests)
         {
 
             var tests = RunTests ? Config.Tests : Config.Live;
-            foreach (var test in tests)
+            for (int i = 0; i < tests.Count; i++)
             {
+                var test = tests[i];
 #if DEBUG
                 if (!test.DebugRun)
                     continue;
@@ -56,7 +58,7 @@ static class DayRunner
                 if (Handler == null)
                     continue;
 
-                Console.Title = $"Advent of Code by Amarthdae | Year {Config.Year} | Day {Config.Day} | Part {PartConfig.Part} | {(RunTests ? "Tests" : "Live")}";
+                Console.Title = $"Advent of Code by Amarthdae | Year {Config.Year} | Day {Config.Day} | {(RunTests ? $"Test" : "Live")} {i + 1} / {tests.Count} | Part {PartConfig.Part}";
 
                 // attempt to load source as a file
                 // if it fails, attempt to load in place

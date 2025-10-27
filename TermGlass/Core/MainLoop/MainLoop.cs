@@ -122,7 +122,11 @@ internal sealed partial class MainLoop
                 if( processThisFrame)
                 {
                     if (processContinue)
+                    {
+                        var startTime = Stopwatch.GetTimestamp();
                         processContinue = _process();
+                        Visualizer.ts += Stopwatch.GetElapsedTime(startTime);
+                    }
                 }
 
                 Draw(!processContinue);
