@@ -98,7 +98,7 @@ internal sealed partial class MainLoop
             // and check for timer here
             bool processThisFrame = _input.StepRequested;
             _input.StepRequested = false;
-
+            int stepsRequiredSinceLastFrame = 0;
             // Autoplay
             if (_cfg.AutoPlay)
             {
@@ -108,6 +108,7 @@ internal sealed partial class MainLoop
                 while (_accum >= stepEvery)
                 {
                     _accum -= stepEvery;
+                    stepsRequiredSinceLastFrame++;
                     processThisFrame = true;
                 }
             }
@@ -124,7 +125,11 @@ internal sealed partial class MainLoop
                     if (processContinue)
                     {
                         var startTime = Stopwatch.GetTimestamp();
-                        processContinue = _process();
+                        while (stepsRequiredSinceLastFrame > 0 && processContinue)
+                        {
+                            processContinue = _process();
+                            stepsRequiredSinceLastFrame--;
+                        }
                         Visualizer.ts += Stopwatch.GetElapsedTime(startTime);
                     }
                 }

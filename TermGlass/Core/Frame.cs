@@ -77,24 +77,31 @@ public sealed class Frame
     {
         var bg = new Rgb(10, 10, 10);
 
-        // will use settings from config once we have those
-        foreach(var vis in traveller.VisitedLocationsForVisOnly)
+        char GetFromCard(CardinalDirection dir)
         {
-            Draw(vis.Key, '◌', new Rgb(230, 230, 230), bg);
+            char c = '◁';
+
+            // current location
+            if (dir == CardinalDirection.South)
+                c = '▽';
+            else if (dir == CardinalDirection.North)
+                c = '△';
+            else if (dir == CardinalDirection.East)
+                c = '▷';
+            return c;
         }
 
-        char c = '◁';
 
-        // current location
-        if (traveller.CardinalDirection == CardinalDirection.South)
-            c = '▽';
-        else if (traveller.CardinalDirection == CardinalDirection.North)
-            c = '△';
-        else if (traveller.CardinalDirection == CardinalDirection.East)
-            c = '▷';
+        // will use settings from config once we have those
+        int step = 0;
+        foreach(var vis in traveller.VisitedLocationsForVisOnly)
+        {
+            step++;
+            var c = 255 - (traveller.VisitedLocationsForVisOnly.Count / step);
+            Draw(vis.Key, GetFromCard(vis.Value), new Rgb(130, 130, 130), new Rgb(10, (byte)(c*10), 10));
+        }
 
-        Draw(traveller.Location, c, new Rgb(255, 230, 120), bg);
-
+        Draw(traveller.Location, GetFromCard(traveller.CardinalDirection), new Rgb(255, 230, 120), bg);
         // origin
         Draw(traveller.StartLocation, '◎', new Rgb(200, 80, 80), bg);
 
