@@ -1,0 +1,48 @@
+
+name: Bathroom Security
+year: 2016
+day: 02
+run: true
+debugRun: false
+visualization: false
+runLive: true
+runTests: true
+
+tests:
+  - part: 1
+    run: true
+    debugRun: true
+    expected:
+    knownErrors:
+    visualization: false
+    source: |
+     ULL
+     RRDDD
+     LURDL
+     UUUUD    
+    
+  - part: 2
+    run: true
+    debugRun: true
+    expected:
+    knownErrors:
+    visualization: false
+    source: 
+    
+live:
+  - part: 1
+    run: true
+    debugRun: true
+    expected:
+    knownErrors:
+    visualization: false
+    source: live.txt
+
+  - part: 2
+    run: true
+    debugRun: true
+    expected:
+    knownErrors:
+    
+    visualization: false
+    source: live.txt

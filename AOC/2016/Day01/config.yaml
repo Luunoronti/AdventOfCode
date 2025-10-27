@@ -1,0 +1,67 @@
+name: No Time for a Taxicab
+year: 2016
+day: 1
+run: true
+debugRun: true
+visualization: false
+runLive: true
+runTests: true
+
+tests:
+  - part: 1
+    run: true
+    debugRun: true
+    expected: "5"
+    knownErrors:
+    visualization: false
+    source: 'R2, L3'
+
+  - part: 1
+    run: true
+    debugRun: true
+    expected: "2"
+    knownErrors:
+    visualization: false
+    source: 'R2, R2, R2'
+
+  - part: 1
+    run: true
+    debugRun: true
+    expected: "12"
+    knownErrors:
+    visualization: false
+    source: 'R5, L5, R5, R3'
+
+  - part: 2
+    run: true
+    debugRun: true
+    expected: "4"
+    knownErrors:
+    - "12"
+    - "14"
+    - "15"
+    visualization: false
+    source: 'R8, R4, R4, R8'
+    
+live:
+  - part: 1
+    run: true
+    debugRun: true
+    expected: 161
+    knownErrors:
+    visualization: false
+    source: live.txt
+
+  - part: 2
+    run: true
+    debugRun: true
+    expected: 110
+    knownErrors:
+    - "75"
+    - "76"
+    - "77"
+    - "4"
+    
+    visualization: false
+    source: live.txt
+      

@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <LangVersion>preview</LangVersion>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+        <PublishAot>True</PublishAot>
+        <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
+        <EnableNETAnalyzers>False</EnableNETAnalyzers>
+        <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,25 @@
+# Documentation Generation Configuration
+
+# This file tells documentation tools and AI assistants how to document the AdventOfCode project.
+
+rules:
+  - For each puzzle day, document:
+      - Implementation summary (for each part)
+      - Example usage
+      - Do NOT include the puzzle name in the documentation
+      - Do NOT include configuration (config.yaml) or test file listings
+  - For APIs, document:
+      - Each folder (Extensions, Internals, Runtime) in its own page
+      - For each class or extension, include:
+          - Purpose/description
+          - Method/property signatures
+          - Usage examples
+  - Getting Started:
+      - Should be the first section in the wiki
+      - Emphasize automation: user only needs to specify year and day, files are generated automatically
+  - Days Index:
+      - List all implemented days with links
+  - Main Wiki Index:
+      - Link to Getting Started, API docs, and Days Index
+
+# Update this file if you want to change documentation rules or add new sections. 

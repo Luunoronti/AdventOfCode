@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net9.0-windows10.0.17763.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+        <LangVersion>preview</LangVersion>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<PublishAot>True</PublishAot>
+		<RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
+		<EnableNETAnalyzers>False</EnableNETAnalyzers>
+		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="System.CommandLine" Version="2.0.0-beta5.25306.1" />
+		<PackageReference Include="YamlDotNet" Version="16.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Configuration\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\AoC.Core\AoC.Core.csproj" />
+	  <ProjectReference Include="..\TermGlass\TermGlass.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="2024\Day01\Day01.Test.Part1.1.txt">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="2024\Day01\Day01.Test.Part2.1.txt">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Configuration\ExecutionConfig.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Configuration\ProgramConfig.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+</Project>

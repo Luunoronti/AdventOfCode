@@ -1,0 +1,32 @@
+{
+  "Years": [
+    {
+      "Year": 2024,
+      "Days": [
+        {
+          "Run": true,
+          "DebugRun": true,
+          "Day": 1,
+          "EnableVisualization": false
+        }
+      ]
+    },
+    {
+      "Year": 2016,
+      "Days": [
+        {
+          "Run": true,
+          "DebugRun": false,
+          "Day": 2,
+          "EnableVisualization": false
+        },
+        {
+          "Run": true,
+          "DebugRun": true,
+          "Day": 1,
+          "EnableVisualization": false
+        }
+      ]
+    }
+  ]
+}
