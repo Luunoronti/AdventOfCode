@@ -1,6 +1,5 @@
 ﻿
 using AdventOfCode.Runtime;
-using System.ComponentModel;
 
 namespace TermGlass;
 
@@ -77,6 +76,9 @@ public sealed class Frame
     {
         var bg = new Rgb(10, 10, 10);
 
+        var fg1 = new Rgb(30, 30, 30);
+        var fg2 = new Rgb(230, 230, 230);
+
         char GetFromCard(CardinalDirection dir)
         {
             char c = '◁';
@@ -97,14 +99,14 @@ public sealed class Frame
         foreach(var vis in traveller.VisitedLocationsForVisOnly)
         {
             step++;
-            var c = 255 - (traveller.VisitedLocationsForVisOnly.Count / step);
-            Draw(vis.Key, GetFromCard(vis.Value), new Rgb(130, 130, 130), new Rgb(10, (byte)(c*10), 10));
+            var p = (float)step / (float)traveller.VisitedLocationsForVisOnly.Count;
+            var c = (int)(p * 255);
+            Draw(vis.Key, GetFromCard(vis.Value), bg, new Rgb(80, 80, (byte)(c)));
         }
 
         Draw(traveller.Location, GetFromCard(traveller.CardinalDirection), new Rgb(255, 230, 120), bg);
         // origin
         Draw(traveller.StartLocation, '◎', new Rgb(200, 80, 80), bg);
-
     }
 
 }
