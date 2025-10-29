@@ -102,7 +102,7 @@ public sealed class Terminal : IDisposable
 
         if (_mode == ColorMode.TrueColor)
         {
-            // Initial state: no colors set → first cell will force both codes
+            // Initial state: no colors set, first cell will force both codes
             var curFg = new Rgb(0, 0, 0);
             var curBg = new Rgb(0, 0, 0);
             var colorInited = false;

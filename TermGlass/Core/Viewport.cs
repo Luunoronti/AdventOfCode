@@ -5,7 +5,7 @@ namespace TermGlass;
 
 public sealed class Viewport : IViewport
 {
-    // World → Screen: sx = 4 + (wx - OriginX) * Zoom
+    // World => Screen: sx = 4 + (wx - OriginX) * Zoom
     // sy = 1 + (wy - OriginY) * Zoom
     public double OriginX { get; private set; } = -40;
     public double OriginY { get; private set; } = -12;
@@ -116,7 +116,7 @@ public sealed class Viewport : IViewport
         var (wx, wy) = ScreenToWorld(sx, sy);
         return ((int)wx, (int)wy);
     }
-    public (int sx, int sy) WorldToScreen(int wx, int wy)
+    (int sx, int sy) IViewport.WorldToScreen(int wx, int wy)
     {
         var (sx, sy) = WorldToScreen(wx, wy);
         return ((int)sx, (int)sy);

@@ -2,7 +2,7 @@ name: No Time for a Taxicab
 year: 2016
 day: 1
 run: true
-debugRun: true
+debugRun: false
 visualization: false
 runLive: true
 runTests: true

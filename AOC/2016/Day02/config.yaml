@@ -3,7 +3,7 @@ name: Bathroom Security
 year: 2016
 day: 02
 run: true
-debugRun: false
+debugRun: true
 visualization: false
 runLive: true
 runTests: true
@@ -12,7 +12,7 @@ tests:
   - part: 1
     run: true
     debugRun: true
-    expected:
+    expected: '1985'
     knownErrors:
     visualization: false
     source: |
@@ -24,16 +24,20 @@ tests:
   - part: 2
     run: true
     debugRun: true
-    expected:
+    expected: 5DB3
     knownErrors:
     visualization: false
-    source: 
+    source: |
+     ULL
+     RRDDD
+     LURDL
+     UUUUD    
     
 live:
   - part: 1
     run: true
     debugRun: true
-    expected:
+    expected: '12578'
     knownErrors:
     visualization: false
     source: live.txt
@@ -41,7 +45,7 @@ live:
   - part: 2
     run: true
     debugRun: true
-    expected:
+    expected: 516DD
     knownErrors:
     
     visualization: false

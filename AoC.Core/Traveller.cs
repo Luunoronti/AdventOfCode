@@ -71,7 +71,10 @@ public class Traveller
                 --s;
                 continue;
             }
-
+            if (p == StepPred.Stop)
+            {
+                continue;
+            }
             TotalStepsTaken += 1;
             Location += dir;
 

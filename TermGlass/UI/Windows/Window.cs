@@ -4,7 +4,7 @@ namespace TermGlass;
 
 public static class FrameDrawer
 {
-    // border characters (single line)
+    // border characters
     public const char tl = '┌', tr = '┐', bl = '└', br = '┘', hz = '─', vt = '│';
 
 

@@ -16,7 +16,7 @@
       "Days": [
         {
           "Run": true,
-          "DebugRun": false,
+          "DebugRun": true,
           "Day": 2,
           "EnableVisualization": false
         },

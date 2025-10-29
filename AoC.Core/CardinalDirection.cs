@@ -9,6 +9,16 @@ public struct CardinalDirection
     public static CardinalDirection South = new() { _dirflag = 2 };
     public static CardinalDirection West = new() { _dirflag = 3 };
 
+    public static CardinalDirection Unknown = new() { _dirflag = -1 };
+
+    public static CardinalDirection FromCharacter(char c) => char.ToUpper(c) switch
+    {
+        'N' => North,
+        'S' => South,
+        'E' => East,
+        'W' => West,
+        _ => Unknown
+    };
 
     public CardinalDirection()
     {
@@ -32,6 +42,7 @@ public struct CardinalDirection
     public readonly bool IsEast => this == East;
     public readonly bool IsSouth => this == South;
     public readonly bool IsWest => this == West;
+    public readonly bool IsUnknown => this == Unknown;
 
     public readonly Direction Direction => IsSouth ? new(0, 1) : IsNorth ? new(0, -1) : IsEast ? new(1, 0) : IsWest ? new(-1, 0) : new(0, 0);
     public static bool operator ==(CardinalDirection a, CardinalDirection b) => a._dirflag == b._dirflag;
@@ -44,6 +55,7 @@ public struct CardinalDirection
         if (this == South) return nameof(South);
         if (this == West) return nameof(West);
         if (this == East) return nameof(East);
+        if (this == Unknown) return nameof(Unknown);
         return base.ToString();
     }
 }

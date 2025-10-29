@@ -4,5 +4,6 @@ public enum StepPred
 {
     Continue,
     Cancel,
-    TryAgain
+    TryAgain,
+    Stop
 }

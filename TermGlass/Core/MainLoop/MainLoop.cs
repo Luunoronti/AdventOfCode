@@ -64,8 +64,8 @@ internal sealed partial class MainLoop
             // map world (0,0) to the top-left MAP cell (just right/below rulers)
             // Viewport uses +4 (x) and +1 (y) internally, so compensate with LeftRulerWidth
             var lw = Math.Max(1, _cfg.LeftRulerWidth);
-            var targetOriginX = 4 - lw; // ensures WorldToScreen(0,*) → sx = lw
-            var targetOriginY = 0.0;    // ensures WorldToScreen(*,0) → sy = 1
+            var targetOriginX = 4 - lw; // ensures WorldToScreen(0,*) > sx = lw
+            var targetOriginY = 0.0;    // ensures WorldToScreen(*,0) > sy = 1
             _vp.Offset(targetOriginX - _vp.OffsetX, targetOriginY - _vp.OffsetY);
         }
 
@@ -97,7 +97,7 @@ internal sealed partial class MainLoop
             // need to check space from input
             // and check for timer here
             bool processThisFrame = _input.StepRequested;
-            _input.StepRequested = false;
+            
             int stepsRequiredSinceLastFrame = 0;
             // Autoplay
             if (_cfg.AutoPlay)
@@ -122,7 +122,11 @@ internal sealed partial class MainLoop
             {
                 if( processThisFrame)
                 {
-                    if (processContinue)
+                    if (!_cfg.AutoPlay && _input.StepRequested)
+                    {
+                        processContinue = _process();
+                    }
+                    else if (processContinue)
                     {
                         var startTime = Stopwatch.GetTimestamp();
                         while (stepsRequiredSinceLastFrame > 0 && processContinue)
@@ -142,6 +146,7 @@ internal sealed partial class MainLoop
                 Thread.Sleep(1);
             }
 
+            _input.StepRequested = false;
             // FPS throttle
             if (_cfg.TargetFps > 0)
             {
@@ -167,7 +172,7 @@ internal sealed partial class MainLoop
             _inputReader?.RequestReset();
             _input.Dirty = true;
 
-            // clamp all windows to new screen size (TODO if you add helper)
+            // clamp all windows to new screen size (TODO add helper)
             foreach (var w in Window.All()) { /* clamp here if needed */ }
         }
     }

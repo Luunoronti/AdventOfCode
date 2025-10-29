@@ -109,7 +109,7 @@ public static class Renderer
         if (!enabled) return;
         PutText(buf, sx, sy, text, fg, bg);
     }
-
+    
     internal static void PutText(CellBuffer buf, int sx, int sy, string text, Rgb fg, Rgb bg)
     {
         for (var i = 0; i < text.Length; i++)
