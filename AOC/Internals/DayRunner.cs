@@ -128,18 +128,18 @@ static class DayRunner
     private static bool RunDay(int Year, int Day)
     {
         // look for config of this day
-        var config = Configuration.Execution?.Years?.SingleOrDefault(y => y.Year == Year)?.Days?.SingleOrDefault(d => d.Day == Day);
-        if (config == null)
-        {
-            Console.WriteLine($"Unable to find config for year {Year} day {Day}");
-            return false;
-        }
+        //var config = Configuration.Execution?.Years?.SingleOrDefault(y => y.Year == Year)?.Days?.SingleOrDefault(d => d.Day == Day);
+        //if (config == null)
+        //{
+        //    Console.WriteLine($"Unable to find config for year {Year} day {Day}");
+        //    return false;
+        //}
 
 #if DEBUG
-        if (!config.DebugRun)
-        {
-            return false;
-        }
+        //if (!config.DebugRun)
+        //{
+        //    return false;
+        //}
 #else
         if (!config.Run)
         {

@@ -55,12 +55,12 @@ static class DayGenerator
             Configuration.SaveExecutionConfiguration();
         }
 
-        if (Configuration.Execution.Years.Count == 0)
-        {
-            Console.WriteLine("Please specify target day to work with (using --year and --day options).");
+        //if (Configuration.Execution.Years.Count == 0)
+        //{
+        //    Console.WriteLine("Please specify target day to work with (using --year and --day options).");
 
-            return;
-        }
+        //    return;
+        //}
     }
 
 
@@ -93,17 +93,17 @@ static class DayGenerator
         if (File.Exists(prefix + $"live.txt") == false || File.Exists(prefix + $"live.txt") == false)
             UpdateLiveDataForADay(year, day);
 
-        if (!Configuration.Execution.Years.Any(y => y.Year == year))
-            Configuration.Execution.Years.Add(new Configuration.YearConfiguration() { Year = year });
+        //if (!Configuration.Execution.Years.Any(y => y.Year == year))
+        //    Configuration.Execution.Years.Add(new Configuration.YearConfiguration() { Year = year });
 
-        if (!Configuration.Execution.Years.Single(y => y.Year == year).Days.Any(d => d.Day == day))
-            Configuration.Execution.Years.Single(y => y.Year == year).Days.Add(new Configuration.DayConfiguration
-            {
-                Day = day,
-                EnableVisualization = false,
-                DebugRun = true,
-                Run = true,
-            });
+        //if (!Configuration.Execution.Years.Single(y => y.Year == year).Days.Any(d => d.Day == day))
+        //    Configuration.Execution.Years.Single(y => y.Year == year).Days.Add(new Configuration.DayConfiguration
+        //    {
+        //        Day = day,
+        //        EnableVisualization = false,
+        //        DebugRun = true,
+        //        Run = true,
+        //    });
     }
 
     public static string ExtractTitle(string html)

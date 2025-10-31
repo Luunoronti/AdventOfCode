@@ -1,0 +1,44 @@
+
+name: Squares With Three Sides
+year: 2016
+day: 03
+run: true
+debugRun: true
+visualization: false
+runLive: true
+runTests: true
+
+tests:
+  - part: 1
+    run: true
+    debugRun: true
+    expected: '0'
+    knownErrors:
+    visualization: false
+    source: '  5 10 25'
+    
+  - part: 2
+    run: true
+    debugRun: true
+    expected: '6'
+    knownErrors:
+    visualization: false
+    source: test2.txt
+    
+live:
+  - part: 1
+    run: true
+    debugRun: true
+    expected: '869'
+    knownErrors:
+    visualization: false
+    source: live.txt
+
+  - part: 2
+    run: true
+    debugRun: true
+    expected: '1544'
+    knownErrors:
+    
+    visualization: false
+    source: live.txt

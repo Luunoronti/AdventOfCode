@@ -3,7 +3,7 @@
 public class Configuration
 {
     public static ProgramConfiguration Program { get; } = LoadProgramConfiguration();
-    public static ExecutionConfiguration Execution { get; } = LoadExecutionConfiguration();
+    //public static ExecutionConfiguration Execution { get; } = LoadExecutionConfiguration();
 
     private static ProgramConfiguration LoadProgramConfiguration()
     {
@@ -23,50 +23,50 @@ public class Configuration
         catch { }
         return new ProgramConfiguration();
     }
-    private static ExecutionConfiguration LoadExecutionConfiguration()
-    {
-        try
-        {
-            return JsonConvert.DeserializeObject<ExecutionConfiguration>(File.ReadAllText($"{RootPath}/Configuration/ExecutionConfig.json")) ?? new ExecutionConfiguration();
-        }
-        catch
-        {
-        }
-        // create empty program config
-        try
-        {
-            Directory.CreateDirectory($"{RootPath}/Configuration/");
-            File.WriteAllText($"{RootPath}/Configuration/ProgramConfig.json", "{}");
-        }
-        catch { }
-        return new ExecutionConfiguration();
-    }
+    //private static ExecutionConfiguration LoadExecutionConfiguration()
+    //{
+    //    try
+    //    {
+    //        return JsonConvert.DeserializeObject<ExecutionConfiguration>(File.ReadAllText($"{RootPath}/Configuration/ExecutionConfig.json")) ?? new ExecutionConfiguration();
+    //    }
+    //    catch
+    //    {
+    //    }
+    //    // create empty program config
+    //    try
+    //    {
+    //        Directory.CreateDirectory($"{RootPath}/Configuration/");
+    //        File.WriteAllText($"{RootPath}/Configuration/ProgramConfig.json", "{}");
+    //    }
+    //    catch { }
+    //    return new ExecutionConfiguration();
+    //}
     public static void SaveExecutionConfiguration()
     {
-        try
-        {
-            // sort years such that last year is going to be the first
-            // in the file, for simpler editing
-            Execution.Years?.Sort((y1, y2) => y2.Year - y1.Year);
+        //try
+        //{
+        //    // sort years such that last year is going to be the first
+        //    // in the file, for simpler editing
+        //    Execution.Years?.Sort((y1, y2) => y2.Year - y1.Year);
 
-            // and do the same for days, so last day (the one we will probably work on)
-            // is going to be the first in the file
-            Execution.Years?.ForEach(y => y.Days?.Sort((d1, d2) => d2.Day - d1.Day));
+        //    // and do the same for days, so last day (the one we will probably work on)
+        //    // is going to be the first in the file
+        //    Execution.Years?.ForEach(y => y.Days?.Sort((d1, d2) => d2.Day - d1.Day));
 
-            Directory.CreateDirectory($"{RootPath}/Configuration/");
-            File.WriteAllText($"{RootPath}/Configuration/ExecutionConfig.json", JsonConvert.SerializeObject(Execution, Formatting.Indented));
-            return;
-        }
-        catch
-        {
-        }
-        // create empty program config
-        try
-        {
-            Directory.CreateDirectory($"{RootPath}/Configuration/");
-            File.WriteAllText($"{RootPath}/Configuration/ExecutionConfig.json", "{}");
-        }
-        catch { }
+        //    Directory.CreateDirectory($"{RootPath}/Configuration/");
+        //    File.WriteAllText($"{RootPath}/Configuration/ExecutionConfig.json", JsonConvert.SerializeObject(Execution, Formatting.Indented));
+        //    return;
+        //}
+        //catch
+        //{
+        //}
+        //// create empty program config
+        //try
+        //{
+        //    Directory.CreateDirectory($"{RootPath}/Configuration/");
+        //    File.WriteAllText($"{RootPath}/Configuration/ExecutionConfig.json", "{}");
+        //}
+        //catch { }
     }
 
     private static string rootPath;
