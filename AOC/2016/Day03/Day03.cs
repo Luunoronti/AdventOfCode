@@ -1,4 +1,6 @@
 
+
+
 namespace Year2016;
 
 class Day03

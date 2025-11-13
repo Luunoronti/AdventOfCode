@@ -6,6 +6,7 @@ using System.IO;
 using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.Serialization;
 using TermGlass;
+using System.Diagnostics;
 
 static class DayRunner
 {
@@ -35,8 +36,10 @@ static class DayRunner
             _ = Handler(Input);
 #endif
             Visualizer.ts = TimeSpan.Zero;
+            Visualizer.RanUsingVisualizer = false;
+            var startTime = Stopwatch.GetTimestamp();
             var result = Handler(Input);
-            RunReport.AddResult(result, Visualizer.ts, Config, PartConfig, RunTests);
+            RunReport.AddResult(result, Visualizer.RanUsingVisualizer ? Visualizer.ts : Stopwatch.GetElapsedTime(startTime), Config, PartConfig, RunTests);
         }
         private void RunInternal(bool RunTests)
         {
@@ -127,44 +130,19 @@ static class DayRunner
 
     private static bool RunDay(int Year, int Day)
     {
-        // look for config of this day
-        //var config = Configuration.Execution?.Years?.SingleOrDefault(y => y.Year == Year)?.Days?.SingleOrDefault(d => d.Day == Day);
-        //if (config == null)
-        //{
-        //    Console.WriteLine($"Unable to find config for year {Year} day {Day}");
-        //    return false;
-        //}
-
-#if DEBUG
-        //if (!config.DebugRun)
-        //{
-        //    return false;
-        //}
-#else
-        if (!config.Run)
-        {
-            return false;
-        }
-#endif
-
         // load local configuration from yaml file
         var file = $"{AoCApp.RootPath}{Year}\\Day{Day:D2}\\config.yaml";
         var localConfig = YamlDeserializer.Deserialize<RunLocalConfiguration>(File.ReadAllText(file));
         localConfig?.OnAfterDeserialize();
 
         // create part runner
-        PartRunner runner = new()
-        {
-            Config = localConfig
-        };
+        PartRunner runner = new() { Config = localConfig };
 
         // create report for this day
-        if (localConfig.RunTests)
-            runner.Run(true);
-        if (localConfig.RunLive)
-            runner.Run(false);
+        runner.Run(true);
+        runner.Run(false);
 
-        return localConfig.RunTests || localConfig.RunLive;
+        return true;
     }
 
     private static bool RunDayFromCommandLine()
@@ -212,7 +190,6 @@ static class DayRunner
             public int Part { get; set; }
             public bool Run { get; set; }
             public bool DebugRun { get; set; }
-            public bool Visualization { get; set; }
             public string Expected { get; set; } = "";
             public List<string> KnownErrors { get; set; } = [];
             public string Source { get; set; } = "";
@@ -220,11 +197,6 @@ static class DayRunner
         public string Name { get; set; } = "";
         public int Year { get; set; }
         public int Day { get; set; }
-        public bool Run { get; set; }
-        public bool DebugRun { get; set; }
-        public bool Visualization { get; set; }
-        public bool RunLive { get; set; }
-        public bool RunTests { get; set; }
 
         public List<PartCfg> Tests { get; set; } = [];
         public List<PartCfg> Live { get; set; } = [];

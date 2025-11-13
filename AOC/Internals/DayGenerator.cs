@@ -1,8 +1,4 @@
-﻿// attempt to keep the code as clean as possible
-// most of functionality is in Core and Extensions folder
-
-
-using System.Net;
+﻿using System.Net;
 using System.Text.RegularExpressions;
 
 static class DayGenerator
@@ -82,18 +78,6 @@ static class DayGenerator
         // and attempt downloading live data
         if (File.Exists(prefix + $"live.txt") == false || File.Exists(prefix + $"live.txt") == false)
             UpdateLiveDataForADay(year, day);
-
-        //if (!Configuration.Execution.Years.Any(y => y.Year == year))
-        //    Configuration.Execution.Years.Add(new Configuration.YearConfiguration() { Year = year });
-
-        //if (!Configuration.Execution.Years.Single(y => y.Year == year).Days.Any(d => d.Day == day))
-        //    Configuration.Execution.Years.Single(y => y.Year == year).Days.Add(new Configuration.DayConfiguration
-        //    {
-        //        Day = day,
-        //        EnableVisualization = false,
-        //        DebugRun = true,
-        //        Run = true,
-        //    });
     }
 
     public static string ExtractTitle(string html)
@@ -188,11 +172,6 @@ class Day{Day}
 name: {Title}
 year: {Year}
 day: {Day}
-run: true
-debugRun: true
-visualization: false
-runLive: true
-runTests: true
 
 tests:
   - part: 1
@@ -200,7 +179,6 @@ tests:
     debugRun: true
     expected:
     knownErrors:
-    visualization: false
     source: 
     
   - part: 2
@@ -208,7 +186,6 @@ tests:
     debugRun: true
     expected:
     knownErrors:
-    visualization: false
     source: 
     
 live:
@@ -217,7 +194,6 @@ live:
     debugRun: true
     expected:
     knownErrors:
-    visualization: false
     source: live.txt
 
   - part: 2
@@ -225,8 +201,6 @@ live:
     debugRun: true
     expected:
     knownErrors:
-    
-    visualization: false
     source: live.txt
 ";
 

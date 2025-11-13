@@ -1,4 +1,6 @@
-﻿class CommandLine
+﻿
+
+class CommandLine
 {
     public static Option Day { get; } = new Option<int>("--day", "Day");
     public static Option Year { get; } = new Option<int>("--year", "Year");

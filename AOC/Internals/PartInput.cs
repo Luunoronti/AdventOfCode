@@ -1,6 +1,6 @@
 namespace AdventOfCode.Internals;
 
-ref struct PartInput
+public ref struct PartInput
 {
     public string FullString;
     public string[] Lines;

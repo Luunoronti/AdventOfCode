@@ -95,7 +95,7 @@ partial class RunReport
                    _ => ConsoleColor.White,
                });
 
-            table.AddValue("Time", result.Time.FormatUltraPrecise(), ConsoleColor.Red);
+            table.AddValue("Time", result.Time.FormatUltraPrecise(), ConsoleColor.Gray);
         }
 
         table.Format();
