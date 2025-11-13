@@ -1,0 +1,34 @@
+
+name: Two-Factor Authentication
+year: 2016
+day: 8
+
+tests:
+  - part: 1
+    run: true
+    debugRun: true
+    expected:
+    knownErrors:
+    source: test.txt
+    
+  - part: 2
+    run: true
+    debugRun: true
+    expected:
+    knownErrors:
+    source: test.txt
+    
+live:
+  - part: 1
+    run: true
+    debugRun: true
+    expected:
+    knownErrors:
+    source: live.txt
+
+  - part: 2
+    run: true
+    debugRun: true
+    expected:
+    knownErrors:
+    source: live.txt

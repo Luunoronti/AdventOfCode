@@ -71,12 +71,17 @@ static class DayGenerator
 
             File.WriteAllText(prefix + $"config.yaml", DayTemplateConfig
                 .Replace("{Year}", year.ToString())
-                .Replace("{Day}", day.ToString("D2"))
+                .Replace("{Day}", day.ToString())
                 .Replace("{Title}", title)
                 );
         }
+        // create empty test data file
+        if ((File.Exists(prefix + "test.txt") == false))
+        {
+            File.WriteAllText(prefix + $"test.txt", "");
+        }
         // and attempt downloading live data
-        if (File.Exists(prefix + $"live.txt") == false || File.Exists(prefix + $"live.txt") == false)
+        if (File.Exists(prefix + $"live.txt") == false)
             UpdateLiveDataForADay(year, day);
     }
 
@@ -179,14 +184,14 @@ tests:
     debugRun: true
     expected:
     knownErrors:
-    source: 
+    source: test.txt
     
   - part: 2
     run: true
     debugRun: true
     expected:
     knownErrors:
-    source: 
+    source: test.txt
     
 live:
   - part: 1
