@@ -77,6 +77,8 @@ internal sealed partial class MainLoop
         var running = true;
         _input.Dirty = true;
 
+        Visualizer.RanUsingVisualizer = true;
+
         while (running)
         {
             OnTerminalResize();

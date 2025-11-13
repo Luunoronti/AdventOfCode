@@ -4,6 +4,7 @@ namespace TermGlass;
 public static class Visualizer
 {
     public static TimeSpan ts;
+    public static bool RanUsingVisualizer = false;
     public static void Run(VizConfig cfg, Func<bool> process, Action<Frame, bool> draw, TooltipProvider? info = null, Func<string>? status = null)
     {
         using var term = new Terminal(cfg.ColorMode);
