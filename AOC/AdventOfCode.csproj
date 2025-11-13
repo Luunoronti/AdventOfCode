@@ -20,10 +20,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Configuration\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\AoC.Core\AoC.Core.csproj" />
 	  <ProjectReference Include="..\TermGlass\TermGlass.csproj" />
 	</ItemGroup>
@@ -33,12 +29,6 @@
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	  <None Update="2024\Day01\Day01.Test.Part2.1.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Configuration\ExecutionConfig.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Configuration\ProgramConfig.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>

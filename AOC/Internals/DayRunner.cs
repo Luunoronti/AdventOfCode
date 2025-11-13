@@ -20,7 +20,7 @@ static class DayRunner
         {
             try
             {
-                var path = $"{Configuration.RootPath}{Config.Year}\\Day{Config.Day:D2}\\{file}";
+                var path = $"{AoCApp.RootPath}{Config.Year}\\Day{Config.Day:D2}\\{file}";
                 output = File.ReadAllText(path);
                 return true;
             }
@@ -148,7 +148,7 @@ static class DayRunner
 #endif
 
         // load local configuration from yaml file
-        var file = $"{Configuration.RootPath}{Year}\\Day{Day:D2}\\config.yaml";
+        var file = $"{AoCApp.RootPath}{Year}\\Day{Day:D2}\\config.yaml";
         var localConfig = YamlDeserializer.Deserialize<RunLocalConfiguration>(File.ReadAllText(file));
         localConfig?.OnAfterDeserialize();
 

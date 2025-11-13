@@ -22,7 +22,6 @@ static class DayGenerator
             if (y >= 2016 && y <= DateTime.Now.Year && d >= 1 && d <= 25)
             {
                 CreateDayIfDoesNotExist(y, d, noNewDay?.GetValueOrDefault<bool>() ?? false);
-                Configuration.SaveExecutionConfiguration();
                 return;
             }
 
@@ -35,7 +34,6 @@ static class DayGenerator
         if (DateTime.Now.Month == 12)
         {
             CreateDayIfDoesNotExist(DateTime.Now.Year, DateTime.Now.Day);
-            Configuration.SaveExecutionConfiguration();
             return;
         }
 
@@ -52,15 +50,7 @@ static class DayGenerator
                     CreateDayIfDoesNotExist(y, d);
                 }
             }
-            Configuration.SaveExecutionConfiguration();
         }
-
-        //if (Configuration.Execution.Years.Count == 0)
-        //{
-        //    Console.WriteLine("Please specify target day to work with (using --year and --day options).");
-
-        //    return;
-        //}
     }
 
 
@@ -68,7 +58,7 @@ static class DayGenerator
     {
         if (day > 25) return;
 
-        var prefix = $"{Configuration.RootPath}{year}\\Day{day:D2}\\";
+        var prefix = $"{AoCApp.RootPath}{year}\\Day{day:D2}\\";
         Directory.CreateDirectory(prefix);
 
         if (!noCode && File.Exists(prefix + $"Day{day:D2}.cs") == false)
@@ -115,7 +105,7 @@ static class DayGenerator
     public static void UpdateLiveDataForADay(int year, int day)
     {
         if (day > 25) return;
-        var prefix = $"{Configuration.RootPath}{year}\\Day{day:D2}\\";
+        var prefix = $"{AoCApp.RootPath}{year}\\Day{day:D2}\\";
         Directory.CreateDirectory(prefix);
         string liveData = GetLiveData(year, day);
         File.WriteAllText(prefix + $"live.txt", liveData);
@@ -129,11 +119,11 @@ static class DayGenerator
         string session = "";
         try
         {
-            session = File.ReadAllText($"{Configuration.RootPath}session.txt");
+            session = File.ReadAllText($"{AoCApp.RootPath}session.txt");
         }
         catch
         {
-            Console.WriteLine($"Unable to find session file. Please provide a valid session in {Path.GetFullPath(Configuration.RootPath)}session.txt");
+            Console.WriteLine($"Unable to find session file. Please provide a valid session in {Path.GetFullPath(AoCApp.RootPath)}session.txt");
             return "no session file";
         }
 
