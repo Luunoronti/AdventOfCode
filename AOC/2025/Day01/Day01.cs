@@ -3,56 +3,62 @@ namespace Year2025;
 
 class Day01
 {
+    struct Step
+    {
+        public char Direction;
+        public int Distance;
+    }
+    static List<Step> Steps = [];
+
     public int Solution(PartInput Input, bool Part2)
     {
+        if(Input.Lines.Length != Steps.Count)
+        {
+            Steps = [.. Input.Lines.Select(l => new Step { Direction = l[0], Distance = int.Parse(l[1..]) })];
+        }
         var position = 50;
         var movesBy0 = 0;
-        foreach (var line in Input.Lines)
+        foreach (var step in Steps)
         {
-            if (int.TryParse(line[1..], out var steps))
+            var steps = step.Distance;
+            var direction = step.Direction;
+            if (Part2)
             {
-                if (steps > 100)
-                {
-                    if (Part2)
-                    {
-                        movesBy0 += (steps / 100);
-                    }
+                movesBy0 += (steps / 100);
+            }
+            steps -= 100 * (steps / 100);
 
-                    steps -= 100 * (steps / 100);
+            if (direction == 'L')
+            {
+                position -= steps;
+                if (position == 0)
+                {
+                    movesBy0++;
                 }
-
-                if (line[0] == 'L')
+                else if (position < 0)
                 {
-                    position -= steps;
-                    if (position == 0)
+                    if (Part2 && position + steps != 0)
                     {
                         movesBy0++;
                     }
-                    else if (position < 0)
-                    {
-                        if (Part2 && position + steps != 0)
-                        {
-                            movesBy0++;
-                        }
-                        position = 100 + position;
-                    }
+                    position = 100 + position;
                 }
-                else if (line[0] == 'R')
+            }
+            else if (direction == 'R')
+            {
+                position += steps;
+                if (position == 100)
                 {
-                    position += steps;
-                    if (position == 100)
+                    movesBy0++;
+                    position = 0;
+                }
+                else if (position > 100)
+                {
+                    if (Part2 && position - steps != 0)
                     {
                         movesBy0++;
-                        position = 0;
                     }
-                    else if (position > 100)
-                    {
-                        if (Part2 && position - steps != 0)
-                        {
-                            movesBy0++;
-                        }
-                        position -= 100;
-                    }
+                    position -= 100;
                 }
             }
         }
