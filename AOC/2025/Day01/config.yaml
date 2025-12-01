@@ -1,0 +1,37 @@
+name: Secret Entrance
+year: 2025
+day: 01
+
+tests:
+  - part: 1
+    run: true
+    debugRun: true
+    expected: 3
+    knownErrors:
+    source: test.txt
+    
+  - part: 2
+    run: true
+    debugRun: true
+    expected: 6
+    knownErrors:
+    source:  test.txt
+    
+live:
+  - part: 1
+    run: true
+    debugRun: true
+    expected: 1048
+    knownErrors: 
+    - 236
+    - 182
+    source: live.txt
+
+  - part: 2
+    run: true
+    debugRun: true
+    expected: 6498
+    knownErrors:
+    - 2183
+    - 6504
+    source: live.txt
