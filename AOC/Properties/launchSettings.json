@@ -2,7 +2,7 @@
   "profiles": {
     "AdventOfCode": {
       "commandName": "Project",
-      "commandLineArgs": "--day 1 --year 2025"
+      "commandLineArgs": "--day 2 --year 2025"
     }
   }
 }
