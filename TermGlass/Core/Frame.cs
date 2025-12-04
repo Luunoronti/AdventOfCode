@@ -10,7 +10,7 @@ public sealed class Frame
     private readonly Viewport _vp;
     private readonly CellBuffer _buf;
     public readonly InputState Input;
-    public readonly VizConfig Cfg;
+    public readonly VisConfig Cfg;
 
     // Optional: host/AoC can set these; MainLoop will pick them up each frame
     public TooltipProvider? TooltipProvider
@@ -18,7 +18,7 @@ public sealed class Frame
         get; set;
     }
 
-    public Frame(Terminal t, Viewport vp, CellBuffer buf, InputState input, VizConfig cfg)
+    public Frame(Terminal t, Viewport vp, CellBuffer buf, InputState input, VisConfig cfg)
     {
         _t = t; _vp = vp; _buf = buf; Input = input; Cfg = cfg;
     }
@@ -128,6 +128,20 @@ public sealed class Frame
             {
                 var s = keypad[x, y]?.ToString() ?? " ";
                 Draw(x, y, s[0], foreground, background);
+            }
+        }
+    }
+
+    public void Draw<TType>(Map<TType> keypad, Func<int, int, Rgb> foreground, Func<int, int, Rgb> background)
+    {
+        if (keypad == null) return;
+        //var maxWidth = keypad.MapActualLinear.Max(p => p.ToString().Length + 2);
+        for (int y = 0; y < keypad.SizeY; y++)
+        {
+            for (int x = 0; x < keypad.SizeX; x++)
+            {
+                var s = keypad[x, y]?.ToString() ?? " ";
+                Draw(x, y, s[0], foreground(x, y), background(x, y));
             }
         }
     }

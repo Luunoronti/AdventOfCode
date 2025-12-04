@@ -56,7 +56,7 @@ class Day02
         foreach (var c in Input.Span)
             instructions.Enqueue(c switch { 'U' => 'N', 'D' => 'S', 'L' => 'W', 'R' => 'E', '\n' => 'P', _ => '.' });
 
-        Visualizer.Run(new VizConfig { AutoPlay = true, CenterAtZero = true, AutoStepPerSecond = 1400 }, () => Process(false), Draw, null, Status);
+        Visualiser.Run(new VisConfig { AutoPlay = true, CenterAtZero = true, AutoStepPerSecond = 1400 }, () => Process(false), Draw, null, Status);
         return string.Join("", combination);
     }
 
@@ -81,7 +81,7 @@ class Day02
         foreach (var c in Input.Span)
             instructions.Enqueue(c switch { 'U' => 'N', 'D' => 'S', 'L' => 'W', 'R' => 'E', '\n' => 'P', _ => '.' });
 
-        Visualizer.Run(new VizConfig { AutoPlay = true, CenterAtZero = true, AutoStepPerSecond = 1400 }, () => Process(true), Draw, null, Status);
+        Visualiser.Run(new VisConfig { AutoPlay = true, CenterAtZero = true, AutoStepPerSecond = 1400 }, () => Process(true), Draw, null, Status);
 
         return string.Join("", combination);
     }

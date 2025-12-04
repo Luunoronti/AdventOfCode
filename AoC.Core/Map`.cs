@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Runtime;
+﻿using System.Runtime.CompilerServices;
+
+namespace AdventOfCode.Runtime;
 
 
 // X*Y character map
@@ -62,6 +64,10 @@ public class Map<TType>
         }
     }
 
+    public Map(string[] Lines, Func<char, TType> Mapper) : this(Lines.Max(l => l.Length), Lines.Length, (x, y) => Mapper(Lines[y][x]))
+    {
+    }
+
     public TType DefaultFill { get; set; } = default;
     public int SizeX
     {
@@ -94,6 +100,97 @@ public class Map<TType>
 
     public IList<TType> MapActualLinear => mapActual;
 
-    public TType this[int x, int y] => (x >= 0 && y >= 0 && mapActual.Count > (y * SizeX + x)) ? mapActual[y * SizeX + x] : default;
+    public TType this[int x, int y] => (x >= 0 && y >= 0 && x < sizeX && y < sizeY) ? mapActual[y * SizeX + x] : DefaultFill;
     public TType this[System.Numerics.Vector2 location] => this[(int)location.X, (int)location.Y];
+
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    public void Set(int x, int y, TType v)
+    {
+        if (x >= 0 && y >= 0 && mapActual.Count > (y * SizeX + x))
+            mapActual[y * SizeX + x] = v;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    public int Count(Func<int, int, TType, bool> predicate)
+    {
+        var sum = 0;
+        for (var y = 0; y < sizeY; y++)
+        {
+            for (var x = 0; x < sizeX; x++)
+            {
+                if (predicate(x, y, mapActual[x + (y * sizeX)]))
+                {
+                    sum++;
+                }
+            }
+        }
+        return sum;
+    }
+
+    /// <summary>
+    /// Returns adjenced cells values.
+    /// If Adjenced buffer size == 4, will return cardinal cells, starting with left, then up, right, down.
+    /// If buffer size == 8, will return all 8 adjenced values, in same direction, starting from left.
+    /// If the buffer is null or size is not 4 or 8, will do nothing.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    public void GetAdjenced(int x, int y, TType[] Adjenced)
+    {
+        if (Adjenced == null)
+            return;
+        if (Adjenced.Length == 4)
+        {
+            Adjenced[0] = this[x - 1, y];
+            Adjenced[1] = this[x, y - 1];
+            Adjenced[2] = this[x + 1, y];
+            Adjenced[3] = this[x, y + 1];
+        }
+        if (Adjenced.Length == 8)
+        {
+            Adjenced[0] = this[x - 1, y];
+            Adjenced[1] = this[x - 1, y - 1];
+            Adjenced[2] = this[x, y - 1];
+            Adjenced[3] = this[x + 1, y - 1];
+
+            Adjenced[4] = this[x + 1, y];
+            Adjenced[5] = this[x + 1, y + 1];
+            Adjenced[6] = this[x, y + 1];
+            Adjenced[7] = this[x - 1, y + 1];
+        }
+    }
+
+
+    public void Print(Func<int, int, TType, char> mapper = null)
+    {
+        for (var y = 0; y < sizeY; y++)
+        {
+            for (var x = 0; x < sizeX; x++)
+            {
+                if (mapper != null)
+                {
+                    Console.Write(mapper(x, y, this[x, y]));
+                }
+                else
+                {
+                    Console.Write(this[x, y]);
+                }
+            }
+            Console.WriteLine();
+        }
+    }
+
+
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    public void CopyTo(Map<TType> Destination)
+    {
+        if (mapActual.Count != Destination.mapActual.Count)
+            return;
+
+        for (var i = 0; i < mapActual.Count; i++)
+        {
+            Destination.mapActual[i] = mapActual[i];
+        }
+    }
 }

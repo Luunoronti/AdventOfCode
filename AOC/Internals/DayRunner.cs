@@ -12,11 +12,16 @@ static class DayRunner
 {
     delegate string PartInputHandler(PartInput input);
 
-    class PartRunner
+    public class PartRunner
     {
+        internal PartRunner()
+        {
+            Current = this;
+        }
         public RunLocalConfiguration Config { get; internal set; }
         public RunLocalConfiguration.PartCfg PartConfig { get; internal set; }
-
+        public bool IsTestRun { get; internal set; }
+        public int TestNumber { get; internal set; }
         private bool LoadSourceFromFile(string file, out string output)
         {
             try
@@ -35,15 +40,15 @@ static class DayRunner
 #if !DEBUG
             _ = Handler(Input);
 #endif
-            Visualizer.ts = TimeSpan.Zero;
-            Visualizer.RanUsingVisualizer = false;
+            Visualiser.ts = TimeSpan.Zero;
+            Visualiser.RanUsingVisualizer = false;
             var startTime = Stopwatch.GetTimestamp();
             var result = Handler(Input);
-            RunReport.AddResult(result, Visualizer.RanUsingVisualizer ? Visualizer.ts : Stopwatch.GetElapsedTime(startTime), Config, PartConfig, RunTests);
+            RunReport.AddResult(result, Visualiser.RanUsingVisualizer ? Visualiser.ts : Stopwatch.GetElapsedTime(startTime), Config, PartConfig, RunTests);
         }
         private void RunInternal(bool RunTests)
         {
-
+            this.IsTestRun = RunTests;
             var tests = RunTests ? Config.Tests : Config.Live;
             for (int i = 0; i < tests.Count; i++)
             {
@@ -70,6 +75,7 @@ static class DayRunner
                 if (string.IsNullOrEmpty(output))
                     continue;
 
+                this.TestNumber = i;
                 PartInput input = new()
                 {
                     FullString = output
@@ -114,6 +120,12 @@ static class DayRunner
 
             return (PartInputHandler)part.CreateDelegate(typeof(PartInputHandler), obj);
         }
+
+        public static PartRunner Current
+        {
+            get; private set;
+        }
+
     }
 
 
@@ -144,6 +156,7 @@ static class DayRunner
 
         return true;
     }
+
 
     private static bool RunDayFromCommandLine()
     {
@@ -191,6 +204,7 @@ static class DayRunner
             public bool Run { get; set; }
             public bool DebugRun { get; set; }
             public string Expected { get; set; } = "";
+            public bool ShowVisualisation { get; set; } = false;
             public List<string> KnownErrors { get; set; } = [];
             public string Source { get; set; } = "";
         }

@@ -1,7 +1,7 @@
 
 namespace TermGlass;
 
-public record VizConfig
+public record VisConfig
 {
     public ColorMode ColorMode { get; set; } = ColorMode.TrueColor;
     public int TargetFps { get; init; } = 30;

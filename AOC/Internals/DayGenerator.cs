@@ -184,6 +184,7 @@ tests:
     debugRun: true
     expected:
     knownErrors:
+    showVisualisation: false
     source: test.txt
     
   - part: 2
@@ -191,6 +192,7 @@ tests:
     debugRun: true
     expected:
     knownErrors:
+    showVisualisation: false
     source: test.txt
     
 live:
@@ -199,6 +201,7 @@ live:
     debugRun: true
     expected:
     knownErrors:
+    showVisualisation: false
     source: live.txt
 
   - part: 2
@@ -206,6 +209,7 @@ live:
     debugRun: true
     expected:
     knownErrors:
+    showVisualisation: false
     source: live.txt
 ";
 

@@ -57,7 +57,7 @@ class Day01
         stepsLeftInInstr = 0;
         traveller = new Traveller(CardinalDirection.North) { };
 
-        Visualizer.Run(new VizConfig { AutoPlay = true, CenterAtZero = true, AutoStepPerSecond = 10 }, () => Process(false), Draw, Tooltip, Status);
+        Visualiser.Run(new VisConfig { AutoPlay = true, CenterAtZero = true, AutoStepPerSecond = 10 }, () => Process(false), Draw, Tooltip, Status);
         return traveller.Location.ManhattanDistance(new(0, 0)).ToString();
     }
     public string Part2(PartInput Input)
@@ -67,7 +67,7 @@ class Day01
         stepsLeftInInstr = 0;
         traveller = new Traveller(CardinalDirection.North) { StoreVisitedLocations = true };
 
-        Visualizer.Run(new VizConfig { AutoPlay = true, CenterAtZero = true, AutoStepPerSecond = 10 }, () => Process(true), Draw, Tooltip, Status);
+        Visualiser.Run(new VisConfig { AutoPlay = true, CenterAtZero = true, AutoStepPerSecond = 10 }, () => Process(true), Draw, Tooltip, Status);
 
         return traveller.Location.ManhattanDistance(new(0, 0)).ToString();
     }

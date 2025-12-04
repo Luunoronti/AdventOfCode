@@ -8,7 +8,7 @@ internal sealed partial class MainLoop
     private const int MaxKeyEventsPerFrame = 64;
 
     private readonly Terminal _t;
-    private readonly VizConfig _cfg;
+    private readonly VisConfig _cfg;
     private readonly Action<Frame, bool> _draw;
     private readonly Func<bool> _process;
     private readonly Func<string>? _status;
@@ -31,7 +31,7 @@ internal sealed partial class MainLoop
 
     private Window? _helpWin;
 
-    public MainLoop(Terminal t, VizConfig cfg, Func<bool> process, Action<Frame, bool> draw, TooltipProvider? tooltip = null, Func<string>? status = null)
+    public MainLoop(Terminal t, VisConfig cfg, Func<bool> process, Action<Frame, bool> draw, TooltipProvider? tooltip = null, Func<string>? status = null)
     {
         _t = t;
         _cfg = cfg;
@@ -77,7 +77,7 @@ internal sealed partial class MainLoop
         var running = true;
         _input.Dirty = true;
 
-        Visualizer.RanUsingVisualizer = true;
+        Visualiser.RanUsingVisualizer = true;
 
         while (running)
         {
@@ -136,7 +136,7 @@ internal sealed partial class MainLoop
                             processContinue = _process();
                             stepsRequiredSinceLastFrame--;
                         }
-                        Visualizer.ts += Stopwatch.GetElapsedTime(startTime);
+                        Visualiser.ts += Stopwatch.GetElapsedTime(startTime);
                     }
                 }
 
