@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using TermGlass;
 
 namespace Year2025;
@@ -21,6 +22,7 @@ class Day04
         if (DayRunner.PartRunner.Current.PartConfig.ShowVisualisation)
             return Part2WithVis(Input);
 
+        Console.WriteLine("b");
         var map = new Map<char>(Input.Lines, static (c) => c);
         var secondMap = new Map<char>(map.SizeX, map.SizeY);
         var adjencedBuffer = new char[8];
@@ -50,6 +52,44 @@ class Day04
 
             totalCount += accessibleCount;
         } while (accessibleCount > 0);
+        return totalCount.ToString();
+    }
+
+
+
+    public string Part2_2(PartInput Input)
+    {
+        var map = new Map<char>(Input.Lines, static (c) => c);
+        var adjencedBuffer = new char[8];
+
+        var accessibleCount = 0;
+        var totalCount = 0L;
+
+        var wasOccupied = '1';
+        var otherFlag = '2';
+
+        var sweeps = 0;
+        do
+        {
+            accessibleCount = map.Count((x, y, c) =>
+            {
+                if (c == wasOccupied || c == otherFlag) { map.SetUnsafe(x, y, '.'); return false; }
+                if (c != '@') return false;
+
+                map.GetAdjenced(x, y, adjencedBuffer);
+                var hasAccess = adjencedBuffer.Count(c => c == '@' || c == wasOccupied) < 4;
+                if (hasAccess)
+                {
+                    map.SetUnsafe(x, y, wasOccupied);
+                }
+                return hasAccess;
+            });
+
+            (wasOccupied, otherFlag) = (otherFlag, wasOccupied);
+            sweeps++;
+            totalCount += accessibleCount;
+        } while (accessibleCount > 0);
+
         return totalCount.ToString();
     }
 

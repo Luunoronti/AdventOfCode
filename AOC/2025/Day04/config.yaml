@@ -15,7 +15,7 @@ tests:
     run: true
     debugRun: true
     expected: 43
-    showVisualisation: true
+    showVisualisation: false
     knownErrors:
     source: test.txt
     
@@ -30,7 +30,8 @@ live:
   - part: 2
     run: true
     debugRun: true
-    showVisualisation: true
+    showVisualisation: false
     expected: 8310
     knownErrors:
     source: live.txt
+
