@@ -23,10 +23,11 @@ class Day04
         //      return Part2Nums(Input);
 
         //        return "";
-        if (DayRunner.PartRunner.Current.PartConfig.ShowVisualisation)
-            return Part2ByNickWithVis(Input);
+        //if (DayRunner.PartRunner.Current.PartConfig.ShowVisualisation)
+        //    return Part2ByNickWithVis(Input);
 
-        Console.WriteLine("b");
+        return Part2_2(Input).ToString();
+
         var map = new Map<char>(Input.Lines, static (c) => c);
         var secondMap = new Map<char>(map.SizeX, map.SizeY);
         var adjencedBuffer = new char[8];
@@ -171,40 +172,100 @@ class Day04
         }
         return removed.ToString();
     }
-    public string Part2_2(PartInput Input)
+
+    static int[] dirX = { -1, 0, 1, -1, 1, -1, 0, 1 };
+    static int[] dirY = { -1, -1, -1, 0, 0, 1, 1, 1 };
+
+    int Part2_2(PartInput Input)
     {
-        var map = new Map<char>(Input.Lines, static (c) => c);
-        var adjencedBuffer = new char[8];
+        const byte MAX = 4;
 
-        var accessibleCount = 0;
-        var totalCount = 0L;
+        int sizeY = Input.Lines.Length;
+        int sizeX = Input.Lines[0].Length;
+        int size = sizeY * sizeX;
 
-        var wasOccupied = '1';
-        var otherFlag = '2';
+        var rolls = new bool[size];
+        var counts = new byte[size];
 
-        var sweeps = 0;
-        do
+        Queue<int> queue = [];
+
+        for (int y = 0; y < sizeY; y++)
         {
-            accessibleCount = map.Count((x, y, c) =>
+            string line = Input.Lines[y];
+            int row = y * sizeX;
+            for (int x = 0; x < sizeX; x++)
             {
-                if (c == wasOccupied || c == otherFlag) { map.SetUnsafe(x, y, '.'); return false; }
-                if (c != '@') return false;
+                if (line[x] == '@')
+                    rolls[row + x] = true;
+            }
+        }
 
-                map.GetAdjenced(x, y, adjencedBuffer);
-                var hasAccess = adjencedBuffer.Count(c => c == '@' || c == wasOccupied) < 4;
-                if (hasAccess)
+
+        for (int y = 0; y < sizeY; y++)
+        {
+            int row = y * sizeX;
+            for (int x = 0; x < sizeX; x++)
+            {
+                int idx = row + x;
+                if (!rolls[idx]) continue;
+
+                byte c = 0;
+                for (int d = 0; d < 8; d++)
                 {
-                    map.SetUnsafe(x, y, wasOccupied);
+                    int nx = x + dirX[d];
+                    int ny = y + dirY[d];
+
+                    if ((uint)nx >= (uint)sizeX || (uint)ny >= (uint)sizeY) continue;
+
+                    if (rolls[ny * sizeX + nx])
+                        c++;
                 }
-                return hasAccess;
-            });
+                counts[idx] = c;
+            }
+        }
 
-            (wasOccupied, otherFlag) = (otherFlag, wasOccupied);
-            sweeps++;
-            totalCount += accessibleCount;
-        } while (accessibleCount > 0);
+        for (int i = 0; i < size; i++)
+        {
+            if (rolls[i] && counts[i] < MAX)
+                queue.Enqueue(i);
+        }
 
-        return totalCount.ToString();
+        int removed = 0;
+
+        while (queue.TryDequeue(out var idx))
+        {
+            if (!rolls[idx])
+                continue; 
+            if (counts[idx] >= MAX)
+                continue;
+
+            rolls[idx] = false;
+            removed++;
+
+            int y = idx / sizeX;
+            int x = idx - y * sizeX;
+
+            for (int d = 0; d < 8; d++)
+            {
+                int nx = x + dirX[d];
+                int ny = y + dirY[d];
+
+                if ((uint)nx >= (uint)sizeX || (uint)ny >= (uint)sizeY)
+                    continue;
+
+                int ni = ny * sizeX + nx;
+                if (!rolls[ni])
+                    continue;
+
+                if (counts[ni] > 0)
+                    counts[ni]--;
+
+                if (counts[ni] < MAX)
+                    queue.Enqueue(ni);
+            }
+        }
+
+        return removed;
     }
 
 

@@ -12,6 +12,68 @@ static class DayRunner
 {
     delegate string PartInputHandler(PartInput input);
 
+    public readonly struct HandlerBenchResult
+    {
+        public long Calls { get; }
+        public TimeSpan Total { get; }
+        public double NsPerCall { get; }
+        public double OpsPerSecond { get; }
+
+        public HandlerBenchResult(long calls, TimeSpan total)
+        {
+            Calls = calls;
+            Total = total;
+            NsPerCall = calls == 0 ? 0.0 : (total.TotalMilliseconds * 1_000_000.0) / calls;
+            OpsPerSecond = total.TotalSeconds == 0 ? double.PositiveInfinity : calls / total.TotalSeconds;
+        }
+
+        public override string ToString()
+            => $"{NsPerCall:N1} ns/op, {OpsPerSecond:N0} ops/s (total {Total.TotalMilliseconds:N2} ms)";
+    }
+
+    private static HandlerBenchResult BenchmarkHandler(
+        PartInputHandler handler,
+        PartInput input,
+        int warmupIterations = 3,
+        int outerIterations = 10,
+        int innerIterations = 1_000)
+    {
+        if (handler == null) throw new ArgumentNullException(nameof(handler));
+        if (outerIterations <= 0) throw new ArgumentOutOfRangeException(nameof(outerIterations));
+        if (innerIterations <= 0) throw new ArgumentOutOfRangeException(nameof(innerIterations));
+
+        // 1. Warmup – JIT and touch data
+        object? last = null;
+        for (int i = 0; i < warmupIterations; i++)
+        {
+            last = handler(input);
+        }
+
+        GC.KeepAlive(last);
+
+        // Optional: reduce GC noise a bit
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
+
+        long calls = (long)outerIterations * innerIterations;
+
+        // 2. Timed region
+        long start = Stopwatch.GetTimestamp();
+        for (int o = 0; o < outerIterations; o++)
+        {
+            for (int i = 0; i < innerIterations; i++)
+            {
+                last = handler(input);
+            }
+        }
+        TimeSpan elapsed = Stopwatch.GetElapsedTime(start);
+        GC.KeepAlive(last);
+
+        return new HandlerBenchResult(calls, elapsed);
+    }
+
+
     public class PartRunner
     {
         internal PartRunner()
@@ -45,7 +107,26 @@ static class DayRunner
             var startTime = Stopwatch.GetTimestamp();
             var result = Handler(Input);
             RunReport.AddResult(result, Visualiser.RanUsingVisualizer ? Visualiser.ts : Stopwatch.GetElapsedTime(startTime), Config, PartConfig, RunTests);
+
+            // optional benchmark
+            if (false)
+            {
+                var bench = BenchmarkHandler(Handler, Input,
+                                             warmupIterations: 3,
+                                             outerIterations: 20,
+                                             innerIterations: 1_000);
+
+                // Now you can use bench however you like:
+                // - log to console
+                // - add to RunReport
+                // - add to your visualizer, etc.
+                Console.WriteLine($"Benchmark: {bench}");
+                // or:
+                // RunReport.AddBenchmark(bench);
+            }
+
         }
+
         private void RunInternal(bool RunTests)
         {
             this.IsTestRun = RunTests;
