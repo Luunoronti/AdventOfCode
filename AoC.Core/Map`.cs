@@ -112,6 +112,12 @@ public class Map<TType>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    public void SetUnsafe(int x, int y, TType v)
+    {
+        mapActual[y * SizeX + x] = v;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public int Count(Func<int, int, TType, bool> predicate)
     {
         var sum = 0;
@@ -128,6 +134,10 @@ public class Map<TType>
         return sum;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    private TType GetFast(int x, int y) => (x >= 0 && y >= 0 && x < sizeX && y < sizeY) ? mapActual[y * SizeX + x] : DefaultFill;
+
+
     /// <summary>
     /// Returns adjenced cells values.
     /// If Adjenced buffer size == 4, will return cardinal cells, starting with left, then up, right, down.
@@ -141,22 +151,22 @@ public class Map<TType>
             return;
         if (Adjenced.Length == 4)
         {
-            Adjenced[0] = this[x - 1, y];
-            Adjenced[1] = this[x, y - 1];
-            Adjenced[2] = this[x + 1, y];
-            Adjenced[3] = this[x, y + 1];
+            Adjenced[0] = GetFast(x - 1, y);
+            Adjenced[1] = GetFast(x, y - 1);
+            Adjenced[2] = GetFast(x + 1, y);
+            Adjenced[3] = GetFast(x, y + 1);
         }
         if (Adjenced.Length == 8)
         {
-            Adjenced[0] = this[x - 1, y];
-            Adjenced[1] = this[x - 1, y - 1];
-            Adjenced[2] = this[x, y - 1];
-            Adjenced[3] = this[x + 1, y - 1];
+            Adjenced[0] = GetFast(x - 1, y);
+            Adjenced[1] = GetFast(x - 1, y - 1);
+            Adjenced[2] = GetFast(x, y - 1);
+            Adjenced[3] = GetFast(x + 1, y - 1);
 
-            Adjenced[4] = this[x + 1, y];
-            Adjenced[5] = this[x + 1, y + 1];
-            Adjenced[6] = this[x, y + 1];
-            Adjenced[7] = this[x - 1, y + 1];
+            Adjenced[4] = GetFast(x + 1, y);
+            Adjenced[5] = GetFast(x + 1, y + 1);
+            Adjenced[6] = GetFast(x, y + 1);
+            Adjenced[7] = GetFast(x - 1, y + 1);
         }
     }
 
