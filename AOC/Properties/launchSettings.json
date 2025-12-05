@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "AdventOfCode": {
-      "commandName": "Project",
-      "commandLineArgs": "--day 5 --year 2025"
-    }
-  }
-}

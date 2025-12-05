@@ -1,14 +1,12 @@
-namespace Year2025;
+namespace AoC;
 
-struct Range
+public static class Solver
 {
-    public long Start;
-    public long End;
-}
-
-
-class Day05
-{
+    struct Range
+    {
+        public long Start;
+        public long End;
+    }
     private static bool IsFresh(long Id, Range[] Ranges, int RangeCount)
     {
         var Low = 0;
@@ -29,11 +27,9 @@ class Day05
         }
         return false;
     }
-
-    private static Range[] ParseAndMergeRanges(PartInput Input, out int MergedCount, out int IndexAfterRanges)
+    private static Range[] ParseAndMergeRanges(string[] lines, out int MergedCount, out int IndexAfterRanges)
     {
-        var Lines = Input.Lines;
-        var LineCount = Lines.Length;
+        var LineCount = lines.Length;
 
         var Ranges = new Range[LineCount];
         var RangeCount = 0;
@@ -41,7 +37,7 @@ class Day05
 
         for (; Index < LineCount; Index++)
         {
-            var Line = Lines[Index];
+            var Line = lines[Index];
             if (string.IsNullOrWhiteSpace(Line))
             {
                 Index++;
@@ -89,16 +85,16 @@ class Day05
     }
 
 
-    public string Part1(PartInput Input)
+
+    public static object? SolvePart1(string[] lines)
     {
-        var Merged = ParseAndMergeRanges(Input, out var MergedCount, out var IndexAfterRanges);
-        var Lines = Input.Lines;
+        var Merged = ParseAndMergeRanges(lines, out var MergedCount, out var IndexAfterRanges);
 
         long FreshCount = 0;
 
-        for (var I = IndexAfterRanges; I < Lines.Length; I++)
+        for (var I = IndexAfterRanges; I < lines.Length; I++)
         {
-            var Line = Lines[I];
+            var Line = lines[I];
             if (string.IsNullOrWhiteSpace(Line))
                 continue;
 
@@ -108,9 +104,10 @@ class Day05
         }
         return FreshCount.ToString();
     }
-    public string Part2(PartInput Input)
+
+    public static object? SolvePart2(string[] lines)
     {
-        var Merged = ParseAndMergeRanges(Input, out var MergedCount, out _);
+        var Merged = ParseAndMergeRanges(lines, out var MergedCount, out _);
         long TotalFreshIds = 0;
         for (var I = 0; I < MergedCount; I++)
         {
