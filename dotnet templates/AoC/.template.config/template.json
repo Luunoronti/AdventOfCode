@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Amarthdae",
+  "classifications": [ "AdventOfCode", "Console" ],
+  "identity": "Aoc.Day.Template",
+  "name": "Advent of Code Day (simple)",
+  "shortName": "aoc",
+  "sourceName": "AocTemplate",
+  "preferNameDirectory": true,
+  "symbols": {
+    "year": {
+      "type": "parameter",
+      "datatype": "int",
+      "defaultValue": "2025",
+      "description": "Advent of Code year (e.g. 2025)",
+      "replaces": "AOC_YEAR"
+    },
+    "day": {
+      "type": "parameter",
+      "datatype": "int",
+      "defaultValue": "1",
+      "description": "Advent of Code day (1-25)",
+      "replaces": "AOC_DAY"
+    }
+  },
+  "primaryOutputs": [
+    {
+      "path": "AocTemplate.csproj"
+    }
+  ]
+}

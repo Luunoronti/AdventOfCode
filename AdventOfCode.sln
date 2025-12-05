@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36301.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode", "AOC\AdventOfCode.csproj", "{B26D27D4-00F5-4915-AAC5-C361D6C69F2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode", "AOC_OLD\AdventOfCode.csproj", "{B26D27D4-00F5-4915-AAC5-C361D6C69F2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TermGlass", "TermGlass\TermGlass.csproj", "{17038C1D-5E43-8E75-A4E3-EABFBD288D60}"
 EndProject

@@ -15,9 +15,9 @@ namespace AdventOfCode.Runtime;
 
 public class Map<TType>
 {
-    private int sizeX;
-    private int sizeY;
-    private List<TType> mapActual = [];
+    protected int sizeX;
+    protected int sizeY;
+    protected List<TType> mapActual = [];
 
     public Map(int sizeX, int sizeY)
     {
@@ -204,3 +204,4 @@ public class Map<TType>
         }
     }
 }
+

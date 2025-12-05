@@ -1,12 +1,14 @@
-namespace AoC;
+namespace Year2025;
 
-public static class Solver
+struct Range
 {
-    struct Range
-    {
-        public long Start;
-        public long End;
-    }
+    public long Start;
+    public long End;
+}
+
+
+class Day05
+{
     private static bool IsFresh(long Id, Range[] Ranges, int RangeCount)
     {
         var Low = 0;
@@ -27,9 +29,11 @@ public static class Solver
         }
         return false;
     }
-    private static Range[] ParseAndMergeRanges(string[] lines, out int MergedCount, out int IndexAfterRanges)
+
+    private static Range[] ParseAndMergeRanges(PartInput Input, out int MergedCount, out int IndexAfterRanges)
     {
-        var LineCount = lines.Length;
+        var Lines = Input.Lines;
+        var LineCount = Lines.Length;
 
         var Ranges = new Range[LineCount];
         var RangeCount = 0;
@@ -37,7 +41,7 @@ public static class Solver
 
         for (; Index < LineCount; Index++)
         {
-            var Line = lines[Index];
+            var Line = Lines[Index];
             if (string.IsNullOrWhiteSpace(Line))
             {
                 Index++;
@@ -85,16 +89,16 @@ public static class Solver
     }
 
 
-
-    public static object? SolvePart1(string[] lines)
+    public string Part1(PartInput Input)
     {
-        var Merged = ParseAndMergeRanges(lines, out var MergedCount, out var IndexAfterRanges);
+        var Merged = ParseAndMergeRanges(Input, out var MergedCount, out var IndexAfterRanges);
+        var Lines = Input.Lines;
 
         long FreshCount = 0;
 
-        for (var I = IndexAfterRanges; I < lines.Length; I++)
+        for (var I = IndexAfterRanges; I < Lines.Length; I++)
         {
-            var Line = lines[I];
+            var Line = Lines[I];
             if (string.IsNullOrWhiteSpace(Line))
                 continue;
 
@@ -102,12 +106,11 @@ public static class Solver
             if (IsFresh(Id, Merged, MergedCount))
                 FreshCount++;
         }
-        return FreshCount;
+        return FreshCount.ToString();
     }
-
-    public static object? SolvePart2(string[] lines)
+    public string Part2(PartInput Input)
     {
-        var Merged = ParseAndMergeRanges(lines, out var MergedCount, out _);
+        var Merged = ParseAndMergeRanges(Input, out var MergedCount, out _);
         long TotalFreshIds = 0;
         for (var I = 0; I < MergedCount; I++)
         {
@@ -115,6 +118,6 @@ public static class Solver
             TotalFreshIds += (R.End - R.Start + 1);
         }
 
-        return TotalFreshIds;
+        return TotalFreshIds.ToString();
     }
 }
