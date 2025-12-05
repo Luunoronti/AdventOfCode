@@ -187,7 +187,7 @@ class Day04
         var rolls = new bool[size];
         var counts = new byte[size];
 
-        Queue<int> queue = [];
+        Queue<int> queue = new Queue<int>(size);
 
         for (int y = 0; y < sizeY; y++)
         {

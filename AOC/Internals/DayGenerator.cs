@@ -177,6 +177,7 @@ class Day{Day}
 name: {Title}
 year: {Year}
 day: {Day}
+benchmark: false
 
 tests:
   - part: 1

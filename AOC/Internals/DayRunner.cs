@@ -14,10 +14,22 @@ static class DayRunner
 
     public readonly struct HandlerBenchResult
     {
-        public long Calls { get; }
-        public TimeSpan Total { get; }
-        public double NsPerCall { get; }
-        public double OpsPerSecond { get; }
+        public long Calls
+        {
+            get;
+        }
+        public TimeSpan Total
+        {
+            get;
+        }
+        public double NsPerCall
+        {
+            get;
+        }
+        public double OpsPerSecond
+        {
+            get;
+        }
 
         public HandlerBenchResult(long calls, TimeSpan total)
         {
@@ -80,10 +92,22 @@ static class DayRunner
         {
             Current = this;
         }
-        public RunLocalConfiguration Config { get; internal set; }
-        public RunLocalConfiguration.PartCfg PartConfig { get; internal set; }
-        public bool IsTestRun { get; internal set; }
-        public int TestNumber { get; internal set; }
+        public RunLocalConfiguration Config
+        {
+            get; internal set;
+        }
+        public RunLocalConfiguration.PartCfg PartConfig
+        {
+            get; internal set;
+        }
+        public bool IsTestRun
+        {
+            get; internal set;
+        }
+        public int TestNumber
+        {
+            get; internal set;
+        }
         private bool LoadSourceFromFile(string file, out string output)
         {
             try
@@ -98,33 +122,24 @@ static class DayRunner
         }
         private void TimedRun(bool RunTests, PartInputHandler Handler, PartInput Input)
         {
-            // warm up
-#if !DEBUG
-            _ = Handler(Input);
-#endif
             Visualiser.ts = TimeSpan.Zero;
             Visualiser.RanUsingVisualizer = false;
             var startTime = Stopwatch.GetTimestamp();
             var result = Handler(Input);
-            RunReport.AddResult(result, Visualiser.RanUsingVisualizer ? Visualiser.ts : Stopwatch.GetElapsedTime(startTime), Config, PartConfig, RunTests);
+            var time = Visualiser.RanUsingVisualizer ? Visualiser.ts : Stopwatch.GetElapsedTime(startTime);
 
-            // optional benchmark
-            if (false)
+            if (Config.Benchmark)
             {
+                Console.WriteLine($"Benchmarking {Config.Name} - {PartConfig.Part} ({(RunTests ? "Test" : "Live")})");
                 var bench = BenchmarkHandler(Handler, Input,
                                              warmupIterations: 3,
                                              outerIterations: 20,
                                              innerIterations: 1_000);
 
-                // Now you can use bench however you like:
-                // - log to console
-                // - add to RunReport
-                // - add to your visualizer, etc.
-                Console.WriteLine($"Benchmark: {bench}");
-                // or:
-                // RunReport.AddBenchmark(bench);
+                time = TimeSpan.FromTicks((long)(bench.NsPerCall / 100.0));
             }
 
+            RunReport.AddResult(result, time, Config, PartConfig, RunTests);
         }
 
         private void RunInternal(bool RunTests)
@@ -161,7 +176,7 @@ static class DayRunner
                 {
                     FullString = output
                 };
-                input.Lines = input.FullString.Replace("\r", "").Split('\n', StringSplitOptions.RemoveEmptyEntries);
+                input.Lines = input.FullString.Replace("\r", "").Split('\n');
                 input.Span = input.FullString.AsSpan();
                 input.Count = input.Lines.Length;
                 input.LineWidth = input.Lines == null ? 0 : (input.Lines.Length > 0 ? input.Lines[0].Length : 0);
@@ -281,18 +296,37 @@ static class DayRunner
         }
         internal class PartCfg
         {
-            public int Part { get; set; }
-            public bool Run { get; set; }
-            public bool DebugRun { get; set; }
+            public int Part
+            {
+                get; set;
+            }
+            public bool Run
+            {
+                get; set;
+            }
+            public bool DebugRun
+            {
+                get; set;
+            }
             public string Expected { get; set; } = "";
             public bool ShowVisualisation { get; set; } = false;
             public List<string> KnownErrors { get; set; } = [];
             public string Source { get; set; } = "";
         }
         public string Name { get; set; } = "";
-        public int Year { get; set; }
-        public int Day { get; set; }
+        public int Year
+        {
+            get; set;
+        }
+        public int Day
+        {
+            get; set;
+        }
 
+        public bool Benchmark
+        {
+            get; set;
+        } = false;
         public List<PartCfg> Tests { get; set; } = [];
         public List<PartCfg> Live { get; set; } = [];
     }

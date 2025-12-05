@@ -1,38 +1,39 @@
 
-name: Printing Department
+name: Cafeteria
 year: 2025
-day: 4
+day: 5
 benchmark: true
 
 tests:
   - part: 1
     run: true
     debugRun: true
-    expected: 13
+    expected: 3
     knownErrors:
+    showVisualisation: false
     source: test.txt
     
   - part: 2
     run: true
     debugRun: true
-    expected: 43
-    showVisualisation: true
+    expected: 14
     knownErrors:
+    showVisualisation: false
     source: test.txt
     
 live:
   - part: 1
     run: true
     debugRun: true
-    expected: 1457
+    expected: 773
     knownErrors:
+    showVisualisation: false
     source: live.txt
 
   - part: 2
     run: true
     debugRun: true
-    showVisualisation: true
-    expected: 8310
+    expected: 332067203034711
     knownErrors:
+    showVisualisation: false
     source: live.txt
-
