@@ -1,14 +1,8 @@
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
-using System;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
-using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
-
 namespace AoC;
 
 public static class AocHost
@@ -50,7 +44,6 @@ public static class AocHost
 
         return null;
     }
-
 
     private static string[] FilterBenchmarkArgs(string[] Args)
     {
@@ -140,7 +133,7 @@ public sealed class AocConfig
     {
         // Defaults baked into the template (replaced by dotnet new)
         int year = 2025;
-        int day = 4;
+        int day = 3;
 
         string inputKind = "live"; // or "test"
         string? inputFileOverride = null;
@@ -275,7 +268,7 @@ public class AocBenchmarks
     [GlobalSetup]
     public async Task Setup()
     {
-        // Uses template defaults (2025 / 4),
+        // Uses template defaults (2025 / 3),
         var config = AocConfig.Parse(Array.Empty<string>());
         _lines = await AocInput.LoadAsync(config);
     }

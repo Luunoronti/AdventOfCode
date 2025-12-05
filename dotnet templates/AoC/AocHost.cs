@@ -1,9 +1,8 @@
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
-
+using System.Net;
+using System.Net.Http.Headers;
+using System.Reflection;
 namespace AoC;
 
 public static class AocHost
@@ -25,9 +24,25 @@ public static class AocHost
         object? Part1Result = SolvePart1(Lines);
         object? Part2Result = SolvePart2(Lines);
 
+        string? expected1 = GetExpectedResult(SolvePart1.Method, Config.InputKind);
+        string? expected2 = GetExpectedResult(SolvePart2.Method, Config.InputKind);
+
         PrintHeader(Config, Title);
-        PrintResult("Part 1", Part1Result);
-        PrintResult("Part 2", Part2Result);
+        PrintResult("Part 1", Part1Result, expected1);
+        PrintResult("Part 2", Part2Result, expected2);
+    }
+
+    private static string? GetExpectedResult(MethodInfo method, string inputKind)
+    {
+        var attrs = method.GetCustomAttributes(typeof(ExpectedResultAttribute), inherit: false).Cast<ExpectedResultAttribute>();
+
+        foreach (var attr in attrs)
+        {
+            if (string.Equals(attr.InputKind, inputKind, StringComparison.OrdinalIgnoreCase))
+                return attr.Value;
+        }
+
+        return null;
     }
 
     private static string[] FilterBenchmarkArgs(string[] Args)
@@ -61,25 +76,28 @@ public static class AocHost
 
         Console.WriteLine(new string('-', 40));
     }
-    private static void PrintResult(string Name, object? Value)
+    private static void PrintResult(string Name, object? Value, string? expected)
     {
-        if (Value is null)
+        var result = Value?.ToString() ?? "<null>";
+
+        bool ok = false;
+        if (Value is not null)
         {
-            Console.WriteLine($"{Name}: <null>");
-            return;
+            ok = string.Equals(result, expected, StringComparison.OrdinalIgnoreCase);
         }
 
-        string Text = Value.ToString() ?? "<null>";
-
-        if (Text.Contains(Environment.NewLine))
+        var oldC = Console.ForegroundColor;
+        Console.ForegroundColor = Value == null ? (oldC) : (ok ? ConsoleColor.Green : ConsoleColor.Red);
+        if (result.Contains(Environment.NewLine))
         {
             Console.WriteLine($"{Name}:");
-            Console.WriteLine(Text);
+            Console.WriteLine(result);
         }
         else
         {
-            Console.WriteLine($"{Name}: {Text}");
+            Console.WriteLine($"{Name}: {result}");
         }
+        Console.ForegroundColor = oldC;
     }
 }
 
@@ -337,5 +355,30 @@ public static class AocTitle
         Inner = Inner.Trim('-').Trim();
 
         return Inner;
+    }
+}
+
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+public sealed class ExpectedResultAttribute : Attribute
+{
+    public string InputKind { get; }
+    public string Value { get; }
+
+    public ExpectedResultAttribute(string inputKind, string value)
+    {
+        InputKind = inputKind;
+        Value = value;
+    }
+
+    public ExpectedResultAttribute(string inputKind, long value)
+    {
+        InputKind = inputKind;
+        Value = value.ToString();
+    }
+
+    public ExpectedResultAttribute(string inputKind, int value)
+    {
+        InputKind = inputKind;
+        Value = value.ToString();
     }
 }

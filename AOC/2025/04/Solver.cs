@@ -52,7 +52,8 @@ public static class Solver
         }
     }
 
-
+    [ExpectedResult("test", 13)]
+    [ExpectedResult("live", 1457)]
     public static object? SolvePart1(string[] Lines)
     {
         PrepareMaps(Lines, out var SizeX, out var SizeY, out var Size, out var Rolls, out var Counts);
@@ -66,6 +67,8 @@ public static class Solver
         return count;
     }
 
+    [ExpectedResult("test", 43)]
+    [ExpectedResult("live", 8310)]
     public static object? SolvePart2(string[] lines)
     {
         PrepareMaps(lines, out var sizeX, out var sizeY, out var size, out var rolls, out var counts);
