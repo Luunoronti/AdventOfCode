@@ -1,8 +1,9 @@
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Running;
+using System.Reflection;
 
 namespace AoC;
 
@@ -10,7 +11,8 @@ public static class AocHost
 {
    public static async Task RunAsync(string[] Args, Func<string[], object?> SolvePart1, Func<string[], object?> SolvePart2)
     {
-        AocConfig Config = AocConfig.Parse(Args);
+        string? DefaultInputKind = GetDefaultInputKind(SolvePart1.Method);
+        AocConfig Config = AocConfig.Parse(Args, DefaultInputKind);
 
         if (Config.Benchmark)
         {
@@ -50,6 +52,15 @@ public static class AocHost
         }
 
         return List.ToArray();
+    }
+    private static string? GetDefaultInputKind(MethodInfo Method)
+    {
+        Type? SolverType = Method.DeclaringType;
+        if (SolverType is null)
+            return null;
+
+        var Attr = SolverType.GetCustomAttribute<DefaultInputAttribute>(inherit: false);
+        return Attr?.InputKind;
     }
 
     private static void PrintHeader(AocConfig Config, string? Title)
@@ -111,13 +122,13 @@ public sealed class AocConfig
     /// </summary>
     public string? SessionToken { get; init; }
 
-    public static AocConfig Parse(string[] args)
+    public static AocConfig Parse(string[] args, string? DefaultInputKind = null)
     {
         // Defaults baked into the template (replaced by dotnet new)
         int year = 2025;
         int day = 5;
 
-        string inputKind = "live"; // or "test"
+        string InputKind = string.IsNullOrEmpty(DefaultInputKind) ? "live" : DefaultInputKind;
         string? inputFileOverride = null;
         bool benchmark = false;
 
@@ -135,7 +146,7 @@ public sealed class AocConfig
             }
             else if (arg.StartsWith("--input=", StringComparison.OrdinalIgnoreCase))
             {
-                inputKind = arg.Substring("--input=".Length);
+                InputKind = arg.Substring("--input=".Length);
             }
             else if (arg.StartsWith("--inputFile=", StringComparison.OrdinalIgnoreCase))
             {
@@ -151,7 +162,7 @@ public sealed class AocConfig
         {
             Year = year,
             Day = day,
-            InputKind = inputKind,
+            InputKind = InputKind,
             InputFileOverride = inputFileOverride,
             Benchmark = benchmark,
             SessionToken = session
@@ -337,5 +348,16 @@ public static class AocTitle
         Inner = Inner.Trim('-').Trim();
 
         return Inner;
+    }
+}
+
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+public sealed class DefaultInputAttribute : Attribute
+{
+    public string InputKind { get; }
+
+    public DefaultInputAttribute(string inputKind)
+    {
+        InputKind = inputKind;
     }
 }

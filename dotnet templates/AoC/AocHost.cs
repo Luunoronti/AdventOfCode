@@ -9,7 +9,8 @@ public static class AocHost
 {
    public static async Task RunAsync(string[] Args, Func<string[], object?> SolvePart1, Func<string[], object?> SolvePart2)
     {
-        AocConfig Config = AocConfig.Parse(Args);
+        string? DefaultInputKind = GetDefaultInputKind(SolvePart1.Method);
+        AocConfig Config = AocConfig.Parse(Args, DefaultInputKind);
 
         if (Config.Benchmark)
         {
@@ -30,6 +31,15 @@ public static class AocHost
         PrintHeader(Config, Title);
         PrintResult("Part 1", Part1Result, expected1);
         PrintResult("Part 2", Part2Result, expected2);
+    }
+    private static string? GetDefaultInputKind(MethodInfo Method)
+    {
+        Type? SolverType = Method.DeclaringType;
+        if (SolverType is null)
+            return null;
+
+        var Attr = SolverType.GetCustomAttribute<DefaultInputAttribute>(inherit: false);
+        return Attr?.InputKind;
     }
 
     private static string? GetExpectedResult(MethodInfo method, string inputKind)
@@ -129,13 +139,13 @@ public sealed class AocConfig
     /// </summary>
     public string? SessionToken { get; init; }
 
-    public static AocConfig Parse(string[] args)
+    public static AocConfig Parse(string[] args, string? DefaultInputKind = null)
     {
         // Defaults baked into the template (replaced by dotnet new)
-        int year = AOC_YEAR;
-        int day = AOC_DAY;
+        int year = 2025;
+        int day = 5;
 
-        string inputKind = "live"; // or "test"
+        string InputKind = string.IsNullOrEmpty(DefaultInputKind) ? "live" : DefaultInputKind;
         string? inputFileOverride = null;
         bool benchmark = false;
 
@@ -153,7 +163,7 @@ public sealed class AocConfig
             }
             else if (arg.StartsWith("--input=", StringComparison.OrdinalIgnoreCase))
             {
-                inputKind = arg.Substring("--input=".Length);
+                InputKind = arg.Substring("--input=".Length);
             }
             else if (arg.StartsWith("--inputFile=", StringComparison.OrdinalIgnoreCase))
             {
@@ -169,7 +179,7 @@ public sealed class AocConfig
         {
             Year = year,
             Day = day,
-            InputKind = inputKind,
+            InputKind = InputKind,
             InputFileOverride = inputFileOverride,
             Benchmark = benchmark,
             SessionToken = session
@@ -380,5 +390,16 @@ public sealed class ExpectedResultAttribute : Attribute
     {
         InputKind = inputKind;
         Value = value.ToString();
+    }
+}
+
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+public sealed class DefaultInputAttribute : Attribute
+{
+    public string InputKind { get; }
+
+    public DefaultInputAttribute(string inputKind)
+    {
+        InputKind = inputKind;
     }
 }

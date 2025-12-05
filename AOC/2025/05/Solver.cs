@@ -1,5 +1,6 @@
 namespace AoC;
 
+[DefaultInput("test")]
 public static class Solver
 {
     struct Range
