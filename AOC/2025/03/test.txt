@@ -1,2 +1,4 @@
-# Paste the sample input for this day here.
-# This file is included in the template and committed to git.
+987654321111111
+811111111111119
+234234234234278
+818181911112111
