@@ -3,28 +3,11 @@ namespace AoC;
 [DefaultInput("live")]
 public static class Solver
 {
-    private static int PrepareOps(ReadOnlySpan<char> opLine, Span<char> ops)
-    {
-        ops.Clear();
-        var opLinew = opLine.Length;
-        var currOp = 0;
-        for (var i = 0; i < opLinew; i++)
-        {
-            var o = opLine[i];
-            if (o == '*' || o == '+')
-            {
-                ops[currOp++] = o;
-            }
-        }
-        return currOp;
-    }
-
-
     [ExpectedResult("test", 4277556)]
     [ExpectedResult("live", 4771265398012)]
     public static unsafe object? SolvePart1(string[] Lines)
     {
-        // check input's shape (is it rectangular)
+        // check input's shape (is it rectangular?)
         //var w = Lines[0].Length;
         //foreach (var l in Lines)
         //    if (w != l.Length)
@@ -42,7 +25,7 @@ public static class Solver
         var totalOps = PrepareOps(Lines[height - 1].AsSpan(), ops);
         var currOp = 0;
 
-        // keep current locations of columns for each line
+        // keep current column for each line
         Span<int> columnPos = stackalloc int[height - 1];
         columnPos.Clear();
 
@@ -60,10 +43,9 @@ public static class Solver
                 var cp = columnPos[numR];
 
                 // look for any char first
-                while (cp < width && line[cp++] == ' ') { }
-                ;
+                while (cp < width && line[cp++] == ' ') ;
 
-                // get back by 1 (from cc++ above)
+                // get back by 1 (from cp++ above)
                 cp--;
 
                 // construct number
@@ -101,7 +83,6 @@ public static class Solver
         var total = 0L;
         var partial = ops[currOp] == '*' ? 1L : 0L;
         var num = 0L;
-        var op = ops[currOp];
 
         while (currColumPos < width)
         {
@@ -116,8 +97,7 @@ public static class Solver
 
             if (num == 0)
             {
-                // if partial is already > 0, we just finished one column of numbers
-                // so perform an op
+                // if partial is > 0, we just finished one column of numbers
                 if (partial > 0)
                 {
                     currOp++;
@@ -132,10 +112,27 @@ public static class Solver
                 num = 0;
             }
         }
-        // last result, as it may not be stored inside a loop
+        // last result, as it may be ommited by the loop above
+        // (if there was no "empty" column at the end of the file, the "if (num == 0)" would not run)
         total += partial;
 
         return total;
+    }
+
+    private static int PrepareOps(ReadOnlySpan<char> opLine, Span<char> ops)
+    {
+        ops.Clear();
+        var opLinew = opLine.Length;
+        var currOp = 0;
+        for (var i = 0; i < opLinew; i++)
+        {
+            var o = opLine[i];
+            if (o == '*' || o == '+')
+            {
+                ops[currOp++] = o;
+            }
+        }
+        return currOp;
     }
 }
 
