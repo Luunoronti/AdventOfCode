@@ -7,8 +7,8 @@ public static class Solver
     [ExpectedResult("live", 4771265398012)]
     public static object? SolvePart1(string[] Lines)
     {
-        return SolvePart1_C(Lines);
-        //return SolvePart1_F(Lines);
+        //return SolvePart1_C(Lines);
+        return SolvePart1_F(Lines);
     }
 
 
@@ -126,8 +126,8 @@ public static class Solver
     [ExpectedResult("live", 10695785245101)]
     public static object? SolvePart2(string[] Lines)
     {
-        return SolvePart2_C(Lines);
-        //return SolvePart2_F(Lines);
+        //return SolvePart2_C(Lines);
+        return SolvePart2_F(Lines);
     }
 
     private static object? SolvePart2_C(string[] Lines)
