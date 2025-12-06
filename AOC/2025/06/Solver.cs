@@ -1,4 +1,18 @@
-using Microsoft.VisualBasic;
+/*
+
+| Method | Mean     | Error    | StdDev   | Allocated |
+|------- |---------:|---------:|---------:|----------:|
+| Part1  | 57.83 us | 0.210 us | 0.197 us |      24 B |
+| Part2  | 55.27 us | 0.446 us | 0.395 us |      24 B |
+
+1 us      : 1 Microsecond (0.000001 sec)
+
+Intel Core i5-8500 CPU 3.00GHz (Coffee Lake), 1 CPU, 6 logical and 6 physical cores
+.NET SDK 10.0.100
+  [Host]     : .NET 10.0.0 (10.0.25.52411), X64 RyuJIT AVX2
+  DefaultJob : .NET 10.0.0 (10.0.25.52411), X64 RyuJIT AVX2
+
+*/
 
 namespace AoC;
 
@@ -14,7 +28,9 @@ public static class Solver
         {
             var o = opLine[i];
             if (o == '*' || o == '+')
+            {
                 ops[currOp++] = o;
+            }
         }
         return currOp;
     }
