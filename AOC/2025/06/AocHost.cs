@@ -7,26 +7,26 @@ namespace AoC;
 
 public static class AocHost
 {
-   public static async Task RunAsync(string[] Args, Func<string[], object?> SolvePart1, Func<string[], object?> SolvePart2)
+   public static async Task RunAsync(string[] Args, Func<string[], long> SolvePart1, Func<string[], long> SolvePart2)
     {
-        string? DefaultInputKind = GetDefaultInputKind(SolvePart1.Method);
+        var DefaultInputKind = GetDefaultInputKind(SolvePart1.Method);
         AocConfig Config = AocConfig.Parse(Args, DefaultInputKind);
 
         if (Config.Benchmark)
         {
-            string[] BenchmarkArgs = FilterBenchmarkArgs(Args);
+            var BenchmarkArgs = FilterBenchmarkArgs(Args);
             BenchmarkSwitcher.FromAssembly(typeof(AocHost).Assembly).Run(BenchmarkArgs);
             return;
         }
 
-        string[] Lines = await AocInput.LoadAsync(Config);
-        string? Title = await AocTitle.TryGetTitleAsync(Config);
+        var Lines = await AocInput.LoadAsync(Config);
+        var Title = await AocTitle.TryGetTitleAsync(Config);
 
-        object? Part1Result = SolvePart1(Lines);
-        object? Part2Result = SolvePart2(Lines);
+        var Part1Result = SolvePart1(Lines);
+        var Part2Result = SolvePart2(Lines);
 
-        string? expected1 = GetExpectedResult(SolvePart1.Method, Config.InputKind);
-        string? expected2 = GetExpectedResult(SolvePart2.Method, Config.InputKind);
+        var expected1 = GetExpectedResult(SolvePart1.Method, Config.InputKind);
+        var expected2 = GetExpectedResult(SolvePart2.Method, Config.InputKind);
 
         PrintHeader(Config, Title);
         PrintResult("Part 1", Part1Result, expected1);
