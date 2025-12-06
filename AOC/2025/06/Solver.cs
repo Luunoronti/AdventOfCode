@@ -161,6 +161,12 @@ Intel Core i5-8500 CPU 3.00GHz (Coffee Lake), 1 CPU, 6 logical and 6 physical co
 | Part1  | 23.39 us | 0.063 us | 0.059 us |      24 B |
 | Part2  | 14.52 us | 0.095 us | 0.084 us |      24 B |
 
+| Method | Mean     | Error    | StdDev   | Allocated |
+|------- |---------:|---------:|---------:|----------:|
+| Part1  | 13.87 us | 0.189 us | 0.177 us |      24 B |
+| Part2  | 17.06 us | 0.257 us | 0.240 us |      24 B |
+
+
 1 us      : 1 Microsecond (0.000001 sec)
 
 Intel Core i9-14900KF, 1 CPU, 32 logical and 24 physical cores
