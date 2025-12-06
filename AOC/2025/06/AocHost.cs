@@ -284,10 +284,10 @@ public class AocBenchmarks
     }
 
     [Benchmark]
-    public object? Part1() => Solver.SolvePart1(_lines);
+    public long Part1() => Solver.SolvePart1(_lines);
 
     [Benchmark]
-    public object? Part2() => Solver.SolvePart2(_lines);
+    public long Part2() => Solver.SolvePart2(_lines);
 }
 
 
