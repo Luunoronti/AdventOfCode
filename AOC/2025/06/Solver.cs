@@ -176,4 +176,10 @@ Intel Core i9-14900KF, 1 CPU, 32 logical and 24 physical cores
 | Part2  | 16.62 us | 0.246 us | 0.230 us |      24 B |
 
 
+| Method | Mean     | Error    | StdDev   | Allocated |
+|------- |---------:|---------:|---------:|----------:|
+| Part1  | 13.23 us | 0.073 us | 0.065 us |      24 B |
+| Part2  | 19.31 us | 0.085 us | 0.080 us |      24 B |
+
+
 */
