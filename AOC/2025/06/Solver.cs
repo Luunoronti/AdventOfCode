@@ -84,8 +84,7 @@ public static class Solver
         var currColumPos = 0;
 
         var total = 0L;
-        var partialM = 1L;
-        var partialA = 0L;
+        var partial = ops[currOp] == '*' ? 1L : 0L;
         var num = 0L;
 
         while (currColumPos < width)
@@ -102,25 +101,23 @@ public static class Solver
             if (num == 0)
             {
                 // if partial is > 0, we just finished one column of numbers
-                if (partialA > 0)
+                if (partial > 0)
                 {
-                    num = 0;
-                    total += ops[currOp] == '*' ? partialM : partialA;
-                    partialA = 0;
-                    partialM = 1;
                     currOp++;
+                    num = 0;
+                    total += partial;
+                    partial = ops[currOp] == '*' ? 1L : 0L;
                 }
             }
             else
             {
-                partialM *= num;
-                partialA += num;
+                partial = ops[currOp] == '*' ? partial * num : partial + num;
                 num = 0;
             }
         }
         // last result, as it may be ommited by the loop above
         // (if there was no "empty" column at the end of the file, the "if (num == 0)" would not run)
-        total += ops[currOp] == '*' ? partialM : partialA;
+        total += partial;
 
         return total;
     }
@@ -170,5 +167,13 @@ Intel Core i9-14900KF, 1 CPU, 32 logical and 24 physical cores
 .NET SDK 10.0.100
   [Host]     : .NET 10.0.0 (10.0.25.52411), X64 RyuJIT AVX2
   DefaultJob : .NET 10.0.0 (10.0.25.52411), X64 RyuJIT AVX2
+
+
+
+| Method | Mean     | Error    | StdDev   | Allocated |
+|------- |---------:|---------:|---------:|----------:|
+| Part1  | 13.11 us | 0.146 us | 0.137 us |      24 B |
+| Part2  | 16.62 us | 0.246 us | 0.230 us |      24 B |
+
 
 */
