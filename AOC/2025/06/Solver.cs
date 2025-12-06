@@ -7,8 +7,8 @@ public static class Solver
     [ExpectedResult("live", 4771265398012)]
     public static object? SolvePart1(string[] Lines)
     {
-        //return SolvePart1_C(Lines);
-        return SolvePart1_F(Lines);
+        return SolvePart1_C(Lines);
+        //return SolvePart1_F(Lines);
     }
 
 
@@ -17,7 +17,18 @@ public static class Solver
         var grid = Lines.Select(L => L.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList()).ToList();
         var height = grid.Count;
         var width = grid[0].Count;
-        var transposed = Enumerable.Range(0, width).Select(c => Enumerable.Range(0, height).Select(r => grid[r][c]).ToList()).ToList();
+
+        var transposed = new List<List<string>>();
+        for (var c = 0; c < width; c++)
+        {
+            var l = new List<string>();
+            transposed.Add(l);
+            for (var r = 0; r < height; r++)
+            {
+                l.Add(grid[r][c]);
+            }
+        }
+
         var total = 0L;
 
         foreach (var t in transposed)
@@ -115,8 +126,8 @@ public static class Solver
     [ExpectedResult("live", 10695785245101)]
     public static object? SolvePart2(string[] Lines)
     {
-        //return SolvePart2_C(Lines);
-        return SolvePart2_F(Lines);
+        return SolvePart2_C(Lines);
+        //return SolvePart2_F(Lines);
     }
 
     private static object? SolvePart2_C(string[] Lines)
@@ -125,10 +136,13 @@ public static class Solver
         var width = Lines.Max(L => L.Length);
         var padded = Lines.Select(L => L.PadRight(width)).ToArray();
         var bottom = height - 1;
-        var emptyFlags = Enumerable.Range(0, width).Select(C => padded.All(R => R[C] == ' ')).ToArray();
-        
-        var total = 0L;
+        List<bool> emptyFlags = [];
+        for(var c = 0; c<width; c++)
+        {
+            emptyFlags.Add(padded.All(r => r[c] == ' '));
+        }
 
+        var total = 0L;
         for (var column = 0; column < width;)
         {
             while (column < width && emptyFlags[column]) column++;
