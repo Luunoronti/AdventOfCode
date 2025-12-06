@@ -5,7 +5,7 @@ public static class Solver
 {
     [ExpectedResult("test", 4277556)]
     [ExpectedResult("live", 4771265398012)]
-    public static unsafe object? SolvePart1(string[] Lines)
+    public static object? SolvePart1(string[] Lines)
     {
         // check input's shape (is it rectangular?)
         //var w = Lines[0].Length;
@@ -66,7 +66,7 @@ public static class Solver
 
     [ExpectedResult("test", 3263827)]
     [ExpectedResult("live", 10695785245101)]
-    public static unsafe object? SolvePart2(string[] Lines)
+    public static object? SolvePart2(string[] Lines)
     {
         // we assume rectangle input
         var height = Lines.Length;
