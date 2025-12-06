@@ -93,7 +93,7 @@ public static class Solver
             for (var r = 0; r < numRows; r++)
             {
                 var c = Lines[r][currColumPos];
-                if (char.IsDigit(c))
+                if ('0' <= c && c <= '9')
                     num = (num * 10) + (c - '0');
             }
             currColumPos++;
@@ -167,6 +167,9 @@ Intel Core i9-14900KF, 1 CPU, 32 logical and 24 physical cores
 .NET SDK 10.0.100
   [Host]     : .NET 10.0.0 (10.0.25.52411), X64 RyuJIT AVX2
   DefaultJob : .NET 10.0.0 (10.0.25.52411), X64 RyuJIT AVX2
+
+
+
 
 
 
