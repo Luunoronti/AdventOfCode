@@ -84,7 +84,9 @@ public static class Solver
         var currColumPos = 0;
 
         var total = 0L;
-        var partial = ops[currOp] == '*' ? 1L : 0L;
+        var partialA = 0L;
+        var partialM = 1L;
+        //var partial = ops[currOp] == '*' ? 1L : 0L;
         var num = 0L;
 
         while (currColumPos < width)
@@ -101,23 +103,25 @@ public static class Solver
             if (num == 0)
             {
                 // if partial is > 0, we just finished one column of numbers
-                if (partial > 0)
+                if (partialA > 0)
                 {
-                    currOp++;
+                    total += ops[currOp] == '*' ? partialM : partialA;
                     num = 0;
-                    total += partial;
-                    partial = ops[currOp] == '*' ? 1L : 0L;
+                    currOp++;
+                    partialA = 0L;
+                    partialM = 1L;
                 }
             }
             else
             {
-                partial = ops[currOp] == '*' ? partial * num : partial + num;
+                partialA += num;
+                partialM *= num;
                 num = 0;
             }
         }
         // last result, as it may be ommited by the loop above
         // (if there was no "empty" column at the end of the file, the "if (num == 0)" would not run)
-        total += partial;
+        total += ops[currOp] == '*' ? partialM : partialA;
 
         return total;
     }
