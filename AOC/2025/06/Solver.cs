@@ -31,11 +31,13 @@ public static class Solver
 
         // look for numbers and perform op
         var total = 0L;
-        var partial = 0L;
+        var partialM = 1L;
+        var partialA = 0L;
         var num = 0L;
         for (currOp = 0; currOp < totalOps; currOp++)
         {
-            partial = ops[currOp] == '*' ? 1L : 0L;
+            partialM = 1L;
+            partialA = 0L;
             for (var numR = 0; numR < numRows; numR++)
             {
                 num = 0L;
@@ -55,10 +57,11 @@ public static class Solver
                 columnPos[numR] = cp;
 
                 // perform op
-                partial = ops[currOp] == '*' ? partial * num : partial + num;
+                partialM *= num;
+                partialA += num;
             }
 
-            total += partial;
+            total += ops[currOp] == '*' ? partialM : partialA;
         }
 
         return total;
@@ -81,7 +84,8 @@ public static class Solver
         var currColumPos = 0;
 
         var total = 0L;
-        var partial = ops[currOp] == '*' ? 1L : 0L;
+        var partialM = 1L;
+        var partialA = 0L;
         var num = 0L;
 
         while (currColumPos < width)
@@ -98,23 +102,25 @@ public static class Solver
             if (num == 0)
             {
                 // if partial is > 0, we just finished one column of numbers
-                if (partial > 0)
+                if (partialA > 0)
                 {
-                    currOp++;
                     num = 0;
-                    total += partial;
-                    partial = ops[currOp] == '*' ? 1L : 0L;
+                    total += ops[currOp] == '*' ? partialM : partialA;
+                    partialA = 0;
+                    partialM = 1;
+                    currOp++;
                 }
             }
             else
             {
-                partial = ops[currOp] == '*' ? partial * num : partial + num;
+                partialM *= num;
+                partialA += num;
                 num = 0;
             }
         }
         // last result, as it may be ommited by the loop above
         // (if there was no "empty" column at the end of the file, the "if (num == 0)" would not run)
-        total += partial;
+        total += ops[currOp] == '*' ? partialM : partialA;
 
         return total;
     }
