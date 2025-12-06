@@ -35,7 +35,7 @@ public static class Solver
         // we assume rectangle input for numbers
         var height = Lines.Length;
         var width = Lines[0].Length;
-        var numRows = height - 1; // ops are one char less than num lines
+        var numRows = height - 1; 
 
         // get ops
         Span<char> ops = stackalloc char[width >> 1];
