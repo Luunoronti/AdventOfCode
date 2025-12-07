@@ -114,4 +114,13 @@ Intel Core i9-14900KF, 1 CPU, 32 logical and 24 physical cores
 
 1 us      : 1 Microsecond (0.000001 sec)
 
+
+Intel Core i5-8500 CPU 3.00GHz (Coffee Lake), 1 CPU, 6 logical and 6 physical cores
+
+| Method | Mean      | Error     | StdDev    | Allocated |
+|------- |----------:|----------:|----------:|----------:|
+| Part1  | 0.0371 ms | 0.0002 ms | 0.0002 ms |         - |
+| Part2  | 0.0421 ms | 0.0001 ms | 0.0001 ms |         - |
+
+
 */

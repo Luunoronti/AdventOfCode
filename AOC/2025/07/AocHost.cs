@@ -4,10 +4,8 @@ using System.Reflection;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
-using Perfolizer.Horology;
 namespace AoC;
 
 public static class AocHost
@@ -283,9 +281,7 @@ public class AocBenchmarks
     {
         public AoCConfig()
         {
-            AddColumnProvider(DefaultColumnProviders.Instance);
-            SummaryStyle = SummaryStyle.Default
-                .WithTimeUnit(TimeUnit.Millisecond);
+            AddColumn(MeanMsColumn.Instance);
         }
     }
 
@@ -305,6 +301,35 @@ public class AocBenchmarks
 
     [Benchmark]
     public long Part2() => Solver.SolvePart2(_lines);
+}
+
+public sealed class MeanMsColumn : IColumn
+{
+    public static IColumn Instance { get; } = new MeanMsColumn();
+
+    public string Id => "MeanMs";
+    public string ColumnName => "Mean";
+    public string Legend => "";//"Mean time per op in milliseconds";
+    public bool AlwaysShow => true;
+    public ColumnCategory Category => ColumnCategory.Statistics;
+    public int PriorityInCategory => -10;
+    public bool IsNumeric => true;
+    public UnitType UnitType => UnitType.Time;
+
+    public string GetValue(Summary summary, BenchmarkCase benchmarkCase) => GetValue(summary, benchmarkCase, summary.Style);
+
+    public string GetValue(Summary summary, BenchmarkCase benchmarkCase, SummaryStyle style)
+    {
+        var report = summary[benchmarkCase];
+        var statistics = report?.ResultStatistics;
+        if (statistics == null || double.IsNaN(statistics.Mean)) return "NA";
+        var meanNanoseconds = statistics.Mean;
+        var meanMilliseconds = meanNanoseconds / 1_000_000.0;
+        return $"{meanMilliseconds.ToString("F3", style.CultureInfo)} ms";
+    }
+
+    public bool IsAvailable(Summary summary) => true;
+    public bool IsDefault(Summary summary, BenchmarkCase benchmarkCase) => false;
 }
 
 
