@@ -38,10 +38,10 @@ Intel Core i9-14900KF, 1 CPU, 32 logical and 24 physical cores
 
 
 ## Day 04 - Printing Department
-| Method | Mean     | Mean     | Error   | StdDev  | Median   | Gen0   | Allocated |
-|------- |---------:|---------:|--------:|--------:|---------:|-------:|----------:|
-| Part1  | 0.396 ms | 396.4 us | 1.07 us | 1.00 us | 396.3 us | 1.9531 |  38.33 KB |
-| Part2  | 0.732 ms | 732.3 us | 1.75 us | 1.46 us | 731.9 us | 5.8594 | 114.95 KB |
+| Method | Mean     | Mean     | Error   | StdDev  | Median   | Allocated |
+|------- |---------:|---------:|--------:|--------:|---------:|----------:|
+| Part1  | 0.380 ms | 379.7 us | 0.81 us | 0.68 us | 379.8 us |         - |
+| Part2  | 0.728 ms | 727.6 us | 4.07 us | 3.81 us | 726.1 us |         - |
 
 
 ## Day 03 - Lobby

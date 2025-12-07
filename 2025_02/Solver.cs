@@ -2,6 +2,7 @@ using System;
 
 namespace AoC;
 
+[DefaultInput("live")]
 public static class Solver
 {
     private static readonly long[] Pow10 = BuildPow10();
@@ -46,7 +47,13 @@ public static class Solver
     public static long SolvePart2(string[] Lines)
     {
         ReadOnlySpan<char> Line = Lines[0].AsSpan();
-        var InvalidIds = new HashSet<long>();
+
+        Span<long> keys = stackalloc long[1024];
+        Span<byte> states = stackalloc byte[1024];
+        states.Clear();
+        keys.Clear();
+
+        var InvalidIds = new SpanHashSetLong(keys, states);
 
         int Pos = 0;
         while (Pos < Line.Length)
@@ -74,14 +81,14 @@ public static class Solver
         }
 
         long Sum = 0;
-        foreach (long Value in InvalidIds)
-            Sum += Value;
+        for (var i = 0; i < keys.Length; i++)
+            Sum += keys[i];
 
         return Sum;
     }
 
 
-    private static void AddInvalidIdsInRange(long Start, long End, HashSet<long> InvalidIds)
+    private static void AddInvalidIdsInRange(long Start, long End, SpanHashSetLong InvalidIds)
     {
         if (Start > End)
             return;
@@ -195,4 +202,97 @@ public static class Solver
     {
         return (Numerator + Denominator - 1) / Denominator;
     }
+
+
+
+
+    public ref struct SpanHashSetLong
+    {
+        private Span<long> Keys;
+        private Span<byte> States;
+        private int CountValue;
+
+        public SpanHashSetLong(Span<long> keys, Span<byte> states)
+        {
+            if (keys.Length != states.Length) throw new ArgumentException();
+            Keys = keys;
+            States = states;
+            CountValue = 0;
+            States.Clear();
+        }
+
+        public int Count => CountValue;
+        public int Capacity => Keys.Length;
+
+        public bool Add(long value)
+        {
+            var length = Keys.Length;
+            if (length == 0) return false;
+
+            var index = GetIndex(value, length);
+
+            for (var i = 0; i < length; i++)
+            {
+                var slot = index + i;
+                if (slot >= length) slot -= length;
+
+                var state = States[slot];
+                if (state == 0)
+                {
+                    Keys[slot] = value;
+                    States[slot] = 1;
+                    CountValue++;
+                    return true;
+                }
+
+                if (state == 1 && Keys[slot] == value)
+                    return false;
+            }
+
+            return false;
+        }
+
+        public bool Contains(long value)
+        {
+            var length = Keys.Length;
+            if (length == 0) return false;
+
+            var index = GetIndex(value, length);
+
+            for (var i = 0; i < length; i++)
+            {
+                var slot = index + i;
+                if (slot >= length) slot -= length;
+
+                var state = States[slot];
+                if (state == 0)
+                    return false;
+
+                if (state == 1 && Keys[slot] == value)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public void Clear()
+        {
+            States.Clear();
+            CountValue = 0;
+        }
+
+        private static int GetIndex(long value, int length)
+        {
+            var hash = unchecked((int)value ^ (int)(value >> 32));
+            hash ^= hash >> 16;
+            hash *= 0x7feb352d;
+            hash ^= hash >> 15;
+            hash = (int)(hash * 0x846ca68b);
+            hash ^= hash >> 16;
+            return (hash & 0x7fffffff) % length;
+        }
+    }
+
+
+
 }
