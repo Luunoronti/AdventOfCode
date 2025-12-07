@@ -289,20 +289,28 @@ public class AocBenchmarks
     }
 
     private string[] _lines = Array.Empty<string>();
-
+    AoCConfig config;
     [GlobalSetup]
     public async Task Setup()
     {
         // Uses template defaults (AOC_YEAR / AOC_DAY),
-        var config = AocConfig.Parse(Array.Empty<string>());
-        _lines = await AocInput.LoadAsync(config);
+        config = AocConfig.Parse(Array.Empty<string>());
+        //_lines = await AocInput.LoadAsync(config);
     }
 
     [Benchmark]
-    public long Part1() => Solver.SolvePart1(_lines);
+    public long Part1()
+    {
+        var lines = await AocInput.LoadAsync(config)
+        Solver.SolvePart1(lines);
+    }
 
     [Benchmark]
-    public long Part2() => Solver.SolvePart2(_lines);
+    public long Part2() 
+    {
+        var lines = await AocInput.LoadAsync(config)
+        Solver.SolvePart2(lines);
+    }
 }
 
 public sealed class MeanMsColumn : IColumn
