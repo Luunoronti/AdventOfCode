@@ -38,11 +38,13 @@ Table 2: Intel Core i5-8500 CPU 3.00GHz (Coffee Lake), 1 CPU, 6 logical and 6 ph
 
 
 ## Day 04 - Printing Department
+Intel Core i9-14900KF:
 | Method | Mean     | Mean     | Error   | StdDev  | Median   | Allocated |
 |------- |---------:|---------:|--------:|--------:|---------:|----------:|
 | Part1  | 0.380 ms | 379.7 us | 0.81 us | 0.68 us | 379.8 us |         - |
 | Part2  | 0.728 ms | 727.6 us | 4.07 us | 3.81 us | 726.1 us |         - |
 
+Intel Core i5-8500:
 | Method | Mean     | Mean       | Error   | StdDev  | Median     | Allocated |
 |------- |---------:|-----------:|--------:|--------:|-----------:|----------:|
 | Part1  | 0.795 ms |   795.3 us | 0.71 us | 0.66 us |   795.3 us |         - |
