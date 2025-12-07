@@ -102,3 +102,16 @@ public static class Solver
         return completedTimelines;
     }
 }
+
+/*
+ 
+Intel Core i9-14900KF, 1 CPU, 32 logical and 24 physical cores
+
+| Method | Mean      | Error     | StdDev    | Allocated |
+|------- |----------:|----------:|----------:|----------:|
+| Part1  |  8.117 us | 0.0313 us | 0.0292 us |         - |
+| Part2  | 13.923 us | 0.0191 us | 0.0179 us |         - |
+
+1 us      : 1 Microsecond (0.000001 sec)
+
+*/
