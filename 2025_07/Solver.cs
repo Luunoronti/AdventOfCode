@@ -3,7 +3,7 @@ namespace AoC;
 using System;
 using System.Runtime.InteropServices;
 
-[DefaultInput("test")]
+[DefaultInput("live")]
 public static class Solver
 {
     const uint GenericRead = 0x80000000;
