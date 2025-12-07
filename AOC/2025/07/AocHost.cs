@@ -1,8 +1,13 @@
-using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Running;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Reflection;
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Columns;
+using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Jobs;
+using BenchmarkDotNet.Reports;
+using BenchmarkDotNet.Running;
+using Perfolizer.Horology;
 namespace AoC;
 
 public static class AocHost
@@ -15,7 +20,7 @@ public static class AocHost
         if (Config.Benchmark)
         {
             var BenchmarkArgs = FilterBenchmarkArgs(Args);
-            BenchmarkSwitcher.FromAssembly(typeof(AocHost).Assembly).Run(BenchmarkArgs);
+            BenchmarkRunner.Run<AocBenchmarks>(args: BenchmarkArgs);
             return;
         }
 
@@ -270,9 +275,21 @@ public static class AocInput
 // BenchmarkDotNet harness
 // --------------------------------------------------
 
+[Config(typeof(AoCConfig))]
 [MemoryDiagnoser]
 public class AocBenchmarks
 {
+    private class AoCConfig : ManualConfig
+    {
+        public AoCConfig()
+        {
+            AddColumnProvider(DefaultColumnProviders.Instance);
+            SummaryStyle = SummaryStyle.Default
+                .WithTimeUnit(TimeUnit.Millisecond);
+        }
+    }
+
+
     private string[] _lines = Array.Empty<string>();
 
     [GlobalSetup]
