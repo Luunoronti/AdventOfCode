@@ -81,7 +81,7 @@ public static class Solver
 
         PrepareMaps(lines, sizeX, sizeY, size, rolls, counts);
 
-        Span<int> buffer = stackalloc int[size]; // max capacity
+        Span<int> buffer = stackalloc int[size];
         var queue = new SpanQueue<int>(buffer);
 
 
@@ -93,7 +93,7 @@ public static class Solver
 
         int removed = 0;
 
-        while (queue.Count > 0)
+        while (!queue.IsEmpty)
         {
             var idx = queue.Dequeue();
             if (!rolls[idx])
