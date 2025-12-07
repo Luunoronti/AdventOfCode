@@ -16,7 +16,7 @@ Table 2: Intel Core i5-8500 CPU 3.00GHz (Coffee Lake), 1 CPU, 6 logical and 6 ph
 <br/>
 
 
-## Day 07 - Laboratories
+## Day 7 - Laboratories
 Intel Core i9-14900KF:
 | Method | Mean     | Mean      | Error     | StdDev    | Median    | Allocated |
 |------- |---------:|----------:|----------:|----------:|----------:|----------:|
@@ -31,7 +31,7 @@ Intel Core i5-8500:
 
 <br/>
 
-## Day 06 - Trash Compactor
+## Day 6 - Trash Compactor
 Intel Core i9-14900KF:
 | Method | Mean     | Mean     | Error    | StdDev   | Median   | Allocated |
 |------- |---------:|---------:|---------:|---------:|---------:|----------:|
@@ -46,7 +46,7 @@ Intel Core i5-8500:
 
 <br/>
 
-## Day 05 - Cafeteria
+## Day 5 - Cafeteria
 Intel Core i9-14900KF:
 | Method | Mean     | Mean      | Error     | StdDev    | Median    | Gen0   | Allocated |
 |------- |---------:|----------:|----------:|----------:|----------:|-------:|----------:|
@@ -61,7 +61,7 @@ Intel Core i5-8500:
 
 <br/>
 
-## Day 04 - Printing Department
+## Day 4 - Printing Department
 Intel Core i9-14900KF:
 | Method | Mean     | Mean     | Error   | StdDev  | Median   | Allocated |
 |------- |---------:|---------:|--------:|--------:|---------:|----------:|
@@ -76,7 +76,7 @@ Intel Core i5-8500:
 
 <br/>
 
-## Day 03 - Lobby
+## Day 3 - Lobby
 Intel Core i9-14900KF:
 | Method | Mean     | Mean     | Error    | StdDev   | Median   | Gen0    | Allocated |
 |------- |---------:|---------:|---------:|---------:|---------:|--------:|----------:|
@@ -91,7 +91,7 @@ Intel Core i5-8500:
 
 <br/>
 
-## Day 02 - Gift Shop
+## Day 2 - Gift Shop
 Intel Core i9-14900KF:
 
 | Method | Mean     | Mean     | Error     | StdDev    | Median   | Allocated |
@@ -107,7 +107,7 @@ Intel Core i5-8500:
 
 <br/>
 
-## Day 01 - Secret Entrance
+## Day 1 - Secret Entrance
 Intel Core i9-14900KF:
 | Method | Mean     | Mean     | Error     | StdDev    | Median   | Allocated |
 |------- |---------:|---------:|----------:|----------:|---------:|----------:|
