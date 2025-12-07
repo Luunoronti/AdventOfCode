@@ -1,4 +1,4 @@
-# Advent Of Code 2025 Timings
+# Advent Of Code 2025 Benchmarks
 
 ### Software: 
 BenchmarkDotNet v0.13.12
