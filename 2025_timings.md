@@ -17,15 +17,38 @@ Intel Core i9-14900KF, 1 CPU, 32 logical and 24 physical cores
 
 
 ## Day 07 - Laboratories
-
 | Method | Mean     | Mean      | Error     | StdDev    | Median    | Allocated |
 |------- |---------:|----------:|----------:|----------:|----------:|----------:|
 | Part1  | 0.010 ms |  9.858 us | 0.4967 us | 0.7434 us |  9.896 us |         - |
 | Part2  | 0.012 ms | 11.964 us | 1.1914 us | 1.7087 us | 10.527 us |         - |
 
 
-## Day 03 - Lobby
+## Day 06 - Trash Compactor
+| Method | Mean     | Mean     | Error    | StdDev   | Median   | Allocated |
+|------- |---------:|---------:|---------:|---------:|---------:|----------:|
+| Part1  | 0.015 ms | 15.29 us | 0.085 us | 0.079 us | 15.29 us |         - |
+| Part2  | 0.016 ms | 15.71 us | 0.052 us | 0.048 us | 15.71 us |         - |
 
+
+## Day 05 - Cafeteria
+| Method | Mean     | Mean      | Error     | StdDev    | Median    | Gen0   | Allocated |
+|------- |---------:|----------:|----------:|----------:|----------:|-------:|----------:|
+| Part1  | 0.023 ms | 22.717 us | 0.0771 us | 0.0643 us | 22.696 us | 1.1597 |  21.46 KB |
+| Part2  | 0.005 ms |  5.376 us | 0.0174 us | 0.0155 us |  5.379 us | 1.1673 |  21.46 KB |
+
+
+## Day 04 - Printing Department
+| Method | Mean     | Mean     | Error   | StdDev  | Median   | Gen0   | Allocated |
+|------- |---------:|---------:|--------:|--------:|---------:|-------:|----------:|
+| Part1  | 0.396 ms | 396.4 us | 1.07 us | 1.00 us | 396.3 us | 1.9531 |  38.33 KB |
+| Part2  | 0.732 ms | 732.3 us | 1.75 us | 1.46 us | 731.9 us | 5.8594 | 114.95 KB |
+
+
+## Day 03 - Lobby
+| Method | Mean     | Mean     | Error    | StdDev   | Median   | Gen0    | Allocated |
+|------- |---------:|---------:|---------:|---------:|---------:|--------:|----------:|
+| Part1  | 0.012 ms | 12.32 us | 0.072 us | 0.064 us | 12.29 us |       - |         - |
+| Part2  | 0.090 ms | 90.08 us | 0.817 us | 0.765 us | 90.11 us | 25.7568 |  485256 B |
 
 
 ## Day 02 - Gift Shop
