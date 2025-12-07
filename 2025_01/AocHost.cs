@@ -4,6 +4,7 @@ using System.Reflection;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
 namespace AoC;
@@ -281,6 +282,8 @@ public class AocBenchmarks
     {
         public AoCConfig()
         {
+            AddColumn(StatisticColumn.Mean, StatisticColumn.Error, StatisticColumn.StdDev, StatisticColumn.Median);
+            AddDiagnoser(MemoryDiagnoser.Default);
             AddColumn(MeanMsColumn.Instance);
         }
     }
