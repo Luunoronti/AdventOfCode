@@ -11,7 +11,7 @@ Windows 11 (10.0.26100.7171)
 Intel Core i9-14900KF, 1 CPU, 32 logical and 24 physical cores
 
 
-> All tinimgs ran with ```--job Medium``` option
+> All tinimgs ran in-process with default job.
 
 <br/>
 
