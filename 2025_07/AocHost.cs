@@ -291,7 +291,7 @@ public class AocBenchmarks
 
     private string[] _lines = Array.Empty<string>();
     //private AocConfig config;
-    string filePath;
+    string filePath = string.Empty;
     [GlobalSetup]
     public async Task Setup()
     {
