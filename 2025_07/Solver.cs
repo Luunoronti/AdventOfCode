@@ -112,68 +112,81 @@ public static class Solver
             active = next;
             next = temp;
         }
-
         return splits;
-
-
-        //// dimensions
-        //var height = Lines.Length;
-        //var width = Lines[0].Length;
-
-        //// look for start position
-        //var startColumn = 0;
-        //var line = Lines[0].AsSpan();
-        //while (startColumn < height && line[startColumn++] != 'S') ;
-        //startColumn--;
-
-        //// state
-        //Span<byte> active = stackalloc byte[width];
-        //Span<byte> next = stackalloc byte[width];
-        //var splits = 0L;
-
-        //// initialize beam
-        //active.Clear();
-        //active[startColumn] = 1;
-
-        //// cascade the beam down
-        //for (var row = 1; row < height; row++)
-        //{
-        //    next.Clear();
-        //    line = Lines[row].AsSpan();
-
-        //    // look for splitters
-        //    for (var col = 0; col < width; col++)
-        //    {
-        //        // there is no beam in this cell, so we have nothing to do
-        //        if (active[col] == 0) continue;
-
-        //        // no splitter here, so we just let the beam travel
-        //        if (line[col] != '^')
-        //        {
-        //            next[col] = 1;
-        //            continue;
-        //        }
-
-        //        // there is a split. record it
-        //        splits++;
-
-        //        // and spawn two new beams, to the left and right
-        //        if (col > 0) next[col - 1] = 1;
-        //        if (col + 1 < width) next[col + 1] = 1;
-        //    }
-
-        //    // swap active row and next row
-        //    var temp = active;
-        //    active = next;
-        //    next = temp;
-        //}
-        //return splits;
     }
 
     [ExpectedResult("test", 40)]
     [ExpectedResult("live", 171692855075500)]
-    public static long SolvePart2(string FilePath)
+    public static unsafe long SolvePart2(string FilePath)
     {
+        var Handle = CreateFileW(FilePath, GenericRead, FileShareRead, IntPtr.Zero, OpenExisting, FileAttributeNormal, IntPtr.Zero);
+        if (Handle == InvalidHandleValue) throw new InvalidOperationException("CreateFile failed");
+        Span<byte> Buffer = stackalloc byte[64 * 1024];
+        int TotalRead = 0;
+
+        // this routine is simple, because we can fit the whole file into the buffer
+        // should this be to big for stack, we would have to process the file line by line
+        // pr chunk by chunk
+        fixed (byte* Pointer = Buffer)
+        {
+            while (true)
+            {
+                if (!ReadFile(Handle, Pointer, Buffer.Length, out var Read, IntPtr.Zero)) throw new InvalidOperationException("ReadFile failed");
+                if (Read == 0) break;
+                TotalRead += Read;
+            }
+        }
+        if (!CloseHandle(Handle)) throw new InvalidOperationException("CloseHandle failed");
+
+        (var width, var fullWidth, var height) = GetRectangularBufferDimensions(Buffer[..TotalRead]);
+
+        var startColumn = 0;
+        while (startColumn < height && Buffer[startColumn++] != StartLocMarker) ;
+        startColumn--;
+
+        Span<long> active = stackalloc long[width];
+        Span<long> next = stackalloc long[width];
+        var completedTimelines = 0L;
+
+        active.Clear();
+        next.Clear();
+        active[startColumn] = 1;
+
+        for (var row = 2; row < height; row += 2)
+        {
+            next.Clear();
+            var line = Buffer[(row * fullWidth)..(width + (row * fullWidth))];
+
+            for (var col = 0; col < width; col++)
+            {
+                var count = active[col];
+                // there is no beam in this cell, so we have nothing to do
+                if (count == 0)
+                    continue;
+
+                // no splitter here, so we just let the beam travel
+                if (line[col] != '^')
+                {
+                    next[col] += count;
+                    continue;
+                }
+
+                if (col > 0) next[col - 1] += count;
+                else completedTimelines += count;
+
+                if (col + 1 < width) next[col + 1] += count;
+                else completedTimelines += count;
+            }
+            var temp = active;
+            active = next;
+            next = temp;
+        }
+        for (var col = 0; col < width; col++)
+            completedTimelines += active[col];
+
+        return completedTimelines;
+
+
         //var height = Lines.Length;
         //var width = Lines[0].Length;
 
