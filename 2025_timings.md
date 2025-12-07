@@ -29,3 +29,16 @@ Intel Core i9-14900KF, 1 CPU, 32 logical and 24 physical cores
 |------- |---------:|---------:|----------:|----------:|---------:|----------:|
 | Part1  | 0.004 ms | 3.664 us | 0.0091 us | 0.0085 us | 3.662 us |         - |
 | Part2  | 0.005 ms | 5.161 us | 0.0193 us | 0.0181 us | 5.160 us |         - |
+
+
+
+### Legend
+| Column | Description  |
+|------- |---------|
+| Mean  | Arithmetic mean of all measurements |
+| Error | Half of 99.9% confidence interval |
+| StdDev | Standard deviation of all measurements |
+| Median  | Value separating the higher half of all measurements (50th percentile) |
+| Allocated | Allocated memory per single operation (managed only, inclusive, 1KB = 1024B) |
+
+  1 us      : 1 Microsecond (0.000001 sec)
