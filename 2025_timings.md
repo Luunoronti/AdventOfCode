@@ -8,7 +8,9 @@ BenchmarkDotNet v0.13.12
 Windows 11 (10.0.26100.7171)
 
 ### Hardware: 
-Intel Core i9-14900KF, 1 CPU, 32 logical and 24 physical cores
+Table 1: Intel Core i9-14900KF, 1 CPU, 32 logical and 24 physical cores
+<br/>
+Table 2: Intel Core i5-8500 CPU 3.00GHz (Coffee Lake), 1 CPU, 6 logical and 6 physical cores
 
 
 <br/>
@@ -40,6 +42,11 @@ Intel Core i9-14900KF, 1 CPU, 32 logical and 24 physical cores
 |------- |---------:|---------:|--------:|--------:|---------:|----------:|
 | Part1  | 0.380 ms | 379.7 us | 0.81 us | 0.68 us | 379.8 us |         - |
 | Part2  | 0.728 ms | 727.6 us | 4.07 us | 3.81 us | 726.1 us |         - |
+
+| Method | Mean     | Mean       | Error   | StdDev  | Median     | Allocated |
+|------- |---------:|-----------:|--------:|--------:|-----------:|----------:|
+| Part1  | 0.795 ms |   795.3 us | 0.71 us | 0.66 us |   795.3 us |         - |
+| Part2  | 1.416 ms | 1,416.3 us | 3.61 us | 3.37 us | 1,416.1 us |         - |
 
 
 ## Day 03 - Lobby
