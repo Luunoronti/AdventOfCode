@@ -25,7 +25,7 @@ Intel Core i9-14900KF, 1 CPU, 32 logical and 24 physical cores
 
 
 ## Day 01 - Secret Entrance
-| Method | Mean     | Mean     | Error     | StdDev    | Allocated |
-|------- |---------:|---------:|----------:|----------:|----------:|
-| Part1  | 0.003 ms | 2.849 us | 0.0066 us | 0.0061 us |         - |
-| Part2  | 0.004 ms | 4.381 us | 0.0165 us | 0.0154 us |         - |
+| Method | Mean     | Mean     | Error     | StdDev    | Median   | Allocated |
+|------- |---------:|---------:|----------:|----------:|---------:|----------:|
+| Part1  | 0.004 ms | 3.664 us | 0.0091 us | 0.0085 us | 3.662 us |         - |
+| Part2  | 0.005 ms | 5.161 us | 0.0193 us | 0.0181 us | 5.160 us |         - |
