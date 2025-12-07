@@ -66,10 +66,17 @@ Intel Core i5-8500:
 
 
 ## Day 01 - Secret Entrance
+Intel Core i9-14900KF:
 | Method | Mean     | Mean     | Error     | StdDev    | Median   | Allocated |
 |------- |---------:|---------:|----------:|----------:|---------:|----------:|
 | Part1  | 0.004 ms | 3.664 us | 0.0091 us | 0.0085 us | 3.662 us |         - |
 | Part2  | 0.005 ms | 5.161 us | 0.0193 us | 0.0181 us | 5.160 us |         - |
+
+Intel Core i5-8500:
+| Method | Mean     | Mean     | Error    | StdDev   | Median   | Allocated |
+|------- |---------:|---------:|---------:|---------:|---------:|----------:|
+| Part1  | 0.021 ms | 20.87 us | 0.115 us | 0.102 us | 20.86 us |         - |
+| Part2  | 0.026 ms | 26.18 us | 0.167 us | 0.156 us | 26.21 us |         - |
 
 
 <br/>
