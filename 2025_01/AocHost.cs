@@ -145,8 +145,8 @@ public sealed class AocConfig
     public static AocConfig Parse(string[] args, string? DefaultInputKind = null)
     {
         // Defaults baked into the template (replaced by dotnet new)
-        int year = AOC_YEAR;
-        int day = AOC_DAY;
+        int year = 2025;
+        int day = 1;
 
         string InputKind = string.IsNullOrEmpty(DefaultInputKind) ? "live" : DefaultInputKind;
         string? inputFileOverride = null;
@@ -290,7 +290,7 @@ public class AocBenchmarks
     [GlobalSetup]
     public async Task Setup()
     {
-        // Uses template defaults (AOC_YEAR / AOC_DAY),
+        // Uses template defaults (2025 / 1),
         var config = AocConfig.Parse(Array.Empty<string>());
         _lines = await AocInput.LoadAsync(config);
     }
