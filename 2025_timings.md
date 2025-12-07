@@ -30,6 +30,7 @@ Intel Core i5-8500:
 | Part2  | 0.042 ms | 42.31 us | 0.109 us | 0.102 us | 42.32 us |         - |
 
 <br/>
+
 ## Day 06 - Trash Compactor
 Intel Core i9-14900KF:
 | Method | Mean     | Mean     | Error    | StdDev   | Median   | Allocated |
@@ -44,6 +45,7 @@ Intel Core i5-8500:
 | Part2  | 0.042 ms | 42.27 us | 0.228 us | 0.214 us | 42.28 us |         - |
 
 <br/>
+
 ## Day 05 - Cafeteria
 Intel Core i9-14900KF:
 | Method | Mean     | Mean      | Error     | StdDev    | Median    | Gen0   | Allocated |
@@ -58,6 +60,7 @@ Intel Core i5-8500:
 | Part2  | 0.016 ms | 16.31 us | 0.234 us | 0.219 us | 16.30 us | 4.6692 |  21.46 KB |
 
 <br/>
+
 ## Day 04 - Printing Department
 Intel Core i9-14900KF:
 | Method | Mean     | Mean     | Error   | StdDev  | Median   | Allocated |
@@ -72,6 +75,7 @@ Intel Core i5-8500:
 | Part2  | 1.416 ms | 1,416.3 us | 3.61 us | 3.37 us | 1,416.1 us |         - |
 
 <br/>
+
 ## Day 03 - Lobby
 Intel Core i9-14900KF:
 | Method | Mean     | Mean     | Error    | StdDev   | Median   | Gen0    | Allocated |
@@ -86,6 +90,7 @@ Intel Core i5-8500:
 | Part2  | 0.149 ms | 148.73 us | 2.810 us | 2.491 us | 148.05 us | 103.0273 | 0.2441 |  485256 B |
 
 <br/>
+
 ## Day 02 - Gift Shop
 Intel Core i9-14900KF:
 
@@ -101,6 +106,7 @@ Intel Core i5-8500:
 | Part2  | 0.010 ms | 9.848 us | 0.0574 us | 0.0509 us | 9.844 us |         - |
 
 <br/>
+
 ## Day 01 - Secret Entrance
 Intel Core i9-14900KF:
 | Method | Mean     | Mean     | Error     | StdDev    | Median   | Allocated |
