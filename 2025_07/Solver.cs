@@ -29,8 +29,7 @@ public static class Solver
         if (NewLineIndex < 0) return (Data.Length, Data.Length, 1);
         var HasCarriageReturn = NewLineIndex > 0 && Data[NewLineIndex - 1] == (byte)'\r';
         var Width = HasCarriageReturn ? NewLineIndex - 1 : NewLineIndex;
-        var NewLineLength = HasCarriageReturn ? 2 : 1;
-        var FullWidth = Width + NewLineLength;
+        var FullWidth = Width + (HasCarriageReturn ? 2 : 1);
         var Length = Data.Length;
         if (Length % FullWidth == 0)
         {
@@ -51,8 +50,8 @@ public static class Solver
     {
         var Handle = CreateFileW(FilePath, GenericRead, FileShareRead, IntPtr.Zero, OpenExisting, FileAttributeNormal, IntPtr.Zero);
         if (Handle == InvalidHandleValue) throw new InvalidOperationException("CreateFile failed");
-        Span<byte> Buffer = stackalloc byte[64 * 1024];
-        int TotalRead = 0;
+        ReadOnlySpan<byte> Buffer = stackalloc byte[64 * 1024];
+        var TotalRead = 0;
 
         // this routine is simple, because we can fit the whole file into the buffer
         // should this be to big for stack, we would have to process the file line by line
@@ -121,8 +120,8 @@ public static class Solver
     {
         var Handle = CreateFileW(FilePath, GenericRead, FileShareRead, IntPtr.Zero, OpenExisting, FileAttributeNormal, IntPtr.Zero);
         if (Handle == InvalidHandleValue) throw new InvalidOperationException("CreateFile failed");
-        Span<byte> Buffer = stackalloc byte[64 * 1024];
-        int TotalRead = 0;
+        ReadOnlySpan<byte> Buffer = stackalloc byte[64 * 1024];
+        var TotalRead = 0;
 
         // this routine is simple, because we can fit the whole file into the buffer
         // should this be to big for stack, we would have to process the file line by line
