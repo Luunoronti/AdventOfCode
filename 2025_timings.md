@@ -17,24 +17,45 @@ Table 2: Intel Core i5-8500 CPU 3.00GHz (Coffee Lake), 1 CPU, 6 logical and 6 ph
 
 
 ## Day 07 - Laboratories
+Intel Core i9-14900KF:
 | Method | Mean     | Mean      | Error     | StdDev    | Median    | Allocated |
 |------- |---------:|----------:|----------:|----------:|----------:|----------:|
 | Part1  | 0.010 ms |  9.858 us | 0.4967 us | 0.7434 us |  9.896 us |         - |
 | Part2  | 0.012 ms | 11.964 us | 1.1914 us | 1.7087 us | 10.527 us |         - |
 
+Intel Core i5-8500:
+| Method | Mean     | Mean     | Error    | StdDev   | Median   | Allocated |
+|------- |---------:|---------:|---------:|---------:|---------:|----------:|
+| Part1  | 0.037 ms | 37.16 us | 0.143 us | 0.111 us | 37.12 us |         - |
+| Part2  | 0.042 ms | 42.31 us | 0.109 us | 0.102 us | 42.32 us |         - |
+
 
 ## Day 06 - Trash Compactor
+Intel Core i9-14900KF:
 | Method | Mean     | Mean     | Error    | StdDev   | Median   | Allocated |
 |------- |---------:|---------:|---------:|---------:|---------:|----------:|
 | Part1  | 0.015 ms | 15.29 us | 0.085 us | 0.079 us | 15.29 us |         - |
 | Part2  | 0.016 ms | 15.71 us | 0.052 us | 0.048 us | 15.71 us |         - |
 
+Intel Core i5-8500:
+| Method | Mean     | Mean     | Error    | StdDev   | Median   | Allocated |
+|------- |---------:|---------:|---------:|---------:|---------:|----------:|
+| Part1  | 0.055 ms | 54.69 us | 0.128 us | 0.120 us | 54.70 us |         - |
+| Part2  | 0.042 ms | 42.27 us | 0.228 us | 0.214 us | 42.28 us |         - |
+
 
 ## Day 05 - Cafeteria
+Intel Core i9-14900KF:
 | Method | Mean     | Mean      | Error     | StdDev    | Median    | Gen0   | Allocated |
 |------- |---------:|----------:|----------:|----------:|----------:|-------:|----------:|
 | Part1  | 0.023 ms | 22.717 us | 0.0771 us | 0.0643 us | 22.696 us | 1.1597 |  21.46 KB |
 | Part2  | 0.005 ms |  5.376 us | 0.0174 us | 0.0155 us |  5.379 us | 1.1673 |  21.46 KB |
+
+Intel Core i5-8500:
+| Method | Mean     | Mean     | Error    | StdDev   | Median   | Gen0   | Allocated |
+|------- |---------:|---------:|---------:|---------:|---------:|-------:|----------:|
+| Part1  | 0.073 ms | 72.92 us | 0.338 us | 0.316 us | 72.86 us | 4.6387 |  21.46 KB |
+| Part2  | 0.016 ms | 16.31 us | 0.234 us | 0.219 us | 16.30 us | 4.6692 |  21.46 KB |
 
 
 ## Day 04 - Printing Department
@@ -52,25 +73,40 @@ Intel Core i5-8500:
 
 
 ## Day 03 - Lobby
+Intel Core i9-14900KF:
 | Method | Mean     | Mean     | Error    | StdDev   | Median   | Gen0    | Allocated |
 |------- |---------:|---------:|---------:|---------:|---------:|--------:|----------:|
 | Part1  | 0.012 ms | 12.32 us | 0.072 us | 0.064 us | 12.29 us |       - |         - |
 | Part2  | 0.090 ms | 90.08 us | 0.817 us | 0.765 us | 90.11 us | 25.7568 |  485256 B |
 
+Intel Core i5-8500:
+| Method | Mean     | Mean      | Error    | StdDev   | Median    | Gen0     | Gen1   | Allocated |
+|------- |---------:|----------:|---------:|---------:|----------:|---------:|-------:|----------:|
+| Part1  | 0.034 ms |  34.21 us | 0.072 us | 0.068 us |  34.21 us |        - |      - |         - |
+| Part2  | 0.149 ms | 148.73 us | 2.810 us | 2.491 us | 148.05 us | 103.0273 | 0.2441 |  485256 B |
+
 
 ## Day 02 - Gift Shop
+Intel Core i9-14900KF:
+
 | Method | Mean     | Mean     | Error     | StdDev    | Median   | Allocated |
 |------- |---------:|---------:|----------:|----------:|---------:|----------:|
 | Part1  | 0.001 ms | 1.298 us | 0.0028 us | 0.0026 us | 1.299 us |         - |
 | Part2  | 0.003 ms | 3.278 us | 0.0092 us | 0.0086 us | 3.280 us |         - |
+
+Intel Core i5-8500:
+| Method | Mean     | Mean     | Error     | StdDev    | Median   | Allocated |
+|------- |---------:|---------:|----------:|----------:|---------:|----------:|
+| Part1  | 0.003 ms | 2.971 us | 0.0123 us | 0.0115 us | 2.969 us |         - |
+| Part2  | 0.010 ms | 9.848 us | 0.0574 us | 0.0509 us | 9.844 us |         - |
 
 
 ## Day 01 - Secret Entrance
 Intel Core i9-14900KF:
 | Method | Mean     | Mean     | Error     | StdDev    | Median   | Allocated |
 |------- |---------:|---------:|----------:|----------:|---------:|----------:|
-| Part1  | 0.004 ms | 3.664 us | 0.0091 us | 0.0085 us | 3.662 us |         - |
-| Part2  | 0.005 ms | 5.161 us | 0.0193 us | 0.0181 us | 5.160 us |         - |
+| Part1  | 0.004 ms | 3.704 us | 0.0097 us | 0.0091 us | 3.702 us |         - |
+| Part2  | 0.004 ms | 3.778 us | 0.0132 us | 0.0124 us | 3.780 us |         - |
 
 Intel Core i5-8500:
 | Method | Mean     | Mean     | Error    | StdDev   | Median   | Allocated |
