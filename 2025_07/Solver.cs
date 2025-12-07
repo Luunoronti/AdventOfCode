@@ -55,7 +55,7 @@ public static class Solver
 
         // this routine is simple, because we can fit the whole file into the buffer
         // should this be to big for stack, we would have to process the file line by line
-        // pr chunk by chunk
+        // or chunk by chunk
         fixed (byte* Pointer = Buffer)
         {
             while (true)
@@ -66,6 +66,8 @@ public static class Solver
             }
         }
         if (!CloseHandle(Handle)) throw new InvalidOperationException("CloseHandle failed");
+
+        if (TotalRead == 0) throw new InvalidOperationException("Input file is empty");
 
         (var width, var fullWidth, var height) = GetRectangularBufferDimensions(Buffer[..TotalRead]);
 
@@ -125,7 +127,7 @@ public static class Solver
 
         // this routine is simple, because we can fit the whole file into the buffer
         // should this be to big for stack, we would have to process the file line by line
-        // pr chunk by chunk
+        // or chunk by chunk
         fixed (byte* Pointer = Buffer)
         {
             while (true)
@@ -136,6 +138,8 @@ public static class Solver
             }
         }
         if (!CloseHandle(Handle)) throw new InvalidOperationException("CloseHandle failed");
+
+        if (TotalRead == 0) throw new InvalidOperationException("Input file is empty");
 
         (var width, var fullWidth, var height) = GetRectangularBufferDimensions(Buffer[..TotalRead]);
 
