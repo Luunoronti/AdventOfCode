@@ -24,6 +24,15 @@ Intel Core i9-14900KF, 1 CPU, 32 logical and 24 physical cores
 | Part2  | 0.012 ms | 11.964 us | 1.1914 us | 1.7087 us | 10.527 us |         - |
 
 
+## Day 03 - Lobby
+
+
+
+## Day 02 - Gift Shop
+| Method | Mean     | Mean     | Error     | StdDev    | Median   | Gen0   | Gen1   | Allocated |
+|------- |---------:|---------:|----------:|----------:|---------:|-------:|-------:|----------:|
+| Part1  | 0.001 ms | 1.301 us | 0.0021 us | 0.0019 us | 1.301 us |      - |      - |         - |
+| Part2  | 0.004 ms | 4.500 us | 0.0272 us | 0.0255 us | 4.503 us | 1.8311 | 0.1755 |   34480 B |
 
 
 ## Day 01 - Secret Entrance

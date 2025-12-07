@@ -276,7 +276,6 @@ public static class AocInput
 // --------------------------------------------------
 [Config(typeof(AoCConfig))]
 [MemoryDiagnoser]
-[InProcess]
 public class AocBenchmarks
 {
     private class AoCConfig : ManualConfig
@@ -334,7 +333,6 @@ public sealed class MeanMsColumn : IColumn
     public bool IsAvailable(Summary summary) => true;
     public bool IsDefault(Summary summary, BenchmarkCase benchmarkCase) => false;
 }
-
 
 
 public static class AocTitle

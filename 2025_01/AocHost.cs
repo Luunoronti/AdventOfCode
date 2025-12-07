@@ -275,7 +275,6 @@ public static class AocInput
 // --------------------------------------------------
 [Config(typeof(AoCConfig))]
 [MemoryDiagnoser]
-[InProcess]
 public class AocBenchmarks
 {
     private class AoCConfig : ManualConfig
