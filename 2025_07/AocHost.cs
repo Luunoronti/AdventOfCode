@@ -12,7 +12,7 @@ namespace AoC;
 
 public static class AocHost
 {
-    public static async Task RunAsync(string[] Args, Func<string[], long> SolvePart1, Func<string[], long> SolvePart2)
+    public static async Task RunAsync(string[] Args, Func<string, long> SolvePart1, Func<string, long> SolvePart2)
     {
         var DefaultInputKind = GetDefaultInputKind(SolvePart1.Method);
         AocConfig Config = AocConfig.Parse(Args, DefaultInputKind);
@@ -25,10 +25,11 @@ public static class AocHost
         }
 
         var Lines = await AocInput.LoadAsync(Config);
+        var FilePath = AocInput.ResolveInputPath(Config);
         var Title = await AocTitle.TryGetTitleAsync(Config);
 
-        var Part1Result = SolvePart1(Lines);
-        var Part2Result = SolvePart2(Lines);
+        var Part1Result = SolvePart1(FilePath);
+        var Part2Result = SolvePart2(FilePath);
 
         var expected1 = GetExpectedResult(SolvePart1.Method, Config.InputKind);
         var expected2 = GetExpectedResult(SolvePart2.Method, Config.InputKind);
@@ -229,7 +230,7 @@ public static class AocInput
         throw new FileNotFoundException($"Input file not found: {filePath}");
     }
 
-   private static string ResolveInputPath(AocConfig Config)
+   public static string ResolveInputPath(AocConfig Config)
     {
         string Root = ProjectRoot;
 
@@ -289,28 +290,41 @@ public class AocBenchmarks
     }
 
     private string[] _lines = Array.Empty<string>();
-    private AocConfig config;
+    //private AocConfig config;
+    string filePath;
     [GlobalSetup]
     public async Task Setup()
     {
         // Uses template defaults (2025 / 7),
-        config = AocConfig.Parse(Array.Empty<string>());
-        //_lines = await AocInput.LoadAsync(config);
+        var config = AocConfig.Parse(Array.Empty<string>());
+        _ = await AocInput.LoadAsync(config);
+        filePath = AocInput.ResolveInputPath(config);
+        _lines = File.ReadAllLines(filePath);
     }
 
     [Benchmark]
     public void Part1()
     {
-        var lines = AocInput.LoadAsync(config).Result;
-        Solver.SolvePart1(lines);
+        Solver.SolvePart1(filePath);
     }
 
     [Benchmark]
     public void Part2()
     {
-        var lines = AocInput.LoadAsync(config).Result;
-        Solver.SolvePart2(lines);
+        Solver.SolvePart2(filePath);
     }
+
+    //[Benchmark]
+    //public void Part1WithInput()
+    //{
+    //    Solver.SolvePart1(File.ReadAllLines(filePath));
+    //}
+
+    //[Benchmark]
+    //public void Part2WithInput()
+    //{
+    //    Solver.SolvePart2(File.ReadAllLines(filePath));
+    //}
 }
 
 public sealed class MeanMsColumn : IColumn
