@@ -16,6 +16,21 @@ Table 2: Intel Core i5-8500 CPU 3.00GHz (Coffee Lake), 1 CPU, 6 logical and 6 ph
 <br/>
 
 
+## Day 8 - Playground
+Intel Core i9-14900KF:
+| Method | Mean     | Mean     | Error     | StdDev    | Median   | Allocated |
+|------- |---------:|---------:|----------:|----------:|---------:|----------:|
+| Part1  | 6.000 ms | 6.000 ms | 0.0339 ms | 0.0317 ms | 5.989 ms |         - |
+| Part2  | 1.559 ms | 1.559 ms | 0.0053 ms | 0.0050 ms | 1.558 ms |         - |
+
+Intel Core i5-8500:
+| Method | Mean      | Mean      | Error     | StdDev    | Median    | Allocated |
+|------- |----------:|----------:|----------:|----------:|----------:|----------:|
+| Part1  | 12.848 ms | 12.848 ms | 0.0460 ms | 0.0430 ms | 12.847 ms |         - |
+| Part2  |  4.192 ms |  4.192 ms | 0.0832 ms | 0.0818 ms |  4.170 ms |         - |
+
+<br/>
+
 ## Day 7 - Laboratories
 Intel Core i9-14900KF:
 | Method | Mean     | Mean      | Error     | StdDev    | Median    | Allocated |
