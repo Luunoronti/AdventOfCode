@@ -139,38 +139,50 @@ public static partial class Solver
         Span<Pair> BestPairs = stackalloc Pair[PairLimit];
         UsedStackMemory += PairLimit * Unsafe.SizeOf<Pair>();
 
-        for (var I = 0; I < Count; I++)
+        // build pairs. we do not store all of them
+        // just what we need (which is 1k pairs for live)
+        for (var i = 0; i < Count; i++)
         {
-            for (var J = I + 1; J < Count; J++)
+            for (var j = i + 1; j < Count; j++)
             {
-                var Dx = points[I].X - points[J].X;
-                var Dy = points[I].Y - points[J].Y;
-                var Dz = points[I].Z - points[J].Z;
-                var NewPair = new Pair(I, J, (long)Dx * Dx + (long)Dy * Dy + (long)Dz * Dz);
+                ref readonly var pi = ref points[i];
+                ref readonly var pj = ref points[j];
+                var Dx = pi.X - pj.X;
+                var Dy = pi.Y - pj.Y;
+                var Dz = pi.Z - pj.Z;
+                var NewPair = new Pair(i, j, (long)Dx * Dx + (long)Dy * Dy + (long)Dz * Dz);
 
                 if (BestCount < PairLimit)
                 {
+                    // less than max allowed pairs in buffer, just add new
                     BestPairs[BestCount] = NewPair;
                     BestCount++;
+                    // if buffer is full, sort it
                     if (BestCount == PairLimit)
-                        System.MemoryExtensions.Sort(BestPairs);
+                        MemoryExtensions.Sort(BestPairs);
                 }
                 else
                 {
+                    // buffer is full. we must insert new pair at the proper location in the buffer
+
+                    // if new pair is larger (greater distance) than largest stored pair, do nothing
                     if (!(NewPair < BestPairs[PairLimit - 1])) continue;
 
+                    // we must move all pairs larger than new one one place down
                     var InsertIndex = PairLimit - 1;
                     while (InsertIndex > 0 && NewPair < BestPairs[InsertIndex - 1])
                     {
                         BestPairs[InsertIndex] = BestPairs[InsertIndex - 1];
                         InsertIndex--;
                     }
+                    // and insert the pair itself
                     BestPairs[InsertIndex] = NewPair;
                 }
             }
         }
 
         var SortedPairs = BestPairs[..BestCount];
+
 
         Span<int> Parents = stackalloc int[Count];
         Span<int> Sizes = stackalloc int[Count];
@@ -266,64 +278,74 @@ public static partial class Solver
         var Count = points.Length;
         if (Count < 2) return 0;
 
-        Span<bool> InMst = stackalloc bool[Count];
+        // MST data
+        Span<bool> IsInMst = stackalloc bool[Count];
         Span<long> BestDistance = stackalloc long[Count];
-        Span<int> BestParent = stackalloc int[Count];
+        Span<int> BestMstNode = stackalloc int[Count];
 
         UsedStackMemory += Count * (Unsafe.SizeOf<bool>() + Unsafe.SizeOf<int>() + Unsafe.SizeOf<long>());
 
         for (var I = 0; I < Count; I++)
         {
-            InMst[I] = false;
+            IsInMst[I] = false;
             BestDistance[I] = long.MaxValue;
-            BestParent[I] = -1;
+            BestMstNode[I] = -1;
         }
+        // seed
         BestDistance[0] = 0;
-        var LastEdgeDistance = -1L;
-        var LastA = 0;
-        var LastB = 0;
+
+        var HeaviestSeenEdgeDistance = -1L;
+        var HeaviestA = 0;
+        var HeaviestB = 0;
+
+        // build MST
         for (var Step = 0; Step < Count; Step++)
         {
-            var U = -1;
+            // get next best node
+            var bestN = -1;
             var MinDistance = long.MaxValue;
-            for (var I = 0; I < Count; I++)
+            for (var i = 0; i < Count; i++)
             {
-                if (!InMst[I] && BestDistance[I] < MinDistance)
+                if (!IsInMst[i] && BestDistance[i] < MinDistance)
                 {
-                    MinDistance = BestDistance[I];
-                    U = I;
+                    MinDistance = BestDistance[i];
+                    bestN = i;
                 }
             }
-            InMst[U] = true;
-            var Parent = BestParent[U];
-            if (Parent != -1)
+
+            // update heaviest seen distance
+            IsInMst[bestN] = true;
+            var node = BestMstNode[bestN];
+            if (node != -1)
             {
-                var Distance = BestDistance[U];
-                if (Distance > LastEdgeDistance)
+                var Distance = BestDistance[bestN];
+                if (Distance > HeaviestSeenEdgeDistance)
                 {
-                    LastEdgeDistance = Distance;
-                    LastA = Parent;
-                    LastB = U;
+                    HeaviestSeenEdgeDistance = Distance;
+                    HeaviestA = node;
+                    HeaviestB = bestN;
                 }
             }
-            ref readonly var PointU = ref points[U];
-            for (var V = 0; V < Count; V++)
+
+            // update distances for nodes not in MST
+            ref readonly var PointU = ref points[bestN];
+            for (var v = 0; v < Count; v++)
             {
-                if (InMst[V]) continue;
-                ref readonly var PointV = ref points[V];
+                if (IsInMst[v]) continue;
+                ref readonly var PointV = ref points[v];
                 var Dx = PointU.X - PointV.X;
                 var Dy = PointU.Y - PointV.Y;
                 var Dz = PointU.Z - PointV.Z;
-                var DistanceSquared = (long)Dx * Dx + (long)Dy * Dy + (long)Dz * Dz;
-                if (DistanceSquared < BestDistance[V])
+                var dist = (long)Dx * Dx + (long)Dy * Dy + (long)Dz * Dz;
+                if (dist < BestDistance[v])
                 {
-                    BestDistance[V] = DistanceSquared;
-                    BestParent[V] = U;
+                    BestDistance[v] = dist;
+                    BestMstNode[v] = bestN;
                 }
             }
         }
-        var Result = (long)points[LastA].X * points[LastB].X;
-        return Result;
+
+        return (long)points[HeaviestA].X * points[HeaviestB].X;
     }
 
 
