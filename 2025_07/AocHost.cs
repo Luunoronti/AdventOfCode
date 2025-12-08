@@ -290,7 +290,6 @@ public class AocBenchmarks
     }
 
     private string[] _lines = Array.Empty<string>();
-    //private AocConfig config;
     string filePath = string.Empty;
     [GlobalSetup]
     public async Task Setup()
@@ -313,18 +312,6 @@ public class AocBenchmarks
     {
         Solver.SolvePart2(filePath);
     }
-
-    //[Benchmark]
-    //public void Part1WithInput()
-    //{
-    //    Solver.SolvePart1(File.ReadAllLines(filePath));
-    //}
-
-    //[Benchmark]
-    //public void Part2WithInput()
-    //{
-    //    Solver.SolvePart2(File.ReadAllLines(filePath));
-    //}
 }
 
 public sealed class MeanMsColumn : IColumn
