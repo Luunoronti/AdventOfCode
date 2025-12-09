@@ -259,25 +259,25 @@ public static partial class Solver
         // then fill up half of the buffer and sort
         // then we will have biggest rects in the buffer and if that fails, we revert to brute force check
 
-        List<Rect> l = new List<Rect>(Points.Length * (Points.Length - 1));
+        //List<Rect> l = new List<Rect>(Points.Length * (Points.Length - 1));
 
-        for (var i = 0; i < Points.Length - 1; i++)
-        {
-            ref readonly var a = ref Points[i];
-            for (var j = i + 1; j < Points.Length; j++)
-            {
-                ref readonly var b = ref Points[j];
+        //for (var i = 0; i < Points.Length - 1; i++)
+        //{
+        //    ref readonly var a = ref Points[i];
+        //    for (var j = i + 1; j < Points.Length; j++)
+        //    {
+        //        ref readonly var b = ref Points[j];
 
-                var X1 = a.X < b.X ? a.X : b.X;
-                var X2 = a.X > b.X ? a.X : b.X;
-                var Y1 = a.Y < b.Y ? a.Y : b.Y;
-                var Y2 = a.Y > b.Y ? a.Y : b.Y;
+        //        var X1 = a.X < b.X ? a.X : b.X;
+        //        var X2 = a.X > b.X ? a.X : b.X;
+        //        var Y1 = a.Y < b.Y ? a.Y : b.Y;
+        //        var Y2 = a.Y > b.Y ? a.Y : b.Y;
 
-                l.Add(new Rect { X1 = X1, Y1 = Y1, X2 = X2, Y2 = Y2, Area = Area(X1, Y1, X2, Y2) });
-            }
-        }
+        //        l.Add(new Rect { X1 = X1, Y1 = Y1, X2 = X2, Y2 = Y2, Area = Area(X1, Y1, X2, Y2) });
+        //    }
+        //}
 
-        l.Sort((a, b) => a.Area < b.Area ? 1 : a.Area > b.Area ? -1 : 0);
+        //l.Sort((a, b) => a.Area < b.Area ? 1 : a.Area > b.Area ? -1 : 0);
 
 
 
@@ -294,22 +294,22 @@ But in the middle of it I realized it won't work probably, because with ball sha
         int cc = 0;
         int ccc = 0;
         int cca = 0;
-        for (var i = 0; i < l.Count; i++)
-        {
-            var r = l[i];
-            cc++;
-            if (r.Area <= maxArea) continue;
-            ccc++;
-            if (!EdgeCrossesRectInteriorAvx(VerticalX, VerticalY1, VerticalY2, HorizontalEdges, r.X1, r.Y1, r.X2, r.Y2))
-            {
-                maxArea = r.Area;
-                cca++;
-            }
-        }
+        //for (var i = 0; i < l.Count; i++)
+        //{
+        //    var r = l[i];
+        //    cc++;
+        //    if (r.Area <= maxArea) continue;
+        //    ccc++;
+        //    if (!EdgeCrossesRectInteriorAvx(VerticalX, VerticalY1, VerticalY2, HorizontalEdges, r.X1, r.Y1, r.X2, r.Y2))
+        //    {
+        //        maxArea = r.Area;
+        //        cca++;
+        //    }
+        //}
 
-        if (maxArea > 0) return maxArea;
+        //if (maxArea > 0) return maxArea;
 
-        Console.WriteLine($"Sorted list of rectangles: {cc} rectangles entered loop, {ccc} went to intersection test, {cca} passed");
+        //Console.WriteLine($"Sorted list of rectangles: {cc} rectangles entered loop, {ccc} went to intersection test, {cca} passed");
 
         cc = 0;
         ccc = 0;
@@ -361,7 +361,7 @@ But in the middle of it I realized it won't work probably, because with ball sha
             }
         }
 
-        Console.WriteLine($"YOLO: {cc} rectangles entered loop, {ccc} went to intersection test, {cca} passed");
+        //Console.WriteLine($"YOLO: {cc} rectangles entered loop, {ccc} went to intersection test, {cca} passed");
 
 
         // 21640 bytes used in total
