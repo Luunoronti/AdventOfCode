@@ -38,6 +38,9 @@ public static partial class Solver
     {
         var UsedStackMemory = 0;
 
+        ////////////////////////////////////////////// 
+        /// FILE OP
+        ////////////////////////////////////////////// 
         var Handle = CreateFileW(FilePath, GenericRead, FileShareRead, IntPtr.Zero, OpenExisting, FileAttributeNormal, IntPtr.Zero);
         if (Handle == InvalidHandleValue) throw new InvalidOperationException("CreateFile failed");
         if (!GetFileSizeEx(Handle, out var FileSizeLong)) throw new InvalidOperationException("GetFileSizeEx failed");
@@ -57,8 +60,11 @@ public static partial class Solver
             }
         }
         if (!CloseHandle(Handle)) throw new InvalidOperationException("CloseHandle failed");
-
         if (TotalRead == 0) throw new InvalidOperationException("Input file is empty");
+        ////////////////////////////////////////////// 
+        /// FILE OP
+        ////////////////////////////////////////////// 
+
 
         // how many boxes do we have?
         var Count = GetLinesCount(Buffer);
@@ -94,6 +100,9 @@ public static partial class Solver
     {
         var UsedStackMemory = 0;
 
+        ////////////////////////////////////////////// 
+        /// FILE OP
+        ////////////////////////////////////////////// 
         var Handle = CreateFileW(FilePath, GenericRead, FileShareRead, IntPtr.Zero, OpenExisting, FileAttributeNormal, IntPtr.Zero);
         if (Handle == InvalidHandleValue) throw new InvalidOperationException("CreateFile failed");
         if (!GetFileSizeEx(Handle, out var FileSizeLong)) throw new InvalidOperationException("GetFileSizeEx failed");
@@ -115,6 +124,10 @@ public static partial class Solver
         if (!CloseHandle(Handle)) throw new InvalidOperationException("CloseHandle failed");
 
         if (TotalRead == 0) throw new InvalidOperationException("Input file is empty");
+        ////////////////////////////////////////////// 
+        /// FILE OP
+        ////////////////////////////////////////////// 
+
 
         // how many boxes do we have?
         var Count = GetLinesCount(Buffer);
@@ -188,6 +201,11 @@ public static partial class Solver
                 var X2 = a.X > b.X ? a.X : b.X;
                 var Y1 = a.Y < b.Y ? a.Y : b.Y;
                 var Y2 = a.Y > b.Y ? a.Y : b.Y;
+
+                // compute area first. if it's smaller than max, there is no point in checking edge crossing
+                var Area = (long)(X2 - X1 + 1) * (Y2 - Y1 + 1);
+                if (Area <= maxArea) continue;
+
                 var C = new Point(X1, Y1);
                 var D = new Point(X1, Y2);
                 var E = new Point(X2, Y1);
@@ -195,14 +213,11 @@ public static partial class Solver
 
                 // check if edges of the rect are inside polygon (it does not cross any edges)
                 //if (EdgeCrossesRectInterior(Points, X1, Y1, X2, Y2)) continue;
-                if (EdgeCrossesRectInteriorSorted(VerticalEdges, HorizontalEdges, X1, Y1, X2, Y2)) continue;
-
-                // compute area
-                var Area = (long)(X2 - X1 + 1) * (Y2 - Y1 + 1);
-                if (Area > maxArea) maxArea = Area;
+                if (!EdgeCrossesRectInteriorSorted(VerticalEdges, HorizontalEdges, X1, Y1, X2, Y2))
+                    maxArea = Area;
             }
         }
-        // 9736 bytes used in total
+        // 15688 bytes used in total
         //Console.WriteLine($"P2 UsedStackMemory: {UsedStackMemory}");
         return maxArea;
     }
@@ -273,10 +288,10 @@ public static partial class Solver
             var h = VerticalEdges.Length;
             while (l < h)
             {
-                var Mid = (l + h) >> 1;
-                if (VerticalEdges[Mid].X < sx) l = Mid + 1; else h = Mid;
+                var mid = (l + h) >> 1;
+                if (VerticalEdges[mid].X < sx) l = mid + 1; else h = mid;
             }
-            
+
             for (var i = l; i < VerticalEdges.Length; i++)
             {
                 var e = VerticalEdges[i];
@@ -292,8 +307,8 @@ public static partial class Solver
             var h = HorizontalEdges.Length;
             while (l < h)
             {
-                var Mid = (l + h) >> 1;
-                if (HorizontalEdges[Mid].Y < sy) l = Mid + 1; else h = Mid;
+                var mid = (l + h) >> 1;
+                if (HorizontalEdges[mid].Y < sy) l = mid + 1; else h = mid;
             }
 
             for (var i = l; i < HorizontalEdges.Length; i++)
@@ -306,7 +321,7 @@ public static partial class Solver
 
         return false;
     }
-   
+
 
 
 
