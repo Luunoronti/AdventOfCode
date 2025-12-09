@@ -259,7 +259,7 @@ public static partial class Solver
         // then fill up half of the buffer and sort
         // then we will have biggest rects in the buffer and if that fails, we revert to brute force check
 
-        List<Rect> l = [];
+        List<Rect> l = new List<Rect>(Points.Length * (Points.Length - 1));
 
         for (var i = 0; i < Points.Length - 1; i++)
         {
