@@ -138,14 +138,14 @@ public static partial class Solver
         GetPointsFromFile(Buffer, Points);
 
         // to save on memory, we count all edges.
-        // we could just allocate Count edges and call it a day, but every byte counts :)
-        // and the number of edges should be equal, but it's almost noop anyway
+        // we could just allocate (Count) edges and call it a day, but every byte counts :)
+        // and the number of edges should be equal, good place to check for scan bugs
         var VerticalEdgesCount = 0;
         var HorizontalEdgesCount = 0;
         for (var i = 0; i < Count; i++)
         {
-            var a = Points[i];
-            var b = Points[(i + 1) % Count];
+            ref readonly var a = ref Points[i];
+            ref readonly var b = ref Points[(i + 1) % Count];
             if (a.X == b.X)
             {
                 VerticalEdgesCount++;
@@ -171,8 +171,8 @@ public static partial class Solver
         HorizontalEdgesCount = 0;
         for (var i = 0; i < Count; i++)
         {
-            var a = Points[i];
-            var b = Points[(i + 1) % Count];
+            ref readonly var a = ref Points[i];
+            ref readonly var b = ref Points[(i + 1) % Count];
             if (a.X == b.X)
             {
                 var y1 = a.Y < b.Y ? a.Y : b.Y;
@@ -245,7 +245,7 @@ public static partial class Solver
         {
             ref readonly var a = ref Points[i];
 
-            // heuristics
+            // heuristics. If best area for this point is less than current maxArea, quit early
             if (BestArea[Order[i]] <= maxArea) break;
 
             for (var j = i + 1; j < Points.Length; j++)
@@ -276,7 +276,6 @@ public static partial class Solver
                 //if (EdgeCrossesRectInterior(Points, X1, Y1, X2, Y2)) continue;
                 //if (!EdgeCrossesRectInteriorSorted(VerticalEdges, HorizontalEdges, X1, Y1, X2, Y2))
                 if (!EdgeCrossesRectInteriorAvx(VerticalX, VerticalY1, VerticalY2, HorizontalEdges, X1, Y1, X2, Y2))
-                
                     maxArea = area;
             }
         }
@@ -337,12 +336,12 @@ public static partial class Solver
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static bool EdgeCrossesRectInterior(ReadOnlySpan<Point> poly, int X1, int Y1, int X2, int Y2)
+    private static bool EdgeCrossesRectInterior(ReadOnlySpan<Point> Poly, int X1, int Y1, int X2, int Y2)
     {
-        for (var i = 0; i < poly.Length; i++)
+        for (var i = 0; i < Poly.Length; i++)
         {
-            var a = poly[i];
-            var b = poly[(i + 1) % poly.Length];
+            var a = Poly[i];
+            var b = Poly[(i + 1) % Poly.Length];
 
             // edge is vertical
             if (a.X == b.X)
@@ -365,7 +364,6 @@ public static partial class Solver
         return false;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool EdgeCrossesRectInteriorSorted(ReadOnlySpan<VerticalEdge> VerticalEdges, ReadOnlySpan<HorizontalEdge> HorizontalEdges, int X1, int Y1, int X2, int Y2)
     {
         if (VerticalEdges.Length > 0)
@@ -433,25 +431,25 @@ public static partial class Solver
                 fixed (int* ptrY1 = VerticalY1)
                 fixed (int* ptrY2 = VerticalY2)
                 {
-                    var x1Vec = Vector256.Create(X1);
-                    var x2Vec = Vector256.Create(X2);
-                    var y1Vec = Vector256.Create(Y1);
-                    var y2Vec = Vector256.Create(Y2);
+                    var xv1 = Vector256.Create(X1);
+                    var xv2 = Vector256.Create(X2);
+                    var yv1 = Vector256.Create(Y1);
+                    var yv2 = Vector256.Create(Y2);
                     var i = index;
                     var limit = verticalC - 8;
                     for (; i <= limit; i += 8)
                     {
-                        var VX = Avx.LoadVector256(ptrX + i);
-                        var VY1 = Avx.LoadVector256(ptrY1 + i);
-                        var VY2 = Avx.LoadVector256(ptrY2 + i);
-                        var C1 = Avx2.CompareGreaterThan(VX, x1Vec);
-                        var C2 = Avx2.CompareGreaterThan(x2Vec, VX);
-                        var C3 = Avx2.CompareGreaterThan(y2Vec, VY1);
-                        var C4 = Avx2.CompareGreaterThan(VY2, y1Vec);
-                        var M1 = Avx2.And(C1, C2);
-                        var M2 = Avx2.And(C3, C4);
-                        var M = Avx2.And(M1, M2);
-                        if (Avx2.MoveMask(M.AsByte()) != 0) return true;
+                        var vX = Avx.LoadVector256(ptrX + i);
+                        var vy1 = Avx.LoadVector256(ptrY1 + i);
+                        var vy2 = Avx.LoadVector256(ptrY2 + i);
+                        var g1 = Avx2.CompareGreaterThan(vX, xv1);
+                        var g2 = Avx2.CompareGreaterThan(xv2, vX);
+                        var g3 = Avx2.CompareGreaterThan(yv2, vy1);
+                        var g4 = Avx2.CompareGreaterThan(vy2, yv1);
+                        var g5 = Avx2.And(g1, g2);
+                        var g6 = Avx2.And(g3, g4);
+                        var g7 = Avx2.And(g5, g6);
+                        if (Avx2.MoveMask(g7.AsByte()) != 0) return true;
                     }
                     for (; i < verticalC; i++)
                     {
@@ -484,9 +482,9 @@ public static partial class Solver
             }
             for (var i = lo; i < horizonalC; i++)
             {
-                var E = HorizontalEdges[i];
-                if (E.Y >= Y2) break;
-                if (E.X1 < X2 && E.X2 > X1) return true;
+                var e = HorizontalEdges[i];
+                if (e.Y >= Y2) break;
+                if (e.X1 < X2 && e.X2 > X1) return true;
             }
         }
 
@@ -497,7 +495,7 @@ public static partial class Solver
 
 
 
-    private static void SortOrderByBestAreaDescending(Span<int> Order, Span<long> BestArea)
+    private static void SortOrderByBestAreaDescending(Span<int> Order, ReadOnlySpan<long> BestArea)
     {
         for (var i = 1; i < Order.Length; i++)
         {
