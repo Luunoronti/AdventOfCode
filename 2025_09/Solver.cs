@@ -94,6 +94,17 @@ public static partial class Solver
     }
 
 
+
+    struct Rect
+    {
+        public int X1;
+        public int Y1;
+        public int X2;
+        public int Y2;
+        public long Area;
+    }
+
+
     [ExpectedResult("test", 24)]
     [ExpectedResult("live", 1516897893)]
     public static unsafe long SolvePart2(string FilePath)
@@ -241,6 +252,68 @@ public static partial class Solver
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         long Area(int x1, int y1, int x2, int y2) => (long)(x2 - x1 + 1) * (y2 - y1 + 1);
 
+
+        // because we don't fit into memory, we must perform such op:
+        // fill the buffer in with rectangles.
+        // sort them all
+        // then fill up half of the buffer and sort
+        // then we will have biggest rects in the buffer and if that fails, we revert to brute force check
+
+        List<Rect> l = [];
+
+        for (var i = 0; i < Points.Length - 1; i++)
+        {
+            ref readonly var a = ref Points[i];
+            for (var j = i + 1; j < Points.Length; j++)
+            {
+                ref readonly var b = ref Points[j];
+
+                var X1 = a.X < b.X ? a.X : b.X;
+                var X2 = a.X > b.X ? a.X : b.X;
+                var Y1 = a.Y < b.Y ? a.Y : b.Y;
+                var Y2 = a.Y > b.Y ? a.Y : b.Y;
+
+                l.Add(new Rect { X1 = X1, Y1 = Y1, X2 = X2, Y2 = Y2, Area = Area(X1, Y1, X2, Y2) });
+            }
+        }
+
+        l.Sort((a, b) => a.Area < b.Area ? 1 : a.Area > b.Area ? -1 : 0);
+
+
+
+
+        //
+        /*
+        
+I started playing with the idea of creating rectangles first and sorting them by area, so biggest would be processed first.
+But in the middle of it I realized it won't work probably, because with ball shape, there are a lot of bigger rectangles that are invalid - intersect with the polygon.
+
+
+         * */
+
+        int cc = 0;
+        int ccc = 0;
+        int cca = 0;
+        foreach (var r in l)
+        {
+            cc++;
+            if (r.Area <= maxArea) continue;
+            ccc++;
+            if (!EdgeCrossesRectInteriorAvx(VerticalX, VerticalY1, VerticalY2, HorizontalEdges, r.X1, r.Y1, r.X2, r.Y2))
+            {
+                maxArea = r.Area;
+                cca++;
+            }
+        }
+
+        if (maxArea > 0) return maxArea;
+
+        Console.WriteLine($"Sorted list of rectangles: {cc} rectangles entered loop, {ccc} went to intersection test, {cca} passed");
+
+        cc = 0;
+        ccc = 0;
+        cca = 0;
+        maxArea = 0;
         for (var i = 0; i < Points.Length - 1; i++)
         {
             ref readonly var a = ref Points[i];
@@ -253,6 +326,8 @@ public static partial class Solver
                 if (BestArea[Order[j]] <= maxArea) break;
 
                 ref readonly var b = ref Points[j];
+
+                cc++;
 
                 // if same coordinate in X or Y, are is 0
                 if (a.X == b.X || a.Y == b.Y) continue;
@@ -267,18 +342,27 @@ public static partial class Solver
                 var area = Area(X1, Y1, X2, Y2);
                 if (area <= maxArea) continue;
 
-                var C = new Point(X1, Y1);
-                var D = new Point(X1, Y2);
-                var E = new Point(X2, Y1);
-                var F = new Point(X2, Y2);
+                ccc++;
+
+                //var C = new Point(X1, Y1);
+                //var D = new Point(X1, Y2);
+                //var E = new Point(X2, Y1);
+                //var F = new Point(X2, Y2);
 
                 // check if edges of the rect are inside polygon (it does not cross any edges)
                 //if (EdgeCrossesRectInterior(Points, X1, Y1, X2, Y2)) continue;
                 //if (!EdgeCrossesRectInteriorSorted(VerticalEdges, HorizontalEdges, X1, Y1, X2, Y2))
                 if (!EdgeCrossesRectInteriorAvx(VerticalX, VerticalY1, VerticalY2, HorizontalEdges, X1, Y1, X2, Y2))
+                {
                     maxArea = area;
+                    cca++;
+                }
             }
         }
+
+        Console.WriteLine($"YOLO: {cc} rectangles entered loop, {ccc} went to intersection test, {cca} passed");
+
+
         // 21640 bytes used in total
         //Console.WriteLine($"P2 UsedStackMemory: {UsedStackMemory}");
         return maxArea;
