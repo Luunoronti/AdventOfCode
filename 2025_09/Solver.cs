@@ -202,7 +202,7 @@ public static partial class Solver
                 if (Area > maxArea) maxArea = Area;
             }
         }
-        // 15688 bytes used in total
+        // 9736 bytes used in total
         //Console.WriteLine($"P2 UsedStackMemory: {UsedStackMemory}");
         return maxArea;
     }
@@ -234,6 +234,34 @@ public static partial class Solver
             }
             Edges[j + 1] = Key;
         }
+    }
+
+    private static bool EdgeCrossesRectInterior(ReadOnlySpan<Point> poly, int X1, int Y1, int X2, int Y2)
+    {
+        for (var i = 0; i < poly.Length; i++)
+        {
+            var a = poly[i];
+            var b = poly[(i + 1) % poly.Length];
+
+            // edge is vertical
+            if (a.X == b.X)
+            {
+                var x = a.X;
+                if (x <= X1 || x >= X2) continue;
+                var minY = a.Y < b.Y ? a.Y : b.Y;
+                var maxY = a.Y > b.Y ? a.Y : b.Y;
+                if (minY < Y2 && maxY > Y1) return true;
+            }
+            else // edge is horizontal
+            {
+                var y = a.Y;
+                if (y <= Y1 || y >= Y2) continue;
+                var minX = a.X < b.X ? a.X : b.X;
+                var maxX = a.X > b.X ? a.X : b.X;
+                if (minX < X2 && maxX > X1) return true;
+            }
+        }
+        return false;
     }
 
     private static bool EdgeCrossesRectInteriorSorted(ReadOnlySpan<VerticalEdge> VerticalEdges, ReadOnlySpan<HorizontalEdge> HorizontalEdges, int X1, int Y1, int X2, int Y2)
@@ -278,6 +306,10 @@ public static partial class Solver
 
         return false;
     }
+   
+
+
+
 
 
     private static void GetPointsFromFile(ReadOnlySpan<byte> Buffer, Span<Point> Points)
