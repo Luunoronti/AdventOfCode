@@ -11,6 +11,27 @@ public static partial class Solver
     internal record struct Point(int X, int Y);
     internal readonly record struct PointWithPotential(Point Point, long BestArea);
 
+    internal readonly struct VerticalEdge
+    {
+        public readonly int X;
+        public readonly int Y1;
+        public readonly int Y2;
+        public VerticalEdge(int x, int y1, int y2)
+        {
+            X = x; Y1 = y1; Y2 = y2;
+        }
+    }
+    internal readonly struct HorizontalEdge
+    {
+        public readonly int Y;
+        public readonly int X1;
+        public readonly int X2;
+        public HorizontalEdge(int y, int x1, int x2)
+        {
+            Y = y; X1 = x1; X2 = x2;
+        }
+    }
+
     [ExpectedResult("test", 50)]
     [ExpectedResult("live", 4763509452)]
     public static unsafe long SolvePart1(string FilePath)
@@ -103,6 +124,54 @@ public static partial class Solver
 
         GetPointsFromFile(Buffer, Points);
 
+        // to save on memory, we count all edges.
+        // we could just allocate Count edges and call it a day, but every byte counts :)
+        // and the number of edges should be equal, but it's almost noop anyway
+        var VerticalEdgesCount = 0;
+        var HorizontalEdgesCount = 0;
+        for (var i = 0; i < Count; i++)
+        {
+            var a = Points[i];
+            var b = Points[(i + 1) % Count];
+            if (a.X == b.X)
+            {
+                VerticalEdgesCount++;
+            }
+            else
+            {
+                HorizontalEdgesCount++;
+            }
+        }
+
+        Span<VerticalEdge> VerticalEdges = stackalloc VerticalEdge[VerticalEdgesCount];
+        Span<HorizontalEdge> HorizontalEdges = stackalloc HorizontalEdge[HorizontalEdgesCount];
+
+        UsedStackMemory += VerticalEdgesCount * Unsafe.SizeOf<VerticalEdge>();
+        UsedStackMemory += HorizontalEdgesCount * Unsafe.SizeOf<HorizontalEdge>();
+        VerticalEdgesCount = 0;
+        HorizontalEdgesCount = 0;
+        for (var i = 0; i < Count; i++)
+        {
+            var a = Points[i];
+            var b = Points[(i + 1) % Count];
+            if (a.X == b.X)
+            {
+                var y1 = a.Y < b.Y ? a.Y : b.Y;
+                var y2 = a.Y > b.Y ? a.Y : b.Y;
+                VerticalEdges[VerticalEdgesCount++] = new VerticalEdge(a.X, y1, y2);
+            }
+            else
+            {
+                var x1 = a.X < b.X ? a.X : b.X;
+                var x2 = a.X > b.X ? a.X : b.X;
+                HorizontalEdges[HorizontalEdgesCount++] = new HorizontalEdge(a.Y, x1, x2);
+            }
+        }
+
+        SortVerticalEdgesByX(VerticalEdges[..VerticalEdgesCount]);
+        SortHorizontalEdgesByY(HorizontalEdges[..HorizontalEdgesCount]);
+
+
         var maxArea = 0L;
         for (var i = 0; i < Points.Length - 1; i++)
         {
@@ -125,7 +194,8 @@ public static partial class Solver
                 var F = new Point(X2, Y2);
 
                 // check if edges of the rect are inside polygon (it does not cross any edges)
-                if (EdgeCrossesRectInterior(Points, X1, Y1, X2, Y2)) continue;
+                //if (EdgeCrossesRectInterior(Points, X1, Y1, X2, Y2)) continue;
+                if (EdgeCrossesRectInteriorSorted(VerticalEdges, HorizontalEdges, X1, Y1, X2, Y2)) continue;
 
                 // compute area
                 var Area = (long)(X2 - X1 + 1) * (Y2 - Y1 + 1);
@@ -137,35 +207,77 @@ public static partial class Solver
         return maxArea;
     }
 
-    private static bool EdgeCrossesRectInterior(ReadOnlySpan<Point> poly, int X1, int Y1, int X2, int Y2)
+    private static void SortVerticalEdgesByX(Span<VerticalEdge> Edges)
     {
-        for (var i = 0; i < poly.Length; i++)
+        for (var i = 1; i < Edges.Length; i++)
         {
-            var a = poly[i];
-            var b = poly[(i + 1) % poly.Length];
-
-            // edge is vertical
-            if (a.X == b.X)
+            var Key = Edges[i];
+            var j = i - 1;
+            while (j >= 0 && Edges[j].X > Key.X)
             {
-                var x = a.X;
-                if (x <= X1 || x >= X2) continue;
-                var minY = a.Y < b.Y ? a.Y : b.Y;
-                var maxY = a.Y > b.Y ? a.Y : b.Y;
-                if (minY < Y2 && maxY > Y1) return true;
+                Edges[j + 1] = Edges[j];
+                j--;
             }
-            else // edge is horizontal
-            {
-                var y = a.Y;
-                if (y <= Y1 || y >= Y2) continue;
-                var minX = a.X < b.X ? a.X : b.X;
-                var maxX = a.X > b.X ? a.X : b.X;
-                if (minX < X2 && maxX > X1) return true;
-            }
+            Edges[j + 1] = Key;
         }
-        return false;
+    }
+    private static void SortHorizontalEdgesByY(Span<HorizontalEdge> Edges)
+    {
+        for (var i = 1; i < Edges.Length; i++)
+        {
+            var Key = Edges[i];
+            var j = i - 1;
+            while (j >= 0 && Edges[j].Y > Key.Y)
+            {
+                Edges[j + 1] = Edges[j];
+                j--;
+            }
+            Edges[j + 1] = Key;
+        }
     }
 
+    private static bool EdgeCrossesRectInteriorSorted(ReadOnlySpan<VerticalEdge> VerticalEdges, ReadOnlySpan<HorizontalEdge> HorizontalEdges, int X1, int Y1, int X2, int Y2)
+    {
+        if (VerticalEdges.Length > 0)
+        {
+            var sx = X1 + 1;
+            var l = 0;
+            var h = VerticalEdges.Length;
+            while (l < h)
+            {
+                var Mid = (l + h) >> 1;
+                if (VerticalEdges[Mid].X < sx) l = Mid + 1; else h = Mid;
+            }
+            
+            for (var i = l; i < VerticalEdges.Length; i++)
+            {
+                var e = VerticalEdges[i];
+                if (e.X >= X2) break;
+                if (e.Y1 < Y2 && e.Y2 > Y1) return true;
+            }
+        }
 
+        if (HorizontalEdges.Length > 0)
+        {
+            var sy = Y1 + 1;
+            var l = 0;
+            var h = HorizontalEdges.Length;
+            while (l < h)
+            {
+                var Mid = (l + h) >> 1;
+                if (HorizontalEdges[Mid].Y < sy) l = Mid + 1; else h = Mid;
+            }
+
+            for (var i = l; i < HorizontalEdges.Length; i++)
+            {
+                var E = HorizontalEdges[i];
+                if (E.Y >= Y2) break;
+                if (E.X1 < X2 && E.X2 > X1) return true;
+            }
+        }
+
+        return false;
+    }
 
 
     private static void GetPointsFromFile(ReadOnlySpan<byte> Buffer, Span<Point> Points)
