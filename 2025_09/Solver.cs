@@ -281,16 +281,6 @@ public static partial class Solver
 
 
 
-
-        //
-        /*
-        
-I started playing with the idea of creating rectangles first and sorting them by area, so biggest would be processed first.
-But in the middle of it I realized it won't work probably, because with ball shape, there are a lot of bigger rectangles that are invalid - intersect with the polygon.
-
-
-         * */
-
         int cc = 0;
         int ccc = 0;
         int cca = 0;
