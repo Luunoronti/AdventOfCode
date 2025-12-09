@@ -344,7 +344,7 @@ public static partial class Solver
                 }
             }
         }
-
+        //Console.WriteLine($"Used {UsedStackMemory} bytes of memory");
         return (long)points[HeaviestA].X * points[HeaviestB].X;
     }
 
