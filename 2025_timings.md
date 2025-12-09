@@ -15,6 +15,20 @@ Table 2: Intel Core i5-8500 CPU 3.00GHz (Coffee Lake), 1 CPU, 6 logical and 6 ph
 
 <br/>
 
+## Day 9 - Movie Theater
+Intel Core i9-14900KF:
+| Method | Mean      | Mean        | Error    | StdDev   | Median      | Allocated |
+|------- |----------:|------------:|---------:|---------:|------------:|----------:|
+| Part1  |  0.121 ms |    120.9 us |  0.25 us |  0.23 us |    121.0 us |         - |
+| Part2  | 27.474 ms | 27,473.6 us | 87.03 us | 72.67 us | 27,483.4 us |         - |
+
+Intel Core i5-8500:
+| Method | Mean      | Mean        | Error     | StdDev    | Median      | Allocated |
+|------- |----------:|------------:|----------:|----------:|------------:|----------:|
+| Part1  |  0.291 ms |    291.2 us |   2.77 us |   2.46 us |    291.5 us |         - |
+| Part2  | 78.935 ms | 78,934.6 us | 318.17 us | 297.61 us | 78,785.5 us |         - |
+
+<br/>
 
 ## Day 8 - Playground
 Intel Core i9-14900KF:
@@ -150,5 +164,6 @@ Intel Core i5-8500:
 | Gen0 | GC Generation 0 collects per 1000 operations |
 | Gen1 | GC Generation 1 collects per 1000 operations |
 | Allocated | Allocated memory per single operation (managed only, inclusive, 1KB = 1024B) |
+
 
   1 us      : 1 Microsecond (0.000001 sec)
