@@ -159,17 +159,15 @@ public static partial class Solver
         }
 
         Span<HorizontalEdge> HorizontalEdges = stackalloc HorizontalEdge[HorizontalEdgesCount];
+        UsedStackMemory += HorizontalEdgesCount * Unsafe.SizeOf<HorizontalEdge>();
 
         //Span<VerticalEdge> VerticalEdges = stackalloc VerticalEdge[VerticalEdgesCount];
         //UsedStackMemory += VerticalEdgesCount * Unsafe.SizeOf<VerticalEdge>();
         Span<int> VerticalX = stackalloc int[Count];
         Span<int> VerticalY1 = stackalloc int[Count];
         Span<int> VerticalY2 = stackalloc int[Count];
-        UsedStackMemory += VerticalEdgesCount * Unsafe.SizeOf<VerticalEdge>();
-        UsedStackMemory += VerticalEdgesCount * Unsafe.SizeOf<VerticalEdge>();
-        UsedStackMemory += VerticalEdgesCount * Unsafe.SizeOf<VerticalEdge>();
+        UsedStackMemory += VerticalEdgesCount * 3 * Unsafe.SizeOf<int>();
 
-        UsedStackMemory += HorizontalEdgesCount * Unsafe.SizeOf<HorizontalEdge>();
 
         VerticalEdgesCount = 0;
         HorizontalEdgesCount = 0;
