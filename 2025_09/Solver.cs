@@ -294,8 +294,9 @@ But in the middle of it I realized it won't work probably, because with ball sha
         int cc = 0;
         int ccc = 0;
         int cca = 0;
-        foreach (var r in l)
+        for (var i = 0; i < l.Count; i++)
         {
+            var r = l[i];
             cc++;
             if (r.Area <= maxArea) continue;
             ccc++;
