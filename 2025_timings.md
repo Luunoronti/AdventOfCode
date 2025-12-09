@@ -17,12 +17,22 @@ Table 2: Intel Core i5-8500 CPU 3.00GHz (Coffee Lake), 1 CPU, 6 logical and 6 ph
 
 ## Day 9 - Movie Theater
 Intel Core i9-14900KF:
+| Method | Mean     | Mean       | Error   | StdDev  | Median     | Allocated |
+|------- |---------:|-----------:|--------:|--------:|-----------:|----------:|
+| Part1  | 0.121 ms |   120.5 us | 0.20 us | 0.19 us |   120.5 us |         - |
+| Part2  | 1.585 ms | 1,585.1 us | 5.63 us | 4.99 us | 1,585.5 us |         - |
+
 | Method | Mean      | Mean        | Error    | StdDev   | Median      | Allocated |
 |------- |----------:|------------:|---------:|---------:|------------:|----------:|
 | Part1  |  0.121 ms |    120.9 us |  0.25 us |  0.23 us |    121.0 us |         - |
 | Part2  | 27.474 ms | 27,473.6 us | 87.03 us | 72.67 us | 27,483.4 us |         - |
 
 Intel Core i5-8500:
+| Method | Mean     | Mean       | Error    | StdDev   | Median     | Allocated |
+|------- |---------:|-----------:|---------:|---------:|-----------:|----------:|
+| Part1  | 0.289 ms |   288.7 us |  1.88 us |  1.76 us |   288.3 us |         - |
+| Part2  | 3.992 ms | 3,991.5 us | 17.50 us | 15.52 us | 3,988.7 us |         - |
+
 | Method | Mean      | Mean        | Error     | StdDev    | Median      | Allocated |
 |------- |----------:|------------:|----------:|----------:|------------:|----------:|
 | Part1  |  0.291 ms |    291.2 us |   2.77 us |   2.46 us |    291.5 us |         - |

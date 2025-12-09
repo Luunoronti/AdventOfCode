@@ -282,7 +282,7 @@ public static partial class Solver
                     maxArea = area;
             }
         }
-        // 15688 bytes used in total
+        // 21640 bytes used in total
         //Console.WriteLine($"P2 UsedStackMemory: {UsedStackMemory}");
         return maxArea;
     }
