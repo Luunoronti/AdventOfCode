@@ -184,14 +184,65 @@ public static partial class Solver
         SortVerticalEdgesByX(VerticalEdges[..VerticalEdgesCount]);
         SortHorizontalEdgesByY(HorizontalEdges[..HorizontalEdgesCount]);
 
+        // compute AABB of the whole scene
+        var MinX = int.MaxValue;
+        var MinY = int.MaxValue;
+        var MaxX = int.MinValue;
+        var MaxY = int.MinValue;
 
-        var maxArea = 0L;
         for (var i = 0; i < Points.Length - 1; i++)
         {
-            var a = Points[i];
-            for (var J = i + 1; J < Points.Length; J++)
+            ref readonly var p = ref Points[i];
+            if (p.X > MaxX) MaxX = p.X;
+            if (p.X < MinX) MinX = p.X;
+            if (p.Y > MaxY) MaxY = p.Y;
+            if (p.Y < MinY) MinY = p.Y;
+        }
+
+        // prepare heuristics buffers
+        Span<long> BestArea = stackalloc long[Count];
+        Span<int> Order = stackalloc int[Count];
+        UsedStackMemory += Count * Unsafe.SizeOf<long>();
+        UsedStackMemory += Count * Unsafe.SizeOf<int>();
+
+        for (var i = 0; i < Count; i++)
+        {
+            ref readonly var p = ref Points[i];
+            var Dx1 = p.X - MinX;
+            if (Dx1 < 0) Dx1 = -Dx1;
+            var Dx2 = p.X - MaxX;
+            if (Dx2 < 0) Dx2 = -Dx2;
+            var BestDx = Dx1 > Dx2 ? Dx1 : Dx2;
+
+            var Dy1 = p.Y - MinY;
+            if (Dy1 < 0) Dy1 = -Dy1;
+            var Dy2 = p.Y - MaxY;
+            if (Dy2 < 0) Dy2 = -Dy2;
+            var BestDy = Dy1 > Dy2 ? Dy1 : Dy2;
+
+            BestArea[i] = (long)(BestDx + 1) * (BestDy + 1);
+            Order[i] = i;
+        }
+
+        SortOrderByBestAreaDescending(Order, BestArea);
+
+        var maxArea = 0L;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        long Area(int x1, int y1, int x2, int y2) => (long)(x2 - x1 + 1) * (y2 - y1 + 1);
+
+        for (var i = 0; i < Points.Length - 1; i++)
+        {
+            ref readonly var a = ref Points[i];
+
+            // heuristics
+            if (BestArea[Order[i]] <= maxArea) break;
+
+            for (var j = i + 1; j < Points.Length; j++)
             {
-                var b = Points[J];
+                if (BestArea[Order[j]] <= maxArea) break;
+
+                ref readonly var b = ref Points[j];
 
                 // if same coordinate in X or Y, are is 0
                 if (a.X == b.X || a.Y == b.Y) continue;
@@ -203,8 +254,8 @@ public static partial class Solver
                 var Y2 = a.Y > b.Y ? a.Y : b.Y;
 
                 // compute area first. if it's smaller than max, there is no point in checking edge crossing
-                var Area = (long)(X2 - X1 + 1) * (Y2 - Y1 + 1);
-                if (Area <= maxArea) continue;
+                var area = Area(X1, Y1, X2, Y2);
+                if (area <= maxArea) continue;
 
                 var C = new Point(X1, Y1);
                 var D = new Point(X1, Y2);
@@ -214,7 +265,7 @@ public static partial class Solver
                 // check if edges of the rect are inside polygon (it does not cross any edges)
                 //if (EdgeCrossesRectInterior(Points, X1, Y1, X2, Y2)) continue;
                 if (!EdgeCrossesRectInteriorSorted(VerticalEdges, HorizontalEdges, X1, Y1, X2, Y2))
-                    maxArea = Area;
+                    maxArea = area;
             }
         }
         // 15688 bytes used in total
@@ -251,6 +302,7 @@ public static partial class Solver
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool EdgeCrossesRectInterior(ReadOnlySpan<Point> poly, int X1, int Y1, int X2, int Y2)
     {
         for (var i = 0; i < poly.Length; i++)
@@ -279,6 +331,7 @@ public static partial class Solver
         return false;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool EdgeCrossesRectInteriorSorted(ReadOnlySpan<VerticalEdge> VerticalEdges, ReadOnlySpan<HorizontalEdge> HorizontalEdges, int X1, int Y1, int X2, int Y2)
     {
         if (VerticalEdges.Length > 0)
@@ -322,6 +375,22 @@ public static partial class Solver
         return false;
     }
 
+
+    private static void SortOrderByBestAreaDescending(Span<int> Order, Span<long> BestArea)
+    {
+        for (var i = 1; i < Order.Length; i++)
+        {
+            var index = Order[i];
+            var area = BestArea[index];
+            var j = i - 1;
+            while (j >= 0 && BestArea[Order[j]] < area)
+            {
+                Order[j + 1] = Order[j];
+                j--;
+            }
+            Order[j + 1] = index;
+        }
+    }
 
 
 
