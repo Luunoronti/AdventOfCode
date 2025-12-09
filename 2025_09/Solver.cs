@@ -1,9 +1,7 @@
-using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
-using CommunityToolkit.HighPerformance;
 
 namespace AoC;
 
@@ -377,8 +375,8 @@ public static partial class Solver
             var h = VerticalEdges.Length;
             while (l < h)
             {
-                var mid = (l + h) >> 1;
-                if (VerticalEdges[mid].X < sx) l = mid + 1; else h = mid;
+                var m = (l + h) >> 1;
+                if (VerticalEdges[m].X < sx) l = m + 1; else h = m;
             }
 
             for (var i = l; i < VerticalEdges.Length; i++)
@@ -396,33 +394,19 @@ public static partial class Solver
             var h = HorizontalEdges.Length;
             while (l < h)
             {
-                var mid = (l + h) >> 1;
-                if (HorizontalEdges[mid].Y < sy) l = mid + 1; else h = mid;
+                var m = (l + h) >> 1;
+                if (HorizontalEdges[m].Y < sy) l = m + 1; else h = m;
             }
 
             for (var i = l; i < HorizontalEdges.Length; i++)
             {
-                var E = HorizontalEdges[i];
-                if (E.Y >= Y2) break;
-                if (E.X1 < X2 && E.X2 > X1) return true;
+                var e = HorizontalEdges[i];
+                if (e.Y >= Y2) break;
+                if (e.X1 < X2 && e.X2 > X1) return true;
             }
         }
 
         return false;
-    }
-
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static int LowerBoundVertical(ReadOnlySpan<int> VerticalX, int Count, int X)
-    {
-        var l = 0;
-        var h = Count;
-        while (l < h)
-        {
-            var m = (l + h) >> 1;
-            if (VerticalX[m] < X) l = m + 1; else h = m;
-        }
-        return l;
     }
 
     private static unsafe bool EdgeCrossesRectInteriorAvx(ReadOnlySpan<int> VerticalX, ReadOnlySpan<int> VerticalY1, ReadOnlySpan<int> VerticalY2, ReadOnlySpan<HorizontalEdge> HorizontalEdges, int X1, int Y1, int X2, int Y2)
@@ -432,70 +416,75 @@ public static partial class Solver
 
         if (verticalC > 0)
         {
-            var StartX = X1 + 1;
-            var Index = LowerBoundVertical(VerticalX, verticalC, StartX);
-            if (Avx2.IsSupported && verticalC - Index >= 8)
+            var sx = X1 + 1;
+
+            var l = 0;
+            var h = verticalC;
+            while (l < h)
             {
-                fixed (int* PtrX = VerticalX)
-                fixed (int* PtrY1 = VerticalY1)
-                fixed (int* PtrY2 = VerticalY2)
+                var m = (l + h) >> 1;
+                if (VerticalX[m] < sx) l = m + 1; else h = m;
+            }
+
+            var index = l;
+            if (Avx2.IsSupported && verticalC - index >= 8)
+            {
+                fixed (int* ptrX = VerticalX)
+                fixed (int* ptrY1 = VerticalY1)
+                fixed (int* ptrY2 = VerticalY2)
                 {
-                    var X1Vec = Vector256.Create(X1);
-                    var X2Vec = Vector256.Create(X2);
-                    var Y1Vec = Vector256.Create(Y1);
-                    var Y2Vec = Vector256.Create(Y2);
-                    var I = Index;
-                    var Limit = verticalC - 8;
-                    for (; I <= Limit; I += 8)
+                    var x1Vec = Vector256.Create(X1);
+                    var x2Vec = Vector256.Create(X2);
+                    var y1Vec = Vector256.Create(Y1);
+                    var y2Vec = Vector256.Create(Y2);
+                    var i = index;
+                    var limit = verticalC - 8;
+                    for (; i <= limit; i += 8)
                     {
-                        var VX = Avx.LoadVector256(PtrX + I);
-                        var VY1 = Avx.LoadVector256(PtrY1 + I);
-                        var VY2 = Avx.LoadVector256(PtrY2 + I);
-                        var C1 = Avx2.CompareGreaterThan(VX, X1Vec);
-                        var C2 = Avx2.CompareGreaterThan(X2Vec, VX);
-                        var C3 = Avx2.CompareGreaterThan(Y2Vec, VY1);
-                        var C4 = Avx2.CompareGreaterThan(VY2, Y1Vec);
+                        var VX = Avx.LoadVector256(ptrX + i);
+                        var VY1 = Avx.LoadVector256(ptrY1 + i);
+                        var VY2 = Avx.LoadVector256(ptrY2 + i);
+                        var C1 = Avx2.CompareGreaterThan(VX, x1Vec);
+                        var C2 = Avx2.CompareGreaterThan(x2Vec, VX);
+                        var C3 = Avx2.CompareGreaterThan(y2Vec, VY1);
+                        var C4 = Avx2.CompareGreaterThan(VY2, y1Vec);
                         var M1 = Avx2.And(C1, C2);
                         var M2 = Avx2.And(C3, C4);
                         var M = Avx2.And(M1, M2);
                         if (Avx2.MoveMask(M.AsByte()) != 0) return true;
                     }
-                    for (; I < verticalC; I++)
+                    for (; i < verticalC; i++)
                     {
-                        var X = VerticalX[I];
-                        if (X <= X1 || X >= X2) continue;
-                        var EdgeY1 = VerticalY1[I];
-                        var EdgeY2 = VerticalY2[I];
-                        if (EdgeY1 < Y2 && EdgeY2 > Y1) return true;
+                        var x = VerticalX[i];
+                        if (x <= X1 || x >= X2) continue;
+                        if (VerticalY1[i] < Y2 && VerticalY2[i] > Y1) return true;
                     }
                 }
             }
             else
             {
-                for (var I = Index; I < verticalC; I++)
+                for (var i = index; i < verticalC; i++)
                 {
-                    var X = VerticalX[I];
-                    if (X <= X1 || X >= X2) continue;
-                    var EdgeY1 = VerticalY1[I];
-                    var EdgeY2 = VerticalY2[I];
-                    if (EdgeY1 < Y2 && EdgeY2 > Y1) return true;
+                    var x = VerticalX[i];
+                    if (x <= X1 || x >= X2) continue;
+                    if (VerticalY1[i] < Y2 && VerticalY2[i] > Y1) return true;
                 }
             }
         }
 
         if (horizonalC > 0)
         {
-            var StartY = Y1 + 1;
-            var Lo = 0;
-            var Hi = horizonalC;
-            while (Lo < Hi)
+            var sy = Y1 + 1;
+            var lo = 0;
+            var hi = horizonalC;
+            while (lo < hi)
             {
-                var Mid = (Lo + Hi) >> 1;
-                if (HorizontalEdges[Mid].Y < StartY) Lo = Mid + 1; else Hi = Mid;
+                var m = (lo + hi) >> 1;
+                if (HorizontalEdges[m].Y < sy) lo = m + 1; else hi = m;
             }
-            for (var I = Lo; I < horizonalC; I++)
+            for (var i = lo; i < horizonalC; i++)
             {
-                var E = HorizontalEdges[I];
+                var E = HorizontalEdges[i];
                 if (E.Y >= Y2) break;
                 if (E.X1 < X2 && E.X2 > X1) return true;
             }
@@ -528,6 +517,9 @@ public static partial class Solver
 
 
 
+    ////////////////////////////////////////////// 
+    /// FILE OP
+    ////////////////////////////////////////////// 
     private static void GetPointsFromFile(ReadOnlySpan<byte> Buffer, Span<Point> Points)
     {
         var num = 0;
