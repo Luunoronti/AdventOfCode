@@ -1,6 +1,8 @@
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
+using System.Runtime.Intrinsics.X86;
 using CommunityToolkit.HighPerformance;
 
 namespace AoC;
@@ -156,11 +158,19 @@ public static partial class Solver
             }
         }
 
-        Span<VerticalEdge> VerticalEdges = stackalloc VerticalEdge[VerticalEdgesCount];
         Span<HorizontalEdge> HorizontalEdges = stackalloc HorizontalEdge[HorizontalEdgesCount];
 
+        //Span<VerticalEdge> VerticalEdges = stackalloc VerticalEdge[VerticalEdgesCount];
+        //UsedStackMemory += VerticalEdgesCount * Unsafe.SizeOf<VerticalEdge>();
+        Span<int> VerticalX = stackalloc int[Count];
+        Span<int> VerticalY1 = stackalloc int[Count];
+        Span<int> VerticalY2 = stackalloc int[Count];
         UsedStackMemory += VerticalEdgesCount * Unsafe.SizeOf<VerticalEdge>();
+        UsedStackMemory += VerticalEdgesCount * Unsafe.SizeOf<VerticalEdge>();
+        UsedStackMemory += VerticalEdgesCount * Unsafe.SizeOf<VerticalEdge>();
+
         UsedStackMemory += HorizontalEdgesCount * Unsafe.SizeOf<HorizontalEdge>();
+
         VerticalEdgesCount = 0;
         HorizontalEdgesCount = 0;
         for (var i = 0; i < Count; i++)
@@ -171,7 +181,11 @@ public static partial class Solver
             {
                 var y1 = a.Y < b.Y ? a.Y : b.Y;
                 var y2 = a.Y > b.Y ? a.Y : b.Y;
-                VerticalEdges[VerticalEdgesCount++] = new VerticalEdge(a.X, y1, y2);
+
+                VerticalX[VerticalEdgesCount] = a.X;
+                VerticalY1[VerticalEdgesCount] = y1;
+                VerticalY2[VerticalEdgesCount] = y2;
+                VerticalEdgesCount++;
             }
             else
             {
@@ -181,7 +195,8 @@ public static partial class Solver
             }
         }
 
-        SortVerticalEdgesByX(VerticalEdges[..VerticalEdgesCount]);
+        SortVerticalSoa(VerticalX, VerticalY1, VerticalY2, VerticalEdgesCount);
+        //SortVerticalEdgesByX(VerticalEdges[..VerticalEdgesCount]);
         SortHorizontalEdgesByY(HorizontalEdges[..HorizontalEdgesCount]);
 
         // compute AABB of the whole scene
@@ -223,7 +238,6 @@ public static partial class Solver
             BestArea[i] = (long)(BestDx + 1) * (BestDy + 1);
             Order[i] = i;
         }
-
         SortOrderByBestAreaDescending(Order, BestArea);
 
         var maxArea = 0L;
@@ -264,7 +278,9 @@ public static partial class Solver
 
                 // check if edges of the rect are inside polygon (it does not cross any edges)
                 //if (EdgeCrossesRectInterior(Points, X1, Y1, X2, Y2)) continue;
-                if (!EdgeCrossesRectInteriorSorted(VerticalEdges, HorizontalEdges, X1, Y1, X2, Y2))
+                //if (!EdgeCrossesRectInteriorSorted(VerticalEdges, HorizontalEdges, X1, Y1, X2, Y2))
+                if (!EdgeCrossesRectInteriorAvx(VerticalX, VerticalY1, VerticalY2, HorizontalEdges, X1, Y1, X2, Y2))
+                
                     maxArea = area;
             }
         }
@@ -272,6 +288,28 @@ public static partial class Solver
         //Console.WriteLine($"P2 UsedStackMemory: {UsedStackMemory}");
         return maxArea;
     }
+
+    private static void SortVerticalSoa(Span<int> VerticalX, Span<int> VerticalY1, Span<int> VerticalY2, int Count)
+    {
+        for (var i = 1; i < Count; i++)
+        {
+            var x = VerticalX[i];
+            var y1 = VerticalY1[i];
+            var y2 = VerticalY2[i];
+            var j = i - 1;
+            while (j >= 0 && VerticalX[j] > x)
+            {
+                VerticalX[j + 1] = VerticalX[j];
+                VerticalY1[j + 1] = VerticalY1[j];
+                VerticalY2[j + 1] = VerticalY2[j];
+                j--;
+            }
+            VerticalX[j + 1] = x;
+            VerticalY1[j + 1] = y1;
+            VerticalY2[j + 1] = y2;
+        }
+    }
+
 
     private static void SortVerticalEdgesByX(Span<VerticalEdge> Edges)
     {
@@ -374,6 +412,102 @@ public static partial class Solver
 
         return false;
     }
+
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static int LowerBoundVertical(ReadOnlySpan<int> VerticalX, int Count, int X)
+    {
+        var l = 0;
+        var h = Count;
+        while (l < h)
+        {
+            var m = (l + h) >> 1;
+            if (VerticalX[m] < X) l = m + 1; else h = m;
+        }
+        return l;
+    }
+
+    private static unsafe bool EdgeCrossesRectInteriorAvx(ReadOnlySpan<int> VerticalX, ReadOnlySpan<int> VerticalY1, ReadOnlySpan<int> VerticalY2, ReadOnlySpan<HorizontalEdge> HorizontalEdges, int X1, int Y1, int X2, int Y2)
+    {
+        var verticalC = VerticalX.Length;
+        var horizonalC = HorizontalEdges.Length;
+
+        if (verticalC > 0)
+        {
+            var StartX = X1 + 1;
+            var Index = LowerBoundVertical(VerticalX, verticalC, StartX);
+            if (Avx2.IsSupported && verticalC - Index >= 8)
+            {
+                fixed (int* PtrX = VerticalX)
+                fixed (int* PtrY1 = VerticalY1)
+                fixed (int* PtrY2 = VerticalY2)
+                {
+                    var X1Vec = Vector256.Create(X1);
+                    var X2Vec = Vector256.Create(X2);
+                    var Y1Vec = Vector256.Create(Y1);
+                    var Y2Vec = Vector256.Create(Y2);
+                    var I = Index;
+                    var Limit = verticalC - 8;
+                    for (; I <= Limit; I += 8)
+                    {
+                        var VX = Avx.LoadVector256(PtrX + I);
+                        var VY1 = Avx.LoadVector256(PtrY1 + I);
+                        var VY2 = Avx.LoadVector256(PtrY2 + I);
+                        var C1 = Avx2.CompareGreaterThan(VX, X1Vec);
+                        var C2 = Avx2.CompareGreaterThan(X2Vec, VX);
+                        var C3 = Avx2.CompareGreaterThan(Y2Vec, VY1);
+                        var C4 = Avx2.CompareGreaterThan(VY2, Y1Vec);
+                        var M1 = Avx2.And(C1, C2);
+                        var M2 = Avx2.And(C3, C4);
+                        var M = Avx2.And(M1, M2);
+                        if (Avx2.MoveMask(M.AsByte()) != 0) return true;
+                    }
+                    for (; I < verticalC; I++)
+                    {
+                        var X = VerticalX[I];
+                        if (X <= X1 || X >= X2) continue;
+                        var EdgeY1 = VerticalY1[I];
+                        var EdgeY2 = VerticalY2[I];
+                        if (EdgeY1 < Y2 && EdgeY2 > Y1) return true;
+                    }
+                }
+            }
+            else
+            {
+                for (var I = Index; I < verticalC; I++)
+                {
+                    var X = VerticalX[I];
+                    if (X <= X1 || X >= X2) continue;
+                    var EdgeY1 = VerticalY1[I];
+                    var EdgeY2 = VerticalY2[I];
+                    if (EdgeY1 < Y2 && EdgeY2 > Y1) return true;
+                }
+            }
+        }
+
+        if (horizonalC > 0)
+        {
+            var StartY = Y1 + 1;
+            var Lo = 0;
+            var Hi = horizonalC;
+            while (Lo < Hi)
+            {
+                var Mid = (Lo + Hi) >> 1;
+                if (HorizontalEdges[Mid].Y < StartY) Lo = Mid + 1; else Hi = Mid;
+            }
+            for (var I = Lo; I < horizonalC; I++)
+            {
+                var E = HorizontalEdges[I];
+                if (E.Y >= Y2) break;
+                if (E.X1 < X2 && E.X2 > X1) return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
 
 
     private static void SortOrderByBestAreaDescending(Span<int> Order, Span<long> BestArea)
