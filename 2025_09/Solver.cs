@@ -199,11 +199,11 @@ public static partial class Solver
             ref readonly var a = ref Points[i];
 
             // heuristics. If best area for this point is less than current maxArea, quit early
-            if (BestArea[Order[i]] <= maxArea) break;
+           // if (BestArea[Order[i]] <= maxArea) break;
 
             for (var j = i + 1; j < Points.Length; j++)
             {
-                if (BestArea[Order[j]] <= maxArea) break;
+             //   if (BestArea[Order[j]] <= maxArea) break;
 
                 ref readonly var b = ref Points[j];
 
