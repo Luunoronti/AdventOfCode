@@ -1,5 +1,4 @@
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
 
@@ -9,28 +8,6 @@ namespace AoC;
 public static partial class Solver
 {
     internal record struct Point(int X, int Y);
-    internal readonly record struct PointWithPotential(Point Point, long BestArea);
-
-    internal readonly struct VerticalEdge
-    {
-        public readonly int X;
-        public readonly int Y1;
-        public readonly int Y2;
-        public VerticalEdge(int x, int y1, int y2)
-        {
-            X = x; Y1 = y1; Y2 = y2;
-        }
-    }
-    internal readonly struct HorizontalEdge
-    {
-        public readonly int Y;
-        public readonly int X1;
-        public readonly int X2;
-        public HorizontalEdge(int y, int x1, int x2)
-        {
-            Y = y; X1 = x1; X2 = x2;
-        }
-    }
 
     [ExpectedResult("test", 50)]
     [ExpectedResult("live", 4763509452)]
@@ -84,60 +61,43 @@ public static partial class Solver
         // how many boxes do we have?
         var Count = FileIO.GetLinesCount(Buffer);
 
+        // allocate buffer
         Span<Point> Points = stackalloc Point[Count];
         UsedStackMemory += Points.Length * Unsafe.SizeOf<Point>();
 
+        // read from the file buffer (simple parsing)
         GetPointsFromFile(Buffer, Points);
 
-        // to save on memory, we count all edges.
+        // to save on memory, we allocate just as much memory as we need.
         // we could just allocate (Count) edges and call it a day, but every byte counts :)
         // and the number of edges should be equal, good place to check for scan bugs
+        // to be a valid input, the number of horizontal edges must be equal to the number of vertical edges
+        // and sum must be equal to Points.Length.
+        // if this fails, we would get runtime memory exception so we will know soon enough :)
+
+        var edgeCount = Points.Length >> 1;
+        
+        // allocate buffers for edges
+        // we keep them SOA (struct over array) for fast and simple Avx load
+        // which basically means we don't do array of structs, but arrays of simple types
+        Span<int> HorizontalY = stackalloc int[edgeCount];
+        Span<int> HorizontalX1 = stackalloc int[edgeCount];
+        Span<int> HorizontalX2 = stackalloc int[edgeCount];
+        UsedStackMemory += edgeCount * 3 * Unsafe.SizeOf<int>();
+
+        Span<int> VerticalX = stackalloc int[edgeCount];
+        Span<int> VerticalY1 = stackalloc int[edgeCount];
+        Span<int> VerticalY2 = stackalloc int[edgeCount];
+        UsedStackMemory += edgeCount * 3 * Unsafe.SizeOf<int>();
+
+        // fill up with data
+
         var VerticalEdgesCount = 0;
         var HorizontalEdgesCount = 0;
         for (var i = 0; i < Count; i++)
         {
             ref readonly var a = ref Points[i];
             ref readonly var b = ref Points[(i + 1) % Count];
-            if (a.X == b.X)
-            {
-                VerticalEdgesCount++;
-            }
-            else
-            {
-                HorizontalEdgesCount++;
-            }
-        }
-
-        // allocate buffers for edges
-        Span<int> HorizontalY = stackalloc int[VerticalEdgesCount];
-        Span<int> HorizontalX1 = stackalloc int[VerticalEdgesCount];
-        Span<int> HorizontalX2 = stackalloc int[VerticalEdgesCount];
-        UsedStackMemory += VerticalEdgesCount * 3 * Unsafe.SizeOf<int>();
-
-        Span<int> VerticalX = stackalloc int[HorizontalEdgesCount];
-        Span<int> VerticalY1 = stackalloc int[HorizontalEdgesCount];
-        Span<int> VerticalY2 = stackalloc int[HorizontalEdgesCount];
-        UsedStackMemory += HorizontalEdgesCount * 3 * Unsafe.SizeOf<int>();
-
-        // fill up with data
-        // we will also use this loop to establish AABB of the scene
-        var MinX = int.MaxValue;
-        var MinY = int.MaxValue;
-        var MaxX = int.MinValue;
-        var MaxY = int.MinValue;
-
-        VerticalEdgesCount = 0;
-        HorizontalEdgesCount = 0;
-        for (var i = 0; i < Count; i++)
-        {
-            ref readonly var a = ref Points[i];
-            ref readonly var b = ref Points[(i + 1) % Count];
-
-            if (a.X > MaxX) MaxX = a.X;
-            if (a.X < MinX) MinX = a.X;
-            if (a.Y > MaxY) MaxY = a.Y;
-            if (a.Y < MinY) MinY = a.Y;
-
             if (a.X == b.X)
             {
                 var y1 = a.Y < b.Y ? a.Y : b.Y;
@@ -161,33 +121,6 @@ public static partial class Solver
         SortVerticalSoa(VerticalX, VerticalY1, VerticalY2, VerticalEdgesCount);
         SortHorizontalSoa(HorizontalY, HorizontalX1, HorizontalX2, HorizontalEdgesCount);
 
-        // prepare heuristics buffers
-        // heuristics are to check
-        Span<long> BestArea = stackalloc long[Count];
-        Span<int> Order = stackalloc int[Count];
-        UsedStackMemory += Count * Unsafe.SizeOf<long>();
-        UsedStackMemory += Count * Unsafe.SizeOf<int>();
-
-        for (var i = 0; i < Count; i++)
-        {
-            ref readonly var p = ref Points[i];
-            var Dx1 = p.X - MinX;
-            if (Dx1 < 0) Dx1 = -Dx1;
-            var Dx2 = p.X - MaxX;
-            if (Dx2 < 0) Dx2 = -Dx2;
-            var BestDx = Dx1 > Dx2 ? Dx1 : Dx2;
-
-            var Dy1 = p.Y - MinY;
-            if (Dy1 < 0) Dy1 = -Dy1;
-            var Dy2 = p.Y - MaxY;
-            if (Dy2 < 0) Dy2 = -Dy2;
-            var BestDy = Dy1 > Dy2 ? Dy1 : Dy2;
-
-            BestArea[i] = (long)(BestDx + 1) * (BestDy + 1);
-            Order[i] = i;
-        }
-        SortOrderByBestAreaDescending(Order, BestArea);
-
         var maxArea = 0L;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -197,14 +130,8 @@ public static partial class Solver
         for (var i = 0; i < Points.Length - 1; i++)
         {
             ref readonly var a = ref Points[i];
-
-            // heuristics. If best area for this point is less than current maxArea, quit early
-           // if (BestArea[Order[i]] <= maxArea) break;
-
             for (var j = i + 1; j < Points.Length; j++)
             {
-             //   if (BestArea[Order[j]] <= maxArea) break;
-
                 ref readonly var b = ref Points[j];
 
                 // if same coordinate in X or Y, are is 0
@@ -224,8 +151,8 @@ public static partial class Solver
                     maxArea = area;
             }
         }
-        // 21640 bytes used in total
-        //Console.WriteLine($"P2 UsedStackMemory: {UsedStackMemory}");
+        // 15688 bytes used in total
+        // Console.WriteLine($"P2 UsedStackMemory: {UsedStackMemory}");
         return maxArea;
     }
 
@@ -271,22 +198,6 @@ public static partial class Solver
         }
     }
 
-    private static void SortOrderByBestAreaDescending(Span<int> Order, ReadOnlySpan<long> BestArea)
-    {
-        for (var i = 1; i < Order.Length; i++)
-        {
-            var index = Order[i];
-            var area = BestArea[index];
-            var j = i - 1;
-            while (j >= 0 && BestArea[Order[j]] < area)
-            {
-                Order[j + 1] = Order[j];
-                j--;
-            }
-            Order[j + 1] = index;
-        }
-    }
-
     private static unsafe bool EdgeCrossesRectInteriorAvx(ReadOnlySpan<int> VerticalX, ReadOnlySpan<int> VerticalY1, ReadOnlySpan<int> VerticalY2,
         ReadOnlySpan<int> HorizontalY, ReadOnlySpan<int> HorizontalX1, ReadOnlySpan<int> HorizontalX2,
         int X1, int Y1, int X2, int Y2)
@@ -324,13 +235,16 @@ public static partial class Solver
                         var vX = Avx.LoadVector256(ptrX + i);
                         var vy1 = Avx.LoadVector256(ptrY1 + i);
                         var vy2 = Avx.LoadVector256(ptrY2 + i);
+
                         var g1 = Avx2.CompareGreaterThan(vX, xv1);
                         var g2 = Avx2.CompareGreaterThan(xv2, vX);
                         var g3 = Avx2.CompareGreaterThan(yv2, vy1);
                         var g4 = Avx2.CompareGreaterThan(vy2, yv1);
+
                         var g5 = Avx2.And(g1, g2);
                         var g6 = Avx2.And(g3, g4);
                         var g7 = Avx2.And(g5, g6);
+
                         if (Avx2.MoveMask(g7.AsByte()) != 0) return true;
                     }
                     for (; i < verticalC; i++)
