@@ -5,7 +5,7 @@ using System.Runtime.Intrinsics.X86;
 namespace AoC;
 
 [DefaultInput("live")]
-public static partial class Solver
+public static class Solver
 {
     internal record struct Point(int X, int Y);
 
@@ -70,11 +70,9 @@ public static partial class Solver
 
         // to save on memory, we allocate just as much memory as we need.
         // we could just allocate (Count) edges and call it a day, but every byte counts :)
-        // and the number of edges should be equal, good place to check for scan bugs
         // to be a valid input, the number of horizontal edges must be equal to the number of vertical edges
         // and sum must be equal to Points.Length.
-        // if this fails, we would get runtime memory exception so we will know soon enough :)
-
+        // if this fails, we would get runtime memory exception so t would tell us soon enough :)
         var edgeCount = Points.Length >> 1;
         
         // allocate buffers for edges
@@ -91,7 +89,6 @@ public static partial class Solver
         UsedStackMemory += edgeCount * 3 * Unsafe.SizeOf<int>();
 
         // fill up with data
-
         var VerticalEdgesCount = 0;
         var HorizontalEdgesCount = 0;
         for (var i = 0; i < Count; i++)
@@ -122,11 +119,6 @@ public static partial class Solver
         SortHorizontalSoa(HorizontalY, HorizontalX1, HorizontalX2, HorizontalEdgesCount);
 
         var maxArea = 0L;
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        long Area(int x1, int y1, int x2, int y2) => (long)(x2 - x1 + 1) * (y2 - y1 + 1);
-
-        maxArea = 0;
         for (var i = 0; i < Points.Length - 1; i++)
         {
             ref readonly var a = ref Points[i];
@@ -134,7 +126,7 @@ public static partial class Solver
             {
                 ref readonly var b = ref Points[j];
 
-                // if same coordinate in X or Y, are is 0
+                // if same coordinate in X or Y, area is 0
                 if (a.X == b.X || a.Y == b.Y) continue;
 
                 // contruct a rectangle from two points (max/max)
@@ -144,7 +136,7 @@ public static partial class Solver
                 var Y2 = a.Y > b.Y ? a.Y : b.Y;
 
                 // compute area first. if it's smaller than max, there is no point in checking edge crossing
-                var area = Area(X1, Y1, X2, Y2);
+                var area = (long)(X2 - X1 + 1) * (Y2 - Y1 + 1);
                 if (area <= maxArea) continue;
 
                 if (!EdgeCrossesRectInteriorAvx(VerticalX, VerticalY1, VerticalY2, HorizontalY, HorizontalX1, HorizontalX2, X1, Y1, X2, Y2))
@@ -237,12 +229,21 @@ public static partial class Solver
                         var vy2 = Avx.LoadVector256(ptrY2 + i);
 
                         // this is equivalent of 
-                        // X1 < X && X < X2 && Y1Edge < Y2Rect && Y2Edge > Y1Rect
+                        //                                X1 < X && X < X2 && Y1E < Y2 && Y2E > Y1
+                        // but done on 8 edges at once
+                        // where:
+                        //    X: VerticalX[point]  (8 points in one pass)
+                        //  Y1E: VerticalY1[point]
+                        //  Y2E: VerticalY1[point]
+                        //   X1: rectangle X1      (all 8 int are of the same value)
+                        //   Y1: rectangle Y1
+                        //   X2: rectangle X2
+                        //   Y2: rectangle Y2
 
                         var g1 = Avx2.CompareGreaterThan(vX, xv1);    // X > X1
                         var g2 = Avx2.CompareGreaterThan(xv2, vX);    // X2 > X
-                        var g3 = Avx2.CompareGreaterThan(yv2, vy1);   // Y2Rect > Y1Edge
-                        var g4 = Avx2.CompareGreaterThan(vy2, yv1);   // Y2Edge > Y1Rect
+                        var g3 = Avx2.CompareGreaterThan(yv2, vy1);   // Y2R > Y1E
+                        var g4 = Avx2.CompareGreaterThan(vy2, yv1);   // Y2E > Y1R
 
                         var g5 = Avx2.And(g1, g2);
                         var g6 = Avx2.And(g3, g4);
