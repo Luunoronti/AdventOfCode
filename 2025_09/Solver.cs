@@ -205,7 +205,7 @@ public static partial class Solver
         var verticalC = VerticalX.Length;
         var horizonalC = HorizontalY.Length;
 
-        if (verticalC > 0)
+        if (verticalC > 0 && Y1 != Y2 ) // vertical edge
         {
             var sx = X1 + 1;
 
@@ -236,10 +236,10 @@ public static partial class Solver
                         var vy1 = Avx.LoadVector256(ptrY1 + i);
                         var vy2 = Avx.LoadVector256(ptrY2 + i);
 
-                        var g1 = Avx2.CompareGreaterThan(vX, xv1);
-                        var g2 = Avx2.CompareGreaterThan(xv2, vX);
-                        var g3 = Avx2.CompareGreaterThan(yv2, vy1);
-                        var g4 = Avx2.CompareGreaterThan(vy2, yv1);
+                        var g1 = Avx2.CompareGreaterThan(vX, xv1);    // X > X1
+                        var g2 = Avx2.CompareGreaterThan(xv2, vX);    // X2 > X
+                        var g3 = Avx2.CompareGreaterThan(yv2, vy1);   // Y2 > Y1 (edge) 
+                        var g4 = Avx2.CompareGreaterThan(vy2, yv1);   // Y2 (edge) > Y2
 
                         var g5 = Avx2.And(g1, g2);
                         var g6 = Avx2.And(g3, g4);
@@ -266,7 +266,7 @@ public static partial class Solver
             }
         }
 
-        if (horizonalC > 0)
+        if (horizonalC > 0 && X1 != X2) // horizontal edge
         {
             var sy = Y1 + 1;
             var lo = 0;
