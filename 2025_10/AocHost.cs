@@ -149,8 +149,8 @@ public sealed class AocConfig
     public static AocConfig Parse(string[] args, string? DefaultInputKind = null)
     {
         // Defaults baked into the template (replaced by dotnet new)
-        int year = AOC_YEAR;
-        int day = AOC_DAY;
+        int year = 2025;
+        int day = 10;
 
         string InputKind = string.IsNullOrEmpty(DefaultInputKind) ? "live" : DefaultInputKind;
         string? inputFileOverride = null;
