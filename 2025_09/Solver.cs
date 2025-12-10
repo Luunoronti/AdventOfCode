@@ -236,13 +236,17 @@ public static partial class Solver
                         var vy1 = Avx.LoadVector256(ptrY1 + i);
                         var vy2 = Avx.LoadVector256(ptrY2 + i);
 
+                        // this is equivalent of 
+                        // X1 < X && X < X2 && Y1Edge < Y2Rect && Y2Edge > Y1Rect
+
                         var g1 = Avx2.CompareGreaterThan(vX, xv1);    // X > X1
                         var g2 = Avx2.CompareGreaterThan(xv2, vX);    // X2 > X
-                        var g3 = Avx2.CompareGreaterThan(yv2, vy1);   // Y2 > Y1 (edge) 
-                        var g4 = Avx2.CompareGreaterThan(vy2, yv1);   // Y2 (edge) > Y2
+                        var g3 = Avx2.CompareGreaterThan(yv2, vy1);   // Y2Rect > Y1Edge
+                        var g4 = Avx2.CompareGreaterThan(vy2, yv1);   // Y2Edge > Y1Rect
 
                         var g5 = Avx2.And(g1, g2);
                         var g6 = Avx2.And(g3, g4);
+
                         var g7 = Avx2.And(g5, g6);
 
                         if (Avx2.MoveMask(g7.AsByte()) != 0) return true;
