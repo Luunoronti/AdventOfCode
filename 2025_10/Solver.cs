@@ -88,7 +88,7 @@ public static class Solver
         }
         // 22634 used
         UsedStackMemory += maxMemPermachine;
-        Console.WriteLine($"P2 UsedStackMemory: {UsedStackMemory}");
+        //Console.WriteLine($"P2 UsedStackMemory: {UsedStackMemory}");
 
         return total;
     }
