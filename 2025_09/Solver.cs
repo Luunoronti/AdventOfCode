@@ -194,19 +194,17 @@ public static partial class Solver
         long Area(int x1, int y1, int x2, int y2) => (long)(x2 - x1 + 1) * (y2 - y1 + 1);
 
         maxArea = 0;
-        var count = Points.Length;
-        //for (var i = 0; i < Points.Length - 1; i++)
-        for (var ii = 0; ii < count - 1; ii++)
+        for (var i = 0; i < Points.Length - 1; i++)
         {
-            var i = Order[ii];
-            if (BestArea[i] <= maxArea) break;
-
             ref readonly var a = ref Points[i];
-            for (var jj = ii + 1; jj < count; jj++)
-            //for (var j = i + 1; j < Points.Length; j++)
+
+            // heuristics. If best area for this point is less than current maxArea, quit early
+            if (BestArea[Order[i]] <= maxArea) break;
+
+            for (var j = i + 1; j < Points.Length; j++)
             {
-                var j = Order[jj];
-                if (BestArea[j] <= maxArea) break;
+                if (BestArea[Order[j]] <= maxArea) break;
+
                 ref readonly var b = ref Points[j];
 
                 // if same coordinate in X or Y, are is 0
