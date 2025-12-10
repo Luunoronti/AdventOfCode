@@ -38,36 +38,13 @@ public static partial class Solver
     {
         var UsedStackMemory = 0;
 
-        ////////////////////////////////////////////// 
-        /// FILE OP
-        ////////////////////////////////////////////// 
-        var Handle = CreateFileW(FilePath, GenericRead, FileShareRead, IntPtr.Zero, OpenExisting, FileAttributeNormal, IntPtr.Zero);
-        if (Handle == InvalidHandleValue) throw new InvalidOperationException("CreateFile failed");
-        if (!GetFileSizeEx(Handle, out var FileSizeLong)) throw new InvalidOperationException("GetFileSizeEx failed");
-        ReadOnlySpan<byte> Buffer = stackalloc byte[(int)FileSizeLong];
+        var FileSize = FileIO.GetFileSize(FilePath);
+        ReadOnlySpan<byte> Buffer = stackalloc byte[(int)FileSize];
         UsedStackMemory += Buffer.Length;
-        var TotalRead = 0;
-
-        fixed (byte* Pointer = Buffer)
-        {
-            var ptr = Pointer;
-            while (true)
-            {
-                if (!ReadFile(Handle, ptr, Buffer.Length - TotalRead, out var Read, IntPtr.Zero)) throw new InvalidOperationException("ReadFile failed");
-                if (Read == 0) break;
-                TotalRead += Read;
-                ptr += Read;
-            }
-        }
-        if (!CloseHandle(Handle)) throw new InvalidOperationException("CloseHandle failed");
-        if (TotalRead == 0) throw new InvalidOperationException("Input file is empty");
-        ////////////////////////////////////////////// 
-        /// FILE OP
-        ////////////////////////////////////////////// 
-
+        FileIO.ReadToBuffer(FilePath, Buffer);
 
         // how many boxes do we have?
-        var Count = GetLinesCount(Buffer);
+        var Count = FileIO.GetLinesCount(Buffer);
 
         Span<Point> points = stackalloc Point[Count];
         UsedStackMemory += points.Length * Unsafe.SizeOf<Point>();
@@ -93,55 +70,19 @@ public static partial class Solver
         return maxArea;
     }
 
-
-
-    struct Rect
-    {
-        public int X1;
-        public int Y1;
-        public int X2;
-        public int Y2;
-        public long Area;
-    }
-
-
     [ExpectedResult("test", 24)]
     [ExpectedResult("live", 1516897893)]
     public static unsafe long SolvePart2(string FilePath)
     {
         var UsedStackMemory = 0;
 
-        ////////////////////////////////////////////// 
-        /// FILE OP
-        ////////////////////////////////////////////// 
-        var Handle = CreateFileW(FilePath, GenericRead, FileShareRead, IntPtr.Zero, OpenExisting, FileAttributeNormal, IntPtr.Zero);
-        if (Handle == InvalidHandleValue) throw new InvalidOperationException("CreateFile failed");
-        if (!GetFileSizeEx(Handle, out var FileSizeLong)) throw new InvalidOperationException("GetFileSizeEx failed");
-        ReadOnlySpan<byte> Buffer = stackalloc byte[(int)FileSizeLong];
+        var FileSize = FileIO.GetFileSize(FilePath);
+        ReadOnlySpan<byte> Buffer = stackalloc byte[(int)FileSize];
         UsedStackMemory += Buffer.Length;
-        var TotalRead = 0;
-
-        fixed (byte* Pointer = Buffer)
-        {
-            var ptr = Pointer;
-            while (true)
-            {
-                if (!ReadFile(Handle, ptr, Buffer.Length - TotalRead, out var Read, IntPtr.Zero)) throw new InvalidOperationException("ReadFile failed");
-                if (Read == 0) break;
-                TotalRead += Read;
-                ptr += Read;
-            }
-        }
-        if (!CloseHandle(Handle)) throw new InvalidOperationException("CloseHandle failed");
-
-        if (TotalRead == 0) throw new InvalidOperationException("Input file is empty");
-        ////////////////////////////////////////////// 
-        /// FILE OP
-        ////////////////////////////////////////////// 
-
+        FileIO.ReadToBuffer(FilePath, Buffer);
 
         // how many boxes do we have?
-        var Count = GetLinesCount(Buffer);
+        var Count = FileIO.GetLinesCount(Buffer);
 
         Span<Point> Points = stackalloc Point[Count];
         UsedStackMemory += Points.Length * Unsafe.SizeOf<Point>();
@@ -167,16 +108,23 @@ public static partial class Solver
             }
         }
 
-        Span<HorizontalEdge> HorizontalEdges = stackalloc HorizontalEdge[HorizontalEdgesCount];
-        UsedStackMemory += HorizontalEdgesCount * Unsafe.SizeOf<HorizontalEdge>();
-
-        //Span<VerticalEdge> VerticalEdges = stackalloc VerticalEdge[VerticalEdgesCount];
-        //UsedStackMemory += VerticalEdgesCount * Unsafe.SizeOf<VerticalEdge>();
-        Span<int> VerticalX = stackalloc int[Count];
-        Span<int> VerticalY1 = stackalloc int[Count];
-        Span<int> VerticalY2 = stackalloc int[Count];
+        // allocate buffers for edges
+        Span<int> HorizontalY = stackalloc int[VerticalEdgesCount];
+        Span<int> HorizontalX1 = stackalloc int[VerticalEdgesCount];
+        Span<int> HorizontalX2 = stackalloc int[VerticalEdgesCount];
         UsedStackMemory += VerticalEdgesCount * 3 * Unsafe.SizeOf<int>();
 
+        Span<int> VerticalX = stackalloc int[HorizontalEdgesCount];
+        Span<int> VerticalY1 = stackalloc int[HorizontalEdgesCount];
+        Span<int> VerticalY2 = stackalloc int[HorizontalEdgesCount];
+        UsedStackMemory += HorizontalEdgesCount * 3 * Unsafe.SizeOf<int>();
+
+        // fill up with data
+        // we will also use this loop to establish AABB of the scene
+        var MinX = int.MaxValue;
+        var MinY = int.MaxValue;
+        var MaxX = int.MinValue;
+        var MaxY = int.MinValue;
 
         VerticalEdgesCount = 0;
         HorizontalEdgesCount = 0;
@@ -184,11 +132,16 @@ public static partial class Solver
         {
             ref readonly var a = ref Points[i];
             ref readonly var b = ref Points[(i + 1) % Count];
+
+            if (a.X > MaxX) MaxX = a.X;
+            if (a.X < MinX) MinX = a.X;
+            if (a.Y > MaxY) MaxY = a.Y;
+            if (a.Y < MinY) MinY = a.Y;
+
             if (a.X == b.X)
             {
                 var y1 = a.Y < b.Y ? a.Y : b.Y;
                 var y2 = a.Y > b.Y ? a.Y : b.Y;
-
                 VerticalX[VerticalEdgesCount] = a.X;
                 VerticalY1[VerticalEdgesCount] = y1;
                 VerticalY2[VerticalEdgesCount] = y2;
@@ -198,30 +151,18 @@ public static partial class Solver
             {
                 var x1 = a.X < b.X ? a.X : b.X;
                 var x2 = a.X > b.X ? a.X : b.X;
-                HorizontalEdges[HorizontalEdgesCount++] = new HorizontalEdge(a.Y, x1, x2);
+                HorizontalY[HorizontalEdgesCount] = a.Y;
+                HorizontalX1[HorizontalEdgesCount] = x1;
+                HorizontalX2[HorizontalEdgesCount] = x2;
+                HorizontalEdgesCount++;
             }
         }
 
         SortVerticalSoa(VerticalX, VerticalY1, VerticalY2, VerticalEdgesCount);
-        //SortVerticalEdgesByX(VerticalEdges[..VerticalEdgesCount]);
-        SortHorizontalEdgesByY(HorizontalEdges[..HorizontalEdgesCount]);
-
-        // compute AABB of the whole scene
-        var MinX = int.MaxValue;
-        var MinY = int.MaxValue;
-        var MaxX = int.MinValue;
-        var MaxY = int.MinValue;
-
-        for (var i = 0; i < Points.Length - 1; i++)
-        {
-            ref readonly var p = ref Points[i];
-            if (p.X > MaxX) MaxX = p.X;
-            if (p.X < MinX) MinX = p.X;
-            if (p.Y > MaxY) MaxY = p.Y;
-            if (p.Y < MinY) MinY = p.Y;
-        }
+        SortHorizontalSoa(HorizontalY, HorizontalX1, HorizontalX2, HorizontalEdgesCount);
 
         // prepare heuristics buffers
+        // heuristics are to check
         Span<long> BestArea = stackalloc long[Count];
         Span<int> Order = stackalloc int[Count];
         UsedStackMemory += Count * Unsafe.SizeOf<long>();
@@ -252,58 +193,6 @@ public static partial class Solver
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         long Area(int x1, int y1, int x2, int y2) => (long)(x2 - x1 + 1) * (y2 - y1 + 1);
 
-
-        // because we don't fit into memory, we must perform such op:
-        // fill the buffer in with rectangles.
-        // sort them all
-        // then fill up half of the buffer and sort
-        // then we will have biggest rects in the buffer and if that fails, we revert to brute force check
-
-        //List<Rect> l = new List<Rect>(Points.Length * (Points.Length - 1));
-
-        //for (var i = 0; i < Points.Length - 1; i++)
-        //{
-        //    ref readonly var a = ref Points[i];
-        //    for (var j = i + 1; j < Points.Length; j++)
-        //    {
-        //        ref readonly var b = ref Points[j];
-
-        //        var X1 = a.X < b.X ? a.X : b.X;
-        //        var X2 = a.X > b.X ? a.X : b.X;
-        //        var Y1 = a.Y < b.Y ? a.Y : b.Y;
-        //        var Y2 = a.Y > b.Y ? a.Y : b.Y;
-
-        //        l.Add(new Rect { X1 = X1, Y1 = Y1, X2 = X2, Y2 = Y2, Area = Area(X1, Y1, X2, Y2) });
-        //    }
-        //}
-
-        //l.Sort((a, b) => a.Area < b.Area ? 1 : a.Area > b.Area ? -1 : 0);
-
-
-
-        int cc = 0;
-        int ccc = 0;
-        int cca = 0;
-        //for (var i = 0; i < l.Count; i++)
-        //{
-        //    var r = l[i];
-        //    cc++;
-        //    if (r.Area <= maxArea) continue;
-        //    ccc++;
-        //    if (!EdgeCrossesRectInteriorAvx(VerticalX, VerticalY1, VerticalY2, HorizontalEdges, r.X1, r.Y1, r.X2, r.Y2))
-        //    {
-        //        maxArea = r.Area;
-        //        cca++;
-        //    }
-        //}
-
-        //if (maxArea > 0) return maxArea;
-
-        //Console.WriteLine($"Sorted list of rectangles: {cc} rectangles entered loop, {ccc} went to intersection test, {cca} passed");
-
-        cc = 0;
-        ccc = 0;
-        cca = 0;
         maxArea = 0;
         for (var i = 0; i < Points.Length - 1; i++)
         {
@@ -318,8 +207,6 @@ public static partial class Solver
 
                 ref readonly var b = ref Points[j];
 
-                cc++;
-
                 // if same coordinate in X or Y, are is 0
                 if (a.X == b.X || a.Y == b.Y) continue;
 
@@ -333,27 +220,10 @@ public static partial class Solver
                 var area = Area(X1, Y1, X2, Y2);
                 if (area <= maxArea) continue;
 
-                ccc++;
-
-                //var C = new Point(X1, Y1);
-                //var D = new Point(X1, Y2);
-                //var E = new Point(X2, Y1);
-                //var F = new Point(X2, Y2);
-
-                // check if edges of the rect are inside polygon (it does not cross any edges)
-                //if (EdgeCrossesRectInterior(Points, X1, Y1, X2, Y2)) continue;
-                //if (!EdgeCrossesRectInteriorSorted(VerticalEdges, HorizontalEdges, X1, Y1, X2, Y2))
-                if (!EdgeCrossesRectInteriorAvx(VerticalX, VerticalY1, VerticalY2, HorizontalEdges, X1, Y1, X2, Y2))
-                {
+                if (!EdgeCrossesRectInteriorAvx(VerticalX, VerticalY1, VerticalY2, HorizontalY, HorizontalX1, HorizontalX2, X1, Y1, X2, Y2))
                     maxArea = area;
-                    cca++;
-                }
             }
         }
-
-        //Console.WriteLine($"YOLO: {cc} rectangles entered loop, {ccc} went to intersection test, {cca} passed");
-
-
         // 21640 bytes used in total
         //Console.WriteLine($"P2 UsedStackMemory: {UsedStackMemory}");
         return maxArea;
@@ -380,112 +250,49 @@ public static partial class Solver
         }
     }
 
-
-    private static void SortVerticalEdgesByX(Span<VerticalEdge> Edges)
+    private static void SortHorizontalSoa(Span<int> HorizontalY, Span<int> HorizontalX1, Span<int> HorizontalX2, int Count)
     {
-        for (var i = 1; i < Edges.Length; i++)
+        for (var i = 1; i < Count; i++)
         {
-            var Key = Edges[i];
+            var y = HorizontalY[i];
+            var x1 = HorizontalX1[i];
+            var x2 = HorizontalX2[i];
             var j = i - 1;
-            while (j >= 0 && Edges[j].X > Key.X)
+            while (j >= 0 && HorizontalY[j] > y)
             {
-                Edges[j + 1] = Edges[j];
+                HorizontalY[j + 1] = HorizontalY[j];
+                HorizontalX1[j + 1] = HorizontalX1[j];
+                HorizontalX2[j + 1] = HorizontalX2[j];
                 j--;
             }
-            Edges[j + 1] = Key;
+            HorizontalY[j + 1] = y;
+            HorizontalX1[j + 1] = x1;
+            HorizontalX2[j + 1] = x2;
         }
     }
-    private static void SortHorizontalEdgesByY(Span<HorizontalEdge> Edges)
+
+    private static void SortOrderByBestAreaDescending(Span<int> Order, ReadOnlySpan<long> BestArea)
     {
-        for (var i = 1; i < Edges.Length; i++)
+        for (var i = 1; i < Order.Length; i++)
         {
-            var Key = Edges[i];
+            var index = Order[i];
+            var area = BestArea[index];
             var j = i - 1;
-            while (j >= 0 && Edges[j].Y > Key.Y)
+            while (j >= 0 && BestArea[Order[j]] < area)
             {
-                Edges[j + 1] = Edges[j];
+                Order[j + 1] = Order[j];
                 j--;
             }
-            Edges[j + 1] = Key;
+            Order[j + 1] = index;
         }
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static bool EdgeCrossesRectInterior(ReadOnlySpan<Point> Poly, int X1, int Y1, int X2, int Y2)
-    {
-        for (var i = 0; i < Poly.Length; i++)
-        {
-            var a = Poly[i];
-            var b = Poly[(i + 1) % Poly.Length];
-
-            // edge is vertical
-            if (a.X == b.X)
-            {
-                var x = a.X;
-                if (x <= X1 || x >= X2) continue;
-                var minY = a.Y < b.Y ? a.Y : b.Y;
-                var maxY = a.Y > b.Y ? a.Y : b.Y;
-                if (minY < Y2 && maxY > Y1) return true;
-            }
-            else // edge is horizontal
-            {
-                var y = a.Y;
-                if (y <= Y1 || y >= Y2) continue;
-                var minX = a.X < b.X ? a.X : b.X;
-                var maxX = a.X > b.X ? a.X : b.X;
-                if (minX < X2 && maxX > X1) return true;
-            }
-        }
-        return false;
-    }
-
-    private static bool EdgeCrossesRectInteriorSorted(ReadOnlySpan<VerticalEdge> VerticalEdges, ReadOnlySpan<HorizontalEdge> HorizontalEdges, int X1, int Y1, int X2, int Y2)
-    {
-        if (VerticalEdges.Length > 0)
-        {
-            var sx = X1 + 1;
-            var l = 0;
-            var h = VerticalEdges.Length;
-            while (l < h)
-            {
-                var m = (l + h) >> 1;
-                if (VerticalEdges[m].X < sx) l = m + 1; else h = m;
-            }
-
-            for (var i = l; i < VerticalEdges.Length; i++)
-            {
-                var e = VerticalEdges[i];
-                if (e.X >= X2) break;
-                if (e.Y1 < Y2 && e.Y2 > Y1) return true;
-            }
-        }
-
-        if (HorizontalEdges.Length > 0)
-        {
-            var sy = Y1 + 1;
-            var l = 0;
-            var h = HorizontalEdges.Length;
-            while (l < h)
-            {
-                var m = (l + h) >> 1;
-                if (HorizontalEdges[m].Y < sy) l = m + 1; else h = m;
-            }
-
-            for (var i = l; i < HorizontalEdges.Length; i++)
-            {
-                var e = HorizontalEdges[i];
-                if (e.Y >= Y2) break;
-                if (e.X1 < X2 && e.X2 > X1) return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static unsafe bool EdgeCrossesRectInteriorAvx(ReadOnlySpan<int> VerticalX, ReadOnlySpan<int> VerticalY1, ReadOnlySpan<int> VerticalY2, ReadOnlySpan<HorizontalEdge> HorizontalEdges, int X1, int Y1, int X2, int Y2)
+    private static unsafe bool EdgeCrossesRectInteriorAvx(ReadOnlySpan<int> VerticalX, ReadOnlySpan<int> VerticalY1, ReadOnlySpan<int> VerticalY2,
+        ReadOnlySpan<int> HorizontalY, ReadOnlySpan<int> HorizontalX1, ReadOnlySpan<int> HorizontalX2,
+        int X1, int Y1, int X2, int Y2)
     {
         var verticalC = VerticalX.Length;
-        var horizonalC = HorizontalEdges.Length;
+        var horizonalC = HorizontalY.Length;
 
         if (verticalC > 0)
         {
@@ -553,41 +360,77 @@ public static partial class Solver
             while (lo < hi)
             {
                 var m = (lo + hi) >> 1;
-                if (HorizontalEdges[m].Y < sy) lo = m + 1; else hi = m;
+                if (HorizontalY[m] < sy) lo = m + 1; else hi = m;
             }
-            for (var i = lo; i < horizonalC; i++)
+
+            var indexY = lo;
+            if (Avx2.IsSupported && horizonalC - indexY >= 8)
             {
-                var e = HorizontalEdges[i];
-                if (e.Y >= Y2) break;
-                if (e.X1 < X2 && e.X2 > X1) return true;
+                fixed (int* ptrY = HorizontalY)
+                fixed (int* ptrX1 = HorizontalX1)
+                fixed (int* ptrX2 = HorizontalX2)
+                {
+                    var yv1 = Vector256.Create(Y1);
+                    var yv2 = Vector256.Create(Y2);
+                    var xv1 = Vector256.Create(X1);
+                    var xv2 = Vector256.Create(X2);
+                    var i = indexY;
+                    var limit = horizonalC - 8;
+                    for (; i <= limit; i += 8)
+                    {
+                        var vY = Avx.LoadVector256(ptrY + i);
+                        var vX1 = Avx.LoadVector256(ptrX1 + i);
+                        var vX2 = Avx.LoadVector256(ptrX2 + i);
+
+                        var g1 = Avx2.CompareGreaterThan(vY, yv1);    // Y > Y1
+                        var g2 = Avx2.CompareGreaterThan(yv2, vY);    // Y2 > Y
+                        var g3 = Avx2.CompareGreaterThan(xv2, vX1);   // X2 > X1Edge
+                        var g4 = Avx2.CompareGreaterThan(vX2, xv1);   // X2Edge > X1Rect
+
+                        var g5 = Avx2.And(g1, g2);
+                        var g6 = Avx2.And(g3, g4);
+                        var g7 = Avx2.And(g5, g6);
+
+                        if (Avx2.MoveMask(g7.AsByte()) != 0) return true;
+                    }
+
+                    for (; i < horizonalC; i++)
+                    {
+                        var y = HorizontalY[i];
+                        if (y <= Y1 || y >= Y2) continue;
+                        if (HorizontalX1[i] < X2 && HorizontalX2[i] > X1) return true;
+                    }
+                }
             }
+            else
+            {
+                for (var i = indexY; i < horizonalC; i++)
+                {
+                    var y = HorizontalY[i];
+                    if (y <= Y1 || y >= Y2) continue;
+                    if (HorizontalX1[i] < X2 && HorizontalX2[i] > X1) return true;
+                }
+            }
+
+
+            //var sy = Y1 + 1;
+            //var lo = 0;
+            //var hi = horizonalC;
+            //while (lo < hi)
+            //{
+            //    var m = (lo + hi) >> 1;
+            //    if (HorizontalEdges[m].Y < sy) lo = m + 1; else hi = m;
+            //}
+            //for (var i = lo; i < horizonalC; i++)
+            //{
+            //    var e = HorizontalEdges[i];
+            //    if (e.Y >= Y2) break;
+            //    if (e.X1 < X2 && e.X2 > X1) return true;
+            //}
         }
 
         return false;
     }
-
-
-
-
-
-    private static void SortOrderByBestAreaDescending(Span<int> Order, ReadOnlySpan<long> BestArea)
-    {
-        for (var i = 1; i < Order.Length; i++)
-        {
-            var index = Order[i];
-            var area = BestArea[index];
-            var j = i - 1;
-            while (j >= 0 && BestArea[Order[j]] < area)
-            {
-                Order[j + 1] = Order[j];
-                j--;
-            }
-            Order[j + 1] = index;
-        }
-    }
-
-
-
 
 
     ////////////////////////////////////////////// 
@@ -616,34 +459,4 @@ public static partial class Solver
         }
 
     }
-    private static int GetLinesCount(ReadOnlySpan<byte> Buffer)
-    {
-        var boxesCount = 0;
-        for (var c = 0; c < Buffer.Length; c++)
-            if (Buffer[c] == '\n') boxesCount++;
-        if (Buffer[^1] == '\n' || Buffer[^1] == '\r')
-            return boxesCount;
-        return boxesCount + 1;
-    }
-
-    private const uint GenericRead = 0x80000000;
-    private const uint FileShareRead = 0x00000001;
-    private const uint OpenExisting = 3;
-    private const uint FileAttributeNormal = 0x80;
-    private static readonly IntPtr InvalidHandleValue = new(-1);
-
-    [LibraryImport("kernel32.dll", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
-    private static partial IntPtr CreateFileW(string FileName, uint DesiredAccess, uint ShareMode, IntPtr SecurityAttributes, uint CreationDisposition, uint FlagsAndAttributes, IntPtr TemplateFile);
-
-    [LibraryImport("kernel32.dll", SetLastError = true)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    private static unsafe partial bool ReadFile(IntPtr FileHandle, byte* Buffer, int NumberOfBytesToRead, out int NumberOfBytesRead, IntPtr Overlapped);
-
-    [LibraryImport("kernel32.dll", SetLastError = true)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    private static unsafe partial bool GetFileSizeEx(IntPtr FileHandle, out long FileSizeLong);
-
-    [LibraryImport("kernel32.dll", SetLastError = true)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    private static partial bool CloseHandle(IntPtr Handle);
 }

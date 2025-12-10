@@ -1,6 +1,7 @@
 using System.Net;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
@@ -455,4 +456,70 @@ public sealed class DefaultInputAttribute : Attribute
     {
         InputKind = inputKind;
     }
+}
+
+
+
+public static partial class FileIO
+{
+    public static int GetFileSize(string FilePath)
+    {
+        var Handle = CreateFileW(FilePath, GenericRead, FileShareRead, IntPtr.Zero, OpenExisting, FileAttributeNormal, IntPtr.Zero);
+        if (Handle == InvalidHandleValue) throw new InvalidOperationException("CreateFile failed");
+        if (!GetFileSizeEx(Handle, out var FileSizeLong)) throw new InvalidOperationException("GetFileSizeEx failed");
+        if (!CloseHandle(Handle)) throw new InvalidOperationException("CloseHandle failed");
+        return (int)FileSizeLong;
+    }
+
+    public static unsafe int ReadToBuffer(string FilePath, ReadOnlySpan<byte> Buffer)
+    {
+        var Handle = CreateFileW(FilePath, GenericRead, FileShareRead, IntPtr.Zero, OpenExisting, FileAttributeNormal, IntPtr.Zero);
+        if (Handle == InvalidHandleValue) throw new InvalidOperationException("CreateFile failed");
+        var TotalRead = 0;
+
+        fixed (byte* Pointer = Buffer)
+        {
+            var ptr = Pointer;
+            while (true)
+            {
+                if (!ReadFile(Handle, ptr, Buffer.Length - TotalRead, out var Read, IntPtr.Zero)) throw new InvalidOperationException("ReadFile failed");
+                if (Read == 0) break;
+                TotalRead += Read;
+                ptr += Read;
+            }
+        }
+        if (TotalRead == 0) throw new InvalidOperationException("Input file is empty"); if (!CloseHandle(Handle)) throw new InvalidOperationException("CloseHandle failed");
+        return TotalRead;
+    }
+
+    public static int GetLinesCount(ReadOnlySpan<byte> Buffer)
+    {
+        var boxesCount = 0;
+        for (var c = 0; c < Buffer.Length; c++)
+            if (Buffer[c] == '\n') boxesCount++;
+        if (Buffer[^1] == '\n' || Buffer[^1] == '\r')
+            return boxesCount;
+        return boxesCount + 1;
+    }
+
+    private const uint GenericRead = 0x80000000;
+    private const uint FileShareRead = 0x00000001;
+    private const uint OpenExisting = 3;
+    private const uint FileAttributeNormal = 0x80;
+    private static readonly IntPtr InvalidHandleValue = new(-1);
+
+    [LibraryImport("kernel32.dll", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+    private static partial IntPtr CreateFileW(string FileName, uint DesiredAccess, uint ShareMode, IntPtr SecurityAttributes, uint CreationDisposition, uint FlagsAndAttributes, IntPtr TemplateFile);
+
+    [LibraryImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static unsafe partial bool ReadFile(IntPtr FileHandle, byte* Buffer, int NumberOfBytesToRead, out int NumberOfBytesRead, IntPtr Overlapped);
+
+    [LibraryImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static unsafe partial bool GetFileSizeEx(IntPtr FileHandle, out long FileSizeLong);
+
+    [LibraryImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static partial bool CloseHandle(IntPtr Handle);
 }
