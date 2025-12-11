@@ -2,6 +2,7 @@
 
 namespace AoC;
 
+//[DefaultInput("test2.txt")]
 [DefaultInput("live")]
 public static class Solver
 {
@@ -23,8 +24,8 @@ public static class Solver
         if (str == "you") startId = nextId;
         else if (str == "out") outId = nextId;
         else if (str == "svr") svrId = nextId;
-        else if (str == "dac") dacId = nextId;
-        else if (str == "fft") fftId = nextId;
+        else if (str == "dac") dacId = nextId; // Digital-Analog Converter (?)
+        else if (str == "fft") fftId = nextId; // Fast Fourier Transform :P
         nextId++;
         return nextId - 1;
     }
@@ -33,11 +34,12 @@ public static class Solver
 
     private static void PrepareGraph()
     {
-        
+
     }
 
 
     [ExpectedResult("test", 5)]
+    [ExpectedResult("test2.txt", 8)]
     [ExpectedResult("live", 603)]
     public static unsafe long SolvePart1(string FilePath)
     {
@@ -51,37 +53,47 @@ public static class Solver
             Graph[fromId] = list;
         }
 
-        
-        Span<int> pathsKeyBacker = stackalloc int[1024];
-        Span<long> pathsValueBacker = stackalloc long[1024];
-        Span<byte> pathsStateBacker = stackalloc byte[1024];
-        var paths = new SpanDictionary<int, long>(pathsKeyBacker, pathsValueBacker, pathsStateBacker);
+        // because we are keeping nodes as ordered ids, we could just use array to keep number of paths
+        // instead of dictionary
+        Span<long> nodePathLens = stackalloc long[nextId];
+        nodePathLens.Clear();
 
+        // BFS queue
         Span<int> queueBacker = stackalloc int[1024];
         var queue = new SpanQueue<int>(queueBacker);
 
-        Span<int> visitedBacker = stackalloc int[1024];
-        Span<byte> visitedStateBacker = stackalloc byte[1024];
-        var visited = new SpanHashSet<int>(visitedBacker, visitedStateBacker);
+        // was the node visited already?
+        Span<byte> visited = stackalloc byte[nextId];
+        visited.Clear();
 
-        paths[startId] = 1;
-        visited.Add(startId);
-        queue.Enqueue(startId);
+        // init
+        var start = startId >= 0 ? startId : svrId;
+        nodePathLens[start] = 1;
+        visited[start] = 1;
+        queue.Enqueue(start);
+
+        // BFS (again :D)
         while (queue.Count > 0)
         {
             var u = queue.Dequeue();
             if (!Graph.TryGetValue(u, out var n)) continue;
-            var count = paths[u];
+            var count = nodePathLens[u];
             foreach (var v in n)
             {
-                if (paths.TryGetValue(v, out var c)) paths[v] = c + count; else paths[v] = count;
-                if (visited.Add(v)) queue.Enqueue(v);
+                nodePathLens[v] += count;
+                if (visited[v] == 0)
+                {
+                    visited[v] = 1;
+                    queue.Enqueue(v);
+                }
             }
         }
-        return paths.TryGetValue(outId, out var result) ? result : 0;
+        return nodePathLens[outId];
+
     }
 
     [ExpectedResult("test", 2)]
+    [ExpectedResult("test2.txt", 2)]
     [ExpectedResult("live", 380961604031372)]
     public static unsafe long SolvePart2(string FilePath)
     {
@@ -95,14 +107,14 @@ public static class Solver
             foreach (var v in kv.Value) indegree[v] = indegree[v] + 1;
         }
 
-        // order the graph
-
+        // order the graph topologically
         Span<int> queueBack = stackalloc int[nodeCount];
         SpanQueue<int> queue = new SpanQueue<int>(queueBack);
 
         Span<int> topology = stackalloc int[nodeCount];
         var nextTopologyIndex = 0;
 
+        // start with nodes that have no incomming edges
         for (var i = 0; i < nodeCount; i++)
             if (indegree[i] == 0)
                 queue.Enqueue(i);
@@ -119,11 +131,13 @@ public static class Solver
             }
         }
 
+        // order complete, prepare DP state
         Span<int> dpKeyBacker = stackalloc int[8192];
         Span<long> dpValBacker = stackalloc long[8192];
         Span<byte> stateBacker = stackalloc byte[8192];
-        SpanDictionary<int, long> dp = new SpanDictionary<int, long>(dpKeyBacker, dpValBacker, stateBacker);
+        SpanDictionary<int, long> pathCountsByState = new SpanDictionary<int, long>(dpKeyBacker, dpValBacker, stateBacker);
 
+        // we can't use keys like (int, bool, bool) so we pack them
         static int MakeKey(int node, bool hasDac, bool hasFft)
         {
             var mask = 0;
@@ -132,35 +146,43 @@ public static class Solver
             return (node << 2) | mask;
         }
 
-        dp.TryAdd(MakeKey(svrId, false, false), 1);
+        // init state
+        pathCountsByState.TryAdd(MakeKey(svrId, false, false), 1);
         long result = 0;
 
         var maxQSize = 0;
-        foreach (var node in topology)
+        // move in order of topology
+        for (var n = 0; n < topology.Length; n++)
         {
+            var node = topology[n];
             if (!Graph.TryGetValue(node, out var neighbors)) continue;
 
+            // mask encodes (hasDac, hasFft)
+            // 0 = none, 1 = dac, 2 = fft, 3 = both
             for (var mask = 0; mask < 4; mask++)
             {
                 var hasDac = (mask & 1) != 0;
                 var hasFft = (mask & 2) != 0;
 
-                if (!dp.TryGetValue((node << 2) | mask, out var ways) || ways == 0) continue;
+                if (!pathCountsByState.TryGetValue((node << 2) | mask, out var ways) || ways == 0) continue;
 
                 foreach (var v in neighbors)
                 {
+                    // update flags when moving to v
                     var newHasDac = hasDac || v == dacId;
                     var newHasFft = hasFft || v == fftId;
                     if (v == outId)
                     {
+                        // count only paths that have seen both dac and fft
                         if (newHasDac && newHasFft) result += ways;
                     }
                     else
                     {
+                        // go to next node
                         var newKey = MakeKey(v, newHasDac, newHasFft);
-                        dp.TryGetValue(newKey, out var cur);
-                        dp[newKey] = cur + ways;
-                        maxQSize = Math.Max(maxQSize, dp.Count);
+                        pathCountsByState.TryGetValue(newKey, out var cur);
+                        pathCountsByState[newKey] = cur + ways;
+                        maxQSize = Math.Max(maxQSize, pathCountsByState.Count);
                     }
                 }
             }
