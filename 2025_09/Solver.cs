@@ -118,6 +118,10 @@ public static class Solver
         SortVerticalSoa(VerticalX, VerticalY1, VerticalY2, VerticalEdgesCount);
         SortHorizontalSoa(HorizontalY, HorizontalX1, HorizontalX2, HorizontalEdgesCount);
 
+        // also, store 4 longest horizontal and vertical edges
+        // end intersect them first
+
+
         var maxArea = 0L;
         for (var i = 0; i < Points.Length - 1; i++)
         {
