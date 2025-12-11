@@ -7,7 +7,6 @@ namespace AoC;
 public static class Solver
 {
     static Dictionary<int, List<int>> Graph = new Dictionary<int, List<int>>();
-    static Dictionary<string, int> StrToId = new Dictionary<string, int>();
     static int youId = -1;
     static int outId = -1;
     static int svrId = -1;
@@ -15,48 +14,62 @@ public static class Solver
     static int fftId = -1;
     static int nextId = 0;
 
-    // Get a unique integer id for each string
-    private static int AddIdIfNotPresent(string str)
-    {
-        if (StrToId.TryGetValue(str, out var nId))
-            return nId;
-        StrToId.Add(str, nextId);
-
-        switch (str)
-        {
-            case "svr": svrId = nextId; break; // Stackalloc Vibes Required
-            case "dac": dacId = nextId; break; // Digital-Analog Converter (?)
-            case "fft": fftId = nextId; break; // Fast Fourier Transform :P
-            case "you": youId = nextId; break; // Yield Optimization Unit? Yelling Over USB?
-            case "out": outId = nextId; break; // Optimized User Tools
-        }
-
-        nextId++;
-        return nextId - 1;
-    }
-
-
-
-    private static void PrepareGraph()
-    {
-
-    }
-
-
     [ExpectedResult("test", 5)]
     [ExpectedResult("test2.txt", 8)]
     [ExpectedResult("live", 603)]
     public static unsafe long SolvePart1(string FilePath)
     {
-        // read the file and prepare graph
+        //TODO: natywny win32 jak wszystko pójdzie na stack
         var lines = File.ReadAllLines(FilePath);
+        var maxNodes = lines.Length * 2; // jedna linia to jedno źródło i kilka destów, czyli jeden int na linię by starczył
+
+        #region Build graph
+        
+        Span<int> nameKeys = stackalloc int[maxNodes];
+        nameKeys.Clear();
+
+        const int svrKey = ('s' << 16) | ('v' << 8) | 'r'; // Stackalloc Vibes Required
+        const int dacKey = ('d' << 16) | ('a' << 8) | 'c'; // Digital-Analog Converter
+        const int fftKey = ('f' << 16) | ('f' << 8) | 't'; // Fast Fourier Transform
+        const int youKey = ('y' << 16) | ('o' << 8) | 'u'; // Yield Optimization Unit? Yelling Over USB?
+        const int outKey = ('o' << 16) | ('u' << 8) | 't'; // Optimized User Tools
+
+        static int MakeNameKey(ReadOnlySpan<char> s) => (s[0] << 16) | (s[1] << 8) | s[2];
+        int AddIdIfNotPresent(ReadOnlySpan<char> name, Span<int> nameKeys)
+        {
+            var key = MakeNameKey(name);
+            for (var i = 0; i < nextId; i++) if (nameKeys[i] == key) return i;
+            var id = nextId;
+            nameKeys[id] = key;
+            nextId++;
+
+            if (key == youKey) youId = id;
+            else if (key == outKey) outId = id;
+            else if (key == svrKey) svrId = id;
+            else if (key == dacKey) dacId = id;
+            else if (key == fftKey) fftId = id;
+
+            return id;
+        }
+
+        // read the file and prepare graph
+        //TODO: skan po span i brak linq
         foreach (var line in lines)
         {
             var parts = line.Split(':', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-            var fromId = AddIdIfNotPresent(parts[0]);
-            var list = parts[1].Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(AddIdIfNotPresent).ToList();
-            Graph[fromId] = list;
+            var fromId = AddIdIfNotPresent(parts[0], nameKeys);
+            var splits = parts[1].Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            var grList = new List<int>();
+            foreach (var s in splits)
+            {
+                grList.Add(AddIdIfNotPresent(s, nameKeys));
+            }
+            Graph[fromId] = grList;
         }
+        #endregion
+
+
+
 
         // because we are keeping nodes as ordered ids, we could just use array to keep number of paths
         // instead of dictionary
