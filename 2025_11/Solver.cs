@@ -6,13 +6,14 @@ namespace AoC;
 [DefaultInput("live")]
 public static class Solver
 {
-    static Dictionary<int, List<int>> Graph = new Dictionary<int, List<int>>();
+    static List<int>[] Graph = [];
     static int youId = -1;
     static int outId = -1;
     static int svrId = -1;
     static int dacId = -1;
     static int fftId = -1;
     static int nextId = 0;
+    static int totalNodesCount = 0;
 
     [ExpectedResult("test", 5)]
     [ExpectedResult("test2.txt", 8)]
@@ -24,7 +25,7 @@ public static class Solver
         var maxNodes = lines.Length * 2; // jedna linia to jedno źródło i kilka destów, czyli jeden int na linię by starczył
 
         #region Build graph
-        
+
         Span<int> nameKeys = stackalloc int[maxNodes];
         nameKeys.Clear();
 
@@ -54,6 +55,7 @@ public static class Solver
 
         // read the file and prepare graph
         //TODO: skan po span i brak linq
+        Graph = new List<int>[maxNodes];
         foreach (var line in lines)
         {
             var parts = line.Split(':', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
@@ -66,14 +68,12 @@ public static class Solver
             }
             Graph[fromId] = grList;
         }
+        totalNodesCount = nextId;
         #endregion
-
-
-
 
         // because we are keeping nodes as ordered ids, we could just use array to keep number of paths
         // instead of dictionary
-        Span<long> nodePathLens = stackalloc long[nextId];
+        Span<long> nodePathLens = stackalloc long[totalNodesCount];
         nodePathLens.Clear();
 
         // BFS queue
@@ -81,7 +81,7 @@ public static class Solver
         var queue = new SpanQueue<int>(queueBacker);
 
         // was the node visited already?
-        Span<byte> visited = stackalloc byte[nextId];
+        Span<byte> visited = stackalloc byte[totalNodesCount];
         visited.Clear();
 
         // init
@@ -94,7 +94,10 @@ public static class Solver
         while (queue.Count > 0)
         {
             var u = queue.Dequeue();
-            if (!Graph.TryGetValue(u, out var n)) continue;
+
+            var n = Graph[u];
+            if (n == null) continue;
+
             var count = nodePathLens[u];
             foreach (var v in n)
             {
@@ -115,25 +118,29 @@ public static class Solver
     [ExpectedResult("live", 380961604031372)]
     public static unsafe long SolvePart2(string FilePath)
     {
-        var nodeCount = nextId;
-
         // counts how many incoming edges each node have
-        Span<int> indegree = stackalloc int[nodeCount];
+        Span<int> indegree = stackalloc int[totalNodesCount];
         indegree.Clear();
         foreach (var kv in Graph)
         {
-            foreach (var v in kv.Value) indegree[v] = indegree[v] + 1;
+            if (kv != null)
+            {
+                foreach (var v in kv)
+                {
+                    indegree[v] = indegree[v] + 1;
+                }
+            }
         }
 
         // order the graph topologically
-        Span<int> queueBack = stackalloc int[nodeCount];
+        Span<int> queueBack = stackalloc int[totalNodesCount];
         SpanQueue<int> queue = new SpanQueue<int>(queueBack);
 
-        Span<int> topology = stackalloc int[nodeCount];
+        Span<int> topology = stackalloc int[totalNodesCount];
         var nextTopologyIndex = 0;
 
         // start with nodes that have no incomming edges
-        for (var i = 0; i < nodeCount; i++)
+        for (var i = 0; i < totalNodesCount; i++)
             if (indegree[i] == 0)
                 queue.Enqueue(i);
 
@@ -141,7 +148,9 @@ public static class Solver
         {
             var u = queue.Dequeue();
             topology[nextTopologyIndex++] = u;
-            if (!Graph.TryGetValue(u, out var neighbors)) continue;
+
+            var neighbors = Graph[u];
+            if (neighbors == null) continue;
             foreach (var v in neighbors)
             {
                 indegree[v] = indegree[v] - 1;
@@ -173,7 +182,9 @@ public static class Solver
         for (var n = 0; n < topology.Length; n++)
         {
             var node = topology[n];
-            if (!Graph.TryGetValue(node, out var neighbors)) continue;
+
+            var neighbors = Graph[node];
+            if (neighbors == null) continue;
 
             // mask encodes (hasDac, hasFft)
             // 0 = none, 1 = dac, 2 = fft, 3 = both
