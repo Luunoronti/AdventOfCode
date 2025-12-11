@@ -8,7 +8,7 @@ public static class Solver
 {
     static Dictionary<int, List<int>> Graph = new Dictionary<int, List<int>>();
     static Dictionary<string, int> StrToId = new Dictionary<string, int>();
-    static int startId = -1;
+    static int youId = -1;
     static int outId = -1;
     static int svrId = -1;
     static int dacId = -1;
@@ -21,11 +21,16 @@ public static class Solver
         if (StrToId.TryGetValue(str, out var nId))
             return nId;
         StrToId.Add(str, nextId);
-        if (str == "you") startId = nextId;
-        else if (str == "out") outId = nextId;
-        else if (str == "svr") svrId = nextId;
-        else if (str == "dac") dacId = nextId; // Digital-Analog Converter (?)
-        else if (str == "fft") fftId = nextId; // Fast Fourier Transform :P
+
+        switch (str)
+        {
+            case "svr": svrId = nextId; break; // Stackalloc Vibes Required
+            case "dac": dacId = nextId; break; // Digital-Analog Converter (?)
+            case "fft": fftId = nextId; break; // Fast Fourier Transform :P
+            case "you": youId = nextId; break; // Yield Optimization Unit? Yelling Over USB?
+            case "out": outId = nextId; break; // Optimized User Tools
+        }
+
         nextId++;
         return nextId - 1;
     }
@@ -67,7 +72,7 @@ public static class Solver
         visited.Clear();
 
         // init
-        var start = startId >= 0 ? startId : svrId;
+        var start = youId >= 0 ? youId : svrId;
         nodePathLens[start] = 1;
         visited[start] = 1;
         queue.Enqueue(start);
