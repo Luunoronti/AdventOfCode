@@ -1,0 +1,2 @@
+# Paste the sample input for this day here.
+# This file is included in the template and committed to git.
